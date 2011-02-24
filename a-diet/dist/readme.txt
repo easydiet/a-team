@@ -1,0 +1,1 @@
+This directory contains all binary distribution packages like jars, wars and starting scripts.

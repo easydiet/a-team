@@ -1,0 +1,1 @@
+This directory contains all documentations and other non-coding related project files.

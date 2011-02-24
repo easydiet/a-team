@@ -1,0 +1,1 @@
+This directory contains all coding related documentation files like UML diagrams and UML designer files. 

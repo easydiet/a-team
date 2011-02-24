@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="EasyDiet" default="easy-ui" basedir=".">
+	<description>
+        a buildfile for building and packaging the A-Team EasyDiet
+    </description>
+
+	<!-- Directory Definition -->
+	<property name="binaries" location="bin" />
+	<property name="libraries" location="lib" />
+	<property name="sources" location="src" />
+	<property name="packages" location="dist" />
+	<property name="main-binary" location="${packages}/EasyDiet.jar" />
+
+	<target name="global-init">
+		<tstamp />
+	</target>
+	
+		
+	<!-- EasyDiet Main Build -->
+	<target name="easy-ui" depends="global-init">
+		<antcall target="rebuild-src" />
+		<antcall target="package-jar">
+			<param name="binary-name" value="${main-binary}" />
+			<param name="main-class" value="" />
+		</antcall>
+	</target>
+
+	<!-- Recompile the sources -->
+	<target name="rebuild-src" depends="global-init">
+		<!-- Compile Sources -->
+		<echo message="compiling EasyDiet" />
+		<javac srcdir="${sources}" destdir="${binaries}" classpath="C:/Program Files/Java/jre6/lib/plugin.jar;${libraries}" />
+	</target>
+
+	<!-- Package an executable Jar -->
+	<target name="package-jar" depends="global-init">
+		<echo message="create executable" />
+		<delete file="${binary-name}" />
+		<jar destfile="${binary-name}">
+			<fileset dir="${binaries}" includes="**/*.*" />
+			<zipgroupfileset dir="${libraries}" includes="*.jar" />
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}" />
+			</manifest>
+		</jar>
+	</target>
+
+
+</project>
