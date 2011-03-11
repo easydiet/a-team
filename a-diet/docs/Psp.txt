@@ -1,0 +1,46 @@
+EasyDiet
+	PM
+		Projekt gestartet (M)
+		Projektcontrolling
+		Projektkoordination
+		Projektabschluss
+		Projekt abgenommen (M)
+	Projektinitialisierung
+		Einarbeitung in die Systembeschreibung
+		Produktvision erstellen
+		Personas erstellen
+		Stakeholder analysieren
+		UseCases für Hauptaufgaben erstellen
+		Glossar für Systembeschreibung erstellen
+	Grobanalyse
+		Systembeschreibung für Pflichtenheft  ausformulieren
+		Domänenmodell erstellen
+		UseCases der Primären Aufgaben erstellen
+		Requirements Workshop (M) 
+		UML Klassendiagramme
+		UML Sequenzdiagramme
+		Timeboxplan
+		Pflichtenheft finalisieren
+		Pflichtenheft abgegeben (M)
+	Timebox1
+		Detaillierte Analyse für UseCases durchführen
+		Design durchführen
+		Implementierung durchführen
+		Anwendung testen
+		Benutzerabnahme abwickeln
+		Entwickelte Module abgeben (M)
+	Timebox2
+		Gruppenfindung 
+		Planung und Analyse weiterer UseCases
+		Implementierung durchführen
+		Anwendung testen
+		Benutzerabnahme abwickeln
+		Entwickelte Module abgeben (M)
+	Timebox3
+		Usecases für Webfähige Architektur Analysieren
+		1.6.2Technologie Evaluierung
+		Entwickelte Module abgeben (M)
+	Abschluss
+		Abschließen der Technischen Dokumnetation
+		Abschließen des Benutzerhandbuchs
+		Schulungen durchführen
