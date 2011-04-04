@@ -14,8 +14,22 @@
 	<target name="global-init">
 		<tstamp />
 	</target>
-	
-		
+
+	<taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" classpath="lib/mysql-connector-java-5.1.15-bin.jar;lib/tools/freemarker.jar;lib/hibernate3.jar;lib/tools/hibernate-tools.jar;lib/tools/jtidy-r8-21122004.jar;lib/tools/velocity-1.4.jar;lib/tools/velocity-tools-generic-1.4.jar;lib/tools/commons-logging-1.0.4.jar;lib/dom4j-1.6.1.jar;lib/slf4j-api-1.6.1.jar;src;lib/javax.persistence.jar" />
+
+	<target name="codegen" description="Generate Java source code
+                            from the Hibernate mapping files">
+		<hibernatetool destdir="src">
+			<configuration configurationfile="src/at/ateam/easydiet/hibernate.cfg.xml">
+				
+			</configuration>
+
+			<hbm2java />
+			<hbm2ddl drop="true" create="true" export="true" outputfilename="schema.sql" delimiter=";" format="true" />
+		</hibernatetool>
+	</target>
+
+
 	<!-- EasyDiet Main Build -->
 	<target name="easy-ui" depends="global-init">
 		<antcall target="rebuild-src" />
