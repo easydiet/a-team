@@ -24,8 +24,8 @@
 				
 			</configuration>
 
-			<hbm2java />
-			<hbm2ddl drop="true" create="true" export="true" outputfilename="schema.sql" delimiter=";" format="true" />
+			<hbm2java jdk5="true" />
+			<!--<hbm2ddl drop="true" create="true" export="true" outputfilename="schema.sql" delimiter=";" format="true" />-->
 		</hibernatetool>
 	</target>
 
