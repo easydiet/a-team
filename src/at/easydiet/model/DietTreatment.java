@@ -1,5 +1,5 @@
 package at.easydiet.model;
-// Generated 06.04.2011 14:32:00 by Hibernate Tools 3.4.0.CR1
+// Generated 06.04.2011 16:43:36 by Hibernate Tools 3.4.0.CR1
 
 
 import java.util.Date;
@@ -14,7 +14,7 @@ public class DietTreatment  implements java.io.Serializable {
 
      private long dietTreatmentId;
      private Date start;
-     private int duration; 
+     private int duration;
      private String name;
      private Set<NutritionProtocol> nutritionProtocols = new HashSet<NutritionProtocol>(0);
      private Set<DietPlan> dietPlans = new HashSet<DietPlan>(0);

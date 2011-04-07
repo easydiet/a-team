@@ -27,9 +27,9 @@
 		<property name="birthday" column="Birthday" type="timestamp" not-null="true" />
 		<property name="job" column="Job" type="string" />
 		<property name="religion" column="Religion" type="string" />
-		<array name="illnesses">
+		<array name="illnesses" table="PatientIllnesses">
 			<key column="PatientId" />
-			<list-index base="0" column="Index" />
+			<list-index base="0" column="Idx" />
 			<element column="Illness" type="string" />
 		</array>
 		<property name="regime" column="Regime" type="string" />
@@ -64,15 +64,14 @@
 		</set>
 	</class>
 
-
 	<class name="FamilyAnamnesis">
 		<id name="familyAnamnesisId" column="FamilyAnamnesisId" type="long">
 			<generator class="native" />
 		</id>
 		<property name="person" column="Person" type="string" not-null="true" />
-		<array name="illnesses">
+		<array name="illnesses" table="FamilyAnamnesisIllnesses">
 			<key column="FamilyAnamnesisId" />
-			<list-index base="0" column="Index" />
+			<list-index base="0" column="Idx" />
 			<element column="Illness" type="string" />
 		</array>
 	</class>
@@ -99,7 +98,6 @@
 		<id name="name" column="Name" type="string" />
 	</class>
 
-
 	<class name="ContactJournal">
 		<id name="contactJournalId" column="ContactJournalId" type="long">
 			<generator class="native" />
@@ -120,13 +118,25 @@
 			<generator class="native" />
 		</id>
 		<property name="name" column="Name" type="string" not-null="true" unique="true" />
-		<property name="unit" column="Unit" type="string" not-null="true" />
-		<property name="checkPattern" column="CheckPattern" type="string" not-null="true" />
-		<many-to-one name="type" column="Type" class="ParameterDefinitionDataType" not-null="true" />
+		<property name="checkPattern" column="CheckPattern" type="string" />	
+        
+        <set name="units" table="ParameterDefinitionUnits">
+			<key column="ParameterDefinitionId" not-null="true" />
+			<many-to-many class="ParameterDefinitionUnit" column="ParameterDefinitionUnitId" />
+		</set>        
 	</class>
 
 	<class name="ParameterDefinitionDataType">
 		<id name="name" column="Name" type="string" />
+	</class>
+
+    
+    <class name="ParameterDefinitionUnit">
+        <id name="parameterDefinitionUnitId" column="ParameterDefinitionUnitId" type="long">
+			<generator class="native" />
+		</id>
+		<property name="name" column="Name" type="string" unique="true" not-null="true" />
+        <many-to-one name="type" column="Type" class="ParameterDefinitionDataType" not-null="true" />
 	</class>
 
 	<class name="DietTreatment">
@@ -224,7 +234,6 @@
 		<id name="name" column="Name" type="string" />
 	</class>
 
-
 	<class name="TimeSpan">
 		<id name="timeSpanId" column="TimeSpanId" type="long">
 			<generator class="native" />
@@ -243,7 +252,6 @@
 		</set>
 		
 	</class>
-
 
 	<class name="Meal">
 		<id name="mealId" column="MealId" type="long">
@@ -269,7 +277,6 @@
 		</id>
 		<property name="quantity" column="Quantity" type="float" not-null="true" />
 		<property name="info" column="Info" type="clob" />
-		<property name="add" column="Add" type="boolean" not-null="true" />
 
 		<set name="mealLines">
 			<key column="ParentMealLineId" not-null="true" />
@@ -278,7 +285,6 @@
 
 		<many-to-one class="Recipe" name="recipe" not-null="true" />
 	</class>
-
 
 	<class name="Recipe">
 		<id name="recipeId" column="RecipeId" type="long">
@@ -291,7 +297,7 @@
 		<property name="benefits" column="Benefits" type="clob" />
 		<property name="cookInstructions" column="CookInstructions" type="clob" />
 
-		<set name="recipes" table="RecipeIngedient">
+		<set name="recipes" table="RecipeIngredient">
 			<key column="RecipeId" not-null="true" />
 			<many-to-many class="Recipe" column="IngredientId" />
 		</set>
@@ -314,7 +320,6 @@
 	<class name="PatientStateType">
 		<id name="name" column="Name" type="string" />
 	</class>
-
 
 	<class name="PatientState">
 

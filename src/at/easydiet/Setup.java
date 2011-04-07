@@ -1,5 +1,6 @@
 package at.easydiet;
 
+import org.apache.log4j.BasicConfigurator;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -15,6 +16,7 @@ public class Setup
 
     private void doIt() throws Exception
     {
+        BasicConfigurator.configure();
         setUp();
     } 
 

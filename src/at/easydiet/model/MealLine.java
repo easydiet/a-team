@@ -1,5 +1,5 @@
 package at.easydiet.model;
-// Generated 06.04.2011 14:32:00 by Hibernate Tools 3.4.0.CR1
+// Generated 06.04.2011 16:43:36 by Hibernate Tools 3.4.0.CR1
 
 
 import java.sql.Clob;
@@ -15,7 +15,6 @@ public class MealLine  implements java.io.Serializable {
      private long mealLineId;
      private float quantity;
      private Clob info;
-     private boolean add;
      private Set<MealLine> mealLines = new HashSet<MealLine>(0);
      private Recipe recipe;
 
@@ -23,15 +22,13 @@ public class MealLine  implements java.io.Serializable {
     }
 
 	
-    public MealLine(float quantity, boolean add, Recipe recipe) {
+    public MealLine(float quantity, Recipe recipe) {
         this.quantity = quantity;
-        this.add = add;
         this.recipe = recipe;
     }
-    public MealLine(float quantity, Clob info, boolean add, Set<MealLine> mealLines, Recipe recipe) {
+    public MealLine(float quantity, Clob info, Set<MealLine> mealLines, Recipe recipe) {
        this.quantity = quantity;
        this.info = info;
-       this.add = add;
        this.mealLines = mealLines;
        this.recipe = recipe;
     }
@@ -56,13 +53,6 @@ public class MealLine  implements java.io.Serializable {
     
     public void setInfo(Clob info) {
         this.info = info;
-    }
-    public boolean isAdd() {
-        return this.add;
-    }
-    
-    public void setAdd(boolean add) {
-        this.add = add;
     }
     public Set<MealLine> getMealLines() {
         return this.mealLines;

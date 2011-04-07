@@ -4,7 +4,11 @@
 	<classpathentry kind="src" path="src.test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/log4j-1.2.15.jar"/>
-	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/hibernate3.jar"/>
+	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/hibernate3.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/D:/Studium/4. Semester/A-Team/hibernate-docs/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/commons-collections-3.1.jar"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/dom4j-1.6.1.jar"/>
@@ -15,5 +19,6 @@
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/mysql-connector-java-5.1.15-bin.jar"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/sqlitejdbc-v056.jar"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/hsqldb.jar"/>
+	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/slf4j-log4j12-1.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -20,12 +20,10 @@
 	<target name="codegen" description="Generate Java source code
                             from the Hibernate mapping files">
 		<hibernatetool destdir="src">
-			<configuration configurationfile="src/at/ateam/easydiet/hibernate.cfg.xml">
-				
+			<configuration configurationfile="src/at/easydiet/hibernate.cfg.xml">
 			</configuration>
-
 			<hbm2java jdk5="true" />
-			<!--<hbm2ddl drop="true" create="true" export="true" outputfilename="schema.sql" delimiter=";" format="true" />-->
+			<hbm2dao jdk5="true" />
 		</hibernatetool>
 	</target>
 
