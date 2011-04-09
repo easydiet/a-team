@@ -15,16 +15,11 @@
 		<tstamp />
 	</target>
 
-	<taskdef name="hibernatetool" classname="org.hibernate.tool.ant.HibernateToolTask" classpath="lib/mysql-connector-java-5.1.15-bin.jar;lib/tools/freemarker.jar;lib/hibernate3.jar;lib/tools/hibernate-tools.jar;lib/tools/jtidy-r8-21122004.jar;lib/tools/velocity-1.4.jar;lib/tools/velocity-tools-generic-1.4.jar;lib/tools/commons-logging-1.0.4.jar;lib/dom4j-1.6.1.jar;lib/slf4j-api-1.6.1.jar;src;lib/javax.persistence.jar" />
+	<taskdef name="easyhibernate" classname="at.easyhibernate.EasyHibernateTask" classpath="lib/EasyHibernate.jar;src" />
 
 	<target name="codegen" description="Generate Java source code
                             from the Hibernate mapping files">
-		<hibernatetool destdir="src">
-			<configuration configurationfile="src/at/easydiet/hibernate.cfg.xml">
-			</configuration>
-			<hbm2java jdk5="true" />
-			<hbm2dao jdk5="true" />
-		</hibernatetool>
+		<easyhibernate hmb="src/hibernate.cfg.xml" pojo="src" dao="src" ddl="db/create.sql" />
 	</target>
 
 

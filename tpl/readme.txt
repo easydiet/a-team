@@ -1,0 +1,1 @@
+This directory contains Template files for generating pojos and daos.

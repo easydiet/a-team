@@ -1,1 +1,0 @@
-This directory contains all dependencies to run the hmb2java command in ant.

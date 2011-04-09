@@ -1,8 +1,7 @@
 package at.easydiet;
 
 import org.apache.log4j.BasicConfigurator;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import at.easydiet.dao.HibernateUtil;
 
 public class Setup
 {
@@ -12,8 +11,6 @@ public class Setup
         s.doIt();
     }
 
-    private SessionFactory _sessionFactory;
-
     private void doIt() throws Exception
     {
         BasicConfigurator.configure();
@@ -22,7 +19,6 @@ public class Setup
 
     protected void setUp() throws Exception
     {
-        // A SessionFactory is set up once for an application
-        _sessionFactory = new Configuration().configure(Setup.class.getResource("hibernate.cfg.xml")).buildSessionFactory();
+        HibernateUtil.currentSession();
     }
 }
