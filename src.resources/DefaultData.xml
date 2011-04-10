@@ -263,4 +263,21 @@
 			</name>
 		</UserRight>
 	</UserRights>
+	<TreatmentStates>
+		<TreatmentState>
+			<name>In Planung</name>
+		</TreatmentState>
+		<TreatmentState>
+			<name>Laufend</name>
+		</TreatmentState>
+		<TreatmentState>
+			<name>Abgeschlossen</name>
+		</TreatmentState>
+		<TreatmentState>
+			<name>Nicht Nötig</name>
+		</TreatmentState>
+		<TreatmentState>
+			<name>Abgebrochen</name>
+		</TreatmentState>
+	</TreatmentStates>
 </Data>

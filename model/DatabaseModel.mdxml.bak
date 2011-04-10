@@ -122,6 +122,10 @@
 			</ownedAttribute>
 			<ownedOperation xmi:type='uml:Operation' xmi:id='_16_8_7ac024e_1301702906831_918945_1926' visibility='public'/>
 		</packagedElement>
+		<packagedElement xmi:type='uml:Dependency' xmi:id='_16_8_7ac024e_1302459026694_585163_1886' visibility='public'>
+			<supplier xmi:idref='_16_8_7ac024e_1302448050409_463107_2028'/>
+			<client xmi:idref='_16_8_7ac024e_1301702906840_211603_1947'/>
+		</packagedElement>
 		<packagedElement xmi:type='uml:Dependency' xmi:id='_16_8_7ac024e_1302448399160_312977_2370' name='FKB34B715576981BB9' visibility='public'>
 			<supplier xmi:idref='_16_8_7ac024e_1301702907448_813261_2134'/>
 			<client xmi:idref='_16_8_7ac024e_1302448050528_514591_2138'/>
@@ -773,10 +777,6 @@
 			<supplier xmi:idref='_16_8_7ac024e_1301702907446_645784_2127'/>
 			<client xmi:idref='_16_8_7ac024e_1301702906656_133643_1761'/>
 		</packagedElement>
-		<packagedElement xmi:type='uml:Dependency' xmi:id='_16_8_7ac024e_1302459303325_612375_2273' visibility='public'>
-			<supplier xmi:idref='_16_8_7ac024e_1302448050404_460215_2015'/>
-			<client xmi:idref='_16_8_7ac024e_1301702906840_211603_1947'/>
-		</packagedElement>
 		<packagedElement xmi:type='uml:Dependency' xmi:id='_16_8_7ac024e_1301702907576_74351_2453' name='FKC92C02771636B763' visibility='public'>
 			<supplier xmi:idref='_16_8_7ac024e_1301702906766_150479_1904'/>
 			<client xmi:idref='_16_8_7ac024e_1301702906832_502195_1931'/>
@@ -1124,10 +1124,6 @@
 		<packagedElement xmi:type='uml:Dependency' xmi:id='_16_8_7ac024e_1301702907598_13325_2551' name='FKD1C4F782BFC865B1' visibility='public'>
 			<supplier xmi:idref='_16_8_7ac024e_1301702907460_684275_2164'/>
 			<client xmi:idref='_16_8_7ac024e_1301702907473_742041_2204'/>
-		</packagedElement>
-		<packagedElement xmi:type='uml:Dependency' xmi:id='_16_8_7ac024e_1302459286158_336391_2262' visibility='public'>
-			<supplier xmi:idref='_16_8_7ac024e_1302448050404_460215_2015'/>
-			<client xmi:idref='_16_8_7ac024e_1301702907448_813261_2134'/>
 		</packagedElement>
 		<packagedElement xmi:type='uml:Dependency' xmi:id='_16_8_7ac024e_1301702907567_825718_2423' name='FK2487E35FB4052B' visibility='public'>
 			<supplier xmi:idref='_16_8_7ac024e_1301702907477_797854_2218'/>
@@ -1530,8 +1526,8 @@
 					<diagramFrameInitialSizeSet xmi:value='true'/>
 					<requiredFeature>;Generic_DDL_Profile.xml;UML_Standard_Profile.xml</requiredFeature>
 					<diagramWindowBounds>3, 25, 1198, 821</diagramWindowBounds>
-					<diagramScrollPositionX xmi:value='3426'/>
-					<diagramScrollPositionY xmi:value='1261'/>
+					<diagramScrollPositionX xmi:value='3388'/>
+					<diagramScrollPositionY xmi:value='1319'/>
 					<maximized xmi:value='false'/>
 					<active xmi:value='true'/>
 					<mdOwnedViews>
@@ -3856,7 +3852,7 @@
 						</mdElement>
 						<mdElement elementClass='DiagramFrame' xmi:id='_16_8_7ac024e_1301703232449_474629_3272'>
 							<elementID xmi:idref='_16_8_7ac024e_1301702938733_211627_2609'/>
-							<geometry>5, 5, 4425, 2718</geometry>
+							<geometry>5, 5, 4372, 2718</geometry>
 						</mdElement>
 						<mdElement elementClass='Dependency' xmi:id='_16_8_7ac024e_1301702940916_457759_3239'>
 							<elementID xmi:idref='_16_8_7ac024e_1302448399160_312977_2370'/>
@@ -4049,7 +4045,7 @@
 							<linkStereotypeID xmi:idref='_16_8_7ac024e_1302448615226_61121_2543'/>
 						</mdElement>
 						<mdElement elementClass='Dependency' xmi:id='_16_8_7ac024e_1302459025712_703578_1885'>
-							<elementID xmi:idref='_16_8_7ac024e_1302459303325_612375_2273'/>
+							<elementID xmi:idref='_16_8_7ac024e_1302459026694_585163_1886'/>
 							<properties>
 								<mdElement elementClass='ColorProperty'>
 									<propertyID>PEN_COLOR</propertyID>
@@ -4082,63 +4078,17 @@
 									<propertyDescriptionID>SHOW_TAGGED_VALUES_DESCRIPTION</propertyDescriptionID>
 								</mdElement>
 							</properties>
-							<linkFirstEndID xmi:idref='_16_8_7ac024e_1302448563839_819170_2501'/>
+							<linkFirstEndID xmi:idref='_16_8_7ac024e_1302448563813_348445_2480'/>
 							<linkSecondEndID xmi:idref='_16_8_7ac024e_1301702940916_578537_3206'/>
-							<geometry>3934, 2002; 4144, 2002; 4144, 1418; 3780, 1418; </geometry>
+							<geometry>3924, 1859; 4144, 1859; 4144, 1418; 3780, 1418; </geometry>
 							<nameVisible xmi:value='true'/>
 							<mdOwnedViews>
 								<mdElement elementClass='TextBoxWithIcon' xmi:id='_16_8_7ac024e_1302459026697_209735_1888'>
-									<geometry>4147, 1617, 26, 13</geometry>
+									<geometry>4147, 1551, 26, 13</geometry>
 									<text>«FK»</text>
 								</mdElement>
 							</mdOwnedViews>
 							<linkStereotypeID xmi:idref='_16_8_7ac024e_1302459026697_209735_1888'/>
-						</mdElement>
-						<mdElement elementClass='Dependency' xmi:id='_16_8_7ac024e_1302459283656_598091_2261'>
-							<elementID xmi:idref='_16_8_7ac024e_1302459286158_336391_2262'/>
-							<properties>
-								<mdElement elementClass='ColorProperty'>
-									<propertyID>PEN_COLOR</propertyID>
-									<propertyDescriptionID>PEN_COLOR_DESCRIPTION</propertyDescriptionID>
-									<value xmi:value='-12434878'/>
-								</mdElement>
-								<mdElement elementClass='FontProperty'>
-									<propertyID>FONT</propertyID>
-									<propertyDescriptionID>FONT_DESCRIPTION</propertyDescriptionID>
-									<fontName>SansSerif</fontName>
-									<size xmi:value='11'/>
-									<style xmi:value='0'/>
-								</mdElement>
-								<mdElement elementClass='ChoiceProperty'>
-									<propertyID>LINK_LINE_STYLE</propertyID>
-									<propertyDescriptionID>LINK_LINE_STYLE_DESCRIPTION</propertyDescriptionID>
-									<value>RECTILINEAR</value>
-									<choice xmi:value='RECTILINEAR^OBLIQUE^BEZIER'/>
-									<index xmi:value='0'/>
-								</mdElement>
-								<mdElement elementClass='FontProperty'>
-									<propertyID>STEREOTYPE_FONT</propertyID>
-									<propertyDescriptionID>STEREOTYPE_FONT_DESCRIPTION</propertyDescriptionID>
-									<fontName>SansSerif</fontName>
-									<size xmi:value='11'/>
-									<style xmi:value='0'/>
-								</mdElement>
-								<mdElement elementClass='BooleanProperty'>
-									<propertyID>SHOW_TAGGED_VALUES</propertyID>
-									<propertyDescriptionID>SHOW_TAGGED_VALUES_DESCRIPTION</propertyDescriptionID>
-								</mdElement>
-							</properties>
-							<linkFirstEndID xmi:idref='_16_8_7ac024e_1302448563839_819170_2501'/>
-							<linkSecondEndID xmi:idref='_16_8_7ac024e_1301702940916_145676_3234'/>
-							<geometry>3934, 2027; 4211, 2027; 4211, 1257; 3764, 1257; </geometry>
-							<nameVisible xmi:value='true'/>
-							<mdOwnedViews>
-								<mdElement elementClass='TextBoxWithIcon' xmi:id='_16_8_7ac024e_1302459286161_427690_2264'>
-									<geometry>4214, 1541, 26, 13</geometry>
-									<text>«FK»</text>
-								</mdElement>
-							</mdOwnedViews>
-							<linkStereotypeID xmi:idref='_16_8_7ac024e_1302459286161_427690_2264'/>
 						</mdElement>
 					</mdOwnedViews>
 				</mdElement>
@@ -4718,7 +4668,7 @@
 						<mdElement elementClass='StringProperty'>
 							<propertyID>INFO_PROPERTY</propertyID>
 							<propertyDescriptionID>INFO_PROPERTY_DESCRIPTION</propertyDescriptionID>
-							<value>73 51 1f 5b 8 19 50 56 50 49 2 db b8 ff 54 2d c eb c7 a6 2 53 37 6e 60 9f 1d a5 69 30 e8 ac 73 26 6f f3 53 52 3d 8 cd 9e e9 63 88 41 66 f1 78 b4 63 a3 c0 d1 25 7 95 6a d2 d f4 bf 21 c4 87 ca e5 7f 9e 86 7b 3b </value>
+							<value>73 51 1f 5b 8 19 50 56 50 49 2 db b8 ff 54 2d c eb c7 a6 2 53 37 6e 60 9f 18 a5 6a 3e e8 ac 73 26 6f f3 53 52 3d 8 cd 9e e9 63 88 41 66 f1 78 b4 63 a3 c0 d1 25 7 95 6a d2 d f4 bf 21 c4 87 ca e5 7f 9e 86 7b 3b </value>
 						</mdElement>
 						<mdElement elementClass='LIST_PROPERTY'>
 							<propertyID>ADDITIONAL_CONTAINMENT_TREES</propertyID>
@@ -4727,7 +4677,7 @@
 						<mdElement elementClass='StringProperty'>
 							<propertyID>LAST_DIRECTORY</propertyID>
 							<propertyDescriptionID>LAST_DIRECTORY_DESCRIPTION</propertyDescriptionID>
-							<value>D:\Studium\4. Semester\A-Team\a-diet\model\</value>
+							<value>D:\Users\Daniel\</value>
 						</mdElement>
 						<mdElement elementClass='NumberProperty'>
 							<propertyID>OutputTypeSelectionPanel.value</propertyID>
@@ -12332,6 +12282,7 @@
 	<MagicDraw_Profile:typeModifier xmi:id='_16_8_7ac024e_1302448050549_728892_2171' base_Element='_16_8_7ac024e_1301702907472_574869_2200' typeModifier='(255)'/>
 	<Generic_DDL_Profile:not_null xmi:id='_16_8_7ac024e_1302448050549_728892_2171application1' base_Property='_16_8_7ac024e_1301702907472_574869_2200'/>
 	<Generic_DDL_Profile:PK xmi:id='_16_8_7ac024e_1302448050549_728892_2171application2' base_Property='_16_8_7ac024e_1301702907472_574869_2200'/>
+	<Generic_DDL_Profile:FK xmi:id='_16_8_7ac024e_1302459026694_524417_1887' base_Dependency='_16_8_7ac024e_1302459026694_585163_1886' PK_columns='_16_8_7ac024e_1302448050436_583430_2033' FK_columns='_16_8_7ac024e_1302458931438_41480_1879'/>
 	<MagicDraw_Profile:typeModifier xmi:id='_16_8_7ac024e_1302448050504_792223_2107' base_Element='_16_8_7ac024e_1302448050503_39599_2106' typeModifier='(255)'/>
 	<Generic_DDL_Profile:not_null xmi:id='_16_8_7ac024e_1302448050504_792223_2107application1' base_Property='_16_8_7ac024e_1302448050503_39599_2106'/>
 	<MagicDraw_Profile:typeModifier xmi:id='_16_8_7ac024e_1302448050473_651189_2054' base_Element='_16_8_7ac024e_1301702906865_312532_2023' typeModifier='(255)'/>
@@ -12437,7 +12388,6 @@
 	<Generic_DDL_Profile:not_null xmi:id='_16_8_7ac024e_1302448050524_634730_2135' base_Property='_16_8_7ac024e_1301702907453_508428_2147'/>
 	<Generic_DDL_Profile:table xmi:id='_16_8_7ac024e_1302448050493_910023_2088' base_Class='_16_8_7ac024e_1302448050492_229940_2086'/>
 	<Generic_DDL_Profile:not_null xmi:id='_16_8_7ac024e_1302448050262_569164_1959' base_Property='_16_8_7ac024e_1301702906762_230381_1895'/>
-	<Generic_DDL_Profile:FK xmi:id='_16_8_7ac024e_1302459286158_400294_2263' base_Dependency='_16_8_7ac024e_1302459286158_336391_2262' PK_columns='_16_8_7ac024e_1302448050405_300666_2018' FK_columns='_16_8_7ac024e_1302448050526_821242_2137'/>
 	<MagicDraw_Profile:typeModifier xmi:id='_16_8_7ac024e_1302448050399_837276_2005' base_Element='_16_8_7ac024e_1301702906852_60252_1979' typeModifier='(255)'/>
 	<Generic_DDL_Profile:not_null xmi:id='_16_8_7ac024e_1302448050399_837276_2005application1' base_Property='_16_8_7ac024e_1301702906852_60252_1979'/>
 	<Generic_DDL_Profile:unique xmi:id='_16_8_7ac024e_1302448050399_837276_2005application2' base_Property='_16_8_7ac024e_1301702906852_60252_1979'/>
@@ -12600,7 +12550,6 @@
 	<Generic_DDL_Profile:table xmi:id='_16_8_7ac024e_1301702906733_801606_1823' base_Class='_16_8_7ac024e_1301702906733_666204_1821'/>
 	<MagicDraw_Profile:typeModifier xmi:id='_16_8_7ac024e_1302448050227_636925_1900' base_Element='_16_8_7ac024e_1301702906726_375486_1800' typeModifier='(255)'/>
 	<Generic_DDL_Profile:not_null xmi:id='_16_8_7ac024e_1302448050227_636925_1900application1' base_Property='_16_8_7ac024e_1301702906726_375486_1800'/>
-	<Generic_DDL_Profile:FK xmi:id='_16_8_7ac024e_1302459303326_13546_2274' base_Dependency='_16_8_7ac024e_1302459303325_612375_2273' PK_columns='_16_8_7ac024e_1302448050436_583430_2033' FK_columns='_16_8_7ac024e_1302458931438_41480_1879'/>
 	<Generic_DDL_Profile:not_null xmi:id='_16_8_7ac024e_1302448050379_401590_1982' base_Property='_16_8_7ac024e_1301702906833_740405_1934'/>
 	<Generic_DDL_Profile:PK xmi:id='_16_8_7ac024e_1302448050379_401590_1982application1' base_Property='_16_8_7ac024e_1301702906833_740405_1934'/>
 	<Generic_DDL_Profile:FK xmi:id='_16_8_7ac024e_1302448469400_464639_2433' base_Dependency='_16_8_7ac024e_1302448469399_415056_2432' PK_columns='_16_8_7ac024e_1301702906743_368522_1849'/>

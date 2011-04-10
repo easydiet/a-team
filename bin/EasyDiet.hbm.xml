@@ -297,9 +297,9 @@
 		<property name="benefits" column="Benefits" type="clob" />
 		<property name="cookInstructions" column="CookInstructions" type="clob" />
 		
-		<!-- Used for NutrimentParameter assignemnts -->
+		<!-- Used for NutrimentParameter calculations -->
 		<property name="amount" column="Amount" type="float" />
-		<many-to-one name="unit" column="Unit" class="ParameterDefinitionUnit" />
+		<many-to-one name="unit" column="ParameterDefinitionUnitId" class="ParameterDefinitionUnit" />
 
 		<set name="ingredients">
 			<key column="RecipeId" not-null="true" />
@@ -331,6 +331,7 @@
 		<property name="value" column="Value" type="string" not-null="true" />
 
 		<many-to-one name="parameterDefinition" column="ParameterDefinitionId" class="ParameterDefinition" not-null="true"/>
+		<many-to-one name="unit" column="ParameterDefinitionUnitId" class="Unit" not-null="true"/>
 	</class>
 
 	<class name="PatientStateType">

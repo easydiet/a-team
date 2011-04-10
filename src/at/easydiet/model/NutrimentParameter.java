@@ -14,6 +14,7 @@ public class NutrimentParameter  implements java.io.Serializable
     private long _nutrimentParameterId;
     private String _value;
     private ParameterDefinition _parameterDefinition;
+    private ParameterDefinitionUnit _unit;
 
     /**
      * Initializes a new instance of the {@link NutrimentParameter} class.
@@ -87,6 +88,24 @@ public class NutrimentParameter  implements java.io.Serializable
     public void setParameterDefinition(ParameterDefinition parameterDefinition) 
     {
         _parameterDefinition = parameterDefinition;
+    }
+    
+    /**       
+     * Gets the unit of this instance. 
+     * @return the unit currently set for this instance.
+     */
+    public ParameterDefinitionUnit getUnit() 
+    {
+        return _unit;
+    }
+    
+    /**       
+     * Sets the unit of this instance. 
+     * @param unit the new unit of this instance.
+     */    
+    public void setUnit(ParameterDefinitionUnit unit) 
+    {
+        _unit = unit;
     }
     
     /**
