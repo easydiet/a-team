@@ -46,7 +46,7 @@ public class Setup
         {
             Document document = saxReader.read(Setup.class.getResource("/DefaultData.xml"));
             
-            List nodes = document.selectNodes("/Data/*/*");
+            List<?> nodes = document.selectNodes("/Data/*/*");
             
             for (Object obj : nodes)
             {

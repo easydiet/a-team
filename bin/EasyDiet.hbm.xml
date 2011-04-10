@@ -296,16 +296,32 @@
 		<property name="description" column="Description" type="clob" />
 		<property name="benefits" column="Benefits" type="clob" />
 		<property name="cookInstructions" column="CookInstructions" type="clob" />
+		
+		<!-- Used for NutrimentParameter assignemnts -->
+		<property name="amount" column="Amount" type="float" />
+		<many-to-one name="unit" column="Unit" class="ParameterDefinitionUnit" />
 
-		<set name="recipes" table="RecipeIngredient">
+		<set name="ingredients">
 			<key column="RecipeId" not-null="true" />
-			<many-to-many class="Recipe" column="IngredientId" />
+			<one-to-many class="RecipeIngredient" />
 		</set>
 
 		<set name="nutrimentParameters">
 			<key column="RecipeId" not-null="true" />
 			<one-to-many class="NutrimentParameter" />
 		</set>
+	</class>
+	
+	<class name="RecipeIngredient">
+		<id name="recipeIngredientId" column="RecipeIngredientId" type="long">
+			<generator class="native" />
+		</id>
+		
+		<!-- Used for NutrimentParameter assignemnts -->
+		<property name="amount" column="Amount" type="float" />
+		
+		<many-to-one name="ingredient" column="IngredientId" class="Recipe" />
+		
 	</class>
 
 	<class name="NutrimentParameter">
