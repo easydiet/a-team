@@ -30,7 +30,6 @@ INSERT INTO fhv_easy.ParameterDefinitionUnits (parameterDefinitionId, parameterD
 --    m?q/100g -> m?g
 --    kcal/100g -> kcal
 --    myg/100g -> 100g
---    mg/dl -> mg
         
 -- Import Nahrungsmitteleintrag 
 INSERT INTO fhv_easyRecipe (Name, BlsCode, Difficulty, Description, Benefits, CookInstruction, Amount, Unit)
