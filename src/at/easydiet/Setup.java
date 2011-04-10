@@ -9,13 +9,9 @@ import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 import org.hibernate.EntityMode;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 
 import at.easydiet.dao.HibernateUtil;
-import at.easydiet.model.CheckOperator;
-import at.easydiet.model.DietPlan;
 
 public class Setup
 {
