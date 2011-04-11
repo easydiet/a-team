@@ -1,0 +1,16 @@
+# ignore special dirs
+/tmp
+/bin
+/srcgen
+/dist 
+
+# ignore project files
+.settings
+.classpath
+.project
+
+# ignore temp files
+.DS_Store 
+*.bak
+~*
+*.lock
