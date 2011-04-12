@@ -6,7 +6,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/mysql-connector-java-5.1.15-bin.jar"/>
-	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/hibernate/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/hibernate/commons-collections-3.1.jar"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/hibernate/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/hibernate/hibernate3.jar"/>
@@ -19,8 +18,8 @@
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/pivot/pivot-web-server-2.0.jar"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/pivot/pivot-wtk-2.0.jar"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/pivot/pivot-wtk-terra-2.0.jar"/>
-	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/javax.persistence.jar"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/jaxen-1.1.3.jar"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/hibernate/slf4j-log4j12-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/hibernate/javax.persistence.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

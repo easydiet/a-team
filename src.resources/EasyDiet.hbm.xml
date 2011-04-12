@@ -331,7 +331,7 @@
 		<property name="value" column="Value" type="string" not-null="true" />
 
 		<many-to-one name="parameterDefinition" column="ParameterDefinitionId" class="ParameterDefinition" not-null="true"/>
-		<many-to-one name="unit" column="ParameterDefinitionUnitId" class="Unit" not-null="true"/>
+		<many-to-one name="unit" column="ParameterDefinitionUnitId" class="ParameterDefinitionUnit" not-null="true"/>
 	</class>
 
 	<class name="PatientStateType">
