@@ -14,6 +14,10 @@
 	<target name="global-init">
 		<tstamp />
 	</target>
+<<<<<<< HEAD
+	
+		
+=======
 
 	<taskdef name="easyhibernate" classname="at.easyhibernate.EasyHibernateTask" classpath="lib/EasyHibernate.jar;src.resources" />
 
@@ -23,6 +27,7 @@
 	</target>
  
 
+>>>>>>> 27ab2570e4346bf94044d959c0e5d780fb2c24eb
 	<!-- EasyDiet Main Build -->
 	<target name="easy-ui" depends="global-init">
 		<antcall target="rebuild-src" />

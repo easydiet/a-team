@@ -290,7 +290,7 @@
 		<id name="recipeId" column="RecipeId" type="long">
 			<generator class="native" />
 		</id>
-		<property name="name" column="Name" type="string" not-null="true" unique="true" />
+		<property name="name" column="Name" type="string" />
 		<property name="blsCode" column="BlsCode" type="string" />
 		<property name="difficulty" column="Difficulty" type="int" not-null="true" />
 		<property name="description" column="Description" type="clob" />
