@@ -27,38 +27,38 @@
 		<property name="birthday" column="Birthday" type="timestamp" not-null="true" />
 		<property name="job" column="Job" type="string" />
 		<property name="religion" column="Religion" type="string" />
-		<array name="illnesses" table="PatientIllnesses">
-			<key column="PatientId" />
-			<list-index base="0" column="Idx" />
-			<element column="Illness" type="string" />
-		</array>
 		<property name="regime" column="Regime" type="string" />
 		<property name="notice" column="Notice" type="clob" />
 
 		<many-to-one class="Gender" name="gender" column="Gender"
 			not-null="true" />
 
-		<set name="familyanamnesis">
+		<set name="illnesses" table="PatientIllnesses">
+			<key column="PatientId" />
+			<element column="Illness" type="string" />
+		</set>
+		
+		<set name="familyanamnesis" lazy="true">
 			<key column="PatientId" not-null="true" />
 			<one-to-many class="FamilyAnamnesis" />
 		</set>
 
-		<set name="patientstate">
+		<set name="patientstate" lazy="true">
 			<key column="PatientId" not-null="true" />
 			<one-to-many class="PatientState" />
 		</set>
 
-		<set name="laborReports">
+		<set name="laborReports" lazy="true">
 			<key column="PatientId" not-null="true" />
 			<one-to-many class="LaborReport" />
 		</set>
 		
-		<set name="treatments">
+		<set name="treatments" lazy="true">
 			<key column="PatientId" />
 			<one-to-many class="DietTreatment" />
 		</set>
 
-		<set name="disfavors" table="PatientDisfavors">
+		<set name="disfavors" table="PatientDisfavors" lazy="true">
 			<key column="PatientId" not-null="true" />
 			<many-to-many class="Recipe" column="RecipeId" />
 		</set>
@@ -69,11 +69,11 @@
 			<generator class="native" />
 		</id>
 		<property name="person" column="Person" type="string" not-null="true" />
-		<array name="illnesses" table="FamilyAnamnesisIllnesses">
+		
+		<set name="illnesses" table="FamilyAnamnesisIllnesses">
 			<key column="FamilyAnamnesisId" />
-			<list-index base="0" column="Idx" />
 			<element column="Illness" type="string" />
-		</array>
+		</set>
 	</class>
 
 	<class name="SystemUser">
@@ -88,6 +88,7 @@
 		<property name="department" column="Department" type="string" />
 		<property name="job" column="Job" type="string" />
 
+		<!-- No Lazy loading: we often will need the user rights, so it's good we have them always -->
 		<set name="rights" table="SystemUserRight">
 			<key column="SystemUserId" not-null="true" />
 			<many-to-many class="UserRight" column="UserRightId" />
@@ -120,6 +121,7 @@
 		<property name="name" column="Name" type="string" not-null="true" unique="true" />
 		<property name="checkPattern" column="CheckPattern" type="string" />	
         
+        <!-- No lazy loading, we will need units always -->
         <set name="units" table="ParameterDefinitionUnits">
 			<key column="ParameterDefinitionId" not-null="true" />
 			<many-to-many class="ParameterDefinitionUnit" column="ParameterDefinitionUnitId" />
@@ -146,11 +148,11 @@
 		<property name="start" column="Start" type="timestamp" not-null="true" />
 		<property name="duration" column="Duration" type="int" not-null="true" />
 		<property name="name" column="Name" type="string" not-null="true" />
-		<set name="nutritionProtocols">
+		<set name="nutritionProtocols" lazy="true">
 			<key column="DietTreatmentId" not-null="true"/>
 			<one-to-many class="NutritionProtocol" />
 		</set>		
-		<set name="dietPlans">
+		<set name="dietPlans" lazy="true">
 			<key column="DietTreatmentId" />
 			<one-to-many class="DietPlan" />
 		</set> 		
@@ -158,17 +160,17 @@
 			<key column="DietTreatmentId" not-null="true" />
 			<many-to-many class="DietParameter" column="DietParameterId"  unique="true" />
 		</set>		
-		<set name="patientStates" table="DietTreatmentPatientState">
+		<set name="patientStates" table="DietTreatmentPatientState" lazy="true">
 			<key column="DietTreatmentId" not-null="true" />
 			<many-to-many class="PatientState" column="DietParameterId" unique="true" />
 		</set>
 		
-		<set name="systemUsers">
+		<set name="systemUsers" lazy="true">
 			<key column="DietTreatmentId" not-null="true" />
 			<one-to-many class="DietTreatmentSystemUser" />
 		</set>
 
-		<set name="contactJournals">
+		<set name="contactJournals" lazy="true">
 			<key column="DietTreatmentId" not-null="true" />
 			<one-to-many class="ContactJournal" />
 		</set>
@@ -205,7 +207,6 @@
 		<property name="name" column="Name" type="string" not-null="true" />
 		<property name="createdOn" column="CreatedOn" type="timestamp" not-null="true" />
 
-
 		<many-to-one class="PlanType" name="planType" column="PlanType" not-null="true" />
 
 		<set name="dietParameters" table="DietPlanDietParameter">
@@ -215,7 +216,7 @@
 
 		<many-to-one class="SystemUser" name="creator" column="Creator" not-null="true" />	
 
-		<set name="timeSpans">
+		<set name="timeSpans" lazy="true">
 			<key column="DietPlanId" not-null="true" />
 			<one-to-many class="TimeSpan" />
 		</set>		
@@ -359,7 +360,7 @@
 
 		<many-to-one class="SystemUser" name="creator" column="SystemUserId" not-null="true" />
 
-		<set name="laborReports" table="PatientStateLaborReports">
+		<set name="laborReports" table="PatientStateLaborReports" lazy="true">
 			<key column="PatientStateId" not-null="true" />
 			<many-to-many class="LaborReport" column="LaborReportId" /> 
 		</set>
@@ -376,7 +377,7 @@
 
 		<many-to-one class="SystemUser" name="creator" column="Creator" not-null="true" />
 
-		<set name="dietParameters" table="LaborReportDietParameter">
+		<set name="dietParameters" table="LaborReportDietParameter" lazy="true">
 			<key column="LaborReportId" not-null="true" />
 			<many-to-many class="DietParameter" column="DietParameterId" unique="true" />
 		</set>
@@ -413,7 +414,7 @@
 
 		<property name="name" column="Name" type="string" not-null="true" />
 
-		<set name="dietParameterTemplates">
+		<set name="dietParameterTemplates" lazy="true">
 			<key column="DietParameterSetId" not-null="true" />
 			<one-to-many class="DietParameterTemplate" />
 		</set>

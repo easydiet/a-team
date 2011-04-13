@@ -279,5 +279,8 @@
 		<TreatmentState>
 			<name>Abgebrochen</name>
 		</TreatmentState>
+		<TreatmentState>
+			<name>Vorlage</name>
+		</TreatmentState>
 	</TreatmentStates>
 </Data>

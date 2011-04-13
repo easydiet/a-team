@@ -10,7 +10,7 @@ public class NutrimentParameter  implements java.io.Serializable
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = -1053222620315888506L;
+    private static final long serialVersionUID = 2579863774576179705L;
     private long _nutrimentParameterId;
     private String _value;
     private ParameterDefinition _parameterDefinition;
@@ -29,11 +29,13 @@ public class NutrimentParameter  implements java.io.Serializable
      * Initializes a new instance of the {@link NutrimentParameter} class.
      * @param value the value to set for this instance
      * @param parameterDefinition the parameterDefinition to set for this instance
+     * @param unit the unit to set for this instance
      */
-    public NutrimentParameter(String value, ParameterDefinition parameterDefinition) 
+    public NutrimentParameter(String value, ParameterDefinition parameterDefinition, ParameterDefinitionUnit unit) 
     {
        _value = value;
        _parameterDefinition = parameterDefinition;
+       _unit = unit;
     }
    
     /**       

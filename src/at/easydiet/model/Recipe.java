@@ -13,7 +13,7 @@ public class Recipe  implements java.io.Serializable
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = -7809031089902416483L;
+    private static final long serialVersionUID = 8149552592327951828L;
     private long _recipeId;
     private String _name;
     private String _blsCode;
@@ -36,12 +36,10 @@ public class Recipe  implements java.io.Serializable
 
     /**
      * Initializes a new instance of the {@link Recipe} class.
-     * @param name the name to set for this instance
      * @param difficulty the difficulty to set for this instance
      */
-    public Recipe(String name, int difficulty) 
+    public Recipe(int difficulty) 
     {
-        _name = name;
         _difficulty = difficulty;
     }
 
