@@ -112,7 +112,6 @@ public class NutritionProtocol extends at.easydiet.model.DietPlan implements jav
     public String toString() 
     {
         StringBuilder builder = new StringBuilder();
-
         builder.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
 		// interesting values
         builder.append("]");

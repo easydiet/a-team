@@ -6,7 +6,9 @@
 <hibernate-mapping package="at.easydiet.model">
 
 	<class name="Gender">
-		<id name="name" column="Name" type="string" />
+		<id name="name" column="Name" type="string">
+			<meta attribute="use-in-tostring">true</meta>
+		</id>
 	</class>
 
 	<class name="Patient">
@@ -43,7 +45,7 @@
 			<one-to-many class="FamilyAnamnesis" />
 		</set>
 
-		<set name="patientstate" lazy="true">
+		<set name="patientStates" lazy="true">
 			<key column="PatientId" not-null="true" />
 			<one-to-many class="PatientState" />
 		</set>
@@ -96,7 +98,9 @@
 	</class>
 
 	<class name="UserRight">
-		<id name="name" column="Name" type="string" />
+		<id name="name" column="Name" type="string">
+			<meta attribute="use-in-tostring">true</meta>
+		</id>
 	</class>
 
 	<class name="ContactJournal">
@@ -110,7 +114,9 @@
 	</class>
 
 	<class name="ContactType">
-		<id name="name" column="Name" type="string" />
+		<id name="name" column="Name" type="string">
+			<meta attribute="use-in-tostring">true</meta>
+		</id>
 	</class>
 	
 	<class name="ParameterDefinition">
@@ -129,7 +135,9 @@
 	</class>
 
 	<class name="ParameterDefinitionDataType">
-		<id name="name" column="Name" type="string" />
+		<id name="name" column="Name" type="string">
+			<meta attribute="use-in-tostring">true</meta>
+		</id>
 	</class>
 
     
@@ -193,11 +201,15 @@
 	</class>
 
 	<class name="SystemUserFunction">
-		<id name="name" column="Name" type="string" />
+		<id name="name" column="Name" type="string">
+			<meta attribute="use-in-tostring">true</meta>
+		</id>
 	</class>
 
 	<class name="TreatmentState">
-		<id name="name" column="Name" type="string" />
+		<id name="name" column="Name" type="string">
+			<meta attribute="use-in-tostring">true</meta>
+		</id>
 	</class>
 
 	<class name="DietPlan">
@@ -232,7 +244,9 @@
 	</class>
 
 	<class name="PlanType">
-		<id name="name" column="Name" type="string" />
+		<id name="name" column="Name" type="string">
+			<meta attribute="use-in-tostring">true</meta>
+		</id>
 	</class>
 
 	<class name="TimeSpan">
@@ -336,7 +350,9 @@
 	</class>
 
 	<class name="PatientStateType">
-		<id name="name" column="Name" type="string" />
+		<id name="name" column="Name" type="string">
+			<meta attribute="use-in-tostring">true</meta>
+		</id>
 	</class>
 
 	<class name="PatientState">
@@ -404,7 +420,9 @@
 	</class>
 
 	<class name="CheckOperator">
-        <id name="name" column="Name" type="string" />
+		<id name="name" column="Name" type="string">
+			<meta attribute="use-in-tostring">true</meta>
+		</id>
 	</class>
 
 	<class name="DietParameterSet">
@@ -421,6 +439,8 @@
 	</class>
 
 	<class name="DietParameterType">
-		<id name="name" column="Name" type="string" />
+		<id name="name" column="Name" type="string">
+			<meta attribute="use-in-tostring">true</meta>
+		</id>
 	</class>
 </hibernate-mapping>

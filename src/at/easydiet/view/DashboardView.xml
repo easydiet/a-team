@@ -1,0 +1,58 @@
+<easy:DashboardView title="Dashboard" maximized="true"
+xmlns:bxml="http://pivot.apache.org/bxml"
+xmlns:easy="at.easydiet.view"
+bxml:id="ui"
+xmlns:collections="org.apache.pivot.collections"
+xmlns="org.apache.pivot.wtk">
+
+	<Border styles="{padding:6}">
+		<TablePane>
+			<columns>
+				<TablePane.Column width="1*"/>
+			</columns>
+			<TablePane.Row height="1*">
+				<Form>
+					<Form.Section heading="Zuletzt verwendetet Patienten">
+						<ScrollPane>
+							<TableView bxml:id="_lastUsedPatientsTable">
+								<columns>
+									<TableView.Column name="forname" width="110" headerData="Vorname"/>
+									<TableView.Column name="lastname" width="110" headerData="Nachname"/>
+									<TableView.Column name="description" width="110" headerData="Diätbeschreibung"/>
+								</columns>
+								<collections:HashMap fname="Sorry, this feature" lname="is not" desc="available"/>
+							</TableView>
+							<columnHeader>
+								<TableViewHeader tableView="$_lastUsedPatientsTable"/>
+							</columnHeader>
+						</ScrollPane>
+					</Form.Section>
+					<Form.Section heading="Patientensuche">
+
+						<TextInput bxml:id="_searchBox"/>
+						<Border>
+							<ScrollPane horizontalScrollBarPolicy="fill">
+								<TableView bxml:id="_patientSearchTable">
+									<columns>
+										<TableView.Column name="insuranceNumber" width="150" headerData="SzvNr."/>
+										<TableView.Column name="forename" width="300" headerData="Vorname"/>
+										<TableView.Column name="lastname" width="300" headerData="Nachname"/>
+									</columns>
+									<tableViewSortListeners>
+										function sortChanged(tableView) {
+										var tableData = tableView.getTableData();
+										tableData.setComparator(new org.apache.pivot.wtk.content.TableViewRowComparator(tableView));
+										}
+									</tableViewSortListeners>
+								</TableView>
+								<columnHeader>
+									<TableViewHeader tableView="$_patientSearchTable" sortMode="single_column"/>
+								</columnHeader>
+							</ScrollPane>
+						</Border>
+					</Form.Section>
+				</Form>
+			</TablePane.Row>
+		</TablePane>
+	</Border>
+</easy:DashboardView>

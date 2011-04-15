@@ -66,7 +66,6 @@ public class DietParameter extends at.easydiet.model.DietParameterTemplate imple
     public String toString() 
     {
         StringBuilder builder = new StringBuilder();
-
         builder.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
 		// interesting values
         builder.append("]");

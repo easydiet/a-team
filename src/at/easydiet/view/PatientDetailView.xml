@@ -1,0 +1,125 @@
+<easy:PatientDetailView title="Patientendetailansicht" maximized="true"
+    xmlns:bxml="http://pivot.apache.org/bxml"
+    xmlns:easy="at.easydiet.view"
+    xmlns:content="org.apache.pivot.wtk.content"
+    xmlns:easycontent="at.easydiet.view.content"
+    xmlns="org.apache.pivot.wtk">
+    
+    <Border styles="{padding:6}">
+    <ScrollPane>
+    	<TablePane>
+            <columns>
+                <TablePane.Column width="1200"/>
+            </columns>           
+            <TablePane.Row height="250">
+                <Form>
+                    <Form.Section heading="Diäten">
+                        <BoxPane bxml:id="diets">
+                        	<BoxPane styles="{padding:4, spacing:4}">
+            					<Border>
+               						<ScrollPane preferredWidth="900" preferredHeight="200"
+                    					horizontalScrollBarPolicy="fill"
+                    					verticalScrollBarPolicy="fill_to_capacity">
+                    				<TableView bxml:id="_dietTreatmentsTable" selectMode="single">
+                    					<columns>
+                    						<TableView.Column name="Name" width="200" headerData="Name"/>
+                    						<TableView.Column name="Start" width="200" headerData="Von">
+                    							<cellRenderer>
+                    								<content:TableViewDateCellRenderer dateFormat="dd.MM.yyyy" />
+                    							</cellRenderer>
+                    						</TableView.Column>
+                    						<TableView.Column name="End" width="200" headerData="Ende">
+                    							<cellRenderer>
+                    								<content:TableViewDateCellRenderer dateFormat="dd.MM.yyyy" />
+                    							</cellRenderer>
+                    						</TableView.Column>
+                    						<TableView.Column name="TreatmentState" width="150" headerData="Status">
+                    							<cellRenderer>
+                    								<easycontent:NameCellRenderer />
+                    							</cellRenderer>
+                    						</TableView.Column>
+                    					</columns>
+                    					
+                    				</TableView>
+                    				<columnHeader>
+                						<TableViewHeader tableView="$_dietTreatmentsTable"/>
+            						</columnHeader>
+                        				
+                					</ScrollPane>
+            					</Border>
+            					<BoxPane orientation="vertical" preferredWidth="120" styles="{fill:true}">
+                					<Label text=""/>
+                					<Label bxml:id="selectionLabelDiet" styles="{wrapText:true}"/>
+            					</BoxPane>
+        					</BoxPane>
+                        </BoxPane>
+                    </Form.Section>
+                </Form>
+            </TablePane.Row>
+            <TablePane.Row height="250">
+                <Form>
+                    <Form.Section heading="Patientenstatus">
+                        <BoxPane bxml:id="patientStatus">
+                        	<BoxPane styles="{padding:4, spacing:4}">
+            					<Border styles="{color:10}">
+               						<ScrollPane preferredWidth="900" preferredHeight="200"
+                    					horizontalScrollBarPolicy="fill"
+                    					verticalScrollBarPolicy="fill_to_capacity">
+                    				<TableView bxml:id="_patientStatesTable" selectMode="single">
+                    					<columns>
+                    						<TableView.Column name="Date" width="450" headerData="Von"/>
+                    						<TableView.Column name="Type" width="450" headerData="Type"/>
+                    					</columns>
+                    					
+                    				</TableView>
+                    				<columnHeader>
+                						<TableViewHeader tableView="$_patientStatesTable"/>
+            						</columnHeader>
+                        				
+                					</ScrollPane>
+            					</Border>
+            					<BoxPane orientation="vertical" preferredWidth="120" styles="{fill:true}">
+                					<Label text=""/>
+                					<Label bxml:id="selectionLabelStatus" styles="{wrapText:true}"/>
+            					</BoxPane>
+        					</BoxPane>
+                        </BoxPane>
+                    </Form.Section>
+                </Form>
+            </TablePane.Row>
+            <TablePane.Row height="250">
+            	<Form>
+                    <Form.Section heading="Laborbefunde">
+                        <BoxPane bxml:id="laboratoryFindings">
+                        	<BoxPane styles="{padding:4, spacing:4}">
+            					<Border styles="{color:10}">
+               						<ScrollPane preferredWidth="900" preferredHeight="200"
+                    					horizontalScrollBarPolicy="fill"
+                    					verticalScrollBarPolicy="fill_to_capacity">
+                    				<TableView bxml:id="_laborReportsTable" selectMode="single">
+                    					<columns>
+                    						<TableView.Column name="Date" width="450" headerData="Von"/>
+                    						<TableView.Column name="Author" width="450" headerData="Erstellt"/>
+                    					</columns>
+                    					
+                    				</TableView>
+                    				<columnHeader>
+                						<TableViewHeader tableView="$_laborReportsTable"/>
+            						</columnHeader>
+                        				
+                					</ScrollPane>
+            					</Border>
+            					<BoxPane orientation="vertical" preferredWidth="120" styles="{fill:true}">
+                					<Label text=""/>
+                					<Label bxml:id="selectionLabelLab" styles="{wrapText:true}"/>
+            					</BoxPane>
+        					</BoxPane>
+                        </BoxPane>
+                    </Form.Section>
+                </Form>
+            </TablePane.Row>
+        </TablePane>
+    </ScrollPane>
+    </Border>
+    
+</easy:PatientDetailView>
