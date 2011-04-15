@@ -1,7 +1,6 @@
-<easy:PatientDetailView title="Patientendetailansicht" maximized="true"
+<easy:DietTreatmentDetailView title="Diätdetailansicht" maximized="true"
 xmlns:bxml="http://pivot.apache.org/bxml"
 xmlns:easy="at.easydiet.view"
-xmlns:content="org.apache.pivot.wtk.content"
 xmlns:easycontent="at.easydiet.view.content"
 xmlns="org.apache.pivot.wtk">
 
@@ -13,35 +12,30 @@ xmlns="org.apache.pivot.wtk">
 				</columns>
 				<TablePane.Row height="250">
 					<Form>
-						<Form.Section heading="Diäten">
-							<BoxPane bxml:id="diets">
+						<Form.Section heading="Diätpläne">
+							<BoxPane>
 								<BoxPane styles="{padding:4, spacing:4}">
 									<Border>
 										<ScrollPane preferredWidth="900" preferredHeight="200"
 										horizontalScrollBarPolicy="fill"
 										verticalScrollBarPolicy="fill_to_capacity">
-											<TableView bxml:id="_dietTreatmentsTable" selectMode="single">
+											<TableView bxml:id="_dietPlanTable" selectMode="single">
 												<columns>
-													<TableView.Column name="Name" width="200" headerData="Name"/>
-													<TableView.Column name="Start" width="200" headerData="Von">
+													<TableView.Column name="Start" width="150" headerData="Von">
 														<cellRenderer>
 															<easycontent:DateCellRenderer />
 														</cellRenderer>
 													</TableView.Column>
-													<TableView.Column name="End" width="200" headerData="Ende">
+													<TableView.Column name="End" width="150" headerData="Bis">
 														<cellRenderer>
 															<easycontent:DateCellRenderer />
 														</cellRenderer>
 													</TableView.Column>
-													<TableView.Column name="TreatmentState" width="150" headerData="Status">
-														<cellRenderer>
-															<easycontent:NameCellRenderer />
-														</cellRenderer>
-													</TableView.Column>
+													<TableView.Column name="Name" width="450" headerData="Name"/>
 												</columns>
 											</TableView>
 											<columnHeader>
-												<TableViewHeader tableView="$_dietTreatmentsTable"/>
+												<TableViewHeader tableView="$_dietPlanTable"/>
 											</columnHeader>
 										</ScrollPane>
 									</Border>
@@ -56,21 +50,26 @@ xmlns="org.apache.pivot.wtk">
 				</TablePane.Row>
 				<TablePane.Row height="250">
 					<Form>
-						<Form.Section heading="Patientenstatus">
-							<BoxPane bxml:id="patientStatus">
+						<Form.Section heading="Kontaktjournal">
+							<BoxPane>
 								<BoxPane styles="{padding:4, spacing:4}">
 									<Border styles="{color:10}">
 										<ScrollPane preferredWidth="900" preferredHeight="200"
 										horizontalScrollBarPolicy="fill"
 										verticalScrollBarPolicy="fill_to_capacity">
-											<TableView bxml:id="_patientStatesTable" selectMode="single">
+											<TableView bxml:id="_contactJournalTable" selectMode="single">
 												<columns>
-													<TableView.Column name="Date" width="450" headerData="Von">
+													<TableView.Column name="Date" width="450" headerData="Datum">
 														<cellRenderer>
 															<easycontent:DateCellRenderer />
 														</cellRenderer>
 													</TableView.Column>
-													<TableView.Column name="Type" width="450" headerData="Type">
+													<TableView.Column name="ContactType" width="450" headerData="Art">
+														<cellRenderer>
+															<easycontent:NameCellRenderer />
+														</cellRenderer>
+													</TableView.Column>
+													<TableView.Column name="CreatedBy" width="450" headerData="Ersteller">
 														<cellRenderer>
 															<easycontent:NameCellRenderer />
 														</cellRenderer>
@@ -78,7 +77,7 @@ xmlns="org.apache.pivot.wtk">
 												</columns>
 											</TableView>
 											<columnHeader>
-												<TableViewHeader tableView="$_patientStatesTable"/>
+												<TableViewHeader tableView="$_contactJournalTable"/>
 											</columnHeader>
 										</ScrollPane>
 									</Border>
@@ -93,29 +92,25 @@ xmlns="org.apache.pivot.wtk">
 				</TablePane.Row>
 				<TablePane.Row height="250">
 					<Form>
-						<Form.Section heading="Laborbefunde">
-							<BoxPane bxml:id="laboratoryFindings">
+						<Form.Section heading="Ernährungsprotokoll">
+							<BoxPane>
 								<BoxPane styles="{padding:4, spacing:4}">
 									<Border styles="{color:10}">
 										<ScrollPane preferredWidth="900" preferredHeight="200"
 										horizontalScrollBarPolicy="fill"
 										verticalScrollBarPolicy="fill_to_capacity">
-											<TableView bxml:id="_laborReportsTable" selectMode="single">
+											<TableView bxml:id="_nutritionProtocolTable" selectMode="single">
 												<columns>
-													<TableView.Column name="Date" width="450" headerData="Von">
+													<TableView.Column name="Date" width="150" headerData="Von">
 														<cellRenderer>
 															<easycontent:DateCellRenderer />
 														</cellRenderer>
 													</TableView.Column>
-													<TableView.Column name="Creator" width="450" headerData="Ersteller">
-														<cellRenderer>
-															<easycontent:NameCellRenderer />
-														</cellRenderer>
-													</TableView.Column>
+													<TableView.Column name="Name" width="450" headerData="Name"/>
 												</columns>
 											</TableView>
 											<columnHeader>
-												<TableViewHeader tableView="$_laborReportsTable"/>
+												<TableViewHeader tableView="$_nutritionProtocolTable"/>
 											</columnHeader>
 										</ScrollPane>
 									</Border>
@@ -131,4 +126,4 @@ xmlns="org.apache.pivot.wtk">
 			</TablePane>
 		</ScrollPane>
 	</Border>
-</easy:PatientDetailView>
+</easy:DietTreatmentDetailView>

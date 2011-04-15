@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
 
+import org.apache.pivot.collections.ArrayList;
+
 import at.easydiet.model.ContactJournal;
 import at.easydiet.model.DietParameter;
 import at.easydiet.model.DietPlan;
@@ -147,6 +149,20 @@ public class DietTreatmentBO
     }
 
     /**
+     * @return a new list of {@link NutritionProtocolBO} according to {@link DietTreatmentBO#getNutritionProtocols()}
+     */
+    public ArrayList<NutritionProtocolBO> getNutritionProtocolBOs()
+    {
+        ArrayList<NutritionProtocolBO> bos = new ArrayList<NutritionProtocolBO>();
+        for (NutritionProtocol contactJournal : getNutritionProtocols())
+        {
+            bos.add(new NutritionProtocolBO(contactJournal));
+        }
+        return bos;
+    }
+
+    
+    /**
      * @return
      * @see at.easydiet.model.DietTreatment#getDietPlans()
      */
@@ -235,6 +251,20 @@ public class DietTreatmentBO
     {
         _treatment.setContactJournals(contactJournals);
     }
+    
+    /**
+     * @return a new list of {@link ContactJournalBO} according to {@link DietTreatmentBO#getContactJournals()}
+     */
+    public ArrayList<ContactJournalBO> getContactJournalBOs()
+    {
+        ArrayList<ContactJournalBO> bos = new ArrayList<ContactJournalBO>();
+        for (ContactJournal contactJournal : getContactJournals())
+        {
+            bos.add(new ContactJournalBO(contactJournal));
+        }
+        return bos;
+    }
+
 
     /**
      * @return
@@ -252,6 +282,16 @@ public class DietTreatmentBO
     public void setTreatmentState(TreatmentState treatmentState)
     {
         _treatment.setTreatmentState(treatmentState);
+    }
+
+    public ArrayList<DietPlanBO> getDietPlanBOs()
+    {
+        ArrayList<DietPlanBO> bos = new ArrayList<DietPlanBO>();
+        for (DietPlan dietPlan : getDietPlans())
+        {
+            bos.add(new DietPlanBO(dietPlan));
+        }
+        return bos;
     }
 
 }

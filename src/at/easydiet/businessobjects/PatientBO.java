@@ -363,6 +363,19 @@ public class PatientBO
     {
         _patient.setPatientStates(patientStates);
     }
+    
+    /**
+     * @return a new list of {@link PatientStateBO} according to {@link PatientBO#getPatientStates()}
+     */
+    public ArrayList<PatientStateBO> getPatientStateBOs()
+    {
+        ArrayList<PatientStateBO> bos = new ArrayList<PatientStateBO>();
+        for (PatientState state : getPatientStates())
+        {
+            bos.add(new PatientStateBO(state));
+        }
+        return bos;
+    }
 
     /**
      * @return
@@ -381,6 +394,20 @@ public class PatientBO
     {
         _patient.setLaborReports(laborReports);
     }
+    
+    /**
+     * @return a new list of {@link LaborReportBO} according to {@link PatientBO#getLaborReports()}
+     */
+    public ArrayList<LaborReportBO> getLaborReportBOs()
+    {
+        ArrayList<LaborReportBO> bos = new ArrayList<LaborReportBO>();
+        for (LaborReport laborReport : getLaborReports())
+        {
+            bos.add(new LaborReportBO(laborReport));
+        }
+        return bos;
+    }
+
 
     /**
      * @return

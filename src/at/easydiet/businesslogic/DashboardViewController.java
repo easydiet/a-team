@@ -10,31 +10,16 @@ import at.easydiet.dao.PatientDAO;
 import at.easydiet.model.Patient;
 import at.easydiet.util.StringUtils;
 
-public class DashboardController
+public class DashboardViewController
 {
     public static final org.apache.log4j.Logger LOG       = org.apache.log4j.Logger
-                                                                  .getLogger(DashboardController.class);
+                                                                  .getLogger(DashboardViewController.class);
     private ArrayList<PatientBO>                _patients = null;
     private String                              _patientFilter;
 
-    public DashboardController()
+    public DashboardViewController()
     {
-        // String[][] dummyData = {
-        // {"1234567890", "Daniel", "Kuschny"},
-        // {"1234567895", "Simon", "Moosbrugger"},
-        // {"1234567893", "Mathias", "Joschika"},
-        // {"1234567894", "Matthias", "Amann"},
-        // {"1234567891", "Halkdjfpwokepof", "dfklsdjfklsdjfl"}
-        // };
-        //
-        // for (String[] strings : dummyData)
-        // {
-        // Patient patient = new Patient();
-        // patient.setInsuranceNumber(strings[0]);
-        // patient.setForename(strings[1]);
-        // patient.setLastname(strings[2]);
-        // _patients.add(patient);
-        // }
+       
     }
 
     public ArrayList<PatientBO> getPatients()

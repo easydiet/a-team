@@ -18,7 +18,7 @@ import org.apache.pivot.wtk.TableViewSelectionListener;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.Window;
 
-import at.easydiet.businesslogic.DashboardController;
+import at.easydiet.businesslogic.DashboardViewController;
 import at.easydiet.businessobjects.PatientBO;
 import at.easydiet.model.Patient;
 
@@ -32,7 +32,7 @@ public class DashboardView extends Window implements Bindable
     @BXML
     private TextInput                           _searchBox;
 
-    private DashboardController                 _controller;
+    private DashboardViewController                 _controller;
 
     public void searchPatient(String searchString)
     {
@@ -44,7 +44,7 @@ public class DashboardView extends Window implements Bindable
 
     public DashboardView()
     {
-        _controller = new DashboardController();
+        _controller = new DashboardViewController();
     }
 
     public void initialize(Map<String, Object> namespace, URL url,

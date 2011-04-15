@@ -3,7 +3,9 @@ package at.easydiet.businesslogic;
 import org.apache.pivot.collections.ArrayList;
 
 import at.easydiet.businessobjects.DietTreatmentBO;
+import at.easydiet.businessobjects.LaborReportBO;
 import at.easydiet.businessobjects.PatientBO;
+import at.easydiet.businessobjects.PatientStateBO;
 
 public class PatientDetailViewController
 {
@@ -12,6 +14,8 @@ public class PatientDetailViewController
 
     private PatientBO                           _patient;
     private ArrayList<DietTreatmentBO>          _dietTreatments;
+    private ArrayList<PatientStateBO>           _patientStates;
+    private ArrayList<LaborReportBO>            _laborReports;
 
     public PatientBO getPatient()
     {
@@ -21,7 +25,7 @@ public class PatientDetailViewController
     public void setPatient(PatientBO patient)
     {
         _patient = patient;
-        reloadPatientData(patient);
+        reloadPatientData();
     }
 
     public ArrayList<DietTreatmentBO> getDietTreatments()
@@ -29,10 +33,22 @@ public class PatientDetailViewController
         return _dietTreatments;
     }
 
-    private void reloadPatientData(PatientBO patient)
+    public ArrayList<PatientStateBO> getPatientStates()
     {
-        if (patient == null) return;
-        _dietTreatments = patient.getTreatmentBOs();
+        return _patientStates;
+    }
+    
+    public ArrayList<LaborReportBO> getLaborReports()
+    {
+        return _laborReports;
+    }
+
+    public void reloadPatientData()
+    {
+        if (_patient == null) return;
+        _dietTreatments = _patient.getTreatmentBOs();
+        _patientStates = _patient.getPatientStateBOs();
+        _laborReports = _patient.getLaborReportBOs();
     }
 
     public PatientDetailViewController()
