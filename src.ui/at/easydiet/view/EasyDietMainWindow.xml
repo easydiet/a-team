@@ -64,8 +64,11 @@ xmlns="org.apache.pivot.wtk"
 		</TablePane.Row>
 		<TablePane.Row height="1*">
 			<ScrollPane>
-				<CardPane bxml:id="content">
-				</CardPane>
+				<TablePane bxml:id="content">
+					<columns>
+						<TablePane.Column width="900" />
+					</columns>
+				</TablePane>
 			</ScrollPane>
 		</TablePane.Row>
 	</TablePane>

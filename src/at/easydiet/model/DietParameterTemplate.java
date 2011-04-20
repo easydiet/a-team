@@ -1,6 +1,5 @@
 package at.easydiet.model;
 
-
 /**
  * Represents a DietParameterTemplate
  */
@@ -15,6 +14,7 @@ public class DietParameterTemplate  implements java.io.Serializable
     private CheckOperator _checkOperator;
     private int _duration;
     private String _value;
+    private ParameterDefinitionDataType _parameterDefinitionDataType;
     private DietParameterType _dietParameterType;
     private ParameterDefinition _parameterDefinition;
 
@@ -29,12 +29,14 @@ public class DietParameterTemplate  implements java.io.Serializable
     /**
      * Initializes a new instance of the {@link DietParameterTemplate} class.
      * @param checkOperator the checkOperator to set for this instance
+     * @param parameterDefinitionDataType the parameterDefinitionDataType to set for this instance
      * @param dietParameterType the dietParameterType to set for this instance
      * @param parameterDefinition the parameterDefinition to set for this instance
      */
-    public DietParameterTemplate(CheckOperator checkOperator, DietParameterType dietParameterType, ParameterDefinition parameterDefinition) 
+    public DietParameterTemplate(CheckOperator checkOperator, ParameterDefinitionDataType parameterDefinitionDataType, DietParameterType dietParameterType, ParameterDefinition parameterDefinition) 
     {
         _checkOperator = checkOperator;
+        _parameterDefinitionDataType = parameterDefinitionDataType;
         _dietParameterType = dietParameterType;
         _parameterDefinition = parameterDefinition;
     }
@@ -44,14 +46,16 @@ public class DietParameterTemplate  implements java.io.Serializable
      * @param checkOperator the checkOperator to set for this instance
      * @param duration the duration to set for this instance
      * @param value the value to set for this instance
+     * @param parameterDefinitionDataType the parameterDefinitionDataType to set for this instance
      * @param dietParameterType the dietParameterType to set for this instance
      * @param parameterDefinition the parameterDefinition to set for this instance
      */
-    public DietParameterTemplate(CheckOperator checkOperator, int duration, String value, DietParameterType dietParameterType, ParameterDefinition parameterDefinition) 
+    public DietParameterTemplate(CheckOperator checkOperator, int duration, String value, ParameterDefinitionDataType parameterDefinitionDataType, DietParameterType dietParameterType, ParameterDefinition parameterDefinition) 
     {
        _checkOperator = checkOperator;
        _duration = duration;
        _value = value;
+       _parameterDefinitionDataType = parameterDefinitionDataType;
        _dietParameterType = dietParameterType;
        _parameterDefinition = parameterDefinition;
     }
@@ -129,6 +133,24 @@ public class DietParameterTemplate  implements java.io.Serializable
     }
     
     /**       
+     * Gets the parameterDefinitionDataType of this instance. 
+     * @return the parameterDefinitionDataType currently set for this instance.
+     */
+    public ParameterDefinitionDataType getParameterDefinitionDataType() 
+    {
+        return _parameterDefinitionDataType;
+    }
+    
+    /**       
+     * Sets the parameterDefinitionDataType of this instance. 
+     * @param parameterDefinitionDataType the new parameterDefinitionDataType of this instance.
+     */    
+    public void setParameterDefinitionDataType(ParameterDefinitionDataType parameterDefinitionDataType) 
+    {
+        _parameterDefinitionDataType = parameterDefinitionDataType;
+    }
+    
+    /**       
      * Gets the dietParameterType of this instance. 
      * @return the dietParameterType currently set for this instance.
      */
@@ -173,7 +195,7 @@ public class DietParameterTemplate  implements java.io.Serializable
     {
         StringBuilder builder = new StringBuilder();
         builder.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-		// interesting values
+        // interesting values
         builder.append("]");
       
         return builder.toString();
