@@ -18,10 +18,10 @@
 	<classpathentry kind="lib" path="lib/hibernate/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate/slf4j-log4j12-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/pivot/pivot-charts-2.0.jar"/>
-	<classpathentry kind="lib" path="lib/pivot/pivot-core-2.0.jar" sourcepath="E:/Downloads/apache-pivot-2.0-src"/>
+	<classpathentry kind="lib" path="lib/pivot/pivot-core-2.0.jar"/>
 	<classpathentry kind="lib" path="lib/pivot/pivot-web-2.0.jar"/>
-	<classpathentry kind="lib" path="lib/pivot/pivot-web-server-2.0.jar"/>
-	<classpathentry kind="lib" path="lib/pivot/pivot-wtk-2.0.jar" sourcepath="E:/Downloads/apache-pivot-2.0-src"/>
-	<classpathentry kind="lib" path="lib/pivot/pivot-wtk-terra-2.0.jar" sourcepath="E:/Downloads/apache-pivot-2.0-src"/>
+	<classpathentry kind="lib" path="lib/pivot/pivot-web-server-2.0.jar" />
+	<classpathentry kind="lib" path="lib/pivot/pivot-wtk-2.0.jar" />
+	<classpathentry kind="lib" path="lib/pivot/pivot-wtk-terra-2.0.jar" />
 	<classpathentry kind="output" path="bin"/>
 </classpath>
