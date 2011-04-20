@@ -25,18 +25,18 @@ public class DietParameter extends at.easydiet.model.DietParameterTemplate imple
     /**
      * Initializes a new instance of the {@link DietParameter} class.
      */
-    public DietParameter(CheckOperator checkOperator, ParameterDefinitionDataType parameterDefinitionDataType, DietParameterType dietParameterType, ParameterDefinition parameterDefinition) 
+    public DietParameter(CheckOperator checkOperator, ParameterDefinitionUnit parameterDefinitionUnit, DietParameterType dietParameterType, ParameterDefinition parameterDefinition) 
     {
-        super(checkOperator, parameterDefinitionDataType, dietParameterType, parameterDefinition);        
+        super(checkOperator, parameterDefinitionUnit, dietParameterType, parameterDefinition);        
     }
 
     /**
      * Initializes a new instance of the {@link DietParameter} class.
      * @param start the start to set for this instance
      */
-    public DietParameter(CheckOperator checkOperator, int duration, String value, ParameterDefinitionDataType parameterDefinitionDataType, DietParameterType dietParameterType, ParameterDefinition parameterDefinition, Date start) 
+    public DietParameter(CheckOperator checkOperator, int duration, String value, ParameterDefinitionUnit parameterDefinitionUnit, DietParameterType dietParameterType, ParameterDefinition parameterDefinition, Date start) 
     {
-        super(checkOperator, duration, value, parameterDefinitionDataType, dietParameterType, parameterDefinition);        
+        super(checkOperator, duration, value, parameterDefinitionUnit, dietParameterType, parameterDefinition);        
        _start = start;
     }
    

@@ -14,7 +14,7 @@ public class DietParameterTemplate  implements java.io.Serializable
     private CheckOperator _checkOperator;
     private int _duration;
     private String _value;
-    private ParameterDefinitionDataType _parameterDefinitionDataType;
+    private ParameterDefinitionUnit _parameterDefinitionUnit;
     private DietParameterType _dietParameterType;
     private ParameterDefinition _parameterDefinition;
 
@@ -29,14 +29,14 @@ public class DietParameterTemplate  implements java.io.Serializable
     /**
      * Initializes a new instance of the {@link DietParameterTemplate} class.
      * @param checkOperator the checkOperator to set for this instance
-     * @param parameterDefinitionDataType the parameterDefinitionDataType to set for this instance
+     * @param parameterDefinitionUnit the parameterDefinitionUnit to set for this instance
      * @param dietParameterType the dietParameterType to set for this instance
      * @param parameterDefinition the parameterDefinition to set for this instance
      */
-    public DietParameterTemplate(CheckOperator checkOperator, ParameterDefinitionDataType parameterDefinitionDataType, DietParameterType dietParameterType, ParameterDefinition parameterDefinition) 
+    public DietParameterTemplate(CheckOperator checkOperator, ParameterDefinitionUnit parameterDefinitionUnit, DietParameterType dietParameterType, ParameterDefinition parameterDefinition) 
     {
         _checkOperator = checkOperator;
-        _parameterDefinitionDataType = parameterDefinitionDataType;
+        _parameterDefinitionUnit = parameterDefinitionUnit;
         _dietParameterType = dietParameterType;
         _parameterDefinition = parameterDefinition;
     }
@@ -46,16 +46,16 @@ public class DietParameterTemplate  implements java.io.Serializable
      * @param checkOperator the checkOperator to set for this instance
      * @param duration the duration to set for this instance
      * @param value the value to set for this instance
-     * @param parameterDefinitionDataType the parameterDefinitionDataType to set for this instance
+     * @param parameterDefinitionUnit the parameterDefinitionUnit to set for this instance
      * @param dietParameterType the dietParameterType to set for this instance
      * @param parameterDefinition the parameterDefinition to set for this instance
      */
-    public DietParameterTemplate(CheckOperator checkOperator, int duration, String value, ParameterDefinitionDataType parameterDefinitionDataType, DietParameterType dietParameterType, ParameterDefinition parameterDefinition) 
+    public DietParameterTemplate(CheckOperator checkOperator, int duration, String value, ParameterDefinitionUnit parameterDefinitionUnit, DietParameterType dietParameterType, ParameterDefinition parameterDefinition) 
     {
        _checkOperator = checkOperator;
        _duration = duration;
        _value = value;
-       _parameterDefinitionDataType = parameterDefinitionDataType;
+       _parameterDefinitionUnit = parameterDefinitionUnit;
        _dietParameterType = dietParameterType;
        _parameterDefinition = parameterDefinition;
     }
@@ -133,21 +133,21 @@ public class DietParameterTemplate  implements java.io.Serializable
     }
     
     /**       
-     * Gets the parameterDefinitionDataType of this instance. 
-     * @return the parameterDefinitionDataType currently set for this instance.
+     * Gets the parameterDefinitionUnit of this instance. 
+     * @return the parameterDefinitionUnit currently set for this instance.
      */
-    public ParameterDefinitionDataType getParameterDefinitionDataType() 
+    public ParameterDefinitionUnit getParameterDefinitionUnit() 
     {
-        return _parameterDefinitionDataType;
+        return _parameterDefinitionUnit;
     }
     
     /**       
-     * Sets the parameterDefinitionDataType of this instance. 
-     * @param parameterDefinitionDataType the new parameterDefinitionDataType of this instance.
+     * Sets the parameterDefinitionUnit of this instance. 
+     * @param parameterDefinitionUnit the new parameterDefinitionUnit of this instance.
      */    
-    public void setParameterDefinitionDataType(ParameterDefinitionDataType parameterDefinitionDataType) 
+    public void setParameterDefinitionUnit(ParameterDefinitionUnit parameterDefinitionUnit) 
     {
-        _parameterDefinitionDataType = parameterDefinitionDataType;
+        _parameterDefinitionUnit = parameterDefinitionUnit;
     }
     
     /**       
