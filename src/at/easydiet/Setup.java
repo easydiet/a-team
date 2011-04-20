@@ -26,7 +26,7 @@ public class Setup
     {
         BasicConfigurator.configure();
         createSchema();
-        importDefaultData();
+        //importDefaultData();
     }
 
     private void createSchema() throws Exception

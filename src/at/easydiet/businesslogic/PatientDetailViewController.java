@@ -16,19 +16,21 @@ public class PatientDetailViewController
     private ArrayList<DietTreatmentBO>          _dietTreatments;
     private ArrayList<PatientStateBO>           _patientStates;
     private ArrayList<LaborReportBO>            _laborReports;
-    
-    private static PatientDetailViewController _singleton;
+
+    private static PatientDetailViewController  _singleton;
+
     public static PatientDetailViewController getInstance()
     {
-        if(_singleton == null)
+        if (_singleton == null)
         {
             _singleton = new PatientDetailViewController();
         }
         return _singleton;
     }
+
     private PatientDetailViewController()
     {
-       
+
     }
 
     public PatientBO getPatient()
@@ -51,7 +53,7 @@ public class PatientDetailViewController
     {
         return _patientStates;
     }
-    
+
     public ArrayList<LaborReportBO> getLaborReports()
     {
         return _laborReports;

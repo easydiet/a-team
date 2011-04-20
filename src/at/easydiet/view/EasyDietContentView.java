@@ -10,11 +10,11 @@ import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Orientation;
+import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.content.ButtonDataRenderer;
 
-public class EasyDietContentView extends BoxPane
+public class EasyDietContentView extends TablePane.Row
 {
-
     /**
      * defines the button in the navigation bar
      * @author Mathias
@@ -40,10 +40,10 @@ public class EasyDietContentView extends BoxPane
                 }
             });
         }
-        
+
         public void refresh()
         {
-            
+
         }
 
         public EasyDietContentView getEasyDietContentView()
@@ -353,8 +353,6 @@ public class EasyDietContentView extends BoxPane
         this.navigationButtons = new ArrayList<NavigationButton>(
                 navigationButtons);
         this.toolbarButtons = new ArrayList<ToolbarButton>(toolbarButtons);
-
-        // installSkin(EasyDietContentView.class);
     }
 
     public NavigationButtonSequence getNavigationButtons()

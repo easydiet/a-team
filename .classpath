@@ -18,10 +18,22 @@
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/hibernate/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/hibernate/slf4j-log4j12-1.6.1.jar"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/pivot/pivot-charts-2.0.jar"/>
-	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/pivot/pivot-core-2.0.jar"/>
+	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/pivot/pivot-core-2.0.jar" sourcepath="E:/Downloads/apache-pivot-2.0-src">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/E:/Downloads/apache-pivot-2.0/apache-pivot-2.0/doc/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/pivot/pivot-web-2.0.jar"/>
 	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/pivot/pivot-web-server-2.0.jar"/>
-	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/pivot/pivot-wtk-2.0.jar"/>
-	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/pivot/pivot-wtk-terra-2.0.jar"/>
+	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/pivot/pivot-wtk-2.0.jar" sourcepath="E:/Downloads/apache-pivot-2.0-src">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/E:/Downloads/apache-pivot-2.0/apache-pivot-2.0/doc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/Studium/4. Semester/A-Team/a-diet/lib/pivot/pivot-wtk-terra-2.0.jar" sourcepath="E:/Downloads/apache-pivot-2.0-src">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/E:/Downloads/apache-pivot-2.0/apache-pivot-2.0/doc/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

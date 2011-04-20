@@ -34,7 +34,17 @@ public class ViewController
      */
     public void loadContent(String file, Component component)
     {
-        EasyDietMainWindow wnd = (EasyDietMainWindow)component.getWindow();
+        EasyDietMainWindow wnd = (EasyDietMainWindow) component.getWindow();
+        loadContent(file, wnd);
+    }
+    
+    /**
+     * Which content to load into the Content pane
+     * @param file BXML file
+     */
+    public void loadContent(String file, EasyDietContentView component)
+    {
+        EasyDietMainWindow wnd = (EasyDietMainWindow) component.getTablePane().getWindow();
         loadContent(file, wnd);
     }
 
@@ -44,8 +54,9 @@ public class ViewController
      */
     public void loadContent(String file, EasyDietMainWindow mainWindow)
     {
-        EasyDietContentView oldView = (EasyDietContentView) mainWindow
-                .getContentPane().getSelectedCard();
+        
+        EasyDietContentView oldView = mainWindow.getContentPane().getRows().getLength() == 0 ? null
+                : (EasyDietContentView) mainWindow.getContentPane().getRows().get(0);
 
         // do onClose method
         if (oldView == null || oldView.onClose())
@@ -59,8 +70,8 @@ public class ViewController
                 // do onLoad method
                 newView.onLoad();
 
-                mainWindow.getContentPane().removeAll();
-                mainWindow.getContentPane().add(newView);
+                mainWindow.getContentPane().getRows().remove(0, mainWindow.getContentPane().getRows().getLength());
+                mainWindow.getContentPane().getRows().add(newView);
 
                 replaceButtons(newView, mainWindow);
             }
@@ -123,10 +134,10 @@ public class ViewController
             navigation.add(button);
             last = button;
         }
-        if(last != null)
+        if (last != null)
         {
             windowTitle.append(last.getText());
         }
-        view.getWindow().setTitle(windowTitle.toString());
+        view.getTablePane().getWindow().setTitle(windowTitle.toString());
     }
 }

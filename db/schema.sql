@@ -36,6 +36,7 @@
         CheckOperator varchar(255) not null,
         Duration integer,
         Value varchar(255),
+        ParameterDefinitionDataTypeId varchar(255) not null,
         DietParameterType varchar(255) not null,
         ParameterDefinitionId bigint not null,
         DietParameterSetId bigint not null,
@@ -369,6 +370,12 @@
         add constraint FK177958FD29C5A36 
         foreign key (CheckOperator) 
         references CheckOperator (Name);
+
+    alter table DietParameterTemplate 
+        add index FK177958FAF4D0EF9 (ParameterDefinitionDataTypeId), 
+        add constraint FK177958FAF4D0EF9 
+        foreign key (ParameterDefinitionDataTypeId) 
+        references ParameterDefinitionDataType (Name);
 
     alter table DietPlan 
         add index FKFD20555D501CA4C1 (DietTreatmentId), 

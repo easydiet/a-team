@@ -25,18 +25,18 @@ public class DietParameter extends at.easydiet.model.DietParameterTemplate imple
     /**
      * Initializes a new instance of the {@link DietParameter} class.
      */
-    public DietParameter(CheckOperator checkOperator, DietParameterType dietParameterType, ParameterDefinition parameterDefinition) 
+    public DietParameter(CheckOperator checkOperator, ParameterDefinitionDataType parameterDefinitionDataType, DietParameterType dietParameterType, ParameterDefinition parameterDefinition) 
     {
-        super(checkOperator, dietParameterType, parameterDefinition);        
+        super(checkOperator, parameterDefinitionDataType, dietParameterType, parameterDefinition);        
     }
 
     /**
      * Initializes a new instance of the {@link DietParameter} class.
      * @param start the start to set for this instance
      */
-    public DietParameter(CheckOperator checkOperator, int duration, String value, DietParameterType dietParameterType, ParameterDefinition parameterDefinition, Date start) 
+    public DietParameter(CheckOperator checkOperator, int duration, String value, ParameterDefinitionDataType parameterDefinitionDataType, DietParameterType dietParameterType, ParameterDefinition parameterDefinition, Date start) 
     {
-        super(checkOperator, duration, value, dietParameterType, parameterDefinition);        
+        super(checkOperator, duration, value, parameterDefinitionDataType, dietParameterType, parameterDefinition);        
        _start = start;
     }
    
@@ -67,7 +67,7 @@ public class DietParameter extends at.easydiet.model.DietParameterTemplate imple
     {
         StringBuilder builder = new StringBuilder();
         builder.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-		// interesting values
+        // interesting values
         builder.append("]");
       
         return builder.toString();

@@ -7,10 +7,10 @@ import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Action;
 import org.apache.pivot.wtk.BoxPane;
-import org.apache.pivot.wtk.CardPane;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.FlowPane;
 import org.apache.pivot.wtk.Prompt;
+import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.Window;
 
 public class EasyDietMainWindow extends Window implements Bindable
@@ -19,7 +19,7 @@ public class EasyDietMainWindow extends Window implements Bindable
                                                             .getLogger(EasyDietMainWindow.class);
 
     private FlowPane                            _navigation;
-    private CardPane                            _content;
+    private TablePane                            _content;
     private BoxPane                             _toolbar;
 
     /**
@@ -35,7 +35,7 @@ public class EasyDietMainWindow extends Window implements Bindable
      * Gets the content.
      * @return the content
      */
-    public CardPane getContentPane()
+    public TablePane getContentPane()
     {
         return _content;
     }
@@ -94,30 +94,20 @@ public class EasyDietMainWindow extends Window implements Bindable
         });
 
         // other xml views
-        Action.getNamedActions().put("showDashboard", new Action()
+        Action.getNamedActions().put("createDietPlan", new Action()
         {
             @Override
             public void perform(Component source)
             {
-                ViewController.getInstance().loadContent("Dashboard.xml",
+                ViewController.getInstance().loadContent("CreateDietPlanView",
                         source);
-            }
-        });
-
-        Action.getNamedActions().put("showPatientDetailView", new Action()
-        {
-            @Override
-            public void perform(Component source)
-            {
-                ViewController.getInstance().loadContent(
-                        "PatientDetailView.xml", source);
             }
         });
     }
 
     public void initialize(Map<String, Object> ns, URL loc, Resources es)
     {
-        _content = (CardPane) ns.get("content");
+        _content = (TablePane) ns.get("content");
         _navigation = (FlowPane) ns.get("navigation");
         _toolbar = (BoxPane) ns.get("toolbar");
 

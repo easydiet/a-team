@@ -6,7 +6,6 @@ import org.apache.pivot.wtk.Application;
 import org.apache.pivot.wtk.Display;
 import org.apache.pivot.wtk.Window;
 
-import at.easydiet.view.DashboardView;
 import at.easydiet.view.EasyDietMainWindow;
 
 public class EasyDietApplication implements Application

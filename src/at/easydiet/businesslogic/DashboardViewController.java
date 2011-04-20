@@ -12,23 +12,25 @@ import at.easydiet.util.StringUtils;
 
 public class DashboardViewController
 {
-    public static final org.apache.log4j.Logger LOG       = org.apache.log4j.Logger
-                                                                  .getLogger(DashboardViewController.class);
-    private ArrayList<PatientBO>                _patients = null;
+    public static final org.apache.log4j.Logger LOG            = org.apache.log4j.Logger
+                                                                       .getLogger(DashboardViewController.class);
+    private ArrayList<PatientBO>                _patients      = null;
     private String                              _patientFilter = "";
 
-    private static DashboardViewController _singleton;
+    private static DashboardViewController      _singleton;
+
     public static DashboardViewController getInstance()
     {
-        if(_singleton == null)
+        if (_singleton == null)
         {
             _singleton = new DashboardViewController();
         }
         return _singleton;
     }
+
     private DashboardViewController()
     {
-       
+
     }
 
     public ArrayList<PatientBO> getPatients()
@@ -65,7 +67,7 @@ public class DashboardViewController
     {
         _patientFilter = searchString;
     }
-    
+
     public String getPatientFilter()
     {
         return _patientFilter;

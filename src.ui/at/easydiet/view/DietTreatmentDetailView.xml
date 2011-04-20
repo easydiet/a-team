@@ -2,137 +2,94 @@
 xmlns:easy="at.easydiet.view"
 xmlns:easycontent="at.easydiet.view.content"
 xmlns="org.apache.pivot.wtk">
-<navigationButtons>
+	<navigationButtons>
 		<easy:EasyDietContentView.NavigationButton text="Dashboard" view="DashboardView" />
 		<easy:PatientNavigationButton view="PatientDetailView" />
-		<easy:DietTreatmentNaviationButton />
+		<easy:DietTreatmentNavigationButton />
 	</navigationButtons>
 	<toolbarButtons>
-		<easy:EasyDietContentView.ToolbarButton action="todo" text="Diät anlegen" icon="@diet_add.png" />
-		<easy:EasyDietContentView.ToolbarButton action="todo" text="Patientenstatus anlegen" icon="@patientstate_add.png" />
-		<easy:EasyDietContentView.ToolbarButton action="todo" text="Laborbefund anlegen" icon="@report_add.png" />
+		<easy:EasyDietContentView.ToolbarButton action="createDietPlan" text="Diätplan anlegen" icon="@diet_add.png" />
+		<easy:EasyDietContentView.ToolbarButton action="todo" text="Kontaktjournaleintrag anlegen" icon="@contact_journal_add.png" />
+		<easy:EasyDietContentView.ToolbarButton action="todo" text="Ernährungsprotokoll anlegen" icon="@report_add.png" />
 		<easy:EasyDietContentView.ToolbarButton action="showHelp" text="Hilfe" icon="@help.png" />
-	</toolbarButtons>			
-	<Border styles="{padding:6}">
-		<ScrollPane>
-			<TablePane>
-				<columns>
-					<TablePane.Column width="1200"/>
-				</columns>
-				<TablePane.Row height="250">
-					<Form>
-						<Form.Section heading="Diätpläne">
-							<BoxPane>
-								<BoxPane styles="{padding:4, spacing:4}">
-									<Border>
-										<ScrollPane preferredWidth="900" preferredHeight="200"
-										horizontalScrollBarPolicy="fill"
-										verticalScrollBarPolicy="fill_to_capacity">
-											<TableView bxml:id="_dietPlanTable" selectMode="single">
-												<columns>
-													<TableView.Column name="Start" width="150" headerData="Von">
-														<cellRenderer>
-															<easycontent:DateCellRenderer />
-														</cellRenderer>
-													</TableView.Column>
-													<TableView.Column name="End" width="150" headerData="Bis">
-														<cellRenderer>
-															<easycontent:DateCellRenderer />
-														</cellRenderer>
-													</TableView.Column>
-													<TableView.Column name="Name" width="450" headerData="Name"/>
-												</columns>
-											</TableView>
-											<columnHeader>
-												<TableViewHeader tableView="$_dietPlanTable"/>
-											</columnHeader>
-										</ScrollPane>
-									</Border>
-									<BoxPane orientation="vertical" preferredWidth="120" styles="{fill:true}">
-										<Label text=""/>
-										<Label bxml:id="selectionLabelDiet" styles="{wrapText:true}"/>
-									</BoxPane>
-								</BoxPane>
-							</BoxPane>
-						</Form.Section>
-					</Form>
-				</TablePane.Row>
-				<TablePane.Row height="250">
-					<Form>
-						<Form.Section heading="Kontaktjournal">
-							<BoxPane>
-								<BoxPane styles="{padding:4, spacing:4}">
-									<Border styles="{color:10}">
-										<ScrollPane preferredWidth="900" preferredHeight="200"
-										horizontalScrollBarPolicy="fill"
-										verticalScrollBarPolicy="fill_to_capacity">
-											<TableView bxml:id="_contactJournalTable" selectMode="single">
-												<columns>
-													<TableView.Column name="Date" width="450" headerData="Datum">
-														<cellRenderer>
-															<easycontent:DateCellRenderer />
-														</cellRenderer>
-													</TableView.Column>
-													<TableView.Column name="ContactType" width="450" headerData="Art">
-														<cellRenderer>
-															<easycontent:NameCellRenderer />
-														</cellRenderer>
-													</TableView.Column>
-													<TableView.Column name="CreatedBy" width="450" headerData="Ersteller">
-														<cellRenderer>
-															<easycontent:NameCellRenderer />
-														</cellRenderer>
-													</TableView.Column>
-												</columns>
-											</TableView>
-											<columnHeader>
-												<TableViewHeader tableView="$_contactJournalTable"/>
-											</columnHeader>
-										</ScrollPane>
-									</Border>
-									<BoxPane orientation="vertical" preferredWidth="120" styles="{fill:true}">
-										<Label text=""/>
-										<Label bxml:id="selectionLabelStatus" styles="{wrapText:true}"/>
-									</BoxPane>
-								</BoxPane>
-							</BoxPane>
-						</Form.Section>
-					</Form>
-				</TablePane.Row>
-				<TablePane.Row height="250">
-					<Form>
-						<Form.Section heading="Ernährungsprotokoll">
-							<BoxPane>
-								<BoxPane styles="{padding:4, spacing:4}">
-									<Border styles="{color:10}">
-										<ScrollPane preferredWidth="900" preferredHeight="200"
-										horizontalScrollBarPolicy="fill"
-										verticalScrollBarPolicy="fill_to_capacity">
-											<TableView bxml:id="_nutritionProtocolTable" selectMode="single">
-												<columns>
-													<TableView.Column name="Date" width="150" headerData="Von">
-														<cellRenderer>
-															<easycontent:DateCellRenderer />
-														</cellRenderer>
-													</TableView.Column>
-													<TableView.Column name="Name" width="450" headerData="Name"/>
-												</columns>
-											</TableView>
-											<columnHeader>
-												<TableViewHeader tableView="$_nutritionProtocolTable"/>
-											</columnHeader>
-										</ScrollPane>
-									</Border>
-									<BoxPane orientation="vertical" preferredWidth="120" styles="{fill:true}">
-										<Label text=""/>
-										<Label bxml:id="selectionLabelLab" styles="{wrapText:true}"/>
-									</BoxPane>
-								</BoxPane>
-							</BoxPane>
-						</Form.Section>
-					</Form>
-				</TablePane.Row>
-			</TablePane>
-		</ScrollPane>
-	</Border>
+	</toolbarButtons>
+	<Form>
+		<Form.Section heading="Diätpläne">
+			<Border>
+				<ScrollPane preferredHeight="200"
+				horizontalScrollBarPolicy="fill"
+				verticalScrollBarPolicy="fill_to_capacity">
+					<TableView bxml:id="_dietPlanTable" selectMode="single">
+						<columns>
+							<TableView.Column name="Start" width="150" headerData="Von">
+								<cellRenderer>
+									<easycontent:DateCellRenderer />
+								</cellRenderer>
+							</TableView.Column>
+							<TableView.Column name="End" width="150" headerData="Bis">
+								<cellRenderer>
+									<easycontent:DateCellRenderer />
+								</cellRenderer>
+							</TableView.Column>
+							<TableView.Column name="Name" width="450" headerData="Name"/>
+						</columns>
+					</TableView>
+					<columnHeader>
+						<TableViewHeader tableView="$_dietPlanTable"/>
+					</columnHeader>
+				</ScrollPane>
+			</Border>
+		</Form.Section>
+		<Form.Section heading="Kontaktjournal">
+			<Border>
+				<ScrollPane preferredHeight="200"
+				horizontalScrollBarPolicy="fill"
+				verticalScrollBarPolicy="fill_to_capacity">
+					<TableView bxml:id="_contactJournalTable" selectMode="single">
+						<columns>
+							<TableView.Column name="Date" width="150" headerData="Datum">
+								<cellRenderer>
+									<easycontent:DateCellRenderer />
+								</cellRenderer>
+							</TableView.Column>
+							<TableView.Column name="ContactType" width="450" headerData="Art">
+								<cellRenderer>
+									<easycontent:NameCellRenderer />
+								</cellRenderer>
+							</TableView.Column>
+							<TableView.Column name="CreatedBy" width="150" headerData="Ersteller">
+								<cellRenderer>
+									<easycontent:NameCellRenderer />
+								</cellRenderer>
+							</TableView.Column>
+						</columns>
+					</TableView>
+					<columnHeader>
+						<TableViewHeader tableView="$_contactJournalTable"/>
+					</columnHeader>
+				</ScrollPane>
+			</Border>
+		</Form.Section>
+		<Form.Section heading="Ernährungsprotokoll">
+			<Border>
+				<ScrollPane preferredHeight="200"
+				horizontalScrollBarPolicy="fill"
+				verticalScrollBarPolicy="fill_to_capacity">
+					<TableView bxml:id="_nutritionProtocolTable" selectMode="single">
+						<columns>
+							<TableView.Column name="Date" width="375" headerData="Von">
+								<cellRenderer>
+									<easycontent:DateCellRenderer />
+								</cellRenderer>
+							</TableView.Column>
+							<TableView.Column name="Name" width="375" headerData="Name"/>
+						</columns>
+					</TableView>
+					<columnHeader>
+						<TableViewHeader tableView="$_nutritionProtocolTable"/>
+					</columnHeader>
+				</ScrollPane>
+			</Border>
+		</Form.Section>
+	</Form>
 </easy:DietTreatmentDetailView>

@@ -21,7 +21,7 @@ public class PatientDetailView extends EasyDietContentView implements Bindable
     public static final org.apache.log4j.Logger LOG         = org.apache.log4j.Logger
                                                                     .getLogger(PatientDetailView.class);
 
-    @BXML
+    @BXML 
     private TableView                           _dietTreatmentsTable;
     @BXML
     private TableView                           _patientStatesTable;
