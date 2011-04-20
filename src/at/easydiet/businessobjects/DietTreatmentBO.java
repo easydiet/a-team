@@ -294,4 +294,9 @@ public class DietTreatmentBO
         return bos;
     }
 
+    public String getDisplayName()
+    {
+        return getName();
+    }
+
 }

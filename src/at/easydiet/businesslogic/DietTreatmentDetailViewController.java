@@ -1,7 +1,6 @@
 package at.easydiet.businesslogic;
 
 import org.apache.pivot.collections.ArrayList;
-import org.apache.pivot.collections.List;
 
 import at.easydiet.businessobjects.ContactJournalBO;
 import at.easydiet.businessobjects.DietPlanBO;
@@ -17,6 +16,20 @@ public class DietTreatmentDetailViewController
     private ArrayList<DietPlanBO> _dietPlans;
     private ArrayList<ContactJournalBO> _contactJournals;
     private ArrayList<NutritionProtocolBO> _nutritionProtocols;
+    
+    private static DietTreatmentDetailViewController _singleton;
+    public static DietTreatmentDetailViewController getInstance()
+    {
+        if(_singleton == null)
+        {
+            _singleton = new DietTreatmentDetailViewController();
+        }
+        return _singleton;
+    }
+    private DietTreatmentDetailViewController()
+    {
+       
+    }
     
     public DietTreatmentBO getDietTreatment()
     {

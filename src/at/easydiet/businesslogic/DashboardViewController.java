@@ -15,9 +15,18 @@ public class DashboardViewController
     public static final org.apache.log4j.Logger LOG       = org.apache.log4j.Logger
                                                                   .getLogger(DashboardViewController.class);
     private ArrayList<PatientBO>                _patients = null;
-    private String                              _patientFilter;
+    private String                              _patientFilter = "";
 
-    public DashboardViewController()
+    private static DashboardViewController _singleton;
+    public static DashboardViewController getInstance()
+    {
+        if(_singleton == null)
+        {
+            _singleton = new DashboardViewController();
+        }
+        return _singleton;
+    }
+    private DashboardViewController()
     {
        
     }
@@ -55,5 +64,10 @@ public class DashboardViewController
     public void setPatientFilter(String searchString)
     {
         _patientFilter = searchString;
+    }
+    
+    public String getPatientFilter()
+    {
+        return _patientFilter;
     }
 }

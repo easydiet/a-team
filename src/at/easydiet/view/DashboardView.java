@@ -3,26 +3,22 @@ package at.easydiet.view;
 import java.net.URL;
 
 import org.apache.pivot.beans.BXML;
-import org.apache.pivot.beans.BXMLSerializer;
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.ComponentKeyListener;
 import org.apache.pivot.wtk.ComponentMouseButtonListener;
-import org.apache.pivot.wtk.Display;
 import org.apache.pivot.wtk.Keyboard.KeyLocation;
 import org.apache.pivot.wtk.Mouse.Button;
 import org.apache.pivot.wtk.TableView;
-import org.apache.pivot.wtk.TableViewSelectionListener;
 import org.apache.pivot.wtk.TextInput;
-import org.apache.pivot.wtk.Window;
 
 import at.easydiet.businesslogic.DashboardViewController;
+import at.easydiet.businesslogic.PatientDetailViewController;
 import at.easydiet.businessobjects.PatientBO;
-import at.easydiet.model.Patient;
 
-public class DashboardView extends Window implements Bindable
+public class DashboardView extends EasyDietContentView implements Bindable
 {
     public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(DashboardView.class);
@@ -32,19 +28,23 @@ public class DashboardView extends Window implements Bindable
     @BXML
     private TextInput                           _searchBox;
 
-    private DashboardViewController                 _controller;
-
     public void searchPatient(String searchString)
     {
         // perform search and update UI
-        _controller.setPatientFilter(searchString);
-        _controller.refreshPatients();
-        _patientSearchTable.setTableData(_controller.getPatients());
+        DashboardViewController.getInstance().setPatientFilter(searchString);
+        DashboardViewController.getInstance().refreshPatients();
+        _patientSearchTable.setTableData(DashboardViewController.getInstance().getPatients());
+    }
+    
+    @Override
+    public void onLoad()
+    {
+        _searchBox.setText(DashboardViewController.getInstance().getPatientFilter());
+        _searchBox.requestFocus();
     }
 
     public DashboardView()
     {
-        _controller = new DashboardViewController();
     }
 
     public void initialize(Map<String, Object> namespace, URL url,
@@ -62,7 +62,7 @@ public class DashboardView extends Window implements Bindable
                     }
                 });
 
-        _patientSearchTable.setTableData(_controller.getPatients());
+        _patientSearchTable.setTableData(DashboardViewController.getInstance().getPatients());
         _patientSearchTable.getComponentMouseButtonListeners().add(
                 new ComponentMouseButtonListener.Adapter()
                 {
@@ -84,19 +84,7 @@ public class DashboardView extends Window implements Bindable
 
     protected void openPatientDetailView(PatientBO patient)
     {
-        try
-        {
-            BXMLSerializer serializer = new BXMLSerializer();
-            PatientDetailView view = (PatientDetailView) serializer
-                    .readObject(PatientDetailView.class
-                            .getResource("PatientDetailView.xml"));
-            view.setPatient(patient);
-            view.open(getDisplay());
-            close();
-        }
-        catch (Exception e)
-        {
-            LOG.error("Error Opening Detail View", e);
-        }
+        PatientDetailViewController.getInstance().setPatient(patient);
+        ViewController.getInstance().loadContent("PatientDetailView", this);
     }
 }

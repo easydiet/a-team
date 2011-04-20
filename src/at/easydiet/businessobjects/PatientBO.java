@@ -459,4 +459,9 @@ public class PatientBO
         _patient.setDisfavors(disfavors);
     }
 
+    public String getDisplayName()
+    {
+        return String.format("%s %s (SvNr. %s)", getForename(), getLastname(), getInsuranceNumber());
+    }
+
 }

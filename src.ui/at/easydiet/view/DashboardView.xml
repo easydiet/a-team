@@ -1,11 +1,16 @@
-<easy:DashboardView title="Dashboard" maximized="true"
-xmlns:bxml="http://pivot.apache.org/bxml"
+<easy:DashboardView xmlns:bxml="http://pivot.apache.org/bxml"
 xmlns:easy="at.easydiet.view"
-bxml:id="ui"
+xmlns:content="org.apache.pivot.wtk.content"
 xmlns:collections="org.apache.pivot.collections"
 xmlns="org.apache.pivot.wtk">
-
-	<Border styles="{padding:6}">
+	<navigationButtons>
+		<easy:EasyDietContentView.NavigationButton text="Dashboard" />
+	</navigationButtons>
+	<toolbarButtons>
+		<easy:EasyDietContentView.ToolbarButton action="todo" text="Patient anlegen" icon="@user_add.png"/>
+		<easy:EasyDietContentView.ToolbarButton action="showHelp" text="Help" icon="@help.png"/>
+	</toolbarButtons>
+	<Border styles="{padding:6, thickness:0}">
 		<TablePane>
 			<columns>
 				<TablePane.Column width="1*"/>
