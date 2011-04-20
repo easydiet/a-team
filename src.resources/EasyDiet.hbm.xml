@@ -410,8 +410,8 @@
 		<property name="duration" column="Duration" type="int" />
 		<property name="value" column="Value" type="string" />
 
-		<many-to-one class="ParameterDefinitionDataType" name="parameterDefinitionDataType" column="ParameterDefinitionDataTypeId" not-null="true" />
-		<many-to-one class="DietParameterType" name="dietParameterType" column="DietParameterType" not-null="true" />
+		<many-to-one class="ParameterDefinitionUnit" name="parameterDefinitionUnit" column="ParameterDefinitionUnitId" not-null="true" />
+		<many-to-one class="DietParameterType" name="dietParameterType" column="DietParameterType" not-null="true" />  
 		<many-to-one class="ParameterDefinition" name="parameterDefinition" column="ParameterDefinitionId" not-null="true" />
 
 		<joined-subclass name="DietParameter">
