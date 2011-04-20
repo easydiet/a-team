@@ -1,6 +1,7 @@
 package at.easydiet.businessobjects;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import at.easydiet.model.DietParameter;
@@ -129,6 +130,22 @@ public class DietPlanBO
     }
 
     /**
+     * @return
+     * @see at.easydiet.model.DietPlan#getDietParameters()
+     */
+    public Set<DietParameterBO> getDietParameterBOs()
+    {
+    	//TODO
+    	Set<DietParameterBO> dietParameterBOSet = new HashSet<DietParameterBO>();
+    	Set<DietParameter> dietParameterSet = _dietPlan.getDietParameters();
+    	for(DietParameter dietParameter : dietParameterSet)
+    	{
+    		dietParameterBOSet.add(new DietParameterBO(dietParameter));
+    	}
+        return dietParameterBOSet;
+    }
+    
+    /**
      * @param dietParameters
      * @see at.easydiet.model.DietPlan#setDietParameters(java.util.Set)
      */
@@ -172,7 +189,6 @@ public class DietPlanBO
     {
         _dietPlan.setTimeSpans(timeSpans);
     }
-    
     
 
 }
