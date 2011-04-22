@@ -18,7 +18,7 @@ public class PatientDAO
 {
     private static final Logger LOG = Logger.getLogger(PatientDAO.class);
 
-    public List<Patient> findPatientsByQuery(String query)
+    public List<Patient> findByQuery(String query)
     {
         // find forename, lastname and insuranceNumber within this query
         String[] parts = query.split(" ");
@@ -47,10 +47,10 @@ public class PatientDAO
             }
         }
         
-        return findPatients(forename, lastname, insuranceNumber);
+        return findByData(forename, lastname, insuranceNumber);
     }
     
-	public List<Patient> findPatients(String forename, String lastname, String insuranceNumber)
+	public List<Patient> findByData(String forename, String lastname, String insuranceNumber)
 	{
 	    Patient template1 = new Patient();
 	    template1.setForename(forename);

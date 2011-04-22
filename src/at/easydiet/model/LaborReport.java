@@ -14,12 +14,13 @@ public class LaborReport  implements java.io.Serializable
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = -5874498161136010551L;
+    private static final long serialVersionUID = -8465422691917107515L;
     private long _laborReportId;
     private Date _date;
     private Clob _notice;
     private SystemUser _creator;
     private Set<DietParameter> _dietParameters = new HashSet<DietParameter>(0);
+    private Patient _patient;
 
     /**
      * Initializes a new instance of the {@link LaborReport} class.
@@ -33,11 +34,13 @@ public class LaborReport  implements java.io.Serializable
      * Initializes a new instance of the {@link LaborReport} class.
      * @param date the date to set for this instance
      * @param creator the creator to set for this instance
+     * @param patient the patient to set for this instance
      */
-    public LaborReport(Date date, SystemUser creator) 
+    public LaborReport(Date date, SystemUser creator, Patient patient) 
     {
         _date = date;
         _creator = creator;
+        _patient = patient;
     }
 
     /**
@@ -46,13 +49,15 @@ public class LaborReport  implements java.io.Serializable
      * @param notice the notice to set for this instance
      * @param creator the creator to set for this instance
      * @param dietParameters the dietParameters to set for this instance
+     * @param patient the patient to set for this instance
      */
-    public LaborReport(Date date, Clob notice, SystemUser creator, Set<DietParameter> dietParameters) 
+    public LaborReport(Date date, Clob notice, SystemUser creator, Set<DietParameter> dietParameters, Patient patient) 
     {
        _date = date;
        _notice = notice;
        _creator = creator;
        _dietParameters = dietParameters;
+       _patient = patient;
     }
    
     /**       
@@ -143,6 +148,24 @@ public class LaborReport  implements java.io.Serializable
     public void setDietParameters(Set<DietParameter> dietParameters) 
     {
         _dietParameters = dietParameters;
+    }
+    
+    /**       
+     * Gets the patient of this instance. 
+     * @return the patient currently set for this instance.
+     */
+    public Patient getPatient() 
+    {
+        return _patient;
+    }
+    
+    /**       
+     * Sets the patient of this instance. 
+     * @param patient the new patient of this instance.
+     */    
+    public void setPatient(Patient patient) 
+    {
+        _patient = patient;
     }
     
     /**

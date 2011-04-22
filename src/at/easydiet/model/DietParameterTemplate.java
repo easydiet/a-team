@@ -1,5 +1,6 @@
 package at.easydiet.model;
 
+
 /**
  * Represents a DietParameterTemplate
  */
@@ -9,7 +10,7 @@ public class DietParameterTemplate  implements java.io.Serializable
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = -3939236036119970855L;
+    private static final long serialVersionUID = -7767029343898961053L;
     private long _dietParameterTemplateId;
     private CheckOperator _checkOperator;
     private int _duration;
@@ -195,7 +196,7 @@ public class DietParameterTemplate  implements java.io.Serializable
     {
         StringBuilder builder = new StringBuilder();
         builder.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        // interesting values
+		// interesting values
         builder.append("]");
       
         return builder.toString();

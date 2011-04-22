@@ -1,0 +1,103 @@
+<!-- START: Meal -->
+<Border styles="{padding: 10, cornerRadii:10, padding:5}"
+xmlns:bxml="http://pivot.apache.org/bxml"
+xmlns:easy="at.easydiet.view"
+xmlns:content="org.apache.pivot.wtk.content"
+xmlns:effects="org.apache.pivot.wtk.effects"
+xmlns:collections="org.apache.pivot.collections"
+xmlns="org.apache.pivot.wtk"
+>
+	<TablePane>
+		<columns>
+			<TablePane.Column width="450" />
+			<TablePane.Column width="30" />
+			<TablePane.Column width="250" />
+		</columns>
+		<TablePane.Row>
+			<!-- START: Meal Setup -->
+			<TablePane>
+				<columns>
+					<TablePane.Column width="30" />
+					<TablePane.Column width="5" />
+					<TablePane.Column width="1*" />
+				</columns>
+				<TablePane.Row>
+					<TextInput bxml:id="mealCode" prompt="FR" maximumLength="2" />
+					<Label text="-" />
+					<TextInput bxml:id="mealName" prompt="Frühstück" />
+				</TablePane.Row>
+			</TablePane>
+			<TablePane.Filler />
+			<BoxPane styles="{horizontalAlignment: 'right'}">
+				<LinkButton bxml:id="deleteMealButton" styles="{color:'#DD0000'}">
+					<content:ButtonData text="Mahlzeit löschen" />
+				</LinkButton>
+			</BoxPane>
+			<!-- END: Meal SETUP -->
+		</TablePane.Row>
+		<TablePane.Row>
+			<!-- START: Parameter of Meal -->
+			<Rollup styles="{fill:true}">
+				<heading>
+					<BoxPane styles="{padding: 5}">
+						<Label text="Zielparameter der Mahlzeit festlegen" />
+					</BoxPane>
+				</heading>
+				<BoxPane styles="{padding: 5}">
+					<Label text="Hallo Parameterwelt" />
+				</BoxPane>
+			</Rollup>
+			<!-- END: Parameter of Meal -->
+		</TablePane.Row>
+		<TablePane.Row height="30">
+			<!-- START: Headings of Recipe Setup -->
+			<Label text="Angelegte Rezepte (Alternativen sind eingerückt)" styles="{verticalAlignment: 'center'}"   />
+			<TablePane.Filler />
+			<BoxPane styles="{verticalAlignment: 'center'}">
+				<TextInput prompt="Rezepte suchen" bxml:id="recipeSearchBox" />
+			</BoxPane>
+			<!-- END: Headings of Recipe Setup -->
+		</TablePane.Row>
+		<TablePane.Row height="200">
+			<!-- START: Recipe Setup -->
+			<Border>
+				<ScrollPane>
+					<TableView bxml:id="mealLines">
+						<columns>
+							<TableView.Column name="amount" width="50" headerData="Menge" />
+							<TableView.Column name="unit" width="50" headerData="Einheit" />
+							<TableView.Column name="name" width="345" headerData="Name" />
+						</columns>
+						<collections:HashMap amount="100" unit="g" name="Spagetti Napoli mit Küchenabfällen" />
+						<collections:HashMap amount="   100" unit="    g" name="    Spagetti Bolognese mit Küchenabfällen" />
+					</TableView>
+					<columnHeader>
+						<TableViewHeader tableView="$mealLines"/>
+					</columnHeader>
+				</ScrollPane>
+			</Border>
+			<BoxPane orientation="vertical" styles="{fill:true}">
+				<easy:SimpleButton text="&lt;" />				
+				<easy:SimpleButton text="&lt;~" />
+				<easy:SimpleButton text="&gt;" />
+			</BoxPane>
+			<Border>
+				<ScrollPane>
+					<TableView bxml:id="recipeSearchResult">
+						<columns>
+							<TableView.Column name="blsCode" width="50" headerData="BLS" />
+							<TableView.Column name="name" width="190" headerData="Name" />
+						</columns>
+						<collections:HashMap name="Küchenabfälle" />
+						<collections:HashMap name="Küchenabfälle mit Küchenabfällen" />
+					</TableView>
+					<columnHeader>
+						<TableViewHeader tableView="$recipeSearchResult"/>
+					</columnHeader>
+				</ScrollPane>
+			</Border>
+			<!-- END: Recipe Setup -->
+		</TablePane.Row>
+	</TablePane>
+</Border>
+<!-- END: Meal -->

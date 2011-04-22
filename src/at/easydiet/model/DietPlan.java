@@ -13,11 +13,12 @@ public class DietPlan  implements java.io.Serializable
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = -7245908342266605197L;
+    private static final long serialVersionUID = -1094183284575467262L;
     private long _dietPlanId;
     private String _name;
     private Date _createdOn;
     private PlanType _planType;
+    private DietTreatment _dietTreatment;
     private Set<DietParameter> _dietParameters = new HashSet<DietParameter>(0);
     private SystemUser _creator;
     private Set<TimeSpan> _timeSpans = new HashSet<TimeSpan>(0);
@@ -35,13 +36,15 @@ public class DietPlan  implements java.io.Serializable
      * @param name the name to set for this instance
      * @param createdOn the createdOn to set for this instance
      * @param planType the planType to set for this instance
+     * @param dietTreatment the dietTreatment to set for this instance
      * @param creator the creator to set for this instance
      */
-    public DietPlan(String name, Date createdOn, PlanType planType, SystemUser creator) 
+    public DietPlan(String name, Date createdOn, PlanType planType, DietTreatment dietTreatment, SystemUser creator) 
     {
         _name = name;
         _createdOn = createdOn;
         _planType = planType;
+        _dietTreatment = dietTreatment;
         _creator = creator;
     }
 
@@ -50,15 +53,17 @@ public class DietPlan  implements java.io.Serializable
      * @param name the name to set for this instance
      * @param createdOn the createdOn to set for this instance
      * @param planType the planType to set for this instance
+     * @param dietTreatment the dietTreatment to set for this instance
      * @param dietParameters the dietParameters to set for this instance
      * @param creator the creator to set for this instance
      * @param timeSpans the timeSpans to set for this instance
      */
-    public DietPlan(String name, Date createdOn, PlanType planType, Set<DietParameter> dietParameters, SystemUser creator, Set<TimeSpan> timeSpans) 
+    public DietPlan(String name, Date createdOn, PlanType planType, DietTreatment dietTreatment, Set<DietParameter> dietParameters, SystemUser creator, Set<TimeSpan> timeSpans) 
     {
        _name = name;
        _createdOn = createdOn;
        _planType = planType;
+       _dietTreatment = dietTreatment;
        _dietParameters = dietParameters;
        _creator = creator;
        _timeSpans = timeSpans;
@@ -134,6 +139,24 @@ public class DietPlan  implements java.io.Serializable
     public void setPlanType(PlanType planType) 
     {
         _planType = planType;
+    }
+    
+    /**       
+     * Gets the dietTreatment of this instance. 
+     * @return the dietTreatment currently set for this instance.
+     */
+    public DietTreatment getDietTreatment() 
+    {
+        return _dietTreatment;
+    }
+    
+    /**       
+     * Sets the dietTreatment of this instance. 
+     * @param dietTreatment the new dietTreatment of this instance.
+     */    
+    public void setDietTreatment(DietTreatment dietTreatment) 
+    {
+        _dietTreatment = dietTreatment;
     }
     
     /**       

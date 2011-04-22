@@ -9,6 +9,11 @@ import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.Order;
+
+import at.easydiet.model.Recipe;
+import at.easydiet.util.StringUtils;
 
 /**
  * The base DAO implementation for using with hibernate objects.
@@ -162,13 +167,34 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
     }
 
     /**
-     * Use this inside subclasses as a convenience method.
-     * This method allows to find entities matching the given criteria.
+     * Use this inside subclasses as a convenience method. This method allows to
+     * find entities matching the given criteria.
      */
     @SuppressWarnings("unchecked")
     protected List<T> findByCriteria(Criterion... criterion)
     {
         Criteria crit = getSession().createCriteria(getPersistentClass());
+        for (Criterion c : criterion)
+        {
+            crit.add(c);
+        }
+        return crit.list();
+    }
+
+    /**
+     * Use this inside subclasses as a convenience method. This method allows to
+     * find entities matching the given criteria returning only 200 entries.
+     */
+    @SuppressWarnings("unchecked")
+    public List<Recipe> findByCriteriaSearch(String sort,
+            Criterion... criterion)
+    {
+        Criteria crit = getSession().createCriteria(getPersistentClass())
+                .setMaxResults(200);
+        if (!StringUtils.isNullOrWhitespaceOnly(sort))
+        {
+            crit.addOrder(Order.asc("name"));
+        }
         for (Criterion c : criterion)
         {
             crit.add(c);

@@ -27,7 +27,7 @@
 
     create table DietParameterSet (
         DietParameterSetId bigint not null auto_increment,
-        Name varchar(255) not null,
+        Name varchar(255) not null unique,
         primary key (DietParameterSetId)
     );
 
@@ -53,8 +53,8 @@
         Name varchar(255) not null,
         CreatedOn datetime not null,
         PlanType varchar(255) not null,
+        DietTreatmentId bigint not null,
         Creator bigint not null,
-        DietTreatmentId bigint,
         primary key (DietPlanId)
     );
 
@@ -70,7 +70,7 @@
         Duration integer not null,
         Name varchar(255) not null,
         TreatmentState varchar(255) not null,
-        PatientId bigint,
+        PatientId bigint not null,
         primary key (DietTreatmentId)
     );
 
@@ -131,6 +131,7 @@
         Code varchar(255) not null,
         Name varchar(255) not null,
         TimeSpanId bigint not null,
+        Idx integer,
         primary key (MealId)
     );
 
@@ -146,7 +147,8 @@
         Info longtext,
         recipe bigint not null,
         MealId bigint not null,
-        ParentMealLineId bigint not null,
+        Idx integer,
+        ParentMealLineId bigint,
         primary key (MealLineId)
     );
 

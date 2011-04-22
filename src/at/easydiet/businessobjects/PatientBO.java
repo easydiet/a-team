@@ -256,6 +256,8 @@ public class PatientBO
         _patient.setReligion(religion);
     }
 
+    
+    
     /**
      * @return
      * @see at.easydiet.model.Patient#getRegime()

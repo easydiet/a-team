@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Set;
 
 import at.easydiet.model.LaborReport;
+import at.easydiet.model.Patient;
 import at.easydiet.model.PatientState;
 import at.easydiet.model.PatientStateType;
 import at.easydiet.model.SystemUser;
@@ -33,6 +34,26 @@ public class PatientStateBO
     {
         super();
         _patientState = patientState;
+    }
+    
+    
+
+    /**
+     * @return
+     * @see at.easydiet.model.PatientState#getPatient()
+     */
+    public Patient getPatient()
+    {
+        return _patientState.getPatient();
+    }
+
+    /**
+     * @param patient
+     * @see at.easydiet.model.PatientState#setPatient(at.easydiet.model.Patient)
+     */
+    public void setPatient(Patient patient)
+    {
+        _patientState.setPatient(patient);
     }
 
     /**
