@@ -313,6 +313,7 @@
 		</list>
 
 		<many-to-one class="Recipe" name="recipe" not-null="true" />
+		<many-to-one class="ParameterDefinitionUnit" name="unit" not-null="true" />
 		
 		<!-- Bidirectional assoc to parent mealLine -->
 		<many-to-one name="parent" column="ParentMealLineId" class="MealLine" not-null="true" insert="false" update="false"/>

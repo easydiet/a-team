@@ -23,7 +23,7 @@ public class MealLineBO
     
     public MealLineBO()
     {
-        this(new MealLine(100, null, null));
+        this(new MealLine(100, null, null, null, null));
     }
     
     /** 
@@ -45,15 +45,37 @@ public class MealLineBO
         return getParent() != null;
     }
     
+ 
+    
+    /**
+     * @return
+     * @see at.easydiet.model.MealLine#getUnit()
+     */
+    public ParameterDefinitionUnit getUnit()
+    {
+        return _mealLine.getUnit();
+    }
+
+    /**
+     * @param unit
+     * @see at.easydiet.model.MealLine#setUnit(at.easydiet.model.ParameterDefinitionUnit)
+     */
+    public void setUnit(ParameterDefinitionUnit unit)
+    {
+        _mealLine.setUnit(unit);
+    }
+
     /**
      * @return
      * @see at.easydiet.model.Recipe#getUnit()
      */
-    public ParameterDefinitionUnit getUnit()
+    public ParameterDefinitionUnit setUnit()
     {
         return _mealLine.getRecipe().getUnit();
     }
 
+    
+    
     /**
      * @return
      * @see at.easydiet.model.MealLine#getMealLineId()
@@ -144,6 +166,10 @@ public class MealLineBO
     public void setRecipe(Recipe recipe)
     {
         _mealLine.setRecipe(recipe);
+        if(getUnit() == null)
+        {
+            setUnit(recipe.getUnit());
+        }
     }
     
     
@@ -183,6 +209,8 @@ public class MealLineBO
     {
         _mealLine.setMeal(meal);
     }
+    
+    
 
     public void removeFromMeal()
     {
@@ -191,4 +219,6 @@ public class MealLineBO
             _mealLine.getMeal().getMealLines().remove(_mealLine);
         }
     }
+    
+    
 }

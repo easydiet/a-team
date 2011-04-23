@@ -19,6 +19,7 @@ public class MealLine  implements java.io.Serializable
     private Clob _info;
     private List<MealLine> _alternatives = new ArrayList<MealLine>(0);
     private Recipe _recipe;
+    private ParameterDefinitionUnit _unit;
     private MealLine _parent;
     private Meal _meal;
 
@@ -34,12 +35,16 @@ public class MealLine  implements java.io.Serializable
      * Initializes a new instance of the {@link MealLine} class.
      * @param quantity the quantity to set for this instance
      * @param recipe the recipe to set for this instance
+     * @param unit the unit to set for this instance
+     * @param parent the parent to set for this instance
      * @param meal the meal to set for this instance
      */
-    public MealLine(float quantity, Recipe recipe, Meal meal) 
+    public MealLine(float quantity, Recipe recipe, ParameterDefinitionUnit unit, MealLine parent, Meal meal) 
     {
         _quantity = quantity;
         _recipe = recipe;
+        _unit = unit;
+        _parent = parent;
         _meal = meal;
     }
 
@@ -49,17 +54,21 @@ public class MealLine  implements java.io.Serializable
      * @param info the info to set for this instance
      * @param alternatives the alternatives to set for this instance
      * @param recipe the recipe to set for this instance
+     * @param unit the unit to set for this instance
+     * @param parent the parent to set for this instance
      * @param meal the meal to set for this instance
      */
-    public MealLine(float quantity, Clob info, List<MealLine> alternatives, Recipe recipe, Meal meal) 
+    public MealLine(float quantity, Clob info, List<MealLine> alternatives, Recipe recipe, ParameterDefinitionUnit unit, MealLine parent, Meal meal) 
     {
        _quantity = quantity;
        _info = info;
        _alternatives = alternatives;
        _recipe = recipe;
+       _unit = unit;
+       _parent = parent;
        _meal = meal;
     }
-   
+    
     /**       
      * Gets the mealLineId of this instance. 
      * @return the mealLineId currently set for this instance.
@@ -148,6 +157,24 @@ public class MealLine  implements java.io.Serializable
     public void setRecipe(Recipe recipe) 
     {
         _recipe = recipe;
+    }
+    
+    /**       
+     * Gets the unit of this instance. 
+     * @return the unit currently set for this instance.
+     */
+    public ParameterDefinitionUnit getUnit() 
+    {
+        return _unit;
+    }
+    
+    /**       
+     * Sets the unit of this instance. 
+     * @param unit the new unit of this instance.
+     */    
+    public void setUnit(ParameterDefinitionUnit unit) 
+    {
+        _unit = unit;
     }
     
     /**       
