@@ -1,10 +1,10 @@
-package at.easydiet.view;
+package at.easydiet.businessobjects;
 
 import java.util.List;
 import java.util.Set;
 
-import at.easydiet.businessobjects.DietPlanBO;
-import at.easydiet.businessobjects.TimeSpanBO;
+import org.apache.pivot.collections.ArrayList;
+
 import at.easydiet.model.DietParameter;
 import at.easydiet.model.Meal;
 import at.easydiet.model.MealLine;
@@ -22,7 +22,6 @@ public class MealBO
         return _meal;
     }
 
-    
     public MealBO()
     {
         this(new Meal("MA", "Mahlzeit", null));
@@ -118,6 +117,17 @@ public class MealBO
     {
         return _meal.getMealLines();
     }
+    
+
+    public ArrayList<MealLineBO> getMealLineBOs()
+    {
+        ArrayList<MealLineBO> bos = new ArrayList<MealLineBO>();
+        for (MealLine line : getMealLines())
+        {
+            bos.add(new MealLineBO(line));
+        }
+        return bos;
+    }
 
     /**
      * @param mealLines
@@ -142,6 +152,8 @@ public class MealBO
         timeSpan.getMeals().add(_meal);
         _meal.setTimeSpan(timeSpan.getTimeSpan());
     }
+
+
 
 }
 

@@ -306,10 +306,11 @@
 		<property name="quantity" column="Quantity" type="float" not-null="true" />
 		<property name="info" column="Info" type="clob" />
 
-		<set name="mealLines" cascade="all">
+		<list name="alternatives" cascade="all">
 			<key column="ParentMealLineId" not-null="false" />
+			<index column="Idx"/>
 			<one-to-many class="MealLine" />
-		</set>
+		</list>
 
 		<many-to-one class="Recipe" name="recipe" not-null="true" />
 		

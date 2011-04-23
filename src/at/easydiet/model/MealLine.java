@@ -1,8 +1,8 @@
 package at.easydiet.model;
 
 import java.sql.Clob;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a MealLine
@@ -17,7 +17,7 @@ public class MealLine  implements java.io.Serializable
     private long _mealLineId;
     private float _quantity;
     private Clob _info;
-    private Set<MealLine> _mealLines = new HashSet<MealLine>(0);
+    private List<MealLine> _alternatives = new ArrayList<MealLine>(0);
     private Recipe _recipe;
     private Meal _meal;
 
@@ -46,15 +46,15 @@ public class MealLine  implements java.io.Serializable
      * Initializes a new instance of the {@link MealLine} class.
      * @param quantity the quantity to set for this instance
      * @param info the info to set for this instance
-     * @param mealLines the mealLines to set for this instance
+     * @param alternatives the alternatives to set for this instance
      * @param recipe the recipe to set for this instance
      * @param meal the meal to set for this instance
      */
-    public MealLine(float quantity, Clob info, Set<MealLine> mealLines, Recipe recipe, Meal meal) 
+    public MealLine(float quantity, Clob info, List<MealLine> alternatives, Recipe recipe, Meal meal) 
     {
        _quantity = quantity;
        _info = info;
-       _mealLines = mealLines;
+       _alternatives = alternatives;
        _recipe = recipe;
        _meal = meal;
     }
@@ -114,21 +114,21 @@ public class MealLine  implements java.io.Serializable
     }
     
     /**       
-     * Gets the mealLines of this instance. 
-     * @return the mealLines currently set for this instance.
+     * Gets the alternatives of this instance. 
+     * @return the alternatives currently set for this instance.
      */
-    public Set<MealLine> getMealLines() 
+    public List<MealLine> getAlternatives() 
     {
-        return _mealLines;
+        return _alternatives;
     }
     
     /**       
-     * Sets the mealLines of this instance. 
-     * @param mealLines the new mealLines of this instance.
+     * Sets the alternatives of this instance. 
+     * @param alternatives the new alternatives of this instance.
      */    
-    public void setMealLines(Set<MealLine> mealLines) 
+    public void setAlternatives(List<MealLine> alternatives) 
     {
-        _mealLines = mealLines;
+        _alternatives = alternatives;
     }
     
     /**       
