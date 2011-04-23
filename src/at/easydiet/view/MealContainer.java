@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.pivot.beans.BXMLSerializer;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.serialization.SerializationException;
+import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.Alert;
 import org.apache.pivot.wtk.Border;
 import org.apache.pivot.wtk.BoxPane;
@@ -12,8 +13,10 @@ import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Dialog;
 import org.apache.pivot.wtk.DialogCloseListener;
+import org.apache.pivot.wtk.ListButton;
 import org.apache.pivot.wtk.Orientation;
 import org.apache.pivot.wtk.TableView;
+import org.apache.pivot.wtk.TableView.RowEditor;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.TextInputContentListener;
 
@@ -22,7 +25,9 @@ import at.easydiet.businesslogic.MealContainerController;
 import at.easydiet.businesslogic.RecipeSearchController;
 import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.MealLineBO;
+import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
 import at.easydiet.businessobjects.RecipeBO;
+import at.easydiet.domainlogic.ParameterDefinitionUnitController;
 
 public class MealContainer extends BoxPane
 {
@@ -65,9 +70,48 @@ public class MealContainer extends BoxPane
                             _searcher.doSearch();
                         }
                     });
-            
-            _mealLineBox = (TableView)serializer.getNamespace().get("mealLines");
 
+            _mealLineBox = (TableView) serializer.getNamespace().get(
+                    "mealLines");
+            final EasyTableViewRowEditor editor = (EasyTableViewRowEditor) _mealLineBox
+                    .getRowEditor();
+            editor.getRowEditorListeners().add(
+                    new EasyTableViewRowEditor.RowEditorListener.Adapter()
+                    {
+                        @Override
+                        public Vote previewEditRow(RowEditor rowEditor,
+                                TableView tableView, int rowIndex,
+                                int columnIndex)
+                        {
+                            // update list of units
+                            ListButton unitList = (ListButton) editor
+                                    .getCellEditors().get("unit.name");
+                            MealLineBO row = (MealLineBO) _mealLineBox
+                                    .getTableData().get(rowIndex);
+
+                            unitList.setListData(ParameterDefinitionUnitController
+                                    .getInstance()
+                                    .getUnitsCompatibleWithRecipe(
+                                            row.getRecipe()));
+
+                            for (int i = 0; i < unitList.getListData()
+                                    .getLength(); i++)
+                            {
+                                ParameterDefinitionUnitBO bo = (ParameterDefinitionUnitBO) unitList
+                                        .getListData().get(i);
+                                if (bo.getName().equalsIgnoreCase(
+                                        row.getUnit().getName()))
+                                {
+                                    unitList.setSelectedIndex(i);
+                                    layout();
+                                    break;
+                                }
+                            }
+
+                            return super.previewEditRow(rowEditor, tableView,
+                                    rowIndex, columnIndex);
+                        }
+                    });
             _mealName = (TextInput) serializer.getNamespace().get("mealName");
             _mealName.getTextInputContentListeners().add(
                     new TextInputContentListener.Adapter()
@@ -127,37 +171,40 @@ public class MealContainer extends BoxPane
                     new ButtonPressListener()
                     {
 
+                        @SuppressWarnings("unchecked")
                         public void buttonPressed(Button button)
                         {
-                            addRecipes((Sequence<RecipeBO>)recipeSearchResult
+                            addRecipes((Sequence<RecipeBO>) recipeSearchResult
                                     .getSelectedRows());
                         }
                     });
-            Button removeRecipeFromMeal = (Button) serializer.getNamespace().get(
-            "removeRecipeFromMeal");
+            Button removeRecipeFromMeal = (Button) serializer.getNamespace()
+                    .get("removeRecipeFromMeal");
             removeRecipeFromMeal.getButtonPressListeners().add(
                     new ButtonPressListener()
                     {
-                        
+
+                        @SuppressWarnings("unchecked")
                         public void buttonPressed(Button button)
                         {
                             removeMealLines((Sequence<MealLineBO>) _mealLineBox
                                     .getSelectedRows());
                         }
                     });
-            Button addRecipeToMealLine = (Button) serializer.getNamespace().get(
-            "addRecipeToMealLine");
+            Button addRecipeToMealLine = (Button) serializer.getNamespace()
+                    .get("addRecipeToMealLine");
             addRecipeToMealLine.getButtonPressListeners().add(
                     new ButtonPressListener()
                     {
-                        
+
                         @SuppressWarnings("unchecked")
                         public void buttonPressed(Button button)
                         {
-                            addRecipeToMealLines((Sequence<MealLineBO>) _mealLineBox
-                                    .getSelectedRows(), 
+                            addRecipeToMealLines(
+                                    (Sequence<MealLineBO>) _mealLineBox
+                                            .getSelectedRows(),
                                     (Sequence<RecipeBO>) recipeSearchResult
-                                    .getSelectedRows());
+                                            .getSelectedRows());
                         }
                     });
 
@@ -178,9 +225,15 @@ public class MealContainer extends BoxPane
     {
         for (int i = 0; i < mealLines.getLength(); i++)
         {
-            for (int j = 0; j < recipes.getLength(); j++)
+            MealLineBO addTo = mealLines.get(i);
+            // check if we try to add a mealline to an alternative
+            if (!addTo.isAlternative())
             {
-                CreateDietPlanViewController.getInstance().addRecipeAsAlternative(mealLines.get(i), recipes.get(j));
+                for (int j = 0; j < recipes.getLength(); j++)
+                {
+                    CreateDietPlanViewController.getInstance()
+                            .addRecipeAsAlternative(addTo, recipes.get(j));
+                }
             }
         }
         updateUI();
@@ -190,7 +243,8 @@ public class MealContainer extends BoxPane
     {
         for (int i = 0; i < selectedRows.getLength(); i++)
         {
-            CreateDietPlanViewController.getInstance().removeMealLine(selectedRows.get(i));
+            CreateDietPlanViewController.getInstance().removeMealLine(
+                    selectedRows.get(i));
         }
         updateUI();
     }
@@ -201,7 +255,8 @@ public class MealContainer extends BoxPane
 
         for (int i = 0; i < recipes.getLength(); i++)
         {
-            CreateDietPlanViewController.getInstance().addRecipeToMeal(_meal, recipes.get(i));
+            CreateDietPlanViewController.getInstance().addRecipeToMeal(_meal,
+                    recipes.get(i));
         }
         updateUI();
     }

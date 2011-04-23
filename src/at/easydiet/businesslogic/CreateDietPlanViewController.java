@@ -5,7 +5,6 @@ import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.MealLineBO;
 import at.easydiet.businessobjects.RecipeBO;
 import at.easydiet.businessobjects.TimeSpanBO;
-import at.easydiet.model.MealLine;
 
 public class CreateDietPlanViewController
 {

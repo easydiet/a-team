@@ -233,6 +233,11 @@ public class RecipeBO
         _recipe.setNutrimentParameters(nutrimentParameters);
     }
     
+    @Override
+    public String toString()
+    {
+        return getName();
+    }
     
     
 }

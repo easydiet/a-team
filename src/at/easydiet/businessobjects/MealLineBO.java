@@ -64,6 +64,15 @@ public class MealLineBO
     {
         _mealLine.setUnit(unit);
     }
+    
+    /**
+     * @param unit
+     * @see at.easydiet.model.MealLine#setUnit(at.easydiet.model.ParameterDefinitionUnit)
+     */
+    public void setUnit(ParameterDefinitionUnitBO unit)
+    {
+        _mealLine.setUnit(unit.getParameterDefinitionUnit());
+    }
 
     /**
      * @return

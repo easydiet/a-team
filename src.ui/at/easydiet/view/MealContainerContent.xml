@@ -70,17 +70,39 @@ xmlns="org.apache.pivot.wtk"
 									<easycontent:MealLineCellRenderer arrowVisible="true" />
 								</cellRenderer>
 							</TableView.Column>
-							<TableView.Column name="unit.name" width="50" headerData="Einheit">
+							<TableView.Column name="unit.name" width="70" headerData="Einheit">
 								<cellRenderer>
 									<easycontent:MealLineCellRenderer />
 								</cellRenderer>
 							</TableView.Column>
-							<TableView.Column name="recipe.name" width="325" headerData="Name">
+							<TableView.Column name="recipe.name" width="305" headerData="Name">
 								<cellRenderer>
 									<easycontent:MealLineCellRenderer />
 								</cellRenderer>
 							</TableView.Column>
 						</columns>
+						<rowEditor>
+							<easy:EasyTableViewRowEditor editEffect="horizontal_slide">
+								<cellEditors>
+									<quantity>
+										<TextInput strictValidation="true" textKey="quantity">
+											<validator>
+												<easycontent:QuantityValidator />
+											</validator>
+											<textBindMapping>
+												<easycontent:QuantityBindMapping />
+											</textBindMapping>
+										</TextInput>
+									</quantity>
+									<unit.name>
+										<ListButton selectedItemKey="unit" selectedItemBindType="store" />
+									</unit.name>
+									<recipe.name>
+										<Label textKey="recipe.name" styles="{verticalAlignment: 'center'}" />
+									</recipe.name>
+								</cellEditors>
+							</easy:EasyTableViewRowEditor>
+						</rowEditor>
 					</TableView>
 					<columnHeader>
 						<TableViewHeader tableView="$mealLines"/>

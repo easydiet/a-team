@@ -1,8 +1,6 @@
 package at.easydiet.util;
 
 import java.util.Collection;
-import java.util.Set;
-
 import org.apache.pivot.collections.ArrayList;
 
 public class CollectionUtils

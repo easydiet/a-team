@@ -9,7 +9,6 @@ import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
-import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Order;
 
 import at.easydiet.model.Recipe;
