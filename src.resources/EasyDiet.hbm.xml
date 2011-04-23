@@ -314,6 +314,9 @@
 
 		<many-to-one class="Recipe" name="recipe" not-null="true" />
 		
+		<!-- Bidirectional assoc to parent mealLine -->
+		<many-to-one name="parent" column="ParentMealLineId" class="MealLine" not-null="true" insert="false" update="false"/>
+
 		<!-- Bidirectional assoc to meal -->
 		<many-to-one name="meal" column="MealId" class="Meal" not-null="true" insert="false" update="false"/>
 

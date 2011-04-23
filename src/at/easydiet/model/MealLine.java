@@ -19,6 +19,7 @@ public class MealLine  implements java.io.Serializable
     private Clob _info;
     private List<MealLine> _alternatives = new ArrayList<MealLine>(0);
     private Recipe _recipe;
+    private MealLine _parent;
     private Meal _meal;
 
     /**
@@ -147,6 +148,24 @@ public class MealLine  implements java.io.Serializable
     public void setRecipe(Recipe recipe) 
     {
         _recipe = recipe;
+    }
+    
+    /**       
+     * Gets the parent of this instance. 
+     * @return the parent currently set for this instance.
+     */
+    public MealLine getParent() 
+    {
+        return _parent;
+    }
+    
+    /**       
+     * Sets the parent of this instance. 
+     * @param parent the new parent of this instance.
+     */    
+    public void setParent(MealLine parent) 
+    {
+        _parent = parent;
     }
     
     /**       

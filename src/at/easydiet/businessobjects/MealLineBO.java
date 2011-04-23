@@ -136,6 +136,26 @@ public class MealLineBO
     {
         _mealLine.setRecipe(recipe);
     }
+    
+    
+
+    /**
+     * @return
+     * @see at.easydiet.model.MealLine#getParent()
+     */
+    public MealLine getParent()
+    {
+        return _mealLine.getParent();
+    }
+
+    /**
+     * @param parent
+     * @see at.easydiet.model.MealLine#setParent(at.easydiet.model.MealLine)
+     */
+    public void setParent(MealLine parent)
+    {
+        _mealLine.setParent(parent);
+    }
 
     /**
      * @return
