@@ -3,6 +3,7 @@ package at.easydiet.view;
 import java.io.IOException;
 
 import org.apache.pivot.beans.BXMLSerializer;
+import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.util.Vote;
@@ -15,6 +16,7 @@ import org.apache.pivot.wtk.Dialog;
 import org.apache.pivot.wtk.DialogCloseListener;
 import org.apache.pivot.wtk.ListButton;
 import org.apache.pivot.wtk.Orientation;
+import org.apache.pivot.wtk.SuggestionPopup;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.TableView.RowEditor;
 import org.apache.pivot.wtk.TextInput;
@@ -34,6 +36,8 @@ public class MealContainer extends BoxPane
     public static final org.apache.log4j.Logger LOG         = org.apache.log4j.Logger
                                                                     .getLogger(MealContainer.class);
 
+    private static final SuggestionPopup        SUGGESTIONS = new SuggestionPopup();
+
     private MealBO                              _meal;
     private RecipeSearchController              _searcher   = new RecipeSearchController();
     private MealContainerController             _controller = new MealContainerController();
@@ -42,6 +46,14 @@ public class MealContainer extends BoxPane
     private TextInput                           _mealCode;
 
     private TableView                           _mealLineBox;
+
+    static
+    {
+        DietPlanEditingController.getInstance().refresh();
+        SUGGESTIONS.setSuggestionData(DietPlanEditingController.getInstance()
+                .getMealCodes());
+        SUGGESTIONS.setListSize(5);
+    }
 
     public MealContainer()
     {
@@ -121,6 +133,37 @@ public class MealContainer extends BoxPane
                         {
                             _meal.setName(textInput.getText());
                         }
+
+                        @Override
+                        public void textInserted(TextInput textInput,
+                                int index, int count)
+                        {
+                            String text = textInput.getText();
+                            ArrayList<String> suggestions = new ArrayList<String>();
+
+                            for (String meal : DietPlanEditingController
+                                    .getInstance().getMealNames())
+                            {
+                                if (meal.toUpperCase().startsWith(
+                                        text.toUpperCase()))
+                                {
+                                    suggestions.add(meal);
+                                }
+                            }
+
+                            if (suggestions.getLength() > 0)
+                            {
+                                SUGGESTIONS.setSuggestionData(suggestions);
+                                SUGGESTIONS.open(textInput);
+                            }
+                        }
+
+                        @Override
+                        public void textRemoved(TextInput textInput, int index,
+                                int count)
+                        {
+                            SUGGESTIONS.close();
+                        }
                     });
 
             _mealCode = (TextInput) serializer.getNamespace().get("mealCode");
@@ -131,6 +174,26 @@ public class MealContainer extends BoxPane
                         public void textChanged(TextInput textInput)
                         {
                             _meal.setCode(textInput.getText());
+                        }
+
+                        @Override
+                        public void textInserted(TextInput textInput,
+                                int index, int count)
+                        {
+                            SUGGESTIONS
+                                    .setSuggestionData(DietPlanEditingController
+                                            .getInstance().getMealCodes());
+                            if (SUGGESTIONS.getSuggestionData().getLength() > 0)
+                            {
+                                SUGGESTIONS.open(textInput);
+                            }
+                        }
+
+                        @Override
+                        public void textRemoved(TextInput textInput, int index,
+                                int count)
+                        {
+                            SUGGESTIONS.close();
                         }
                     });
 

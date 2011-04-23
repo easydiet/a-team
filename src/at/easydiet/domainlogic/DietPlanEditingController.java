@@ -3,6 +3,8 @@ package at.easydiet.domainlogic;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.pivot.collections.ArrayList;
+
 import at.easydiet.EasyDietApplication;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.DietTreatmentBO;
@@ -12,6 +14,8 @@ import at.easydiet.businessobjects.RecipeBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.DietPlanDAO;
+import at.easydiet.dao.MealDAO;
+import at.easydiet.util.CollectionUtils;
 
 public class DietPlanEditingController
 {
@@ -19,6 +23,8 @@ public class DietPlanEditingController
                                                             .getLogger(DietPlanEditingController.class);
 
     private DietPlanBO                          _dietPlan;
+    private ArrayList<String>                   _mealCodes;
+    private ArrayList<String>                   _mealNames;
 
     /**
      * Gets the dietPlan.
@@ -130,5 +136,28 @@ public class DietPlanEditingController
     private DietPlanEditingController()
     {
 
+    }
+
+    public void refresh()
+    {
+        if (_dietPlan != null && _dietPlan.getDietPlanId() > 0)
+        {
+            DietPlanDAO dao = DAOFactory.getInstance().getDietPlanDAO();
+            dao.refresh(_dietPlan.getDietPlan());
+        }
+
+        MealDAO mealDao = DAOFactory.getInstance().getMealDAO();
+        _mealCodes = CollectionUtils.toPivotList(mealDao.findCodes());
+        _mealNames = CollectionUtils.toPivotList(mealDao.findNames());
+    }
+
+    public ArrayList<String> getMealCodes()
+    {
+        return _mealCodes;
+    }
+    
+    public ArrayList<String> getMealNames()
+    {
+        return _mealNames;
     }
 }

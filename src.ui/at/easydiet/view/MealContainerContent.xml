@@ -70,12 +70,12 @@ xmlns="org.apache.pivot.wtk"
 									<easycontent:MealLineCellRenderer arrowVisible="true" />
 								</cellRenderer>
 							</TableView.Column>
-							<TableView.Column name="unit.name" width="70" headerData="Einheit">
+							<TableView.Column name="unit.name" width="75" headerData="Einheit">
 								<cellRenderer>
 									<easycontent:MealLineCellRenderer />
 								</cellRenderer>
 							</TableView.Column>
-							<TableView.Column name="recipe.name" width="305" headerData="Name">
+							<TableView.Column name="recipe.name" width="300" headerData="Name">
 								<cellRenderer>
 									<easycontent:MealLineCellRenderer />
 								</cellRenderer>

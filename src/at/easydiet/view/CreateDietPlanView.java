@@ -22,6 +22,12 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable
 
     private BoxPane _timeSpanContainer;
     
+    
+    
+    public CreateDietPlanView()
+    {
+    }
+    
     public void initialize(Map<String, Object> namespace, URL location,
             Resources resources)
     {
@@ -68,6 +74,7 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable
     public void onLoad()
     {
         DietPlanEditingController.getInstance().createNew(DietTreatmentDetailViewController.getInstance().getDietTreatment());
+        DietPlanEditingController.getInstance().refresh();
     }
     
     public void rebuildUI()
