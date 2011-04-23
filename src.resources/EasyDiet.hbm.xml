@@ -110,7 +110,7 @@
 		<many-to-one class="SystemUser" name="createdBy" column="CreatedBy" not-null="true" />
 		<many-to-one class="ContactType" name="contactType" column="ContactType" not-null="true" />
 		<!-- Bidirectional assoc to treatment -->
-		<many-to-one name="dietTreatment" column="DietTreatmentId" class="DietTreatment" not-null="true" insert="false" update="false"/>
+		<many-to-one name="dietTreatment" column="DietTreatmentId" class="DietTreatment" not-null="true" insert="true" update="true"/>
 	</class>
 
 	<class name="ContactType">
@@ -191,7 +191,7 @@
 		</joined-subclass>-->
 		
 		<!-- Bidirectional assoc to patient -->
-		<many-to-one name="patient" column="PatientId" class="Patient" not-null="true" insert="false" update="false"/>
+		<many-to-one name="patient" column="PatientId" class="Patient" not-null="true" insert="true" update="true"/>
 	</class>
 
 	<class name="DietTreatmentSystemUser">
@@ -224,7 +224,7 @@
 		<many-to-one class="PlanType" name="planType" column="PlanType" not-null="true" />
 	
 		<!-- Bidirectional assoc to treatment -->
-		<many-to-one name="dietTreatment" column="DietTreatmentId" class="DietTreatment" not-null="true" insert="false" update="false"/>
+		<many-to-one name="dietTreatment" column="DietTreatmentId" class="DietTreatment" not-null="true" insert="true" update="true"/>
 
 		<set name="dietParameters" table="DietPlanDietParameter">
 			<key column="DietPlanId" not-null="true" />
@@ -262,7 +262,7 @@
 		<property name="duration" column="Duration" type="int" not-null="true" />
 
 		<!-- Bidirectional assoc to plan -->
-		<many-to-one name="dietPlan" column="DietPlanId" class="DietPlan" not-null="true" insert="false" update="false"/>
+		<many-to-one name="dietPlan" column="DietPlanId" class="DietPlan" not-null="true" insert="true" update="true"/>
 
 		<set name="dietParameters" table="TimeSpanDietParameter">
 			<key column="TimeSpanId" not-null="true" />
@@ -316,7 +316,7 @@
 		<many-to-one class="ParameterDefinitionUnit" name="unit" not-null="true" />
 		
 		<!-- Bidirectional assoc to parent mealLine -->
-		<many-to-one name="parent" column="ParentMealLineId" class="MealLine" not-null="true" insert="false" update="false"/>
+		<many-to-one name="parent" column="ParentMealLineId" class="MealLine" insert="true" update="true"/>
 
 		<!-- Bidirectional assoc to meal -->
 		<many-to-one name="meal" column="MealId" class="Meal" not-null="true" insert="false" update="false"/>
@@ -360,7 +360,7 @@
 		<many-to-one name="ingredient" column="IngredientId" class="Recipe" />
 		
 		<!-- Bidirectional assoc to recipe -->
-		<many-to-one name="recipe" column="RecipeId" class="Recipe" not-null="true" insert="false" update="false"/>
+		<many-to-one name="recipe" column="RecipeId" class="Recipe" not-null="true" insert="true" update="true"/>
 
 	</class>
 
@@ -407,7 +407,7 @@
 		</set>
 		
 		<!-- Bidirectional assoc to patient -->
-		<many-to-one name="patient" column="PatientId" class="Patient" not-null="true" insert="false" update="false"/>
+		<many-to-one name="patient" column="PatientId" class="Patient" not-null="true" insert="true" update="true"/>
 
 	</class>
 
@@ -427,7 +427,7 @@
 		</set>
 		
 		<!-- Bidirectional assoc to patient -->
-		<many-to-one name="patient" column="PatientId" class="Patient" not-null="true" insert="false" update="false"/>
+		<many-to-one name="patient" column="PatientId" class="Patient" not-null="true" insert="true" update="true"/>
 
 	</class>
 

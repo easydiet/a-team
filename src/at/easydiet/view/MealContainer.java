@@ -20,14 +20,14 @@ import org.apache.pivot.wtk.TableView.RowEditor;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.TextInputContentListener;
 
-import at.easydiet.businesslogic.CreateDietPlanViewController;
 import at.easydiet.businesslogic.MealContainerController;
-import at.easydiet.businesslogic.RecipeSearchController;
 import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.MealLineBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
 import at.easydiet.businessobjects.RecipeBO;
+import at.easydiet.domainlogic.DietPlanEditingController;
 import at.easydiet.domainlogic.ParameterDefinitionUnitController;
+import at.easydiet.domainlogic.RecipeSearchController;
 
 public class MealContainer extends BoxPane
 {
@@ -231,7 +231,7 @@ public class MealContainer extends BoxPane
             {
                 for (int j = 0; j < recipes.getLength(); j++)
                 {
-                    CreateDietPlanViewController.getInstance()
+                    DietPlanEditingController.getInstance()
                             .addRecipeAsAlternative(addTo, recipes.get(j));
                 }
             }
@@ -243,7 +243,7 @@ public class MealContainer extends BoxPane
     {
         for (int i = 0; i < selectedRows.getLength(); i++)
         {
-            CreateDietPlanViewController.getInstance().removeMealLine(
+            DietPlanEditingController.getInstance().removeMealLine(
                     selectedRows.get(i));
         }
         updateUI();
@@ -255,7 +255,7 @@ public class MealContainer extends BoxPane
 
         for (int i = 0; i < recipes.getLength(); i++)
         {
-            CreateDietPlanViewController.getInstance().addRecipeToMeal(_meal,
+            DietPlanEditingController.getInstance().addRecipeToMeal(_meal,
                     recipes.get(i));
         }
         updateUI();

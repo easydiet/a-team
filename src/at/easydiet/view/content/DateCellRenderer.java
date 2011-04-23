@@ -2,6 +2,8 @@ package at.easydiet.view.content;
 
 import org.apache.pivot.wtk.content.TableViewDateCellRenderer;
 
+import at.easydiet.EasyDietApplication;
+
 public class DateCellRenderer extends TableViewDateCellRenderer
 {
     public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
@@ -9,6 +11,6 @@ public class DateCellRenderer extends TableViewDateCellRenderer
     
     public DateCellRenderer()
     {
-        setDateFormat("dd.MM.yyyy");
+        setDateFormat(EasyDietApplication.DATE_FORMAT);
     }
 }

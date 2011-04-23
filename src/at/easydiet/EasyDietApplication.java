@@ -10,16 +10,16 @@ import at.easydiet.view.EasyDietMainWindow;
 
 public class EasyDietApplication implements Application
 {
-    public static final org.apache.log4j.Logger LOG    = org.apache.log4j.Logger
-                                                               .getLogger(EasyDietApplication.class);
+    public static final org.apache.log4j.Logger LOG               = org.apache.log4j.Logger
+                                                                          .getLogger(EasyDietApplication.class);
 
-    public static final Object APPLICATION_TITLE = "EasyDiet v0.1(dev) ~ ";
+    public static final String                  APPLICATION_TITLE = "EasyDiet v0.1(dev) ~ ";
+    public static final String                  DATE_FORMAT       = "dd.MM.yyyy";
 
-    private Window                              window = null;
+    private Window                              window            = null;
 
     public void resume() throws Exception
-    {
-    }
+    {}
 
     public boolean shutdown(boolean arg0) throws Exception
     {
@@ -41,7 +41,6 @@ public class EasyDietApplication implements Application
     }
 
     public void suspend() throws Exception
-    {
-    }
+    {}
 
 }

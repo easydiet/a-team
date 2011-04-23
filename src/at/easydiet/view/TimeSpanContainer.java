@@ -23,9 +23,9 @@ import org.apache.pivot.wtk.DialogCloseListener;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.Orientation;
 
-import at.easydiet.businesslogic.CreateDietPlanViewController;
 import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.TimeSpanBO;
+import at.easydiet.domainlogic.DietPlanEditingController;
 
 @DefaultProperty("mealContainers")
 public class TimeSpanContainer extends BoxPane
@@ -263,7 +263,7 @@ public class TimeSpanContainer extends BoxPane
             {
                 public void buttonPressed(Button button)
                 {
-                    MealBO meal = CreateDietPlanViewController.getInstance()
+                    MealBO meal = DietPlanEditingController.getInstance()
                             .createMeal(_timeSpan);
                     addMeal(meal);
                 }

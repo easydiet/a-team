@@ -146,9 +146,10 @@
         Quantity float not null,
         Info longtext,
         recipe bigint not null,
+        unit bigint not null,
+        ParentMealLineId bigint not null,
         MealId bigint not null,
         Idx integer,
-        ParentMealLineId bigint,
         primary key (MealLineId)
     );
 
@@ -522,6 +523,12 @@
         add constraint FKC92C02776ED73A1E 
         foreign key (recipe) 
         references Recipe (RecipeId);
+
+    alter table MealLine 
+        add index FKC92C02774DA9F442 (unit), 
+        add constraint FKC92C02774DA9F442 
+        foreign key (unit) 
+        references ParameterDefinitionUnit (ParameterDefinitionUnitId);
 
     alter table MealLine 
         add index FKC92C02775992B695 (ParentMealLineId), 

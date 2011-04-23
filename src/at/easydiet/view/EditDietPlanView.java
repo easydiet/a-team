@@ -10,12 +10,11 @@ import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.PushButton;
 
-import at.easydiet.businesslogic.DietTreatmentDetailViewController;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.domainlogic.DietPlanEditingController;
 
-public class CreateDietPlanView extends EasyDietContentView implements Bindable
+public class EditDietPlanView extends EasyDietContentView implements Bindable
 { 
     public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(CreateDietPlanView.class);
@@ -31,7 +30,7 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable
         {
             
             public void buttonPressed(Button button)
-            { 
+            {
                 addTimeSpan(DietPlanEditingController.getInstance().createTimeSpan());
                 //rebuildUI();
             }
@@ -43,7 +42,7 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable
             public void buttonPressed(Button button)
             {
                 DietPlanEditingController.getInstance().saveDietPlan();
-                ViewController.getInstance().loadContent("DietTreatmentDetailView", CreateDietPlanView.this);
+                ViewController.getInstance().loadContent("DietTreatmentDetailView", EditDietPlanView.this);
             }
         });
         
@@ -67,7 +66,7 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable
     @Override
     public void onLoad()
     {
-        DietPlanEditingController.getInstance().createNew(DietTreatmentDetailViewController.getInstance().getDietTreatment());
+        rebuildUI();
     }
     
     public void rebuildUI()

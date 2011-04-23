@@ -81,7 +81,6 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
                     LockOptions.UPGRADE);
         else
             entity = (T) getSession().load(getPersistentClass(), id);
-
         return entity;
     }
 
@@ -128,6 +127,25 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
     {
         getSession().saveOrUpdate(entity);
         return entity;
+    }
+
+    /**
+     * Re-read the state of the given instance from the underlying database. It
+     * is inadvisable to use this to implement long-running sessions that span
+     * many business tasks. This method is, however, useful in certain special
+     * circumstances. For example
+     * <ul>
+     * <li>where a database trigger alters the object state upon insert or
+     * update</li>
+     * <li>after executing direct SQL (eg. a mass update) in the same session</li>
+     * <li>after inserting a Blob or Clob</li>
+     * </ul>
+     * 
+     * @param entity a persistent or detached instance
+     */
+    public void refresh(T entity)
+    {
+        getSession().refresh(entity);
     }
 
     /**
