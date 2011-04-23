@@ -28,7 +28,7 @@ public class DietPlanEditingController
     {
         return _dietPlan;
     }
-    
+
     public void setDietPlan(DietPlanBO dietPlan)
     {
         _dietPlan = dietPlan;
@@ -100,16 +100,25 @@ public class DietPlanEditingController
     public void saveDietPlan()
     {
         validateDietPlan();
-        
-        SimpleDateFormat formatter = new SimpleDateFormat(EasyDietApplication.DATE_FORMAT);
-        // generate a good name
-        _dietPlan.setCreatedOn(new Date());
-        String name = String.format("Diätplan vom %s", formatter.format(_dietPlan.getCreatedOn()));
-        _dietPlan.setName(name);
-        _dietPlan.setCreator(SystemUserController.getInstance().getCurrentUser().getSystemUser());
-        
+
+        SimpleDateFormat formatter = new SimpleDateFormat(
+                EasyDietApplication.DATE_FORMAT);
+        // generate a good name if it's a new plan
+        if (_dietPlan.getDietPlanId() <= 0)
+        {
+            _dietPlan.setCreatedOn(new Date());
+            String name = String.format("Diätplan vom %s",
+                    formatter.format(_dietPlan.getCreatedOn()));
+            _dietPlan.setName(name);
+        }
+
+        // update creator
+        _dietPlan.setCreator(SystemUserController.getInstance()
+                .getCurrentUser().getSystemUser());
+
         DietPlanDAO dao = DAOFactory.getInstance().getDietPlanDAO();
         dao.makePersistent(_dietPlan.getDietPlan());
+        dao.flush();
         _dietPlan = null;
     }
 
@@ -120,6 +129,6 @@ public class DietPlanEditingController
 
     private DietPlanEditingController()
     {
-        
+
     }
 }
