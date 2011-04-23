@@ -1,4 +1,4 @@
--- Map Dimensions
+ï»¿-- Map Dimensions
 INSERT INTO fhv_easy.ParameterDefinitionUnit (Name, Type) 
     SELECT Bezeichnung, 'Numbers' FROM fhv_bls.dimension;
 
@@ -6,11 +6,11 @@ INSERT INTO fhv_easy.ParameterDefinitionUnit (Name, Type)
 INSERT INTO fhv_easy.ParameterDefinitionUnit (Name, Type)
     VALUES ('m?q', 'Numbers'), ('myg', 'Numbers');
     
--- Map Nährwertbezeichnungen
+-- Map NÃ¤hrwertbezeichnungen
 INSERT INTO fhv_easy.ParameterDefinition (Name) 
     SELECT name FROM fhv_bls.naehrwertbezeichnung GROUP BY name;
     
--- Map Units for Nährwertbezeichnungen
+-- Map Units for NÃ¤hrwertbezeichnungen
 INSERT INTO fhv_easy.ParameterDefinitionUnits (parameterDefinitionId, parameterDefinitionUnitId)
     SELECT d.parameterDefinitionId, c.parameterDefinitionUnitId FROM fhv_bls.naehrwertbezeichnung a
         INNER JOIN fhv_bls.dimension b ON a.dimensions_id = b.id
@@ -1064,7 +1064,7 @@ INSERT INTO fhv_easy.NutrimentParameter (Value, ParameterDefinitionId, Parameter
 		INNER JOIN fhv_easy.Recipe f ON a.SBLS = f.BlsCode;
 
 		
--- Update für alle NutrimentParameter das die Einheit ohne /100g da steht
+-- Update fÃ¼r alle NutrimentParameter das die Einheit ohne /100g da steht
 UPDATE fhv_easy.NutrimentParameter a SET a.ParameterDefinitionUnitId = (
 	SELECT c.ParameterDefinitionUnitId FROM fhv_easy.ParameterDefinitionUnit b 
 		INNER JOIN fhv_easy.ParameterDefinitionUnit c ON c.Name = REPLACE(b.Name, '/100g', '') 
