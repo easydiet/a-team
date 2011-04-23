@@ -2,6 +2,7 @@
 <Border styles="{padding: 10, cornerRadii:10, padding:5}"
 xmlns:bxml="http://pivot.apache.org/bxml"
 xmlns:easy="at.easydiet.view"
+xmlns:easycontent="at.easydiet.view.content"
 xmlns:content="org.apache.pivot.wtk.content"
 xmlns:effects="org.apache.pivot.wtk.effects"
 xmlns:collections="org.apache.pivot.collections"
@@ -62,14 +63,24 @@ xmlns="org.apache.pivot.wtk"
 			<!-- START: Recipe Setup -->
 			<Border>
 				<ScrollPane>
-					<TableView bxml:id="mealLines">
+					<TableView bxml:id="mealLines" selectMode="multi">
 						<columns>
-							<TableView.Column name="amount" width="50" headerData="Menge" />
-							<TableView.Column name="unit" width="50" headerData="Einheit" />
-							<TableView.Column name="name" width="345" headerData="Name" />
+							<TableView.Column name="quantity" width="70" headerData="Menge">
+								<cellRenderer>
+									<easycontent:MealLineCellRenderer arrowVisible="true" />
+								</cellRenderer>
+							</TableView.Column>
+							<TableView.Column name="unit.name" width="50" headerData="Einheit">
+								<cellRenderer>
+									<easycontent:MealLineCellRenderer />
+								</cellRenderer>
+							</TableView.Column>
+							<TableView.Column name="recipe.name" width="325" headerData="Name">
+								<cellRenderer>
+									<easycontent:MealLineCellRenderer />
+								</cellRenderer>
+							</TableView.Column>
 						</columns>
-						<collections:HashMap amount="100" unit="g" name="Spagetti Napoli mit Küchenabfällen" />
-						<collections:HashMap amount="   100" unit="    g" name="    Spagetti Bolognese mit Küchenabfällen" />
 					</TableView>
 					<columnHeader>
 						<TableViewHeader tableView="$mealLines"/>
@@ -77,19 +88,17 @@ xmlns="org.apache.pivot.wtk"
 				</ScrollPane>
 			</Border>
 			<BoxPane orientation="vertical" styles="{fill:true}">
-				<easy:SimpleButton text="&lt;" />				
-				<easy:SimpleButton text="&lt;~" />
-				<easy:SimpleButton text="&gt;" />
+				<easy:SimpleButton text="&lt;" bxml:id="addRecipeToMeal" />
+				<easy:SimpleButton text="&lt;~" bxml:id="addRecipeToMealLine" />
+				<easy:SimpleButton text="&gt;"  bxml:id="removeRecipeFromMeal" />
 			</BoxPane>
 			<Border>
 				<ScrollPane>
-					<TableView bxml:id="recipeSearchResult">
+					<TableView bxml:id="recipeSearchResult" selectMode="multi">
 						<columns>
 							<TableView.Column name="blsCode" width="50" headerData="BLS" />
 							<TableView.Column name="name" width="190" headerData="Name" />
 						</columns>
-						<collections:HashMap name="Küchenabfälle" />
-						<collections:HashMap name="Küchenabfälle mit Küchenabfällen" />
 					</TableView>
 					<columnHeader>
 						<TableViewHeader tableView="$recipeSearchResult"/>

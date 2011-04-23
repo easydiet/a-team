@@ -24,6 +24,7 @@ import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.Orientation;
 
 import at.easydiet.businesslogic.CreateDietPlanViewController;
+import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 
 @DefaultProperty("mealContainers")

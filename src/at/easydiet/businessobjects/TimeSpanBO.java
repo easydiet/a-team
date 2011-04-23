@@ -12,7 +12,6 @@ import at.easydiet.model.DietParameter;
 import at.easydiet.model.DietPlan;
 import at.easydiet.model.Meal;
 import at.easydiet.model.TimeSpan;
-import at.easydiet.view.MealBO;
 
 public class TimeSpanBO
 {

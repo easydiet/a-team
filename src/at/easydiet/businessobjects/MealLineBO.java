@@ -37,6 +37,15 @@ public class MealLineBO
     }
     
     /**
+     * Gets a value indicating whether this meal line is an alternative to an other mealline
+     * @return
+     */
+    public boolean isAlternative()
+    {
+        return getParent() != null;
+    }
+    
+    /**
      * @return
      * @see at.easydiet.model.Recipe#getUnit()
      */
