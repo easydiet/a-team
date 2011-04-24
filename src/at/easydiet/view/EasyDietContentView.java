@@ -10,10 +10,9 @@ import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Orientation;
-import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.content.ButtonDataRenderer;
 
-public class EasyDietContentView extends TablePane.Row
+public class EasyDietContentView extends BoxPane
 {
     /**
      * defines the button in the navigation bar
@@ -353,6 +352,9 @@ public class EasyDietContentView extends TablePane.Row
         this.navigationButtons = new ArrayList<NavigationButton>(
                 navigationButtons);
         this.toolbarButtons = new ArrayList<ToolbarButton>(toolbarButtons);
+        this.setOrientation(Orientation.VERTICAL);
+        this.getStyles().put("fill", true);
+        this.getStyles().put("padding", 10);
     }
 
     public NavigationButtonSequence getNavigationButtons()

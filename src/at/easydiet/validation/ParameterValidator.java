@@ -16,6 +16,8 @@ import at.easydiet.businessobjects.ParameterDefinitionDataTypeBO;
  *
  */
 public class ParameterValidator {
+	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    .getLogger(ParameterValidator.class);
 
 	/**
 	 * check if any parameters are conflicting
@@ -55,15 +57,14 @@ public class ParameterValidator {
 			{
 				ParameterDefinitionBO compareParameterDefinition = compareParameter.getParameterDefinitionBO();
 				
-				//DEBUG:
-				System.out.println(">>>checkParameterDefinition: " + checkParameterDefinition.getName() + ".equals(compareParameterDefinition: " + compareParameterDefinition.getName() +") = " + (checkParameterDefinition.equals(compareParameterDefinition)));
+				LOG.debug(">>>checkParameterDefinition: " + checkParameterDefinition.getName() + ".equals(compareParameterDefinition: " + compareParameterDefinition.getName() +") = " + (checkParameterDefinition.equals(compareParameterDefinition)));
 				
 				//if definition is the same
 				if(checkParameterDefinition.equals(compareParameterDefinition))
 				{
 					//DEBUG:
-					System.out.println(">>>checkParameter.getUnitBO().getTypeBO().getName(): " + checkParameter.getUnitBO().getTypeBO().getName() + " == ParameterDefinitionDataTypeBO.NUMBERS.getName(): " + ParameterDefinitionDataTypeBO.NUMBERS.getName() + " = " + (checkParameter.getUnitBO().getTypeBO() == ParameterDefinitionDataTypeBO.NUMBERS));
-					System.out.println(">>>compareParameter.getUnitBO().getTypeBO().getName(): " + compareParameter.getUnitBO().getTypeBO().getName() + " == ParameterDefinitionDataTypeBO.NUMBERS.getName(): " + ParameterDefinitionDataTypeBO.NUMBERS.getName()  + " = " + (compareParameter.getUnitBO().getTypeBO() == ParameterDefinitionDataTypeBO.NUMBERS));
+					LOG.debug(">>>checkParameter.getUnitBO().getTypeBO().getName(): " + checkParameter.getUnitBO().getTypeBO().getName() + " == ParameterDefinitionDataTypeBO.NUMBERS.getName(): " + ParameterDefinitionDataTypeBO.NUMBERS.getName() + " = " + (checkParameter.getUnitBO().getTypeBO() == ParameterDefinitionDataTypeBO.NUMBERS));
+					LOG.debug(">>>compareParameter.getUnitBO().getTypeBO().getName(): " + compareParameter.getUnitBO().getTypeBO().getName() + " == ParameterDefinitionDataTypeBO.NUMBERS.getName(): " + ParameterDefinitionDataTypeBO.NUMBERS.getName()  + " = " + (compareParameter.getUnitBO().getTypeBO() == ParameterDefinitionDataTypeBO.NUMBERS));
 					
 					//if both are numbers			
 					if(checkParameter.getUnitBO().getTypeBO() == ParameterDefinitionDataTypeBO.NUMBERS && compareParameter.getUnitBO().getTypeBO() == ParameterDefinitionDataTypeBO.NUMBERS)
@@ -80,14 +81,14 @@ public class ParameterValidator {
 						CheckOperatorBO compareParameterOperator = compareParameter.getCheckOperatorBO();
 						
 						//DEBUG:
-						System.out.println(">>>checkParameterOperator.getName(): " + checkParameterOperator.getName());
-						System.out.println(">>>compareParameterOperator.getName(): " + compareParameterOperator.getName());
+						LOG.debug(">>>checkParameterOperator.getName(): " + checkParameterOperator.getName());
+						LOG.debug(">>>compareParameterOperator.getName(): " + compareParameterOperator.getName());
 						
 						// > && >=
 						if(checkParameterOperator == CheckOperatorBO.BIGGER || checkParameterOperator == CheckOperatorBO.EQUALORBIGGER )
 						{
 							if(compareParameterOperator == CheckOperatorBO.SMALLER)
-							{
+							{	
 								//the lower limit needs to be smaller than the upper limit
 								if(!(checkNumberValue < compareNumberValue))
 								{
@@ -95,7 +96,7 @@ public class ParameterValidator {
 											checkParameter, compareParameter);
 								}
 							}
-							if(compareParameterOperator == CheckOperatorBO.EQUALORSMALLER)
+							else if(compareParameterOperator == CheckOperatorBO.EQUALORSMALLER)
 							{
 								//the lower limit needs to be smaller or equal than the upper limit
 								if(!(checkNumberValue <= compareNumberValue))
@@ -139,7 +140,7 @@ public class ParameterValidator {
 								addConflicting(conflictingParameters,
 										checkParameter, compareParameter);
 							}
-							if(compareParameterOperator == CheckOperatorBO.EQUALORSMALLER)
+							else if(compareParameterOperator == CheckOperatorBO.EQUALORSMALLER)
 							{
 								//not allowed
 								addConflicting(conflictingParameters,
@@ -148,7 +149,7 @@ public class ParameterValidator {
 							else if (compareParameterOperator == CheckOperatorBO.BIGGER)
 							{
 								//the upper limit has to be bigger than the lower limit
-								if(!(checkNumberValue < compareNumberValue))
+								if(!(checkNumberValue > compareNumberValue))
 								{
 									addConflicting(conflictingParameters,
 											checkParameter, compareParameter);
@@ -157,7 +158,7 @@ public class ParameterValidator {
 							else if (compareParameterOperator == CheckOperatorBO.EQUALORBIGGER)
 							{
 								//the upper limit has to be bigger than the lower limit
-								if(!(checkNumberValue <= compareNumberValue))
+								if(!(checkNumberValue >= compareNumberValue))
 								{
 									addConflicting(conflictingParameters,
 											checkParameter, compareParameter);
@@ -186,7 +187,7 @@ public class ParameterValidator {
 								addConflicting(conflictingParameters,
 										checkParameter, compareParameter);
 							}
-							if(compareParameterOperator == CheckOperatorBO.EQUALORSMALLER)
+							else if(compareParameterOperator == CheckOperatorBO.EQUALORSMALLER)
 							{
 								//not allowed
 								addConflicting(conflictingParameters,
@@ -230,7 +231,7 @@ public class ParameterValidator {
 								addConflicting(conflictingParameters,
 										checkParameter, compareParameter);
 							}
-							if(compareParameterOperator == CheckOperatorBO.EQUALORSMALLER)
+							else if(compareParameterOperator == CheckOperatorBO.EQUALORSMALLER)
 							{
 								//not allowed
 								addConflicting(conflictingParameters,

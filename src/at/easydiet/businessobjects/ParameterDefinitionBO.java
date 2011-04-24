@@ -1,5 +1,6 @@
 package at.easydiet.businessobjects;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import at.easydiet.model.ParameterDefinition;
@@ -70,18 +71,16 @@ public class ParameterDefinitionBO {
      * Gets the units of this instance. 
      * @return the units currently set for this instance.
      */
-    public Set<ParameterDefinitionUnit> getUnits() 
+    public Set<ParameterDefinitionUnitBO> getUnitsBO() 
     {
-        return _parameterDefinition.getUnits();
-    }
-    
-    /**       
-     * Sets the units of this instance. 
-     * @param units the new units of this instance.
-     */    
-    public void setUnits(Set<ParameterDefinitionUnit> units) 
-    {
-        _parameterDefinition.setUnits(units);
+    	Set<ParameterDefinitionUnitBO> parameterDefinitionUnitBOs = new HashSet<ParameterDefinitionUnitBO>();
+    	
+        for(ParameterDefinitionUnit parameterDefinitionUnit : _parameterDefinition.getUnits())
+        {
+        	parameterDefinitionUnitBOs.add(new ParameterDefinitionUnitBO(parameterDefinitionUnit));
+        }
+      
+        return parameterDefinitionUnitBOs;
     }
     
     public boolean equals(Object o)

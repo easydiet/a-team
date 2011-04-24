@@ -3,6 +3,7 @@ package at.easydiet.businessobjects;
 import java.util.Date;
 
 import at.easydiet.model.DietParameter;
+import at.easydiet.model.ParameterDefinition;
 
 public class DietParameterBO extends DietParameterTemplateBO
 {
@@ -12,7 +13,38 @@ public class DietParameterBO extends DietParameterTemplateBO
 		super(dietParameter);
 		_dietParameter = dietParameter;
 	}
-	   
+	
+	public String getParameterDefinitionName()
+	{
+		return _dietParameter.getParameterDefinition().getName();
+	}
+	
+	public void setParameterDefinitionName(String name)
+	{
+		_dietParameter.setParameterDefinition(new ParameterDefinition(name));
+	}
+	
+	public String getCheckOperatorName()
+	{
+		return _dietParameter.getCheckOperator().getName();
+	}
+	
+	//TODO: setCheckOperatorName()
+	
+	public double getParameterValue()
+	{
+		return Double.parseDouble(_dietParameter.getValue());
+	}
+	
+	//TODO: setParameterValue()
+	
+	public String getSelectedUnit()
+	{
+		return _dietParameter.getParameterDefinitionUnit().getName();
+	}
+	
+	//TODO: setSelectedValue()
+	
     /**       
      * Gets the start of this instance. 
      * @return the start currently set for this instance.
