@@ -14,7 +14,7 @@ public class PatientState  implements java.io.Serializable
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = -2330123253871789027L;
+    private static final long serialVersionUID = 8479616084835494226L;
     private long _patientStateId;
     private Date _date;
     private Clob _anamnesis;
@@ -27,6 +27,7 @@ public class PatientState  implements java.io.Serializable
     private PatientStateType _type;
     private SystemUser _creator;
     private Set<LaborReport> _laborReports = new HashSet<LaborReport>(0);
+    private Patient _patient;
 
     /**
      * Initializes a new instance of the {@link PatientState} class.
@@ -41,12 +42,14 @@ public class PatientState  implements java.io.Serializable
      * @param date the date to set for this instance
      * @param type the type to set for this instance
      * @param creator the creator to set for this instance
+     * @param patient the patient to set for this instance
      */
-    public PatientState(Date date, PatientStateType type, SystemUser creator) 
+    public PatientState(Date date, PatientStateType type, SystemUser creator, Patient patient) 
     {
         _date = date;
         _type = type;
         _creator = creator;
+        _patient = patient;
     }
 
     /**
@@ -62,8 +65,9 @@ public class PatientState  implements java.io.Serializable
      * @param type the type to set for this instance
      * @param creator the creator to set for this instance
      * @param laborReports the laborReports to set for this instance
+     * @param patient the patient to set for this instance
      */
-    public PatientState(Date date, Clob anamnesis, Integer weight, float weightPercentile, Integer height, float heightPercentile, int compliance, int motivation, PatientStateType type, SystemUser creator, Set<LaborReport> laborReports) 
+    public PatientState(Date date, Clob anamnesis, Integer weight, float weightPercentile, Integer height, float heightPercentile, int compliance, int motivation, PatientStateType type, SystemUser creator, Set<LaborReport> laborReports, Patient patient) 
     {
        _date = date;
        _anamnesis = anamnesis;
@@ -76,6 +80,7 @@ public class PatientState  implements java.io.Serializable
        _type = type;
        _creator = creator;
        _laborReports = laborReports;
+       _patient = patient;
     }
    
     /**       
@@ -292,6 +297,24 @@ public class PatientState  implements java.io.Serializable
     public void setLaborReports(Set<LaborReport> laborReports) 
     {
         _laborReports = laborReports;
+    }
+    
+    /**       
+     * Gets the patient of this instance. 
+     * @return the patient currently set for this instance.
+     */
+    public Patient getPatient() 
+    {
+        return _patient;
+    }
+    
+    /**       
+     * Sets the patient of this instance. 
+     * @param patient the new patient of this instance.
+     */    
+    public void setPatient(Patient patient) 
+    {
+        _patient = patient;
     }
     
     /**

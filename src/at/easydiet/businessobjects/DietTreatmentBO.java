@@ -12,6 +12,7 @@ import at.easydiet.model.DietPlan;
 import at.easydiet.model.DietTreatment;
 import at.easydiet.model.DietTreatmentSystemUser;
 import at.easydiet.model.NutritionProtocol;
+import at.easydiet.model.Patient;
 import at.easydiet.model.PatientState;
 import at.easydiet.model.TreatmentState;
 
@@ -21,7 +22,6 @@ public class DietTreatmentBO
                                                             .getLogger(DietTreatmentBO.class);
 
     private DietTreatment                       _treatment;
-    private Date                                _end;
 
     /**
      * Initializes a new instance of the {@link DietTreatmentBO} class.
@@ -84,14 +84,30 @@ public class DietTreatmentBO
      */
     public Date getEnd()
     {
-        if (_end == null)
-        {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(getStart());
-            calendar.add(Calendar.DATE, getDuration());
-            _end = calendar.getTime();
-        }
-        return _end;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(getStart());
+        calendar.add(Calendar.DATE, getDuration());
+        return calendar.getTime();
+    }
+    
+    
+
+    /**
+     * @return
+     * @see at.easydiet.model.DietTreatment#getPatient()
+     */
+    public Patient getPatient()
+    {
+        return _treatment.getPatient();
+    }
+
+    /**
+     * @param patient
+     * @see at.easydiet.model.DietTreatment#setPatient(at.easydiet.model.Patient)
+     */
+    public void setPatient(Patient patient)
+    {
+        _treatment.setPatient(patient);
     }
 
     /**

@@ -6,6 +6,7 @@ import java.util.Set;
 
 import at.easydiet.model.DietParameter;
 import at.easydiet.model.LaborReport;
+import at.easydiet.model.Patient;
 import at.easydiet.model.SystemUser;
 
 public class LaborReportBO
@@ -32,6 +33,26 @@ public class LaborReportBO
     {
         super();
         _laborReport = laborReport;
+    }
+    
+    
+
+    /**
+     * @return
+     * @see at.easydiet.model.LaborReport#getPatient()
+     */
+    public Patient getPatient()
+    {
+        return _laborReport.getPatient();
+    }
+
+    /**
+     * @param patient
+     * @see at.easydiet.model.LaborReport#setPatient(at.easydiet.model.Patient)
+     */
+    public void setPatient(Patient patient)
+    {
+        _laborReport.setPatient(patient);
     }
 
     /**

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Set;
 
 import at.easydiet.model.DietParameter;
+import at.easydiet.model.DietTreatment;
 import at.easydiet.model.NutritionProtocol;
 import at.easydiet.model.PlanType;
 import at.easydiet.model.SystemUser;
@@ -23,7 +24,30 @@ public class NutritionProtocolBO
         return _nutritionProtocol;
     }
 
-    
+    /**
+     * @return
+     * @see at.easydiet.model.DietPlan#getDietTreatment()
+     */
+    public DietTreatment getDietTreatment()
+    {
+        return _nutritionProtocol.getDietTreatment();
+    }
+
+
+
+
+    /**
+     * @param dietTreatment
+     * @see at.easydiet.model.DietPlan#setDietTreatment(at.easydiet.model.DietTreatment)
+     */
+    public void setDietTreatment(DietTreatment dietTreatment)
+    {
+        _nutritionProtocol.setDietTreatment(dietTreatment);
+    }
+
+
+
+
     /** 
      * Initializes a new instance of the {@link NutritionProtocolBO} class. 
      * @param nutritionProtocol

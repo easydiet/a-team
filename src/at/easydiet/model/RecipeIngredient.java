@@ -10,10 +10,11 @@ public class RecipeIngredient  implements java.io.Serializable
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = 8618320415928998257L;
+    private static final long serialVersionUID = 3344946157277639977L;
     private long _recipeIngredientId;
     private float _amount;
     private Recipe _ingredient;
+    private Recipe _recipe;
 
     /**
      * Initializes a new instance of the {@link RecipeIngredient} class.
@@ -23,16 +24,26 @@ public class RecipeIngredient  implements java.io.Serializable
         // no initialization
     }
 
+    /**
+     * Initializes a new instance of the {@link RecipeIngredient} class.
+     * @param recipe the recipe to set for this instance
+     */
+    public RecipeIngredient(Recipe recipe) 
+    {
+        _recipe = recipe;
+    }
 
     /**
      * Initializes a new instance of the {@link RecipeIngredient} class.
      * @param amount the amount to set for this instance
      * @param ingredient the ingredient to set for this instance
+     * @param recipe the recipe to set for this instance
      */
-    public RecipeIngredient(float amount, Recipe ingredient) 
+    public RecipeIngredient(float amount, Recipe ingredient, Recipe recipe) 
     {
        _amount = amount;
        _ingredient = ingredient;
+       _recipe = recipe;
     }
    
     /**       
@@ -87,6 +98,24 @@ public class RecipeIngredient  implements java.io.Serializable
     public void setIngredient(Recipe ingredient) 
     {
         _ingredient = ingredient;
+    }
+    
+    /**       
+     * Gets the recipe of this instance. 
+     * @return the recipe currently set for this instance.
+     */
+    public Recipe getRecipe() 
+    {
+        return _recipe;
+    }
+    
+    /**       
+     * Sets the recipe of this instance. 
+     * @param recipe the new recipe of this instance.
+     */    
+    public void setRecipe(Recipe recipe) 
+    {
+        _recipe = recipe;
     }
     
     /**

@@ -1,14 +1,19 @@
 package at.easydiet.businessobjects;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import at.easydiet.model.DietParameter;
 import at.easydiet.model.DietPlan;
+import at.easydiet.model.DietTreatment;
 import at.easydiet.model.PlanType;
 import at.easydiet.model.SystemUser;
 import at.easydiet.model.TimeSpan;
+import at.easydiet.util.CollectionCache;
 
 public class DietPlanBO
 {
@@ -16,7 +21,15 @@ public class DietPlanBO
                                                             .getLogger(DietPlanBO.class);
 
     private DietPlan                            _dietPlan;
+    private CollectionCache<TimeSpan>           _sortedTimeSpans;
 
+    /**
+     * Initializes a new instance of the {@link DietPlanBO} class.
+     */
+    public DietPlanBO()
+    {
+        this(new DietPlan("Neuer Diätplan", new Date(), PlanTypeBO.DIETPLAN.getPlanType(), null, null));
+    }
     /**
      * Initializes a new instance of the {@link DietPlanBO} class.
      * @param dietPlan
@@ -25,20 +38,60 @@ public class DietPlanBO
     {
         super();
         _dietPlan = dietPlan;
+        _sortedTimeSpans = new CollectionCache<TimeSpan>()
+        {
+
+            @Override
+            protected void refreshCache()
+            {
+                java.util.ArrayList<TimeSpan> sortedTimeSpans = new java.util.ArrayList<TimeSpan>(
+                        getOriginal());
+                Collections.sort(sortedTimeSpans, new TimeSpanComparator());
+                setCache(sortedTimeSpans);
+            }
+
+            @Override
+            protected java.util.Collection<TimeSpan> getOriginal()
+            {
+                return _dietPlan.getTimeSpans();
+            }
+        };
     }
+
     
+    
+    /**
+     * @return
+     * @see at.easydiet.model.DietPlan#getDietTreatment()
+     */
+    public DietTreatment getDietTreatment()
+    {
+        return _dietPlan.getDietTreatment();
+    }
+    /**
+     * @param dietTreatment
+     * @see at.easydiet.model.DietPlan#setDietTreatment(at.easydiet.model.DietTreatment)
+     */
+    public void setDietTreatment(DietTreatment dietTreatment)
+    {
+        _dietPlan.setDietTreatment(dietTreatment);
+    }
     public Date getStart()
     {
-        //TODO: get start of first timespan
-        return new Date();
+        List<TimeSpan> cache = ((List<TimeSpan>) _sortedTimeSpans.getCache());
+        if(cache.size() == 0)
+            return new Date();
+        return cache.get(0).getStart();
     }
 
     public Date getEnd()
     {
-        //TODO: get end of last timespan
-        return new Date();
+        List<TimeSpan> cache = ((List<TimeSpan>) _sortedTimeSpans.getCache());
+        if(cache.size() == 0)
+            return new Date();
+        return new TimeSpanBO(cache.get(cache.size() - 1)).getEnd();
     }
-    
+
     /**
      * Gets the dietPlan.
      * @return the dietPlan
@@ -135,16 +188,16 @@ public class DietPlanBO
      */
     public Set<DietParameterBO> getDietParameterBOs()
     {
-    	//TODO
-    	Set<DietParameterBO> dietParameterBOSet = new HashSet<DietParameterBO>();
-    	Set<DietParameter> dietParameterSet = _dietPlan.getDietParameters();
-    	for(DietParameter dietParameter : dietParameterSet)
-    	{
-    		dietParameterBOSet.add(new DietParameterBO(dietParameter));
-    	}
+        // TODO
+        Set<DietParameterBO> dietParameterBOSet = new HashSet<DietParameterBO>();
+        Set<DietParameter> dietParameterSet = _dietPlan.getDietParameters();
+        for (DietParameter dietParameter : dietParameterSet)
+        {
+            dietParameterBOSet.add(new DietParameterBO(dietParameter));
+        }
         return dietParameterBOSet;
     }
-    
+
     /**
      * @param dietParameters
      * @see at.easydiet.model.DietPlan#setDietParameters(java.util.Set)
@@ -189,6 +242,15 @@ public class DietPlanBO
     {
         _dietPlan.setTimeSpans(timeSpans);
     }
-    
+
+    public ArrayList<TimeSpanBO> getSortedTimeSpanBOs()
+    {
+        ArrayList<TimeSpanBO> bos = new ArrayList<TimeSpanBO>();
+        for (TimeSpan timespan : _sortedTimeSpans.getCache())
+        {
+            bos.add(new TimeSpanBO(timespan));
+        }
+        return bos;
+    }
 
 }

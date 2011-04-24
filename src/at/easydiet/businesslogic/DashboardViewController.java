@@ -54,7 +54,7 @@ public class DashboardViewController
         }
         else
         {
-            patients = patientDao.findPatientsByQuery(_patientFilter);
+            patients = patientDao.findByQuery(_patientFilter);
         }
 
         for (Patient patient : patients)

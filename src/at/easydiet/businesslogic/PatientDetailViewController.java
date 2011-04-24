@@ -6,6 +6,8 @@ import at.easydiet.businessobjects.DietTreatmentBO;
 import at.easydiet.businessobjects.LaborReportBO;
 import at.easydiet.businessobjects.PatientBO;
 import at.easydiet.businessobjects.PatientStateBO;
+import at.easydiet.dao.DAOFactory;
+import at.easydiet.dao.PatientDAO;
 
 public class PatientDetailViewController
 {
@@ -65,5 +67,12 @@ public class PatientDetailViewController
         _dietTreatments = _patient.getTreatmentBOs();
         _patientStates = _patient.getPatientStateBOs();
         _laborReports = _patient.getLaborReportBOs();
+    }
+    
+    public void refresh()
+    {
+        PatientDAO dao = DAOFactory.getInstance().getPatientDAO();
+        dao.refresh(_patient.getPatient());
+        reloadPatientData();
     }
 }

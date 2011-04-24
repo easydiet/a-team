@@ -13,7 +13,7 @@ public class DietTreatment  implements java.io.Serializable
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = -1587531563621117473L;
+    private static final long serialVersionUID = 3879975384365335112L;
     private long _dietTreatmentId;
     private Date _start;
     private int _duration;
@@ -25,6 +25,7 @@ public class DietTreatment  implements java.io.Serializable
     private Set<DietTreatmentSystemUser> _systemUsers = new HashSet<DietTreatmentSystemUser>(0);
     private Set<ContactJournal> _contactJournals = new HashSet<ContactJournal>(0);
     private TreatmentState _treatmentState;
+    private Patient _patient;
 
     /**
      * Initializes a new instance of the {@link DietTreatment} class.
@@ -40,13 +41,15 @@ public class DietTreatment  implements java.io.Serializable
      * @param duration the duration to set for this instance
      * @param name the name to set for this instance
      * @param treatmentState the treatmentState to set for this instance
+     * @param patient the patient to set for this instance
      */
-    public DietTreatment(Date start, int duration, String name, TreatmentState treatmentState) 
+    public DietTreatment(Date start, int duration, String name, TreatmentState treatmentState, Patient patient) 
     {
         _start = start;
         _duration = duration;
         _name = name;
         _treatmentState = treatmentState;
+        _patient = patient;
     }
 
     /**
@@ -61,8 +64,9 @@ public class DietTreatment  implements java.io.Serializable
      * @param systemUsers the systemUsers to set for this instance
      * @param contactJournals the contactJournals to set for this instance
      * @param treatmentState the treatmentState to set for this instance
+     * @param patient the patient to set for this instance
      */
-    public DietTreatment(Date start, int duration, String name, Set<NutritionProtocol> nutritionProtocols, Set<DietPlan> dietPlans, Set<DietParameter> dietParameters, Set<PatientState> patientStates, Set<DietTreatmentSystemUser> systemUsers, Set<ContactJournal> contactJournals, TreatmentState treatmentState) 
+    public DietTreatment(Date start, int duration, String name, Set<NutritionProtocol> nutritionProtocols, Set<DietPlan> dietPlans, Set<DietParameter> dietParameters, Set<PatientState> patientStates, Set<DietTreatmentSystemUser> systemUsers, Set<ContactJournal> contactJournals, TreatmentState treatmentState, Patient patient) 
     {
        _start = start;
        _duration = duration;
@@ -74,6 +78,7 @@ public class DietTreatment  implements java.io.Serializable
        _systemUsers = systemUsers;
        _contactJournals = contactJournals;
        _treatmentState = treatmentState;
+       _patient = patient;
     }
    
     /**       
@@ -272,6 +277,24 @@ public class DietTreatment  implements java.io.Serializable
     public void setTreatmentState(TreatmentState treatmentState) 
     {
         _treatmentState = treatmentState;
+    }
+    
+    /**       
+     * Gets the patient of this instance. 
+     * @return the patient currently set for this instance.
+     */
+    public Patient getPatient() 
+    {
+        return _patient;
+    }
+    
+    /**       
+     * Sets the patient of this instance. 
+     * @param patient the new patient of this instance.
+     */    
+    public void setPatient(Patient patient) 
+    {
+        _patient = patient;
     }
     
     /**

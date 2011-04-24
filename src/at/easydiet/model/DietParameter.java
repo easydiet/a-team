@@ -11,7 +11,7 @@ public class DietParameter extends at.easydiet.model.DietParameterTemplate imple
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = -5415629633663504397L;
+    private static final long serialVersionUID = -8505565857503590488L;
     private Date _start;
 
     /**
@@ -67,7 +67,7 @@ public class DietParameter extends at.easydiet.model.DietParameterTemplate imple
     {
         StringBuilder builder = new StringBuilder();
         builder.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        // interesting values
+		// interesting values
         builder.append("]");
       
         return builder.toString();

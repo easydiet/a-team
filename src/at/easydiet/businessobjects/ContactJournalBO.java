@@ -5,6 +5,7 @@ import java.util.Date;
 
 import at.easydiet.model.ContactJournal;
 import at.easydiet.model.ContactType;
+import at.easydiet.model.DietTreatment;
 import at.easydiet.model.SystemUser;
 
 
@@ -28,6 +29,26 @@ public class ContactJournalBO
     {
         super();
         _contactJournal = contactJournal;
+    }
+    
+    
+
+    /**
+     * @return
+     * @see at.easydiet.model.ContactJournal#getDietTreatment()
+     */
+    public DietTreatment getDietTreatment()
+    {
+        return _contactJournal.getDietTreatment();
+    }
+
+    /**
+     * @param dietTreatment
+     * @see at.easydiet.model.ContactJournal#setDietTreatment(at.easydiet.model.DietTreatment)
+     */
+    public void setDietTreatment(DietTreatment dietTreatment)
+    {
+        _contactJournal.setDietTreatment(dietTreatment);
     }
 
     /**

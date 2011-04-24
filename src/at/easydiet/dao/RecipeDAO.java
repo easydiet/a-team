@@ -1,5 +1,11 @@
 package at.easydiet.dao;
 
+import java.util.List;
+
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
+
 import at.easydiet.model.Recipe;
 
 /**
@@ -8,5 +14,18 @@ import at.easydiet.model.Recipe;
 public class RecipeDAO 
         extends GenericHibernateDAO<Recipe, Long>
 {
-	// implementation in parent class
+
+    public List<Recipe> findByQuery(String queryString)
+    {
+        Recipe template1 = new Recipe();
+        template1.setName(queryString);
+        
+        Recipe template2 = new Recipe();
+        template2.setBlsCode(queryString);
+        
+        Example ex = Example.create(template1).enableLike(MatchMode.START).excludeZeroes().ignoreCase();
+        Example ex2 = Example.create(template2).enableLike(MatchMode.START).excludeZeroes().ignoreCase();
+        
+        return super.findByCriteriaSearch("name", Restrictions.or(ex, ex2));
+    }
 }

@@ -44,7 +44,7 @@ public class ViewController
      */
     public void loadContent(String file, EasyDietContentView component)
     {
-        EasyDietMainWindow wnd = (EasyDietMainWindow) component.getTablePane().getWindow();
+        EasyDietMainWindow wnd = (EasyDietMainWindow) component.getWindow();
         loadContent(file, wnd);
     }
 
@@ -55,8 +55,8 @@ public class ViewController
     public void loadContent(String file, EasyDietMainWindow mainWindow)
     {
         
-        EasyDietContentView oldView = mainWindow.getContentPane().getRows().getLength() == 0 ? null
-                : (EasyDietContentView) mainWindow.getContentPane().getRows().get(0);
+        EasyDietContentView oldView = mainWindow.getContentPane().getLength() == 0 ? null
+                : (EasyDietContentView) mainWindow.getContentPane().get(0);
 
         // do onClose method
         if (oldView == null || oldView.onClose())
@@ -70,8 +70,8 @@ public class ViewController
                 // do onLoad method
                 newView.onLoad();
 
-                mainWindow.getContentPane().getRows().remove(0, mainWindow.getContentPane().getRows().getLength());
-                mainWindow.getContentPane().getRows().add(newView);
+                mainWindow.getContentPane().removeAll();
+                mainWindow.getContentPane().add(newView);
 
                 replaceButtons(newView, mainWindow);
             }
@@ -138,6 +138,6 @@ public class ViewController
         {
             windowTitle.append(last.getText());
         }
-        view.getTablePane().getWindow().setTitle(windowTitle.toString());
+        view.getWindow().setTitle(windowTitle.toString());
     }
 }

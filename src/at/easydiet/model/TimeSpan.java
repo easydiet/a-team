@@ -1,7 +1,9 @@
 package at.easydiet.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -13,12 +15,13 @@ public class TimeSpan  implements java.io.Serializable
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = -4519193996264066334L;
+    private static final long serialVersionUID = -7437256819971857468L;
     private long _timeSpanId;
     private Date _start;
     private int _duration;
+    private DietPlan _dietPlan;
     private Set<DietParameter> _dietParameters = new HashSet<DietParameter>(0);
-    private Set<Meal> _meals = new HashSet<Meal>(0);
+    private List<Meal> _meals = new ArrayList<Meal>(0);
 
     /**
      * Initializes a new instance of the {@link TimeSpan} class.
@@ -32,24 +35,28 @@ public class TimeSpan  implements java.io.Serializable
      * Initializes a new instance of the {@link TimeSpan} class.
      * @param start the start to set for this instance
      * @param duration the duration to set for this instance
+     * @param dietPlan the dietPlan to set for this instance
      */
-    public TimeSpan(Date start, int duration) 
+    public TimeSpan(Date start, int duration, DietPlan dietPlan) 
     {
         _start = start;
         _duration = duration;
+        _dietPlan = dietPlan;
     }
 
     /**
      * Initializes a new instance of the {@link TimeSpan} class.
      * @param start the start to set for this instance
      * @param duration the duration to set for this instance
+     * @param dietPlan the dietPlan to set for this instance
      * @param dietParameters the dietParameters to set for this instance
      * @param meals the meals to set for this instance
      */
-    public TimeSpan(Date start, int duration, Set<DietParameter> dietParameters, Set<Meal> meals) 
+    public TimeSpan(Date start, int duration, DietPlan dietPlan, Set<DietParameter> dietParameters, List<Meal> meals) 
     {
        _start = start;
        _duration = duration;
+       _dietPlan = dietPlan;
        _dietParameters = dietParameters;
        _meals = meals;
     }
@@ -109,6 +116,24 @@ public class TimeSpan  implements java.io.Serializable
     }
     
     /**       
+     * Gets the dietPlan of this instance. 
+     * @return the dietPlan currently set for this instance.
+     */
+    public DietPlan getDietPlan() 
+    {
+        return _dietPlan;
+    }
+    
+    /**       
+     * Sets the dietPlan of this instance. 
+     * @param dietPlan the new dietPlan of this instance.
+     */    
+    public void setDietPlan(DietPlan dietPlan) 
+    {
+        _dietPlan = dietPlan;
+    }
+    
+    /**       
      * Gets the dietParameters of this instance. 
      * @return the dietParameters currently set for this instance.
      */
@@ -130,7 +155,7 @@ public class TimeSpan  implements java.io.Serializable
      * Gets the meals of this instance. 
      * @return the meals currently set for this instance.
      */
-    public Set<Meal> getMeals() 
+    public List<Meal> getMeals() 
     {
         return _meals;
     }
@@ -139,7 +164,7 @@ public class TimeSpan  implements java.io.Serializable
      * Sets the meals of this instance. 
      * @param meals the new meals of this instance.
      */    
-    public void setMeals(Set<Meal> meals) 
+    public void setMeals(List<Meal> meals) 
     {
         _meals = meals;
     }
