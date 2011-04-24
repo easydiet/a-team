@@ -172,7 +172,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
     {
         getSession().flush();
     }
-
+    
     /**
      * Completely clear the session. Evict all loaded instances and cancel all
      * pending saves, updates and deletions. Do not close open iterators or

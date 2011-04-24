@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.pivot.collections.ArrayList;
+import org.hibernate.HibernateException;
 
 import at.easydiet.EasyDietApplication;
 import at.easydiet.businessobjects.DietPlanBO;
@@ -14,6 +15,7 @@ import at.easydiet.businessobjects.RecipeBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.DietPlanDAO;
+import at.easydiet.dao.HibernateUtil;
 import at.easydiet.dao.MealDAO;
 import at.easydiet.util.CollectionUtils;
 
@@ -103,7 +105,7 @@ public class DietPlanEditingController
         return alternative;
     }
 
-    public void saveDietPlan()
+    public boolean saveDietPlan()
     {
         validateDietPlan();
 
@@ -122,10 +124,20 @@ public class DietPlanEditingController
         _dietPlan.setCreator(SystemUserController.getInstance()
                 .getCurrentUser().getSystemUser());
 
-        DietPlanDAO dao = DAOFactory.getInstance().getDietPlanDAO();
-        dao.makePersistent(_dietPlan.getDietPlan());
-        dao.flush();
-        _dietPlan = null;
+        try
+        {
+            HibernateUtil.currentSession().beginTransaction();
+            DietPlanDAO dao = DAOFactory.getInstance().getDietPlanDAO();
+            dao.makePersistent(_dietPlan.getDietPlan());
+            _dietPlan = null;
+            HibernateUtil.currentSession().getTransaction().commit();
+            return true;
+        }
+        catch(HibernateException e)
+        {
+            HibernateUtil.currentSession().getTransaction().rollback();
+            return false;
+        }
     }
 
     public void validateDietPlan()
@@ -155,7 +167,7 @@ public class DietPlanEditingController
     {
         return _mealCodes;
     }
-    
+
     public ArrayList<String> getMealNames()
     {
         return _mealNames;
