@@ -45,7 +45,7 @@ public class DietPlanEditingController
     public TimeSpanBO createTimeSpan()
     {
         TimeSpanBO t = new TimeSpanBO();
-        t.addToDietPlan(_dietPlan);
+        _dietPlan.addTimeSpans(t);
         return t;
     }
 
@@ -63,45 +63,45 @@ public class DietPlanEditingController
     public void createNew(DietTreatmentBO dietTreatment)
     {
         _dietPlan = new DietPlanBO();
-        _dietPlan.setDietTreatment(dietTreatment.getTreatment());
+        _dietPlan.setDietTreatment(dietTreatment);
     }
 
     public MealBO createMeal(TimeSpanBO timeSpan)
     {
         MealBO meal = new MealBO();
-        meal.addToTimeSpan(timeSpan);
+        timeSpan.addMeals(meal);
         return meal;
     }
 
     public MealLineBO addRecipeToMeal(MealBO meal, RecipeBO recipe)
     {
         MealLineBO line = new MealLineBO();
-        line.setMeal(meal.getMeal());
-        line.setRecipe(recipe.getRecipe());
+        line.setMeal(meal);
+        line.setRecipe(recipe);
         line.setQuantity(recipe.getAmount());
-        meal.getMealLines().add(line.getMealLine());
+        meal.addMealLines(line);
         return line;
     }
 
     public void removeMealLine(MealLineBO selectedRow)
     {
         if (selectedRow == null) return;
-        selectedRow.removeFromMeal();
+        selectedRow.getMeal().removeMealLines(selectedRow);
     }
 
     public MealLineBO addRecipeAsAlternative(MealLineBO mealLine,
             RecipeBO recipe)
     {
         MealLineBO alternative = new MealLineBO();
-        alternative.setParent(mealLine.getMealLine());
+        alternative.setParent(mealLine);
         alternative.setMeal(mealLine.getMeal());
-        alternative.setRecipe(recipe.getRecipe());
+        alternative.setRecipe(recipe);
         alternative.setQuantity(recipe.getAmount());
 
         // insert alternative after mealLine
         int index = mealLine.getMeal().getMealLines()
-                .indexOf(mealLine.getMealLine()) + 1;
-        mealLine.getMeal().getMealLines().add(index, alternative.getMealLine());
+                .indexOf(mealLine) + 1;
+        mealLine.getMeal().addMealLines(index, alternative);
         return alternative;
     }
 
@@ -122,18 +122,18 @@ public class DietPlanEditingController
 
         // update creator
         _dietPlan.setCreator(SystemUserController.getInstance()
-                .getCurrentUser().getSystemUser());
+                .getCurrentUser());
 
         try
         {
             HibernateUtil.currentSession().beginTransaction();
             DietPlanDAO dao = DAOFactory.getInstance().getDietPlanDAO();
-            dao.makePersistent(_dietPlan.getDietPlan());
+            dao.makePersistent(_dietPlan.getModel());
             _dietPlan = null;
             HibernateUtil.currentSession().getTransaction().commit();
             return true;
         }
-        catch(HibernateException e)
+        catch (HibernateException e)
         {
             HibernateUtil.currentSession().getTransaction().rollback();
             return false;
@@ -155,7 +155,7 @@ public class DietPlanEditingController
         if (_dietPlan != null && _dietPlan.getDietPlanId() > 0)
         {
             DietPlanDAO dao = DAOFactory.getInstance().getDietPlanDAO();
-            dao.refresh(_dietPlan.getDietPlan());
+            dao.refresh(_dietPlan.getModel());
         }
 
         MealDAO mealDao = DAOFactory.getInstance().getMealDAO();

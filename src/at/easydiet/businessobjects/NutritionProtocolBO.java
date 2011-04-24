@@ -1,242 +1,98 @@
 package at.easydiet.businessobjects;
 
+
 import java.sql.Clob;
 import java.util.Date;
-import java.util.Set;
 
-import at.easydiet.model.DietParameter;
-import at.easydiet.model.DietTreatment;
 import at.easydiet.model.NutritionProtocol;
-import at.easydiet.model.PlanType;
-import at.easydiet.model.SystemUser;
-import at.easydiet.model.TimeSpan;
 
-
-public class NutritionProtocolBO
+/**
+ * This class encapsules a NutritionProtocol instance.
+ */
+public class NutritionProtocolBO extends DietPlanBO
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(NutritionProtocolBO.class);
-
-    private NutritionProtocol _nutritionProtocol;
-    
-    public NutritionProtocol getNutritionProtocol()
-    {
-        return _nutritionProtocol;
-    }
-
+	private NutritionProtocol _model;
+	
     /**
-     * @return
-     * @see at.easydiet.model.DietPlan#getDietTreatment()
+     * Initializes a new instance of the {@link NutritionProtocolBO} class.
      */
-    public DietTreatment getDietTreatment()
-    {
-        return _nutritionProtocol.getDietTreatment();
-    }
-
-
-
-
+	public NutritionProtocolBO()
+	{
+		// TODO: add default values
+		this(new NutritionProtocol());
+	}
+	
     /**
-     * @param dietTreatment
-     * @see at.easydiet.model.DietPlan#setDietTreatment(at.easydiet.model.DietTreatment)
+     * Initializes a new instance of the {@link NutritionProtocolBO} class.
+     * @param model the original model object
      */
-    public void setDietTreatment(DietTreatment dietTreatment)
-    {
-        _nutritionProtocol.setDietTreatment(dietTreatment);
-    }
-
-
-
-
-    /** 
-     * Initializes a new instance of the {@link NutritionProtocolBO} class. 
-     * @param nutritionProtocol
+	public NutritionProtocolBO(NutritionProtocol model)
+	{
+	    super(model);
+		_model = model;
+	}
+	
+	/**
+	 * Gets the original model object used as object store for this BusinessObject.
+	 * @return the original {@link NutritionProtocol} object.
+	 */
+ 	public NutritionProtocol getModel()
+	{
+		return _model;
+	}
+	
+    /**       
+     * Gets the date of this instance. 
+     * @return the date currently set for this instance.
      */
-    public NutritionProtocolBO(NutritionProtocol nutritionProtocol)
+    public Date getDate() 
     {
-        super();
-        _nutritionProtocol = nutritionProtocol;
+        return _model.getDate();
     }
     
-    /**
-     * @return
-     * @see at.easydiet.model.NutritionProtocol#getDate()
-     */
-    public Date getDate()
+    /**       
+     * Sets the date of this instance. 
+     * @param date the new date of this instance.
+     */    
+    public void setDate(Date date) 
     {
-        return _nutritionProtocol.getDate();
+        _model.setDate(date);
     }
 
-    /**
-     * @param date
-     * @see at.easydiet.model.NutritionProtocol#setDate(java.util.Date)
+    /**       
+     * Gets the contact of this instance. 
+     * @return the contact currently set for this instance.
      */
-    public void setDate(Date date)
+    public String getContact() 
     {
-        _nutritionProtocol.setDate(date);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.NutritionProtocol#getContact()
-     */
-    public String getContact()
-    {
-        return _nutritionProtocol.getContact();
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietPlan#getDietPlanId()
-     */
-    public long getDietPlanId()
-    {
-        return _nutritionProtocol.getDietPlanId();
-    }
-
-    /**
-     * @param contact
-     * @see at.easydiet.model.NutritionProtocol#setContact(java.lang.String)
-     */
-    public void setContact(String contact)
-    {
-        _nutritionProtocol.setContact(contact);
-    }
-
-    /**
-     * @param dietPlanId
-     * @see at.easydiet.model.DietPlan#setDietPlanId(long)
-     */
-    public void setDietPlanId(long dietPlanId)
-    {
-        _nutritionProtocol.setDietPlanId(dietPlanId);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.NutritionProtocol#getNotice()
-     */
-    public Clob getNotice()
-    {
-        return _nutritionProtocol.getNotice();
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietPlan#getName()
-     */
-    public String getName()
-    {
-        return _nutritionProtocol.getName();
-    }
-
-    /**
-     * @param notice
-     * @see at.easydiet.model.NutritionProtocol#setNotice(java.sql.Clob)
-     */
-    public void setNotice(Clob notice)
-    {
-        _nutritionProtocol.setNotice(notice);
-    }
-
-    /**
-     * @param name
-     * @see at.easydiet.model.DietPlan#setName(java.lang.String)
-     */
-    public void setName(String name)
-    {
-        _nutritionProtocol.setName(name);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietPlan#getCreatedOn()
-     */
-    public Date getCreatedOn()
-    {
-        return _nutritionProtocol.getCreatedOn();
-    }
-
-    /**
-     * @param createdOn
-     * @see at.easydiet.model.DietPlan#setCreatedOn(java.util.Date)
-     */
-    public void setCreatedOn(Date createdOn)
-    {
-        _nutritionProtocol.setCreatedOn(createdOn);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietPlan#getPlanType()
-     */
-    public PlanType getPlanType()
-    {
-        return _nutritionProtocol.getPlanType();
-    }
-
-    /**
-     * @param planType
-     * @see at.easydiet.model.DietPlan#setPlanType(at.easydiet.model.PlanType)
-     */
-    public void setPlanType(PlanType planType)
-    {
-        _nutritionProtocol.setPlanType(planType);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietPlan#getDietParameters()
-     */
-    public Set<DietParameter> getDietParameters()
-    {
-        return _nutritionProtocol.getDietParameters();
-    }
-
-    /**
-     * @param dietParameters
-     * @see at.easydiet.model.DietPlan#setDietParameters(java.util.Set)
-     */
-    public void setDietParameters(Set<DietParameter> dietParameters)
-    {
-        _nutritionProtocol.setDietParameters(dietParameters);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietPlan#getCreator()
-     */
-    public SystemUser getCreator()
-    {
-        return _nutritionProtocol.getCreator();
-    }
-
-    /**
-     * @param creator
-     * @see at.easydiet.model.DietPlan#setCreator(at.easydiet.model.SystemUser)
-     */
-    public void setCreator(SystemUser creator)
-    {
-        _nutritionProtocol.setCreator(creator);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietPlan#getTimeSpans()
-     */
-    public Set<TimeSpan> getTimeSpans()
-    {
-        return _nutritionProtocol.getTimeSpans();
-    }
-
-    /**
-     * @param timeSpans
-     * @see at.easydiet.model.DietPlan#setTimeSpans(java.util.Set)
-     */
-    public void setTimeSpans(Set<TimeSpan> timeSpans)
-    {
-        _nutritionProtocol.setTimeSpans(timeSpans);
+        return _model.getContact();
     }
     
+    /**       
+     * Sets the contact of this instance. 
+     * @param contact the new contact of this instance.
+     */    
+    public void setContact(String contact) 
+    {
+        _model.setContact(contact);
+    }
+
+    /**       
+     * Gets the notice of this instance. 
+     * @return the notice currently set for this instance.
+     */
+    public Clob getNotice() 
+    {
+        return _model.getNotice();
+    }
     
+    /**       
+     * Sets the notice of this instance. 
+     * @param notice the new notice of this instance.
+     */    
+    public void setNotice(Clob notice) 
+    {
+        _model.setNotice(notice);
+    }
+
 }

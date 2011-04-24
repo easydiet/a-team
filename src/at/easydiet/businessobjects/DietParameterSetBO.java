@@ -1,42 +1,71 @@
 package at.easydiet.businessobjects;
 
-import java.util.Set;
+
+import org.apache.pivot.collections.List;
+import org.apache.pivot.collections.ArrayList;
 
 import at.easydiet.model.DietParameterSet;
 import at.easydiet.model.DietParameterTemplate;
 
+/**
+ * This class encapsules a DietParameterSet instance.
+ */
 public class DietParameterSetBO
 {
-	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-    .getLogger(DietPlanBO.class);
-
-	private DietParameterSet	_dietParameterSet;
-
-	public DietParameterSetBO(DietParameterSet dietParameterSet) {
-		super();
-		_dietParameterSet = dietParameterSet;
-	}
-
-	public DietParameterSet getDietParameterSet() {
-		return _dietParameterSet;
+	private DietParameterSet _model;
+	
+    /**
+     * Initializes a new instance of the {@link DietParameterSetBO} class.
+     */
+	public DietParameterSetBO()
+	{
+		// TODO: add default values
+		this(new DietParameterSet());
 	}
 	
-	 /**       
+    /**
+     * Initializes a new instance of the {@link DietParameterSetBO} class.
+     * @param model the original model object
+     */
+	public DietParameterSetBO(DietParameterSet model)
+	{
+		_model = model;
+	}
+	
+	/**
+	 * Gets the original model object used as object store for this BusinessObject.
+	 * @return the original {@link DietParameterSet} object.
+	 */
+ 	public DietParameterSet getModel()
+	{
+		return _model;
+	}
+	
+    /**       
      * Gets the dietParameterSetId of this instance. 
      * @return the dietParameterSetId currently set for this instance.
      */
     public long getDietParameterSetId() 
     {
-        return _dietParameterSet.getDietParameterSetId();
+        return _model.getDietParameterSetId();
     }
     
+    /**       
+     * Sets the dietParameterSetId of this instance. 
+     * @param dietParameterSetId the new dietParameterSetId of this instance.
+     */    
+    public void setDietParameterSetId(long dietParameterSetId) 
+    {
+        _model.setDietParameterSetId(dietParameterSetId);
+    }
+
     /**       
      * Gets the name of this instance. 
      * @return the name currently set for this instance.
      */
     public String getName() 
     {
-        return _dietParameterSet.getName();
+        return _model.getName();
     }
     
     /**       
@@ -45,40 +74,60 @@ public class DietParameterSetBO
      */    
     public void setName(String name) 
     {
-        _dietParameterSet.setName(name);
+        _model.setName(name);
     }
-    
-    /**       
-     * Gets the dietParameterTemplates of this instance. 
-     * @return the dietParameterTemplates currently set for this instance.
-     */
-    public Set<DietParameterTemplate> getDietParameterTemplates() 
-    {
-        return _dietParameterSet.getDietParameterTemplates();
-    }
-    
-    /**       
-     * Sets the dietParameterTemplates of this instance. 
-     * @param dietParameterTemplates the new dietParameterTemplates of this instance.
-     */    
-    public void setDietParameterTemplates(Set<DietParameterTemplate> dietParameterTemplates) 
-    {
-        _dietParameterSet.setDietParameterTemplates(dietParameterTemplates);
-    }
-    
+
+
+	private List<DietParameterTemplateBO> _dietParameterTemplates;
+	
     /**
-     * Returns a string representation of this instance.
-     * @return a string
+     * Gets a list of referenced DietParameterTemplates of this instance.
+     * This list is cached, use {@link DietParameterSet#updateDietParameterTemplatesCache()) to update this cache.
+     * @return a cached list of referenced DietParameterTemplates wrapped into the correct businessobject. 
      */
-    @Override
-    public String toString() 
+    public List<DietParameterTemplateBO> getDietParameterTemplates()
     {
-        StringBuilder builder = new StringBuilder();
-        builder.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-		// interesting values
-        builder.append("]");
-      
-        return builder.toString();
+        if(_dietParameterTemplates == null) 
+        {
+            _dietParameterTemplates = new ArrayList<DietParameterTemplateBO>();
+            for(DietParameterTemplate dietParameterTemplates : _model.getDietParameterTemplates())
+            {
+                _dietParameterTemplates.add(new DietParameterTemplateBO(dietParameterTemplates));
+            }
+        }
+        return _dietParameterTemplates;
     }
 	
+    /**
+     * Adds a new DietParameterTemplate to the list of referenced dietParameterTemplates.
+     * The cache will updated
+     * @param dietParameterTemplates the DietParameterTemplate to add. 
+     */
+    public void addDietParameterTemplates(DietParameterTemplateBO dietParameterTemplates)
+    {
+        getDietParameterTemplates().add(dietParameterTemplates);
+        _model.getDietParameterTemplates().add(dietParameterTemplates.getModel());
+    }
+    
+        
+    /**
+     * Removes the given DietParameterTemplate from the list of referenced dietParameterTemplates.
+     * The cache will updated
+     * @param dietParameterTemplates the timespan to add. 
+     */
+    public void removeDietParameterTemplates(DietParameterTemplateBO dietParameterTemplates)
+    {
+        getDietParameterTemplates().remove(dietParameterTemplates);
+        _model.getDietParameterTemplates().remove(dietParameterTemplates.getModel());
+    }
+	
+    /**
+     * Rebuilds the cache for referenced dietParameterTemplates.
+     */
+    public void updateDietParameterTemplatesCache()
+    {
+        _dietParameterTemplates = null;
+        getDietParameterTemplates();
+    }
+
 }

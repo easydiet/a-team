@@ -4,13 +4,13 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="at.easydiet.model">
 	<class name="Gender">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
 	</class>
 
 	<class name="Patient">
-
 		<id name="patientId" column="PatientId" type="long">
 			<generator class="native" />
 		</id>
@@ -114,6 +114,7 @@
 	</class>
 
 	<class name="ContactType">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
@@ -135,6 +136,7 @@
 	</class>
 
 	<class name="ParameterDefinitionDataType">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
@@ -203,12 +205,14 @@
 	</class>
 
 	<class name="SystemUserFunction">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
 	</class>
 
 	<class name="TreatmentState">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
@@ -249,6 +253,7 @@
 	</class>
 
 	<class name="PlanType">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
@@ -375,6 +380,7 @@
 	</class>
 
 	<class name="PatientStateType">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
@@ -388,10 +394,10 @@
 
 		<property name="date" column="Date" type="timestamp" not-null="true" />
 		<property name="anamnesis" column="Anamnesis" type="clob" />
-		<property name="weight" column="Weight" type="integer" />
+		<property name="weight" column="Weight" type="int" />
 		<property name="weightPercentile" column="WeightPercentile"
 			type="float" />
-		<property name="height" column="Height" type="integer" />
+		<property name="height" column="Height" type="int" />
 		<property name="heightPercentile" column="HeightPercentile"
 			type="float" />
 		<property name="compliance" column="Compliance" type="int" />
@@ -452,6 +458,7 @@
 	</class>
 
 	<class name="CheckOperator">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
@@ -471,6 +478,7 @@
 	</class>
 
 	<class name="DietParameterType">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>

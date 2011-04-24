@@ -327,7 +327,7 @@ public class MealContainer extends BoxPane
     private void deleteMeal()
     {
         getParent().remove(this);
-        _meal.removeFromTimeSpan();
+        _meal.getTimeSpan().removeMeals(_meal);
     }
 
     /**

@@ -1,6 +1,6 @@
 package at.easydiet.businesslogic;
 
-import org.apache.pivot.collections.ArrayList;
+import org.apache.pivot.collections.List;
 
 import at.easydiet.businessobjects.DietTreatmentBO;
 import at.easydiet.businessobjects.LaborReportBO;
@@ -15,9 +15,9 @@ public class PatientDetailViewController
                                                             .getLogger(PatientDetailViewController.class);
 
     private PatientBO                           _patient;
-    private ArrayList<DietTreatmentBO>          _dietTreatments;
-    private ArrayList<PatientStateBO>           _patientStates;
-    private ArrayList<LaborReportBO>            _laborReports;
+    private List<DietTreatmentBO>          _dietTreatments;
+    private List<PatientStateBO>           _patientStates;
+    private List<LaborReportBO>            _laborReports;
 
     private static PatientDetailViewController  _singleton;
 
@@ -46,17 +46,17 @@ public class PatientDetailViewController
         reloadPatientData();
     }
 
-    public ArrayList<DietTreatmentBO> getDietTreatments()
+    public List<DietTreatmentBO> getDietTreatments()
     {
         return _dietTreatments;
     }
 
-    public ArrayList<PatientStateBO> getPatientStates()
+    public List<PatientStateBO> getPatientStates()
     {
         return _patientStates;
     }
 
-    public ArrayList<LaborReportBO> getLaborReports()
+    public List<LaborReportBO> getLaborReports()
     {
         return _laborReports;
     }
@@ -64,15 +64,20 @@ public class PatientDetailViewController
     public void reloadPatientData()
     {
         if (_patient == null) return;
-        _dietTreatments = _patient.getTreatmentBOs();
-        _patientStates = _patient.getPatientStateBOs();
-        _laborReports = _patient.getLaborReportBOs();
+        _dietTreatments = _patient.getTreatments();
+        _patientStates = _patient.getPatientStates();
+        _laborReports = _patient.getLaborReports();
     }
     
     public void refresh()
     {
         PatientDAO dao = DAOFactory.getInstance().getPatientDAO();
-        dao.refresh(_patient.getPatient());
+        dao.refresh(_patient.getModel());
+        _patient.updateDisfavorsCache();
+        _patient.updateFamilyanamnesisCache();
+        _patient.updateLaborReportsCache();
+        _patient.updatePatientStatesCache();
+        _patient.updateTreatmentsCache();
         reloadPatientData();
     }
 }

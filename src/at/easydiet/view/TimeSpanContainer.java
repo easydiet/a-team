@@ -69,7 +69,7 @@ public class TimeSpanContainer extends BoxPane
         _startDateButton.setSelectedDate(_timeSpan.getStartDate());
         _endDateButton.setSelectedDate(_timeSpan.getEndDate());
         _mealBox.removeAll();
-        for (MealBO meal : _timeSpan.getMealBOs())
+        for (MealBO meal : _timeSpan.getMeals())
         {
             addMeal(meal);
         }
@@ -324,6 +324,6 @@ public class TimeSpanContainer extends BoxPane
     private void deleteTimeSpan()
     {
         getParent().remove(this);
-        _timeSpan.removeFromDietPlan();
+        _timeSpan.getDietPlan().removeTimeSpans(_timeSpan);
     }
 }

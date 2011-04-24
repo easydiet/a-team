@@ -1,6 +1,6 @@
 package at.easydiet.businesslogic;
 
-import org.apache.pivot.collections.ArrayList;
+import org.apache.pivot.collections.List;
 
 import at.easydiet.businessobjects.ContactJournalBO;
 import at.easydiet.businessobjects.DietPlanBO;
@@ -15,9 +15,9 @@ public class DietTreatmentDetailViewController
                                                                  .getLogger(DietTreatmentDetailViewController.class);
 
     private DietTreatmentBO                          _dietTreatment;
-    private ArrayList<DietPlanBO>                    _dietPlans;
-    private ArrayList<ContactJournalBO>              _contactJournals;
-    private ArrayList<NutritionProtocolBO>           _nutritionProtocols;
+    private List<DietPlanBO>                    _dietPlans;
+    private List<ContactJournalBO>              _contactJournals;
+    private List<NutritionProtocolBO>           _nutritionProtocols;
 
     private static DietTreatmentDetailViewController _singleton;
 
@@ -46,12 +46,12 @@ public class DietTreatmentDetailViewController
         reloadTreatmentData();
     }
 
-    public ArrayList<DietPlanBO> getDietPlans()
+    public List<DietPlanBO> getDietPlans()
     {
         return _dietPlans;
     }
 
-    public ArrayList<ContactJournalBO> getContactJournals()
+    public List<ContactJournalBO> getContactJournals()
     {
         return _contactJournals;
     }
@@ -59,12 +59,12 @@ public class DietTreatmentDetailViewController
     public void reloadTreatmentData()
     {
         if (_dietTreatment == null) return;
-        _dietPlans = _dietTreatment.getDietPlanBOs();
-        _contactJournals = _dietTreatment.getContactJournalBOs();
-        _nutritionProtocols = _dietTreatment.getNutritionProtocolBOs();
+        _dietPlans = _dietTreatment.getDietPlans();
+        _contactJournals = _dietTreatment.getContactJournals();
+        _nutritionProtocols = _dietTreatment.getNutritionProtocols();
     }
 
-    public ArrayList<NutritionProtocolBO> getNutritionProcotols()
+    public List<NutritionProtocolBO> getNutritionProcotols()
     {
         return _nutritionProtocols;
     }
@@ -72,7 +72,13 @@ public class DietTreatmentDetailViewController
     public void refresh()
     {
         DietTreatmentDAO dao = DAOFactory.getInstance().getDietTreatmentDAO();
-        dao.refresh(_dietTreatment.getTreatment());
+        dao.refresh(_dietTreatment.getModel());
+        _dietTreatment.updateContactJournalsCache();
+        _dietTreatment.updateDietParametersCache();
+        _dietTreatment.updateDietPlansCache();
+        _dietTreatment.updateNutritionProtocolsCache();
+        _dietTreatment.updatePatientStatesCache();
+        _dietTreatment.updateSystemUsersCache();
         reloadTreatmentData();
     }
 }

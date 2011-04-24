@@ -1,6 +1,6 @@
 package at.easydiet.businesslogic;
 
-import org.apache.pivot.collections.ArrayList;
+import org.apache.pivot.collections.List;
 
 import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.MealLineBO;
@@ -11,7 +11,7 @@ public class MealContainerController
                                                             .getLogger(MealContainerController.class);
 
     private MealBO                              _meal;
-    private ArrayList<MealLineBO>               _mealLines;
+    private List<MealLineBO>               _mealLines;
 
     /**
      * Gets the meal.
@@ -34,14 +34,14 @@ public class MealContainerController
 
     public void refresh()
     {
-        _mealLines = _meal.getMealLineBOs();
+        _mealLines = _meal.getMealLines();
     }
 
     /**
      * Gets the mealLines.
      * @return the mealLines
      */
-    public ArrayList<MealLineBO> getMealLines()
+    public List<MealLineBO> getMealLines()
     {
         return _mealLines;
     }
