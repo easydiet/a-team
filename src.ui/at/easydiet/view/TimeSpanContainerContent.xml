@@ -63,7 +63,7 @@
 					>
 						<ScrollPane>
 							<easy:ParameterTableView
-								bxml:id="dietPlanParameterTableView"
+								bxml:id="timeSpanContainerParameterTableView"
 							>
 								<columns>
 									<TableView.Column

@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.pivot.collections.ArrayList;
+import org.apache.pivot.collections.List;
 
 import at.easydiet.businessobjects.CheckOperatorBO;
 import at.easydiet.businessobjects.DietParameterBO;
@@ -37,7 +38,7 @@ public class ParameterValidator {
 
 	}
 
-	public boolean isValid(ArrayList<DietParameterBO> checkList) {
+	public boolean isValid(List<DietParameterBO> checkList) {
 
 		return this.isValid(listToSet(checkList));
 	}
@@ -47,7 +48,7 @@ public class ParameterValidator {
 		return this.isValid(listToSet(checkList), conflictingParameters);
 	}
 
-	private Set<DietParameterBO> listToSet(ArrayList<DietParameterBO> checkList) {
+	private Set<DietParameterBO> listToSet(List<DietParameterBO> checkList) {
 		Set<DietParameterBO> checkSet = new HashSet<DietParameterBO>();
 		for (DietParameterBO dietParameterBO : checkList) {
 			checkSet.add(dietParameterBO);

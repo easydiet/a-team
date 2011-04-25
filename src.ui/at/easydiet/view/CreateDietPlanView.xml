@@ -47,14 +47,15 @@
 		<BoxPane
 			styles="{padding: 5}"
 		>
-			<ScrollPane>
+			<ScrollPane preferredHeight="150">
 				<easy:ParameterTableView
 					bxml:id="dietPlanParameterTableView"
 				>
 					<columns>
 						<TableView.Column
 							name="parameterDefinitionBO.name"
-							width="100"
+							headerData="Definition"
+							width="150"
 						>
 							<cellRenderer>
 								<easycontent:ParameterCellRenderer />
@@ -62,7 +63,8 @@
 						</TableView.Column>
 						<TableView.Column
 							name="checkOperatorBO.name"
-							width="40"
+							headerData="Operator"
+							width="-1"
 						>
 							<cellRenderer>
 								<easycontent:ParameterCellRenderer />
@@ -70,6 +72,7 @@
 						</TableView.Column>
 						<TableView.Column
 							name="value"
+							headerData="Wert"
 							width="100"
 						>
 							<cellRenderer>
@@ -78,7 +81,8 @@
 						</TableView.Column>
 						<TableView.Column
 							name="selectedUnitBO.name"
-							width="100"
+							headerData="Einheit"
+							width="150"
 						>
 							<cellRenderer>
 								<easycontent:ParameterCellRenderer />
@@ -133,7 +137,15 @@
 					</rowEditor>
 
 				</easy:ParameterTableView>
+				<columnHeader>
+	                <TableViewHeader tableView="$dietPlanParameterTableView" />
+	            </columnHeader>
 			</ScrollPane>
+		
+			<BoxPane orientation="vertical">
+				<easy:SimpleButton text="Parameter hinzufügen" bxml:id="addDietPlanParameters" />
+				<easy:SimpleButton text="Parameter entfernen" bxml:id="removeDietPlanParameter"/>
+			</BoxPane>
 		</BoxPane>
 	</Rollup>
 	<easy:SimpleButton

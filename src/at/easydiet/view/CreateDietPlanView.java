@@ -3,17 +3,22 @@ package at.easydiet.view;
 import java.net.URL;
 
 import org.apache.pivot.beans.Bindable;
+import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.PushButton;
+import org.apache.pivot.wtk.TableView.Column;
 
 import at.easydiet.businesslogic.DietTreatmentDetailViewController;
+import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.domainlogic.DietPlanEditingController;
+import at.easydiet.validation.ParameterValidator;
+import at.easydiet.view.content.ParameterCellRenderer;
 
 public class CreateDietPlanView extends EasyDietContentView implements Bindable
 { 
@@ -21,6 +26,7 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable
                                                             .getLogger(CreateDietPlanView.class);
 
     private BoxPane _timeSpanContainer;
+    private ParameterTableView _parameterTableView;
     
     
     
@@ -32,6 +38,8 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable
             Resources resources)
     {
         _timeSpanContainer = (BoxPane) namespace.get("timeSpanContainer");
+        
+        _parameterTableView = (ParameterTableView) namespace.get("dietPlanParameterTableView");
         
         ButtonPressListener createTimeSpan = new ButtonPressListener()
         {
@@ -75,6 +83,17 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable
     {
         DietPlanEditingController.getInstance().createNew(DietTreatmentDetailViewController.getInstance().getDietTreatment());
         DietPlanEditingController.getInstance().refresh();
+        
+        List<DietParameterBO> listData = DietPlanEditingController.getInstance().getDietPlan().getDietParameters();
+        
+        _parameterTableView.setTableData(listData);
+        ParameterValidator parameterValidator = new ParameterValidator();
+        parameterValidator.isValid(listData);
+        
+        for(Column col : _parameterTableView.getColumns())
+        {
+        	((ParameterCellRenderer)col.getCellRenderer()).setValidator(parameterValidator);
+        }
     }
     
     public void rebuildUI()
