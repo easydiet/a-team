@@ -1,61 +1,185 @@
 <!-- START: Timespan -->
-<Border styles="{cornerRadii:10, padding:5, backgroundColor: '#F0F0F0'}"
-xmlns:bxml="http://pivot.apache.org/bxml"
-xmlns:easy="at.easydiet.view"
-xmlns:easyui="at.easydiet.view.controls"
-xmlns:content="org.apache.pivot.wtk.content"
-xmlns:effects="org.apache.pivot.wtk.effects"
-xmlns:collections="org.apache.pivot.collections"
-xmlns="org.apache.pivot.wtk"
+<Border
+	styles="{cornerRadii:10, padding:5, backgroundColor: '#F0F0F0'}"
+	xmlns:bxml="http://pivot.apache.org/bxml"
+	xmlns:easy="at.easydiet.view"
+	xmlns:easycontent="at.easydiet.view.content"
+	xmlns:easyui="at.easydiet.view.controls"
+	xmlns:content="org.apache.pivot.wtk.content"
+	xmlns:effects="org.apache.pivot.wtk.effects"
+	xmlns:collections="org.apache.pivot.collections"
+	xmlns="org.apache.pivot.wtk"
 >
 	<decorators>
-		<effects:DropShadowDecorator xOffset="0" yOffset="0" blurRadius="7" />
+		<effects:DropShadowDecorator
+			xOffset="0"
+			yOffset="0"
+			blurRadius="7" />
 	</decorators>
 	<!-- START: Collapsible Timespan Content -->
-	<Rollup expanded="true" styles="{fill:true}">
+	<Rollup
+		expanded="true"
+		styles="{fill:true}"
+	>
 		<heading>
 			<!-- START: Timespan setup -->
-			<BoxPane orientation="horizontal" styles="{verticalAlignment:'center'}">
-				<Label text="Von" />
-				<CalendarButton bxml:id="startDate" />
-				<Label text="Dauer" />
-				<Label bxml:id="durationLabel" />
-				<CalendarButton bxml:id="endDate" />
+			<BoxPane
+				orientation="horizontal"
+				styles="{verticalAlignment:'center'}"
+			>
+				<Label
+					text="Von" />
+				<CalendarButton
+					bxml:id="startDate" />
+				<Label
+					text="Dauer" />
+				<Label
+					bxml:id="durationLabel" />
+				<CalendarButton
+					bxml:id="endDate" />
 			</BoxPane>
 			<!-- END: Timespan setup -->
 		</heading>
 		<TablePane>
 			<columns>
-				<TablePane.Column width="1*" />
-				<TablePane.Column width="100" />
+				<TablePane.Column
+					width="1*" />
+				<TablePane.Column
+					width="100" />
 			</columns>
 			<TablePane.Row>
 				<!-- START: Parameter of Timespan -->
 				<Rollup>
 					<heading>
-						<BoxPane styles="{padding: 5}">
-							<Label text="Zielparameter des Zeitraums festlegen" />
+						<BoxPane
+							styles="{padding: 5}"
+						>
+							<Label
+								text="Zielparameter des Zeitraums festlegen" />
 						</BoxPane>
 					</heading>
-					<BoxPane styles="{padding: 5}">
-						<Label text="Hallo Parameterwelt" />
+					<BoxPane
+						styles="{padding: 5}"
+					>
+						<ScrollPane>
+							<easy:ParameterTableView
+								bxml:id="dietPlanParameterTableView"
+							>
+								<columns>
+									<TableView.Column
+										name="parameterDefinitionBO.name"
+										width="100"
+									>
+										<cellRenderer>
+											<easycontent:ParameterCellRenderer />
+										</cellRenderer>
+									</TableView.Column>
+									<TableView.Column
+										name="checkOperatorBO.name"
+										width="40"
+									>
+										<cellRenderer>
+											<easycontent:ParameterCellRenderer />
+										</cellRenderer>
+									</TableView.Column>
+									<TableView.Column
+										name="value"
+										width="100"
+									>
+										<cellRenderer>
+											<easycontent:ParameterCellRenderer />
+										</cellRenderer>
+									</TableView.Column>
+									<TableView.Column
+										name="selectedUnitBO.name"
+										width="100"
+									>
+										<cellRenderer>
+											<easycontent:ParameterCellRenderer />
+										</cellRenderer>
+									</TableView.Column>
+									<TableView.Column
+										name="validationResult"
+										width="-1"
+									>
+										<cellRenderer>
+											<easycontent:ParameterCellRenderer
+												errorImageVisible="true" />
+										</cellRenderer>
+									</TableView.Column>
+								</columns>
+
+								<rowEditor>
+									<easy:EasyTableViewRowEditor
+										editEffect="horizontal_slide"
+									>
+										<cellEditors>
+											<parameterDefinitionBO.name>
+												<ListButton
+													selectedItemKey="parameterDefinitionBO"
+													selectedItemBindType="store" />
+											</parameterDefinitionBO.name>
+
+											<checkOperatorBO.name>
+												<ListButton
+													selectedItemKey="checkOperatorBO"
+													selectedItemBindType="store" />
+											</checkOperatorBO.name>
+
+											<value>
+												<TextInput
+													textKey="value"
+												>
+												</TextInput>
+											</value>
+
+											<selectedUnitBO.name>
+												<ListButton
+													selectedItemKey="selectedUnitBO"
+													selectedItemBindType="store" />
+											</selectedUnitBO.name>
+
+											<validationResult>
+												<Label />
+											</validationResult>
+										</cellEditors>
+									</easy:EasyTableViewRowEditor>
+								</rowEditor>
+
+							</easy:ParameterTableView>
+						</ScrollPane>
 					</BoxPane>
 				</Rollup>
 				<!-- END: Parameter of Timespan -->
-				<LinkButton styles="{color:'#DD0000'}" bxml:id="deleteButton" >
-					<content:ButtonData text="Zeitraum löschen" />
+				<LinkButton
+					styles="{color:'#DD0000'}"
+					bxml:id="deleteButton"
+				>
+					<content:ButtonData
+						text="Zeitraum löschen" />
 				</LinkButton>
 			</TablePane.Row>
 			<TablePane.Row>
-				<BoxPane orientation="vertical" styles="{fill:true}">
-					<easy:SimpleButton text="Neue Mahlzeit" bxml:id="createMealTop" />
+				<BoxPane
+					orientation="vertical"
+					styles="{fill:true}"
+				>
+					<easy:SimpleButton
+						text="Neue Mahlzeit"
+						bxml:id="createMealTop" />
 					<!-- START: Meal -->
-					<BoxPane orientation="vertical" styles="{fill:true}" TablePane.columnSpan="2"
-					bxml:id="mealBox">
+					<BoxPane
+						orientation="vertical"
+						styles="{fill:true}"
+						TablePane.columnSpan="2"
+						bxml:id="mealBox"
+					>
 						<!-- MealBoxes will added here -->
 					</BoxPane>
 					<!-- END: Meal -->
-					<easy:SimpleButton text="Neue Mahlzeit" bxml:id="createMealBottom" />
+					<easy:SimpleButton
+						text="Neue Mahlzeit"
+						bxml:id="createMealBottom" />
 				</BoxPane>
 			</TablePane.Row>
 		</TablePane>
