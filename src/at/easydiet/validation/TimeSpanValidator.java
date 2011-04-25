@@ -22,11 +22,6 @@ import at.easydiet.model.TimeSpan;
 public class TimeSpanValidator {
 	private Set<TimeSpanBO> _source = new HashSet<TimeSpanBO>();
 
-	/*public TimeSpanValidator(Patient patient) {
-		for (TimeSpan timespan : DAOFactory.getInstance().getTimeSpanDAO().findByPatient(patient)) {
-			_source.add(new TimeSpanBO(timespan));
-		}
-	}*/
 
 	public void overlappingTimeSpan(PatientBO currentPatient,
 			DietTreatmentBO currentDietTreatment, DietPlanBO currentDietPlan,
@@ -66,9 +61,9 @@ public class TimeSpanValidator {
 	}
 
 	/**
-	 * compares all timespans from a patient and checks if they overlap or not
+	 * compares timespans from and checks if they overlap or not
 	 * 
-	 * @return returns whether the timespans of all dietarytreatments overlap
+	 * @return returns if the timespans overlap
 	 */
 	public boolean correctValidation(Date tempStart, Date tempEnd,
 			Date toCompareStart, Date toCompareEnd) {
@@ -85,6 +80,7 @@ public class TimeSpanValidator {
 	/**
 	 * @param args
 	 */
+	/* Runner
 	public static void main(String[] args) {
 		PatientDAO p = DAOFactory.getInstance().getPatientDAO();
 		DietTreatmentDAO treat = DAOFactory.getInstance().getDietTreatmentDAO();
@@ -114,5 +110,5 @@ public class TimeSpanValidator {
 			}
 			
 			
-	}
+	}*/
 }
