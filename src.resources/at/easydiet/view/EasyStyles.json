@@ -1,0 +1,17 @@
+{  
+	Label: {
+		color: '#2e2e2e'
+	},
+	
+	TableViewCellRenderer: {
+		color: '#2e2e2e'
+	},
+	
+	Button: {
+		font: {
+			name: "Arial"
+			size: 14,
+			bold: true
+		}
+	}	
+}

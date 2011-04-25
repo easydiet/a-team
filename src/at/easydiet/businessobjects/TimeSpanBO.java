@@ -201,6 +201,7 @@ public class TimeSpanBO
      */
     public void addMeals(MealBO meals)
     {
+        meals.setTimeSpan(this);
         getMeals().add(meals);
         _model.getMeals().add(meals.getModel());
     }

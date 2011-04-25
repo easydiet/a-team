@@ -202,6 +202,7 @@ public class DietTreatmentBO
      */
     public void addDietPlans(DietPlanBO dietPlans)
     {
+        dietPlans.setDietTreatment(this);
         getDietPlans().add(dietPlans);
         _model.getDietPlans().add(dietPlans.getModel());
     }

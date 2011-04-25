@@ -1,15 +1,19 @@
 package at.easydiet.view;
 
+import java.awt.Font;
 import java.net.URL;
 
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Action;
+import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.FlowPane;
+import org.apache.pivot.wtk.MenuBar;
 import org.apache.pivot.wtk.Prompt;
+import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Window;
 
 public class EasyDietMainWindow extends Window implements Bindable
@@ -17,6 +21,7 @@ public class EasyDietMainWindow extends Window implements Bindable
     public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(EasyDietMainWindow.class);
 
+    private MenuBar                             _menu;
     private FlowPane                            _navigation;
     private BoxPane                             _content;
     private BoxPane                             _toolbar;
@@ -68,7 +73,7 @@ public class EasyDietMainWindow extends Window implements Bindable
             @Override
             public void perform(Component source)
             {
-                Prompt.prompt("Jetzt sollte sich die Hilfe öffnen.", source
+                Prompt.prompt("Die Hilfe ist zurzeit leider noch nicht verfügbar.", source
                         .getWindow().getRootOwner());
             }
         });
@@ -78,7 +83,7 @@ public class EasyDietMainWindow extends Window implements Bindable
             @Override
             public void perform(Component source)
             {
-                Prompt.prompt("EasyDiet v.0.0.0.0.0.0.0.0.0.0.0.1", source
+                Prompt.prompt("EasyDiet v0.1 (dev)", source
                         .getWindow().getRootOwner());
             }
         });
@@ -109,6 +114,7 @@ public class EasyDietMainWindow extends Window implements Bindable
         _content = (BoxPane) ns.get("content");
         _navigation = (FlowPane) ns.get("navigation");
         _toolbar = (BoxPane) ns.get("toolbar");
+        _menu = (MenuBar) ns.get("menu");
 
         ViewController.getInstance().loadContent("DashboardView", this);
     }
