@@ -1,46 +1,59 @@
 package at.easydiet.businessobjects;
 
+
 import at.easydiet.model.ParameterDefinitionDataType;
 
-public enum ParameterDefinitionDataTypeBO {
-	NUMBERS ("Numbers"),
-	ENUMERATION ("Enumeration"),
-	STRING ("String");
+/**
+ * This class encapsules a ParameterDefinitionDataType instance.
+ */
+public enum ParameterDefinitionDataTypeBO
+{
+    NUMBERS ("Numbers"),
+    ENUMERATION ("Enumeration"),
+    STRING ("String");
+    
+	private ParameterDefinitionDataType _model;
 
-	private ParameterDefinitionDataType _parameterDefinitionDataType;
-	
-	private ParameterDefinitionDataTypeBO(String name) {
-		_parameterDefinitionDataType = new ParameterDefinitionDataType(name);
-	}
-
-    /**       
-     * Gets the name of this instance. 
-     * @return the name currently set for this instance.
+    /**
+     * Initializes a new instance of the {@link ParameterDefinitionDataTypeBO} enum.
+     * @param model the enum value
      */
-    public String getName() 
-    {
-        return _parameterDefinitionDataType.getName();
-    }
-    
-    /**       
-     * Sets the name of this instance. 
-     * @param name the new name of this instance.
-     */    
-    public void setName(String name) 
-    {
-        _parameterDefinitionDataType.setName(name);
-    }
-    
-    public static ParameterDefinitionDataTypeBO getForOperator(ParameterDefinitionDataType data)
+	private ParameterDefinitionDataTypeBO(String value)
 	{
-		for (ParameterDefinitionDataTypeBO current : values()) 
+		_model = new ParameterDefinitionDataType(value);
+	}
+	
+	/**
+	 * Gets the original model object used as object store for this BusinessObject.
+	 * @return the original {@link ParameterDefinitionDataType} object.
+	 */
+ 	public ParameterDefinitionDataType getModel()
+	{
+		return _model;
+	}
+	
+    /**
+     * Gets the name of this enum value.
+     * @return the name of this enum value
+     */
+    public String getName()
+    {
+        return _model.getName();
+    }
+    
+	/**
+	 * Returns the BusinessObject matching to the specified model object.
+	 * @returns the enum value matching to the given model or the default value. 
+	 */
+	public static ParameterDefinitionDataTypeBO getForModel(ParameterDefinitionDataType model)
+	{
+		for(ParameterDefinitionDataTypeBO bo : values())
 		{
-			if(current.getName().equals(data.getName()))
+			if(bo.getModel().getName().equals(model.getName()))
 			{
-				return current;
+				return bo;
 			}
 		}
-		//default value
 		return NUMBERS;
 	}
 }

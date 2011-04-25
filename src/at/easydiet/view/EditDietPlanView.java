@@ -74,7 +74,7 @@ public class EditDietPlanView extends EasyDietContentView implements Bindable
         DietPlanBO dietPlan = DietPlanEditingController.getInstance().getDietPlan();
         
         _timeSpanContainer.removeAll();
-        for (TimeSpanBO timeSpan : dietPlan.getSortedTimeSpanBOs())
+        for (TimeSpanBO timeSpan : dietPlan.getSortedTimeSpans())
         {
             addTimeSpan(timeSpan);
         }

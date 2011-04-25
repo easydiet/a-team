@@ -1,28 +1,43 @@
 package at.easydiet.businessobjects;
 
+
 import java.util.Date;
 
-import at.easydiet.dao.DAOFactory;
 import at.easydiet.model.DietParameter;
 
+/**
+ * This class encapsules a DietParameter instance.
+ */
 public class DietParameterBO extends DietParameterTemplateBO
 {
-	private DietParameter _dietParameter;
+	private DietParameter _model;
 	
-	public DietParameterBO(DietParameter dietParameter) {
-		super(dietParameter);
-		_dietParameter = dietParameter;
+    /**
+     * Initializes a new instance of the {@link DietParameterBO} class.
+     */
+	public DietParameterBO()
+	{
+		// TODO: add default values
+		this(new DietParameter());
 	}
 	
-	
-	public String getParameterValue()
+    /**
+     * Initializes a new instance of the {@link DietParameterBO} class.
+     * @param model the original model object
+     */
+	public DietParameterBO(DietParameter model)
 	{
-		return _dietParameter.getValue();
+	    super(model);
+		_model = model;
 	}
 	
-	public void setParameterValue(String value)
+	/**
+	 * Gets the original model object used as object store for this BusinessObject.
+	 * @return the original {@link DietParameter} object.
+	 */
+ 	public DietParameter getModel()
 	{
-		_dietParameter.setValue(value);
+		return _model;
 	}
 	
     /**       
@@ -31,7 +46,7 @@ public class DietParameterBO extends DietParameterTemplateBO
      */
     public Date getStart() 
     {
-        return _dietParameter.getStart();
+        return _model.getStart();
     }
     
     /**       
@@ -40,61 +55,7 @@ public class DietParameterBO extends DietParameterTemplateBO
      */    
     public void setStart(Date start) 
     {
-        _dietParameter.setStart(start);
-    }
-    
-    /**
-     * Returns a string representation of this instance.
-     * @return a string
-     */
-    @Override
-    public String toString() 
-    {
-        StringBuilder builder = new StringBuilder();
-        builder.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-		// interesting values
-        builder.append("DietParameterTemplateID").append("='").append(_dietParameter.getDietParameterTemplateId()).append("' ");		
-        builder.append("Duration").append("='").append(_dietParameter.getDuration()).append("' ");		
-        builder.append("Value").append("='").append(_dietParameter.getValue()).append("' ");
-        builder.append("CheckOperator").append("='").append(_dietParameter.getCheckOperator()).append("' ");
-        builder.append("DietParameterType").append("='").append(_dietParameter.getDietParameterType()).append("' ");	
-        builder.append("ParameterDefinition").append("='").append(_dietParameter.getParameterDefinition()).append("' ");		
-        builder.append("ParameterDefinitionUnit").append("='").append(_dietParameter.getParameterDefinitionUnit()).append("' ");
-        builder.append("Start").append("='").append(_dietParameter.getStart()).append("' ");		
-        builder.append("]");
-      
-        return builder.toString();
+        _model.setStart(start);
     }
 
-	public DietParameterTypeBO getDietParameterTypeBO() {
-		return new DietParameterTypeBO(_dietParameter.getDietParameterType());
-	}
-
-	public ParameterDefinitionBO getParameterDefinitionBO() {
-		return new ParameterDefinitionBO(_dietParameter.getParameterDefinition());
-	}
-	
-	public void setParameterDefinitionBO(ParameterDefinitionBO parameterDefinitionBO) {
-		_dietParameter.setParameterDefinition(DAOFactory.getInstance().getParameterDefinitionDAO().findById(parameterDefinitionBO.getParameterDefinitionId(), false));
-	}
-	
-	public CheckOperatorBO getCheckOperatorBO() {
-		return CheckOperatorBO.getForOperator(_dietParameter.getCheckOperator());
-	}
-	
-	public void setCheckOperatorBO(CheckOperatorBO checkOperatorBO)
-	{
-		_dietParameter.setCheckOperator(checkOperatorBO.getCheckOperator());
-	}
-
-	public ParameterDefinitionUnitBO getSelectedUnitBO()
-	{
-		return new ParameterDefinitionUnitBO(_dietParameter.getParameterDefinitionUnit());
-	}
-	
-	public void setSelectedUnitBO(ParameterDefinitionUnitBO parameterDefinitionUnitBO)
-	{
-		//TODO: check
-		_dietParameter.setParameterDefinitionUnit(parameterDefinitionUnitBO.getParameterDefinitionUnit());
-	}
 }

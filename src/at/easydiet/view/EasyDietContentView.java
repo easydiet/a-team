@@ -1,32 +1,71 @@
 package at.easydiet.view;
 
+import java.awt.Color;
+import java.net.URL;
 import java.util.Iterator;
 
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.util.ImmutableIterator;
 import org.apache.pivot.util.ListenerList;
+import org.apache.pivot.util.concurrent.TaskExecutionException;
 import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
+import org.apache.pivot.wtk.HorizontalAlignment;
+import org.apache.pivot.wtk.ImageView;
+import org.apache.pivot.wtk.Insets;
 import org.apache.pivot.wtk.Orientation;
+import org.apache.pivot.wtk.StackPane;
+import org.apache.pivot.wtk.content.ButtonData;
 import org.apache.pivot.wtk.content.ButtonDataRenderer;
+import org.apache.pivot.wtk.media.Image;
 
 public class EasyDietContentView extends BoxPane
 {
+    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+                                                            .getLogger(EasyDietContentView.class);
+
     /**
      * defines the button in the navigation bar
      * @author Mathias
      * 
      */
-    public static class NavigationButton extends SimpleButton
+    public static class NavigationButton extends StackPane
     {
         private EasyDietContentView easyDietContentView;
         private String              view;
 
+        private SimpleButton        _button;
+
         public NavigationButton()
         {
-            this.getButtonPressListeners().add(new ButtonPressListener()
+            // Background image
+            Image img = null;
+            try
+            {
+                img = Image.load(EasyDietMainWindow.class
+                        .getResource("navigation_arrow.gif"));
+                ImageView buttonBg = new ImageView(img);
+                buttonBg.setPreferredHeight(29);
+                buttonBg.getStyles().put("horizontalAlignment",
+                        HorizontalAlignment.RIGHT);
+                buttonBg.getStyles().put("preserveAspectRatio", true);
+                add(buttonBg);
+            }
+            catch (TaskExecutionException e)
+            {
+                LOG.debug(e);
+            }
+
+            // button
+            _button = new SimpleButton();
+            if (img != null)
+                _button.getStyles().put("padding",
+                        new Insets(0, 10, 0, img.getWidth()));
+            _button.getStyles().put("color", new Color(0x173760));
+            _button.getStyles().put("toolbar", true);
+            _button.getButtonPressListeners().add(new ButtonPressListener()
             {
                 public void buttonPressed(Button button)
                 {
@@ -38,6 +77,7 @@ public class EasyDietContentView extends BoxPane
                     }
                 }
             });
+            add(_button);
         }
 
         public void refresh()
@@ -45,9 +85,34 @@ public class EasyDietContentView extends BoxPane
 
         }
 
-        public EasyDietContentView getEasyDietContentView()
+        public String getText()
         {
-            return easyDietContentView;
+            return ((ButtonData) _button.getButtonData()).getText();
+        }
+
+        public void setText(String text)
+        {
+            ((ButtonData) _button.getButtonData()).setText(text);
+        }
+
+        public Image getIcon()
+        {
+            return ((ButtonData) _button.getButtonData()).getIcon();
+        }
+
+        public void setIcon(Image icon)
+        {
+            ((ButtonData) _button.getButtonData()).setIcon(icon);
+        }
+
+        public void setIcon(String icon)
+        {
+            ((ButtonData) _button.getButtonData()).setIcon(icon);
+        }
+
+        public void setIcon(URL icon)
+        {
+            ((ButtonData) _button.getButtonData()).setIcon(icon);
         }
 
         public void setView(String value)
@@ -86,6 +151,10 @@ public class EasyDietContentView extends BoxPane
             // Width
             setMinimumWidth(60);
             setMaximumWidth(180);
+
+            // styles
+            getStyles().put("color", new Color(0x173760));
+            getStyles().put("toolbar", true);
         }
 
         public EasyDietContentView getEasyDietContentView()

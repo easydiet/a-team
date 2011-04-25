@@ -19,48 +19,56 @@ xmlns="org.apache.pivot.wtk"
 					<TablePane.Column width="100" />
 				</columns>
 				<TablePane.Row>
-					<MenuBar bxml:id="menu" styles="{backgroundColor: '#777799'}">
-						<MenuBar.Item buttonData="Datei">
-							<Menu>
-								<Menu.Section>
-									<Menu.Item action="quitApplication">
-										<buttonData>
-											<content:MenuItemData text="Beenden" keyboardShortcut="CMD-Q"/>
-										</buttonData>
-									</Menu.Item>
-								</Menu.Section>
-							</Menu>
-						</MenuBar.Item>
-						<MenuBar.Item buttonData="Patientendaten" action="todo" />
-						<MenuBar.Item buttonData="Rezepte" action="todo" />
-						<MenuBar.Item buttonData="Hilfe">
-							<Menu>
-								<Menu.Section>
-									<Menu.Item action="showHelp">
-										<buttonData>
-											<content:MenuItemData text="Hilfe" keyboardShortcut="F1"/>
-										</buttonData>
-									</Menu.Item>
-									<Menu.Item action="showInfo">
-										<buttonData>
-											<content:MenuItemData text="Über EasyDiet"/>
-										</buttonData>
-									</Menu.Item>
-								</Menu.Section>
-							</Menu>
-						</MenuBar.Item>
-					</MenuBar>
-					<Label text="EasyDiet" styles="{backgroundColor: '#777799',color: '#0000aa', font: {size: '140%'}}" />
+					<StackPane>
+						<ImageView image="@menu_bg.gif" styles="{fill:true, preserveAspectRatio:false}" />
+						<MenuBar bxml:id="menu" styles="{backgroundColor: '0x00000000', color: '#FFFFFF', disabledColor:'#E0E0E0'}">
+							<MenuBar.Item buttonData="Datei">
+								<Menu>
+									<Menu.Section>
+										<Menu.Item action="quitApplication">
+											<buttonData>
+												<content:MenuItemData text="Beenden" keyboardShortcut="CMD-Q"/>
+											</buttonData>
+										</Menu.Item>
+									</Menu.Section>
+								</Menu>
+							</MenuBar.Item>
+							<MenuBar.Item buttonData="Patientendaten" action="todo" />
+							<MenuBar.Item buttonData="Rezepte" action="todo" />
+							<MenuBar.Item buttonData="Hilfe">
+								<Menu>
+									<Menu.Section>
+										<Menu.Item action="showHelp">
+											<buttonData>
+												<content:MenuItemData text="Hilfe" keyboardShortcut="F1"/>
+											</buttonData>
+										</Menu.Item>
+										<Menu.Item action="showInfo">
+											<buttonData>
+												<content:MenuItemData text="Über EasyDiet"/>
+											</buttonData>
+										</Menu.Item>
+									</Menu.Section>
+								</Menu>
+							</MenuBar.Item>
+						</MenuBar>
+					</StackPane>
 				</TablePane.Row>
 			</TablePane>
 		</TablePane.Row>
 		<TablePane.Row height="-1">
-			<FlowPane bxml:id="navigation" styles="{backgroundColor: '#bbbbbb', padding: 6, spacing: 3}">
-			</FlowPane>
+			<StackPane>
+				<ImageView image="@navigation_bg.gif" styles="{fill:true, preserveAspectRatio:false}" />
+				<FlowPane bxml:id="navigation" styles="{backgroundColor: '0x00000000', padding: 0, spacing: 3}">
+				</FlowPane>
+			</StackPane>
 		</TablePane.Row>
 		<TablePane.Row height="70">
-			<BoxPane bxml:id="toolbar" styles="{backgroundColor: '#dddddd', padding:6, spacing:8, fill:true}">
-			</BoxPane>
+			<StackPane>
+				<ImageView image="@toolbar_bg.gif" styles="{fill:true, preserveAspectRatio:false}" />
+				<BoxPane bxml:id="toolbar" styles="{backgroundColor: '0x00000000', padding:6, spacing:8, fill:true}">
+				</BoxPane>
+			</StackPane>
 		</TablePane.Row>
 		<TablePane.Row height="1*">
 			<ScrollPane>

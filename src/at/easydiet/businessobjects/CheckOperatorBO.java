@@ -1,60 +1,62 @@
-/**
- * 
- */
 package at.easydiet.businessobjects;
-
-import org.apache.pivot.collections.List;
-import org.apache.pivot.collections.ArrayList;
 
 import at.easydiet.model.CheckOperator;
 
 /**
- * @author Mathias
- * 
+ * This class encapsules a CheckOperator instance.
  */
-public enum CheckOperatorBO {
-	BIGGER(">"), SMALLER("<"), EQUALORBIGGER(">="), EQUALORSMALLER("<="), EQUAL(
-			"="), NOTEQUAL("!=");
+public enum CheckOperatorBO
+{
+    BIGGER (">"),
+    SMALLER ("<"),
+    EQUALORBIGGER (">="),
+    EQUALORSMALLER ("<="),
+    EQUAL ("="),
+    NOTEQUAL ("!=");
 
-	private CheckOperator _checkOperator;
+    private CheckOperator _model;
 
-	private CheckOperatorBO(String name) {
-		_checkOperator = new CheckOperator(name);
-	}
+    /**
+     * Initializes a new instance of the {@link CheckOperatorBO} enum.
+     * @param model the enum value
+     */
+    private CheckOperatorBO(String value)
+    {
+        _model = new CheckOperator(value);
+    }
 
-	public String getName() {
-		return _checkOperator.getName();
-	}
+    /**
+     * Gets the original model object used as object store for this
+     * BusinessObject.
+     * @return the original {@link CheckOperator} object.
+     */
+    public CheckOperator getModel()
+    {
+        return _model;
+    }
 
-	public void setName(String name) {
-		_checkOperator.setName(name);
-	}
-
-	public static CheckOperatorBO getForOperator(CheckOperator operator) {
-		for (CheckOperatorBO current : values()) {
-			if (current.getName().equals(operator.getName())) {
-				return current;
-			}
-		}
-		return EQUAL;
-	}
-
-	public static List<CheckOperatorBO> getAllOperators()
-	{
-		ArrayList<CheckOperatorBO> list = new ArrayList<CheckOperatorBO>();
-		for(CheckOperatorBO current : values())
-		{
-			list.add(current);
-		}
-		return list;
-	}
-	
-	public String toString()
-	{
-		return _checkOperator.getName();
-	}
-
-	CheckOperator getCheckOperator() {
-		return _checkOperator;
-	}
+    /**
+     * Gets the name of this enum value.
+     * @return the name of this enum value
+     */
+    public String getName()
+    {
+        return _model.getName();
+    }
+    
+    /**
+     * Returns the BusinessObject matching to the specified model object.
+     * @returns the enum value matching to the given model or the default value.
+     */
+    public static CheckOperatorBO getForModel(CheckOperator model)
+    {
+        for (CheckOperatorBO bo : values())
+        {
+            if (bo.getModel().getName().equals(model.getName()))
+            {
+                return bo;
+            }
+        }
+        return EQUAL;
+    }
 }

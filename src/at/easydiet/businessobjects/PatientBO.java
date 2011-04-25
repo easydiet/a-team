@@ -1,464 +1,612 @@
 package at.easydiet.businessobjects;
 
+
 import java.sql.Clob;
 import java.util.Date;
 import java.util.Set;
 
+import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.ArrayList;
 
 import at.easydiet.model.DietTreatment;
 import at.easydiet.model.FamilyAnamnesis;
-import at.easydiet.model.Gender;
 import at.easydiet.model.LaborReport;
 import at.easydiet.model.Patient;
 import at.easydiet.model.PatientState;
 import at.easydiet.model.Recipe;
 
+/**
+ * This class encapsules a Patient instance.
+ */
 public class PatientBO
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(PatientBO.class);
-
-    private Patient                             _patient;
-
+	private Patient _model;
+	
     /**
      * Initializes a new instance of the {@link PatientBO} class.
-     * @param patient
      */
-    public PatientBO(Patient patient)
-    {
-        super();
-        _patient = patient;
-    }
-
+	public PatientBO()
+	{
+		// TODO: add default values
+		this(new Patient());
+	}
+	
     /**
-     * Gets the patient.
-     * @return the patient
+     * Initializes a new instance of the {@link PatientBO} class.
+     * @param model the original model object
      */
-    public Patient getPatient()
-    {
-        return _patient;
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getPatientId()
+	public PatientBO(Patient model)
+	{
+		_model = model;
+	}
+	
+	/**
+	 * Gets the original model object used as object store for this BusinessObject.
+	 * @return the original {@link Patient} object.
+	 */
+ 	public Patient getModel()
+	{
+		return _model;
+	}
+	
+    /**       
+     * Gets the patientId of this instance. 
+     * @return the patientId currently set for this instance.
      */
-    public long getPatientId()
+    public long getPatientId() 
     {
-        return _patient.getPatientId();
-    }
-
-    /**
-     * @param patientId
-     * @see at.easydiet.model.Patient#setPatientId(long)
-     */
-    public void setPatientId(long patientId)
-    {
-        _patient.setPatientId(patientId);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getInsuranceNumber()
-     */
-    public String getInsuranceNumber()
-    {
-        return _patient.getInsuranceNumber();
-    }
-
-    /**
-     * @param insuranceNumber
-     * @see at.easydiet.model.Patient#setInsuranceNumber(java.lang.String)
-     */
-    public void setInsuranceNumber(String insuranceNumber)
-    {
-        _patient.setInsuranceNumber(insuranceNumber);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getForename()
-     */
-    public String getForename()
-    {
-        return _patient.getForename();
-    }
-
-    /**
-     * @param forename
-     * @see at.easydiet.model.Patient#setForename(java.lang.String)
-     */
-    public void setForename(String forename)
-    {
-        _patient.setForename(forename);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getLastname()
-     */
-    public String getLastname()
-    {
-        return _patient.getLastname();
-    }
-
-    /**
-     * @param lastname
-     * @see at.easydiet.model.Patient#setLastname(java.lang.String)
-     */
-    public void setLastname(String lastname)
-    {
-        _patient.setLastname(lastname);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getTitle()
-     */
-    public String getTitle()
-    {
-        return _patient.getTitle();
-    }
-
-    /**
-     * @param title
-     * @see at.easydiet.model.Patient#setTitle(java.lang.String)
-     */
-    public void setTitle(String title)
-    {
-        _patient.setTitle(title);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getStreet()
-     */
-    public String getStreet()
-    {
-        return _patient.getStreet();
-    }
-
-    /**
-     * @param street
-     * @see at.easydiet.model.Patient#setStreet(java.lang.String)
-     */
-    public void setStreet(String street)
-    {
-        _patient.setStreet(street);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getZip()
-     */
-    public String getZip()
-    {
-        return _patient.getZip();
-    }
-
-    /**
-     * @param zip
-     * @see at.easydiet.model.Patient#setZip(java.lang.String)
-     */
-    public void setZip(String zip)
-    {
-        _patient.setZip(zip);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getPlace()
-     */
-    public String getPlace()
-    {
-        return _patient.getPlace();
-    }
-
-    /**
-     * @param place
-     * @see at.easydiet.model.Patient#setPlace(java.lang.String)
-     */
-    public void setPlace(String place)
-    {
-        _patient.setPlace(place);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getCountry()
-     */
-    public String getCountry()
-    {
-        return _patient.getCountry();
-    }
-
-    /**
-     * @param country
-     * @see at.easydiet.model.Patient#setCountry(java.lang.String)
-     */
-    public void setCountry(String country)
-    {
-        _patient.setCountry(country);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getBirthday()
-     */
-    public Date getBirthday()
-    {
-        return _patient.getBirthday();
-    }
-
-    /**
-     * @param birthday
-     * @see at.easydiet.model.Patient#setBirthday(java.util.Date)
-     */
-    public void setBirthday(Date birthday)
-    {
-        _patient.setBirthday(birthday);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getJob()
-     */
-    public String getJob()
-    {
-        return _patient.getJob();
-    }
-
-    /**
-     * @param job
-     * @see at.easydiet.model.Patient#setJob(java.lang.String)
-     */
-    public void setJob(String job)
-    {
-        _patient.setJob(job);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getReligion()
-     */
-    public String getReligion()
-    {
-        return _patient.getReligion();
-    }
-
-    /**
-     * @param religion
-     * @see at.easydiet.model.Patient#setReligion(java.lang.String)
-     */
-    public void setReligion(String religion)
-    {
-        _patient.setReligion(religion);
-    }
-
-    
-    
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getRegime()
-     */
-    public String getRegime()
-    {
-        return _patient.getRegime();
-    }
-
-    /**
-     * @param regime
-     * @see at.easydiet.model.Patient#setRegime(java.lang.String)
-     */
-    public void setRegime(String regime)
-    {
-        _patient.setRegime(regime);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getNotice()
-     */
-    public Clob getNotice()
-    {
-        return _patient.getNotice();
-    }
-
-    /**
-     * @param notice
-     * @see at.easydiet.model.Patient#setNotice(java.sql.Clob)
-     */
-    public void setNotice(Clob notice)
-    {
-        _patient.setNotice(notice);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getGender()
-     */
-    public Gender getGender()
-    {
-        return _patient.getGender();
-    }
-
-    /**
-     * @param gender
-     * @see at.easydiet.model.Patient#setGender(at.easydiet.model.Gender)
-     */
-    public void setGender(Gender gender)
-    {
-        _patient.setGender(gender);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getIllnesses()
-     */
-    public Set<String> getIllnesses()
-    {
-        return _patient.getIllnesses();
-    }
-
-    /**
-     * @param illnesses
-     * @see at.easydiet.model.Patient#setIllnesses(java.util.Set)
-     */
-    public void setIllnesses(Set<String> illnesses)
-    {
-        _patient.setIllnesses(illnesses);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getFamilyanamnesis()
-     */
-    public Set<FamilyAnamnesis> getFamilyanamnesis()
-    {
-        return _patient.getFamilyanamnesis();
-    }
-
-    /**
-     * @param familyanamnesis
-     * @see at.easydiet.model.Patient#setFamilyanamnesis(java.util.Set)
-     */
-    public void setFamilyanamnesis(Set<FamilyAnamnesis> familyanamnesis)
-    {
-        _patient.setFamilyanamnesis(familyanamnesis);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getPatientStates()
-     */
-    public Set<PatientState> getPatientStates()
-    {
-        return _patient.getPatientStates();
-    }
-
-    /**
-     * @param patientStates
-     * @see at.easydiet.model.Patient#setPatientStates(java.util.Set)
-     */
-    public void setPatientStates(Set<PatientState> patientStates)
-    {
-        _patient.setPatientStates(patientStates);
+        return _model.getPatientId();
     }
     
-    /**
-     * @return a new list of {@link PatientStateBO} according to {@link PatientBO#getPatientStates()}
-     */
-    public ArrayList<PatientStateBO> getPatientStateBOs()
+    /**       
+     * Sets the patientId of this instance. 
+     * @param patientId the new patientId of this instance.
+     */    
+    public void setPatientId(long patientId) 
     {
-        ArrayList<PatientStateBO> bos = new ArrayList<PatientStateBO>();
-        for (PatientState state : getPatientStates())
+        _model.setPatientId(patientId);
+    }
+
+    /**       
+     * Gets the insuranceNumber of this instance. 
+     * @return the insuranceNumber currently set for this instance.
+     */
+    public String getInsuranceNumber() 
+    {
+        return _model.getInsuranceNumber();
+    }
+    
+    /**       
+     * Sets the insuranceNumber of this instance. 
+     * @param insuranceNumber the new insuranceNumber of this instance.
+     */    
+    public void setInsuranceNumber(String insuranceNumber) 
+    {
+        _model.setInsuranceNumber(insuranceNumber);
+    }
+
+    /**       
+     * Gets the forename of this instance. 
+     * @return the forename currently set for this instance.
+     */
+    public String getForename() 
+    {
+        return _model.getForename();
+    }
+    
+    /**       
+     * Sets the forename of this instance. 
+     * @param forename the new forename of this instance.
+     */    
+    public void setForename(String forename) 
+    {
+        _model.setForename(forename);
+    }
+
+    /**       
+     * Gets the lastname of this instance. 
+     * @return the lastname currently set for this instance.
+     */
+    public String getLastname() 
+    {
+        return _model.getLastname();
+    }
+    
+    /**       
+     * Sets the lastname of this instance. 
+     * @param lastname the new lastname of this instance.
+     */    
+    public void setLastname(String lastname) 
+    {
+        _model.setLastname(lastname);
+    }
+
+    /**       
+     * Gets the title of this instance. 
+     * @return the title currently set for this instance.
+     */
+    public String getTitle() 
+    {
+        return _model.getTitle();
+    }
+    
+    /**       
+     * Sets the title of this instance. 
+     * @param title the new title of this instance.
+     */    
+    public void setTitle(String title) 
+    {
+        _model.setTitle(title);
+    }
+
+    /**       
+     * Gets the street of this instance. 
+     * @return the street currently set for this instance.
+     */
+    public String getStreet() 
+    {
+        return _model.getStreet();
+    }
+    
+    /**       
+     * Sets the street of this instance. 
+     * @param street the new street of this instance.
+     */    
+    public void setStreet(String street) 
+    {
+        _model.setStreet(street);
+    }
+
+    /**       
+     * Gets the zip of this instance. 
+     * @return the zip currently set for this instance.
+     */
+    public String getZip() 
+    {
+        return _model.getZip();
+    }
+    
+    /**       
+     * Sets the zip of this instance. 
+     * @param zip the new zip of this instance.
+     */    
+    public void setZip(String zip) 
+    {
+        _model.setZip(zip);
+    }
+
+    /**       
+     * Gets the place of this instance. 
+     * @return the place currently set for this instance.
+     */
+    public String getPlace() 
+    {
+        return _model.getPlace();
+    }
+    
+    /**       
+     * Sets the place of this instance. 
+     * @param place the new place of this instance.
+     */    
+    public void setPlace(String place) 
+    {
+        _model.setPlace(place);
+    }
+
+    /**       
+     * Gets the country of this instance. 
+     * @return the country currently set for this instance.
+     */
+    public String getCountry() 
+    {
+        return _model.getCountry();
+    }
+    
+    /**       
+     * Sets the country of this instance. 
+     * @param country the new country of this instance.
+     */    
+    public void setCountry(String country) 
+    {
+        _model.setCountry(country);
+    }
+
+    /**       
+     * Gets the birthday of this instance. 
+     * @return the birthday currently set for this instance.
+     */
+    public Date getBirthday() 
+    {
+        return _model.getBirthday();
+    }
+    
+    /**       
+     * Sets the birthday of this instance. 
+     * @param birthday the new birthday of this instance.
+     */    
+    public void setBirthday(Date birthday) 
+    {
+        _model.setBirthday(birthday);
+    }
+
+    /**       
+     * Gets the job of this instance. 
+     * @return the job currently set for this instance.
+     */
+    public String getJob() 
+    {
+        return _model.getJob();
+    }
+    
+    /**       
+     * Sets the job of this instance. 
+     * @param job the new job of this instance.
+     */    
+    public void setJob(String job) 
+    {
+        _model.setJob(job);
+    }
+
+    /**       
+     * Gets the religion of this instance. 
+     * @return the religion currently set for this instance.
+     */
+    public String getReligion() 
+    {
+        return _model.getReligion();
+    }
+    
+    /**       
+     * Sets the religion of this instance. 
+     * @param religion the new religion of this instance.
+     */    
+    public void setReligion(String religion) 
+    {
+        _model.setReligion(religion);
+    }
+
+    /**       
+     * Gets the regime of this instance. 
+     * @return the regime currently set for this instance.
+     */
+    public String getRegime() 
+    {
+        return _model.getRegime();
+    }
+    
+    /**       
+     * Sets the regime of this instance. 
+     * @param regime the new regime of this instance.
+     */    
+    public void setRegime(String regime) 
+    {
+        _model.setRegime(regime);
+    }
+
+    /**       
+     * Gets the notice of this instance. 
+     * @return the notice currently set for this instance.
+     */
+    public Clob getNotice() 
+    {
+        return _model.getNotice();
+    }
+    
+    /**       
+     * Sets the notice of this instance. 
+     * @param notice the new notice of this instance.
+     */    
+    public void setNotice(Clob notice) 
+    {
+        _model.setNotice(notice);
+    }
+
+	
+    private GenderBO _gender;
+    
+    /**
+     * Gets the currently referenced Gender of this instance.
+     * @return the Gender currently referenced in this Patient. 
+     */
+    public GenderBO getGender()
+    {
+        if(_gender == null)
         {
-            bos.add(new PatientStateBO(state));
+            _gender = GenderBO.getForModel(_model.getGender());
         }
-        return bos;
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getLaborReports()
-     */
-    public Set<LaborReport> getLaborReports()
-    {
-        return _patient.getLaborReports();
-    }
-
-    /**
-     * @param laborReports
-     * @see at.easydiet.model.Patient#setLaborReports(java.util.Set)
-     */
-    public void setLaborReports(Set<LaborReport> laborReports)
-    {
-        _patient.setLaborReports(laborReports);
+        return _gender;
     }
     
     /**
-     * @return a new list of {@link LaborReportBO} according to {@link PatientBO#getLaborReports()}
+     * Sets the Gender to be referenced in this instance
+     * @param gender the Gender to reference in this Patient. 
      */
-    public ArrayList<LaborReportBO> getLaborReportBOs()
+    public void setGender(GenderBO gender)
     {
-        ArrayList<LaborReportBO> bos = new ArrayList<LaborReportBO>();
-        for (LaborReport laborReport : getLaborReports())
-        {
-            bos.add(new LaborReportBO(laborReport));
-        }
-        return bos;
+        _gender = gender;
+        _model.setGender(gender.getModel());
     }
-
-
-    /**
-     * @return
-     * @see at.easydiet.model.Patient#getTreatments()
+    /**       
+     * Gets the illnesses of this instance. 
+     * @return the illnesses currently set for this instance.
      */
-    public Set<DietTreatment> getTreatments()
+    public Set<String> getIllnesses() 
     {
-        return _patient.getTreatments();
+        return _model.getIllnesses();
     }
     
-    /**
-     * @return a new list of {@link DietTreatmentBO} according to {@link PatientBO#getTreatments()}
-     * @see at.easydiet.model.Patient#getTreatments()
-     */
-    public ArrayList<DietTreatmentBO> getTreatmentBOs()
+    /**       
+     * Sets the illnesses of this instance. 
+     * @param illnesses the new illnesses of this instance.
+     */    
+    public void setIllnesses(Set<String> illnesses) 
     {
-        ArrayList<DietTreatmentBO> bos = new ArrayList<DietTreatmentBO>();
-        for (DietTreatment treatment : getTreatments())
+        _model.setIllnesses(illnesses);
+    }
+
+
+	private List<FamilyAnamnesisBO> _familyanamnesis;
+	
+    /**
+     * Gets a list of referenced Familyanamnesis of this instance.
+     * This list is cached, use {@link Patient#updateFamilyanamnesisCache()) to update this cache.
+     * @return a cached list of referenced Familyanamnesis wrapped into the correct businessobject. 
+     */
+    public List<FamilyAnamnesisBO> getFamilyanamnesis()
+    {
+        if(_familyanamnesis == null) 
         {
-            bos.add(new DietTreatmentBO(treatment));
+            _familyanamnesis = new ArrayList<FamilyAnamnesisBO>();
+            for(FamilyAnamnesis familyanamnesis : _model.getFamilyanamnesis())
+            {
+                _familyanamnesis.add(new FamilyAnamnesisBO(familyanamnesis));
+            }
         }
-        return bos;
+        return _familyanamnesis;
+    }
+	
+    /**
+     * Adds a new FamilyAnamnesis to the list of referenced familyanamnesis.
+     * The cache will updated
+     * @param familyanamnesis the FamilyAnamnesis to add. 
+     */
+    public void addFamilyanamnesis(FamilyAnamnesisBO familyanamnesis)
+    {
+        getFamilyanamnesis().add(familyanamnesis);
+        _model.getFamilyanamnesis().add(familyanamnesis.getModel());
+    }
+    
+        
+    /**
+     * Removes the given FamilyAnamnesis from the list of referenced familyanamnesis.
+     * The cache will updated
+     * @param familyanamnesis the timespan to add. 
+     */
+    public void removeFamilyanamnesis(FamilyAnamnesisBO familyanamnesis)
+    {
+        getFamilyanamnesis().remove(familyanamnesis);
+        _model.getFamilyanamnesis().remove(familyanamnesis.getModel());
+    }
+	
+    /**
+     * Rebuilds the cache for referenced familyanamnesis.
+     */
+    public void updateFamilyanamnesisCache()
+    {
+        _familyanamnesis = null;
+        getFamilyanamnesis();
     }
 
+
+	private List<PatientStateBO> _patientStates;
+	
     /**
-     * @param treatments
-     * @see at.easydiet.model.Patient#setTreatments(java.util.Set)
+     * Gets a list of referenced PatientStates of this instance.
+     * This list is cached, use {@link Patient#updatePatientStatesCache()) to update this cache.
+     * @return a cached list of referenced PatientStates wrapped into the correct businessobject. 
      */
-    public void setTreatments(Set<DietTreatment> treatments)
+    public List<PatientStateBO> getPatientStates()
     {
-        _patient.setTreatments(treatments);
+        if(_patientStates == null) 
+        {
+            _patientStates = new ArrayList<PatientStateBO>();
+            for(PatientState patientStates : _model.getPatientStates())
+            {
+                _patientStates.add(new PatientStateBO(patientStates));
+            }
+        }
+        return _patientStates;
+    }
+	
+    /**
+     * Adds a new PatientState to the list of referenced patientStates.
+     * The cache will updated
+     * @param patientStates the PatientState to add. 
+     */
+    public void addPatientStates(PatientStateBO patientStates)
+    {
+        getPatientStates().add(patientStates);
+        _model.getPatientStates().add(patientStates.getModel());
+    }
+    
+        
+    /**
+     * Removes the given PatientState from the list of referenced patientStates.
+     * The cache will updated
+     * @param patientStates the timespan to add. 
+     */
+    public void removePatientStates(PatientStateBO patientStates)
+    {
+        getPatientStates().remove(patientStates);
+        _model.getPatientStates().remove(patientStates.getModel());
+    }
+	
+    /**
+     * Rebuilds the cache for referenced patientStates.
+     */
+    public void updatePatientStatesCache()
+    {
+        _patientStates = null;
+        getPatientStates();
     }
 
+
+	private List<LaborReportBO> _laborReports;
+	
     /**
-     * @return
-     * @see at.easydiet.model.Patient#getDisfavors()
+     * Gets a list of referenced LaborReports of this instance.
+     * This list is cached, use {@link Patient#updateLaborReportsCache()) to update this cache.
+     * @return a cached list of referenced LaborReports wrapped into the correct businessobject. 
      */
-    public Set<Recipe> getDisfavors()
+    public List<LaborReportBO> getLaborReports()
     {
-        return _patient.getDisfavors();
+        if(_laborReports == null) 
+        {
+            _laborReports = new ArrayList<LaborReportBO>();
+            for(LaborReport laborReports : _model.getLaborReports())
+            {
+                _laborReports.add(new LaborReportBO(laborReports));
+            }
+        }
+        return _laborReports;
+    }
+	
+    /**
+     * Adds a new LaborReport to the list of referenced laborReports.
+     * The cache will updated
+     * @param laborReports the LaborReport to add. 
+     */
+    public void addLaborReports(LaborReportBO laborReports)
+    {
+        getLaborReports().add(laborReports);
+        _model.getLaborReports().add(laborReports.getModel());
+    }
+    
+        
+    /**
+     * Removes the given LaborReport from the list of referenced laborReports.
+     * The cache will updated
+     * @param laborReports the timespan to add. 
+     */
+    public void removeLaborReports(LaborReportBO laborReports)
+    {
+        getLaborReports().remove(laborReports);
+        _model.getLaborReports().remove(laborReports.getModel());
+    }
+	
+    /**
+     * Rebuilds the cache for referenced laborReports.
+     */
+    public void updateLaborReportsCache()
+    {
+        _laborReports = null;
+        getLaborReports();
     }
 
+
+	private List<DietTreatmentBO> _treatments;
+	
     /**
-     * @param disfavors
-     * @see at.easydiet.model.Patient#setDisfavors(java.util.Set)
+     * Gets a list of referenced Treatments of this instance.
+     * This list is cached, use {@link Patient#updateTreatmentsCache()) to update this cache.
+     * @return a cached list of referenced Treatments wrapped into the correct businessobject. 
      */
-    public void setDisfavors(Set<Recipe> disfavors)
+    public List<DietTreatmentBO> getTreatments()
     {
-        _patient.setDisfavors(disfavors);
+        if(_treatments == null) 
+        {
+            _treatments = new ArrayList<DietTreatmentBO>();
+            for(DietTreatment treatments : _model.getTreatments())
+            {
+                _treatments.add(new DietTreatmentBO(treatments));
+            }
+        }
+        return _treatments;
+    }
+	
+    /**
+     * Adds a new DietTreatment to the list of referenced treatments.
+     * The cache will updated
+     * @param treatments the DietTreatment to add. 
+     */
+    public void addTreatments(DietTreatmentBO treatments)
+    {
+        getTreatments().add(treatments);
+        _model.getTreatments().add(treatments.getModel());
+    }
+    
+        
+    /**
+     * Removes the given DietTreatment from the list of referenced treatments.
+     * The cache will updated
+     * @param treatments the timespan to add. 
+     */
+    public void removeTreatments(DietTreatmentBO treatments)
+    {
+        getTreatments().remove(treatments);
+        _model.getTreatments().remove(treatments.getModel());
+    }
+	
+    /**
+     * Rebuilds the cache for referenced treatments.
+     */
+    public void updateTreatmentsCache()
+    {
+        _treatments = null;
+        getTreatments();
+    }
+
+
+	private List<RecipeBO> _disfavors;
+	
+    /**
+     * Gets a list of referenced Disfavors of this instance.
+     * This list is cached, use {@link Patient#updateDisfavorsCache()) to update this cache.
+     * @return a cached list of referenced Disfavors wrapped into the correct businessobject. 
+     */
+    public List<RecipeBO> getDisfavors()
+    {
+        if(_disfavors == null) 
+        {
+            _disfavors = new ArrayList<RecipeBO>();
+            for(Recipe disfavors : _model.getDisfavors())
+            {
+                _disfavors.add(new RecipeBO(disfavors));
+            }
+        }
+        return _disfavors;
+    }
+	
+    /**
+     * Adds a new Recipe to the list of referenced disfavors.
+     * The cache will updated
+     * @param disfavors the Recipe to add. 
+     */
+    public void addDisfavors(RecipeBO disfavors)
+    {
+        getDisfavors().add(disfavors);
+        _model.getDisfavors().add(disfavors.getModel());
+    }
+    
+        
+    /**
+     * Removes the given Recipe from the list of referenced disfavors.
+     * The cache will updated
+     * @param disfavors the timespan to add. 
+     */
+    public void removeDisfavors(RecipeBO disfavors)
+    {
+        getDisfavors().remove(disfavors);
+        _model.getDisfavors().remove(disfavors.getModel());
+    }
+	
+    /**
+     * Rebuilds the cache for referenced disfavors.
+     */
+    public void updateDisfavorsCache()
+    {
+        _disfavors = null;
+        getDisfavors();
     }
 
     public String getDisplayName()

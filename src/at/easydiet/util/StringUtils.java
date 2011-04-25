@@ -1,5 +1,6 @@
 package at.easydiet.util;
 
+
 public class StringUtils
 {
     public static boolean isNullOrWhitespaceOnly(String value)

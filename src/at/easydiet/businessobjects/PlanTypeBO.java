@@ -1,7 +1,11 @@
 package at.easydiet.businessobjects;
 
+
 import at.easydiet.model.PlanType;
 
+/**
+ * This class encapsules a PlanType instance.
+ */
 public enum PlanTypeBO
 {
     DIETPLAN("Diätplan"),
@@ -9,50 +13,40 @@ public enum PlanTypeBO
     NUTRITION_PROTOCOL("Ernährungsprotokoll"),
     BILL_OF_FARE("Speiseplan"),
     WEIGHT_PROTOCOL("Wägeprotokoll");
-    
-    private PlanType _planType;
+
+	private PlanType _model;
 
     /**
-     * Gets the planType.
-     * @return the planType
+     * Initializes a new instance of the {@link PlanTypeBO} enum.
+     * @param model the enum value
      */
-    public PlanType getPlanType()
-    {
-        return _planType;
-    }
-    
-    
-    
-    /**
-     * @return
-     * @see at.easydiet.model.PlanType#getName()
-     */
-    public String getName()
-    {
-        return _planType.getName();
-    }
-
-
-
-    /** 
-     * Initializes a new instance of the {@link PlanTypeBO} class. 
-     * @param planType
-     */
-    private PlanTypeBO(String planType)
-    {
-        this(new PlanType(planType));
-    }
-    
-    
-
-    /** 
-     * Initializes a new instance of the {@link PlanTypeBO} class. 
-     * @param planType
-     */
-    private PlanTypeBO(PlanType planType)
-    {
-        _planType = planType;
-    }
-    
-    
+	private PlanTypeBO(String value)
+	{
+		_model = new PlanType(value);
+	}
+	
+	/**
+	 * Gets the original model object used as object store for this BusinessObject.
+	 * @return the original {@link PlanType} object.
+	 */
+ 	public PlanType getModel()
+	{
+		return _model;
+	}
+	
+	/**
+	 * Returns the BusinessObject matching to the specified model object.
+	 * @returns the enum value matching to the given model or the default value. 
+	 */
+	public static PlanTypeBO getForModel(PlanType model)
+	{
+		for(PlanTypeBO bo : values())
+		{
+			if(bo.getModel().getName().equals(model.getName()))
+			{
+				return bo;
+			}
+		}
+		return DIETPLAN;
+	}
 }

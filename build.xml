@@ -18,7 +18,7 @@
 
 	<target name="codegen" description="Generate Java source code
                             from the Hibernate mapping files">
-		<easyhibernate hmb="src.resources/hibernate.cfg.xml" pojo="srcgen/pojo" dao="srcgen/dao" ddl="db/schema.sql" />
+		<easyhibernate hmb="src.resources/hibernate.cfg.xml" pojo="srcgen/pojo" bo="srcgen/bo" dao="srcgen/dao" ddl="db/schema.sql" />
 	</target>
  
 	<!-- EasyDiet Main Build -->

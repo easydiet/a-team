@@ -1,276 +1,337 @@
 package at.easydiet.businessobjects;
 
+
 import java.sql.Clob;
 import java.util.Date;
-import java.util.Set;
+
+import org.apache.pivot.collections.List;
+import org.apache.pivot.collections.ArrayList;
 
 import at.easydiet.model.LaborReport;
-import at.easydiet.model.Patient;
 import at.easydiet.model.PatientState;
-import at.easydiet.model.PatientStateType;
-import at.easydiet.model.SystemUser;
 
+/**
+ * This class encapsules a PatientState instance.
+ */
 public class PatientStateBO
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(PatientStateBO.class);
-
-    private PatientState _patientState;
-
+	private PatientState _model;
+	
     /**
-     * Gets the patientState.
-     * @return the patientState
+     * Initializes a new instance of the {@link PatientStateBO} class.
      */
-    public PatientState getPatientState()
-    {
-        return _patientState;
-    }
-
-    /** 
-     * Initializes a new instance of the {@link PatientStateBO} class. 
-     * @param patientState
+	public PatientStateBO()
+	{
+		// TODO: add default values
+		this(new PatientState());
+	}
+	
+    /**
+     * Initializes a new instance of the {@link PatientStateBO} class.
+     * @param model the original model object
      */
-    public PatientStateBO(PatientState patientState)
+	public PatientStateBO(PatientState model)
+	{
+		_model = model;
+	}
+	
+	/**
+	 * Gets the original model object used as object store for this BusinessObject.
+	 * @return the original {@link PatientState} object.
+	 */
+ 	public PatientState getModel()
+	{
+		return _model;
+	}
+	
+    /**       
+     * Gets the patientStateId of this instance. 
+     * @return the patientStateId currently set for this instance.
+     */
+    public long getPatientStateId() 
     {
-        super();
-        _patientState = patientState;
+        return _model.getPatientStateId();
     }
     
-    
-
-    /**
-     * @return
-     * @see at.easydiet.model.PatientState#getPatient()
-     */
-    public Patient getPatient()
+    /**       
+     * Sets the patientStateId of this instance. 
+     * @param patientStateId the new patientStateId of this instance.
+     */    
+    public void setPatientStateId(long patientStateId) 
     {
-        return _patientState.getPatient();
+        _model.setPatientStateId(patientStateId);
     }
 
-    /**
-     * @param patient
-     * @see at.easydiet.model.PatientState#setPatient(at.easydiet.model.Patient)
+    /**       
+     * Gets the date of this instance. 
+     * @return the date currently set for this instance.
      */
-    public void setPatient(Patient patient)
+    public Date getDate() 
     {
-        _patientState.setPatient(patient);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.PatientState#getPatientStateId()
-     */
-    public long getPatientStateId()
-    {
-        return _patientState.getPatientStateId();
-    }
-
-    /**
-     * @param patientStateId
-     * @see at.easydiet.model.PatientState#setPatientStateId(long)
-     */
-    public void setPatientStateId(long patientStateId)
-    {
-        _patientState.setPatientStateId(patientStateId);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.PatientState#getDate()
-     */
-    public Date getDate()
-    {
-        return _patientState.getDate();
-    }
-
-    /**
-     * @param date
-     * @see at.easydiet.model.PatientState#setDate(java.util.Date)
-     */
-    public void setDate(Date date)
-    {
-        _patientState.setDate(date);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.PatientState#getAnamnesis()
-     */
-    public Clob getAnamnesis()
-    {
-        return _patientState.getAnamnesis();
-    }
-
-    /**
-     * @param anamnesis
-     * @see at.easydiet.model.PatientState#setAnamnesis(java.sql.Clob)
-     */
-    public void setAnamnesis(Clob anamnesis)
-    {
-        _patientState.setAnamnesis(anamnesis);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.PatientState#getWeight()
-     */
-    public Integer getWeight()
-    {
-        return _patientState.getWeight();
-    }
-
-    /**
-     * @param weight
-     * @see at.easydiet.model.PatientState#setWeight(java.lang.Integer)
-     */
-    public void setWeight(Integer weight)
-    {
-        _patientState.setWeight(weight);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.PatientState#getWeightPercentile()
-     */
-    public float getWeightPercentile()
-    {
-        return _patientState.getWeightPercentile();
-    }
-
-    /**
-     * @param weightPercentile
-     * @see at.easydiet.model.PatientState#setWeightPercentile(float)
-     */
-    public void setWeightPercentile(float weightPercentile)
-    {
-        _patientState.setWeightPercentile(weightPercentile);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.PatientState#getHeight()
-     */
-    public Integer getHeight()
-    {
-        return _patientState.getHeight();
-    }
-
-    /**
-     * @param height
-     * @see at.easydiet.model.PatientState#setHeight(java.lang.Integer)
-     */
-    public void setHeight(Integer height)
-    {
-        _patientState.setHeight(height);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.PatientState#getHeightPercentile()
-     */
-    public float getHeightPercentile()
-    {
-        return _patientState.getHeightPercentile();
-    }
-
-    /**
-     * @param heightPercentile
-     * @see at.easydiet.model.PatientState#setHeightPercentile(float)
-     */
-    public void setHeightPercentile(float heightPercentile)
-    {
-        _patientState.setHeightPercentile(heightPercentile);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.PatientState#getCompliance()
-     */
-    public int getCompliance()
-    {
-        return _patientState.getCompliance();
-    }
-
-    /**
-     * @param compliance
-     * @see at.easydiet.model.PatientState#setCompliance(int)
-     */
-    public void setCompliance(int compliance)
-    {
-        _patientState.setCompliance(compliance);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.PatientState#getMotivation()
-     */
-    public int getMotivation()
-    {
-        return _patientState.getMotivation();
-    }
-
-    /**
-     * @param motivation
-     * @see at.easydiet.model.PatientState#setMotivation(int)
-     */
-    public void setMotivation(int motivation)
-    {
-        _patientState.setMotivation(motivation);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.PatientState#getType()
-     */
-    public PatientStateType getType()
-    {
-        return _patientState.getType();
-    }
-
-    /**
-     * @param type
-     * @see at.easydiet.model.PatientState#setType(at.easydiet.model.PatientStateType)
-     */
-    public void setType(PatientStateType type)
-    {
-        _patientState.setType(type);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.PatientState#getCreator()
-     */
-    public SystemUser getCreator()
-    {
-        return _patientState.getCreator();
-    }
-
-    /**
-     * @param creator
-     * @see at.easydiet.model.PatientState#setCreator(at.easydiet.model.SystemUser)
-     */
-    public void setCreator(SystemUser creator)
-    {
-        _patientState.setCreator(creator);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.PatientState#getLaborReports()
-     */
-    public Set<LaborReport> getLaborReports()
-    {
-        return _patientState.getLaborReports();
-    }
-
-    /**
-     * @param laborReports
-     * @see at.easydiet.model.PatientState#setLaborReports(java.util.Set)
-     */
-    public void setLaborReports(Set<LaborReport> laborReports)
-    {
-        _patientState.setLaborReports(laborReports);
+        return _model.getDate();
     }
     
+    /**       
+     * Sets the date of this instance. 
+     * @param date the new date of this instance.
+     */    
+    public void setDate(Date date) 
+    {
+        _model.setDate(date);
+    }
+
+    /**       
+     * Gets the anamnesis of this instance. 
+     * @return the anamnesis currently set for this instance.
+     */
+    public Clob getAnamnesis() 
+    {
+        return _model.getAnamnesis();
+    }
     
+    /**       
+     * Sets the anamnesis of this instance. 
+     * @param anamnesis the new anamnesis of this instance.
+     */    
+    public void setAnamnesis(Clob anamnesis) 
+    {
+        _model.setAnamnesis(anamnesis);
+    }
+
+    /**       
+     * Gets the weight of this instance. 
+     * @return the weight currently set for this instance.
+     */
+    public int getWeight() 
+    {
+        return _model.getWeight();
+    }
+    
+    /**       
+     * Sets the weight of this instance. 
+     * @param weight the new weight of this instance.
+     */    
+    public void setWeight(int weight) 
+    {
+        _model.setWeight(weight);
+    }
+
+    /**       
+     * Gets the weightPercentile of this instance. 
+     * @return the weightPercentile currently set for this instance.
+     */
+    public float getWeightPercentile() 
+    {
+        return _model.getWeightPercentile();
+    }
+    
+    /**       
+     * Sets the weightPercentile of this instance. 
+     * @param weightPercentile the new weightPercentile of this instance.
+     */    
+    public void setWeightPercentile(float weightPercentile) 
+    {
+        _model.setWeightPercentile(weightPercentile);
+    }
+
+    /**       
+     * Gets the height of this instance. 
+     * @return the height currently set for this instance.
+     */
+    public int getHeight() 
+    {
+        return _model.getHeight();
+    }
+    
+    /**       
+     * Sets the height of this instance. 
+     * @param height the new height of this instance.
+     */    
+    public void setHeight(int height) 
+    {
+        _model.setHeight(height);
+    }
+
+    /**       
+     * Gets the heightPercentile of this instance. 
+     * @return the heightPercentile currently set for this instance.
+     */
+    public float getHeightPercentile() 
+    {
+        return _model.getHeightPercentile();
+    }
+    
+    /**       
+     * Sets the heightPercentile of this instance. 
+     * @param heightPercentile the new heightPercentile of this instance.
+     */    
+    public void setHeightPercentile(float heightPercentile) 
+    {
+        _model.setHeightPercentile(heightPercentile);
+    }
+
+    /**       
+     * Gets the compliance of this instance. 
+     * @return the compliance currently set for this instance.
+     */
+    public int getCompliance() 
+    {
+        return _model.getCompliance();
+    }
+    
+    /**       
+     * Sets the compliance of this instance. 
+     * @param compliance the new compliance of this instance.
+     */    
+    public void setCompliance(int compliance) 
+    {
+        _model.setCompliance(compliance);
+    }
+
+    /**       
+     * Gets the motivation of this instance. 
+     * @return the motivation currently set for this instance.
+     */
+    public int getMotivation() 
+    {
+        return _model.getMotivation();
+    }
+    
+    /**       
+     * Sets the motivation of this instance. 
+     * @param motivation the new motivation of this instance.
+     */    
+    public void setMotivation(int motivation) 
+    {
+        _model.setMotivation(motivation);
+    }
+
+	
+    private PatientStateTypeBO _type;
+    
+    /**
+     * Gets the currently referenced Type of this instance.
+     * @return the PatientStateType currently referenced in this PatientState. 
+     */
+    public PatientStateTypeBO getType()
+    {
+        if(_type == null)
+        {
+            _type = PatientStateTypeBO.getForModel(_model.getType());
+        }
+        return _type;
+    }
+    
+    /**
+     * Sets the Type to be referenced in this instance
+     * @param type the PatientStateType to reference in this PatientState. 
+     */
+    public void setType(PatientStateTypeBO type)
+    {
+        _type = type;
+        _model.setType(type.getModel());
+    }
+	
+    private SystemUserBO _creator;
+    
+    /**
+     * Gets the currently referenced Creator of this instance.
+     * @return the SystemUser currently referenced in this PatientState. 
+     */
+    public SystemUserBO getCreator()
+    {
+        if(_creator == null)
+        {
+            _creator = new SystemUserBO(_model.getCreator());
+        }
+        return _creator;
+    }
+    
+    /**
+     * Sets the Creator to be referenced in this instance
+     * @param creator the SystemUser to reference in this PatientState. 
+     */
+    public void setCreator(SystemUserBO creator)
+    {
+        _creator = creator;
+        _model.setCreator(creator.getModel());
+    }
+
+	private List<LaborReportBO> _laborReports;
+	
+    /**
+     * Gets a list of referenced LaborReports of this instance.
+     * This list is cached, use {@link PatientState#updateLaborReportsCache()) to update this cache.
+     * @return a cached list of referenced LaborReports wrapped into the correct businessobject. 
+     */
+    public List<LaborReportBO> getLaborReports()
+    {
+        if(_laborReports == null) 
+        {
+            _laborReports = new ArrayList<LaborReportBO>();
+            for(LaborReport laborReports : _model.getLaborReports())
+            {
+                _laborReports.add(new LaborReportBO(laborReports));
+            }
+        }
+        return _laborReports;
+    }
+	
+    /**
+     * Adds a new LaborReport to the list of referenced laborReports.
+     * The cache will updated
+     * @param laborReports the LaborReport to add. 
+     */
+    public void addLaborReports(LaborReportBO laborReports)
+    {
+        getLaborReports().add(laborReports);
+        _model.getLaborReports().add(laborReports.getModel());
+    }
+    
+        
+    /**
+     * Removes the given LaborReport from the list of referenced laborReports.
+     * The cache will updated
+     * @param laborReports the timespan to add. 
+     */
+    public void removeLaborReports(LaborReportBO laborReports)
+    {
+        getLaborReports().remove(laborReports);
+        _model.getLaborReports().remove(laborReports.getModel());
+    }
+	
+    /**
+     * Rebuilds the cache for referenced laborReports.
+     */
+    public void updateLaborReportsCache()
+    {
+        _laborReports = null;
+        getLaborReports();
+    }
+
+	
+    private PatientBO _patient;
+    
+    /**
+     * Gets the currently referenced Patient of this instance.
+     * @return the Patient currently referenced in this PatientState. 
+     */
+    public PatientBO getPatient()
+    {
+        if(_patient == null)
+        {
+            _patient = new PatientBO(_model.getPatient());
+        }
+        return _patient;
+    }
+    
+    /**
+     * Sets the Patient to be referenced in this instance
+     * @param patient the Patient to reference in this PatientState. 
+     */
+    public void setPatient(PatientBO patient)
+    {
+        _patient = patient;
+        _model.setPatient(patient.getModel());
+    }
 }

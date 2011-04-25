@@ -21,18 +21,18 @@ xmlns="org.apache.pivot.wtk">
 				verticalScrollBarPolicy="fill_to_capacity">
 					<TableView bxml:id="_dietTreatmentsTable" selectMode="single">
 						<columns>
-							<TableView.Column name="Name" width="200" headerData="Name"/>
-							<TableView.Column name="Start" width="200" headerData="Von">
+							<TableView.Column name="name" width="200" headerData="Name"/>
+							<TableView.Column name="start" width="200" headerData="Von">
 								<cellRenderer>
 									<easycontent:DateCellRenderer />
 								</cellRenderer>
 							</TableView.Column>
-							<TableView.Column name="End" width="200" headerData="Ende">
+							<TableView.Column name="end" width="200" headerData="Ende">
 								<cellRenderer>
 									<easycontent:DateCellRenderer />
 								</cellRenderer>
 							</TableView.Column>
-							<TableView.Column name="TreatmentState" width="150" headerData="Status">
+							<TableView.Column name="treatmentState" width="150" headerData="Status">
 								<cellRenderer>
 									<easycontent:NameCellRenderer />
 								</cellRenderer>

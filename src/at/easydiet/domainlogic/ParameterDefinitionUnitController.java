@@ -5,10 +5,10 @@ import java.util.List;
 import org.apache.pivot.collections.ArrayList;
 
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
+import at.easydiet.businessobjects.RecipeBO;
 import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.ParameterDefinitionUnitDAO;
 import at.easydiet.model.ParameterDefinitionUnit;
-import at.easydiet.model.Recipe;
 
 public class ParameterDefinitionUnitController
 {
@@ -27,7 +27,7 @@ public class ParameterDefinitionUnitController
     }
 
     public ArrayList<ParameterDefinitionUnitBO> getUnitsCompatibleWithRecipe(
-            Recipe recipe)
+            RecipeBO recipe)
     {
         // TODO: Check for available type converters with recipe.getUnit()
         ParameterDefinitionUnitDAO dao = DAOFactory.getInstance()

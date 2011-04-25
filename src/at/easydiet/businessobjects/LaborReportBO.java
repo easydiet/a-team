@@ -1,149 +1,204 @@
 package at.easydiet.businessobjects;
 
+
 import java.sql.Clob;
 import java.util.Date;
-import java.util.Set;
+
+import org.apache.pivot.collections.List;
+import org.apache.pivot.collections.ArrayList;
 
 import at.easydiet.model.DietParameter;
 import at.easydiet.model.LaborReport;
-import at.easydiet.model.Patient;
-import at.easydiet.model.SystemUser;
 
+/**
+ * This class encapsules a LaborReport instance.
+ */
 public class LaborReportBO
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(LaborReportBO.class);
-
-    private LaborReport _laborReport;
-
+	private LaborReport _model;
+	
     /**
-     * Gets the laborReport.
-     * @return the laborReport
+     * Initializes a new instance of the {@link LaborReportBO} class.
      */
-    public LaborReport getLaborReport()
-    {
-        return _laborReport;
-    }
-
-    /** 
-     * Initializes a new instance of the {@link LaborReportBO} class. 
-     * @param laborReport
+	public LaborReportBO()
+	{
+		// TODO: add default values
+		this(new LaborReport());
+	}
+	
+    /**
+     * Initializes a new instance of the {@link LaborReportBO} class.
+     * @param model the original model object
      */
-    public LaborReportBO(LaborReport laborReport)
+	public LaborReportBO(LaborReport model)
+	{
+		_model = model;
+	}
+	
+	/**
+	 * Gets the original model object used as object store for this BusinessObject.
+	 * @return the original {@link LaborReport} object.
+	 */
+ 	public LaborReport getModel()
+	{
+		return _model;
+	}
+	
+    /**       
+     * Gets the laborReportId of this instance. 
+     * @return the laborReportId currently set for this instance.
+     */
+    public long getLaborReportId() 
     {
-        super();
-        _laborReport = laborReport;
+        return _model.getLaborReportId();
     }
     
-    
-
-    /**
-     * @return
-     * @see at.easydiet.model.LaborReport#getPatient()
-     */
-    public Patient getPatient()
+    /**       
+     * Sets the laborReportId of this instance. 
+     * @param laborReportId the new laborReportId of this instance.
+     */    
+    public void setLaborReportId(long laborReportId) 
     {
-        return _laborReport.getPatient();
+        _model.setLaborReportId(laborReportId);
     }
 
-    /**
-     * @param patient
-     * @see at.easydiet.model.LaborReport#setPatient(at.easydiet.model.Patient)
+    /**       
+     * Gets the date of this instance. 
+     * @return the date currently set for this instance.
      */
-    public void setPatient(Patient patient)
+    public Date getDate() 
     {
-        _laborReport.setPatient(patient);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.LaborReport#getLaborReportId()
-     */
-    public long getLaborReportId()
-    {
-        return _laborReport.getLaborReportId();
-    }
-
-    /**
-     * @param laborReportId
-     * @see at.easydiet.model.LaborReport#setLaborReportId(long)
-     */
-    public void setLaborReportId(long laborReportId)
-    {
-        _laborReport.setLaborReportId(laborReportId);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.LaborReport#getDate()
-     */
-    public Date getDate()
-    {
-        return _laborReport.getDate();
-    }
-
-    /**
-     * @param date
-     * @see at.easydiet.model.LaborReport#setDate(java.util.Date)
-     */
-    public void setDate(Date date)
-    {
-        _laborReport.setDate(date);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.LaborReport#getNotice()
-     */
-    public Clob getNotice()
-    {
-        return _laborReport.getNotice();
-    }
-
-    /**
-     * @param notice
-     * @see at.easydiet.model.LaborReport#setNotice(java.sql.Clob)
-     */
-    public void setNotice(Clob notice)
-    {
-        _laborReport.setNotice(notice);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.LaborReport#getCreator()
-     */
-    public SystemUser getCreator()
-    {
-        return _laborReport.getCreator();
-    }
-
-    /**
-     * @param creator
-     * @see at.easydiet.model.LaborReport#setCreator(at.easydiet.model.SystemUser)
-     */
-    public void setCreator(SystemUser creator)
-    {
-        _laborReport.setCreator(creator);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.LaborReport#getDietParameters()
-     */
-    public Set<DietParameter> getDietParameters()
-    {
-        return _laborReport.getDietParameters();
-    }
-
-    /**
-     * @param dietParameters
-     * @see at.easydiet.model.LaborReport#setDietParameters(java.util.Set)
-     */
-    public void setDietParameters(Set<DietParameter> dietParameters)
-    {
-        _laborReport.setDietParameters(dietParameters);
+        return _model.getDate();
     }
     
+    /**       
+     * Sets the date of this instance. 
+     * @param date the new date of this instance.
+     */    
+    public void setDate(Date date) 
+    {
+        _model.setDate(date);
+    }
+
+    /**       
+     * Gets the notice of this instance. 
+     * @return the notice currently set for this instance.
+     */
+    public Clob getNotice() 
+    {
+        return _model.getNotice();
+    }
     
+    /**       
+     * Sets the notice of this instance. 
+     * @param notice the new notice of this instance.
+     */    
+    public void setNotice(Clob notice) 
+    {
+        _model.setNotice(notice);
+    }
+
+	
+    private SystemUserBO _creator;
+    
+    /**
+     * Gets the currently referenced Creator of this instance.
+     * @return the SystemUser currently referenced in this LaborReport. 
+     */
+    public SystemUserBO getCreator()
+    {
+        if(_creator == null)
+        {
+            _creator = new SystemUserBO(_model.getCreator());
+        }
+        return _creator;
+    }
+    
+    /**
+     * Sets the Creator to be referenced in this instance
+     * @param creator the SystemUser to reference in this LaborReport. 
+     */
+    public void setCreator(SystemUserBO creator)
+    {
+        _creator = creator;
+        _model.setCreator(creator.getModel());
+    }
+
+	private List<DietParameterBO> _dietParameters;
+	
+    /**
+     * Gets a list of referenced DietParameters of this instance.
+     * This list is cached, use {@link LaborReport#updateDietParametersCache()) to update this cache.
+     * @return a cached list of referenced DietParameters wrapped into the correct businessobject. 
+     */
+    public List<DietParameterBO> getDietParameters()
+    {
+        if(_dietParameters == null) 
+        {
+            _dietParameters = new ArrayList<DietParameterBO>();
+            for(DietParameter dietParameters : _model.getDietParameters())
+            {
+                _dietParameters.add(new DietParameterBO(dietParameters));
+            }
+        }
+        return _dietParameters;
+    }
+	
+    /**
+     * Adds a new DietParameter to the list of referenced dietParameters.
+     * The cache will updated
+     * @param dietParameters the DietParameter to add. 
+     */
+    public void addDietParameters(DietParameterBO dietParameters)
+    {
+        getDietParameters().add(dietParameters);
+        _model.getDietParameters().add(dietParameters.getModel());
+    }
+    
+        
+    /**
+     * Removes the given DietParameter from the list of referenced dietParameters.
+     * The cache will updated
+     * @param dietParameters the timespan to add. 
+     */
+    public void removeDietParameters(DietParameterBO dietParameters)
+    {
+        getDietParameters().remove(dietParameters);
+        _model.getDietParameters().remove(dietParameters.getModel());
+    }
+	
+    /**
+     * Rebuilds the cache for referenced dietParameters.
+     */
+    public void updateDietParametersCache()
+    {
+        _dietParameters = null;
+        getDietParameters();
+    }
+
+	
+    private PatientBO _patient;
+    
+    /**
+     * Gets the currently referenced Patient of this instance.
+     * @return the Patient currently referenced in this LaborReport. 
+     */
+    public PatientBO getPatient()
+    {
+        if(_patient == null)
+        {
+            _patient = new PatientBO(_model.getPatient());
+        }
+        return _patient;
+    }
+    
+    /**
+     * Sets the Patient to be referenced in this instance
+     * @param patient the Patient to reference in this LaborReport. 
+     */
+    public void setPatient(PatientBO patient)
+    {
+        _patient = patient;
+        _model.setPatient(patient.getModel());
+    }
 }
