@@ -9,6 +9,7 @@ xmlns="org.apache.pivot.wtk">
 		<easy:EasyDietContentView.NavigationButton text="Diätplan anlegen" />
 	</navigationButtons>
 	<toolbarButtons>
+		<easy:EasyDietContentView.ToolbarButton text="Speichern" icon="@save.png" bxml:id="save" />
 		<easy:EasyDietContentView.ToolbarButton action="todo" text="Validieren" icon="@validate.png" />
 		<easy:EasyDietContentView.ToolbarButton text="GUI Aktualisieren" icon="@refresh.png" bxml:id="refreshUI" />
 		<easy:EasyDietContentView.ToolbarButton action="showHelp" text="Hilfe" icon="@help.png" />

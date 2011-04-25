@@ -34,7 +34,7 @@ public class Setup
         HibernateUtil.currentSession();
     }
 
-    private void importDefaultData()
+    protected void importDefaultData()
     {
         LOGGER.info("Importing Data");
         Session session = HibernateUtil.currentSession();

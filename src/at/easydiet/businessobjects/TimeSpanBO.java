@@ -2,114 +2,235 @@ package at.easydiet.businessobjects;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Set;
 
+import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.util.CalendarDate;
 
 import at.easydiet.model.DietParameter;
-import at.easydiet.model.DietPlan;
 import at.easydiet.model.Meal;
 import at.easydiet.model.TimeSpan;
-import at.easydiet.view.MealBO;
 
+/**
+ * This class encapsules a TimeSpan instance.
+ */
 public class TimeSpanBO
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(TimeSpanBO.class);
-
-    private TimeSpan _timeSpan;
+    private TimeSpan _model;
 
     /**
-     * Gets the timeSpan.
-     * @return the timeSpan
-     */
-    public TimeSpan getTimeSpan()
-    {
-        return _timeSpan;
-    }
-
-    /** 
-     * Initializes a new instance of the {@link TimeSpanBO} class. 
+     * Initializes a new instance of the {@link TimeSpanBO} class.
      */
     public TimeSpanBO()
     {
-        this(new TimeSpan(new Date(), 1, null));
-    }
-    /** 
-     * Initializes a new instance of the {@link TimeSpanBO} class. 
-     * @param timeSpan
-     */
-    public TimeSpanBO(TimeSpan timeSpan)
-    {
-        super();
-        _timeSpan = timeSpan;
+        this(new TimeSpan(new Date(), 0, null));
     }
 
     /**
-     * @return
-     * @see at.easydiet.model.TimeSpan#getTimeSpanId()
+     * Initializes a new instance of the {@link TimeSpanBO} class.
+     * @param model the original model object
+     */
+    public TimeSpanBO(TimeSpan model)
+    {
+        _model = model;
+    }
+
+    /**
+     * Gets the original model object used as object store for this
+     * BusinessObject.
+     * @return the original {@link TimeSpan} object.
+     */
+    public TimeSpan getModel()
+    {
+        return _model;
+    }
+
+    /**
+     * Gets the timeSpanId of this instance.
+     * @return the timeSpanId currently set for this instance.
      */
     public long getTimeSpanId()
     {
-        return _timeSpan.getTimeSpanId();
+        return _model.getTimeSpanId();
     }
 
     /**
-     * @param timeSpanId
-     * @see at.easydiet.model.TimeSpan#setTimeSpanId(long)
+     * Sets the timeSpanId of this instance.
+     * @param timeSpanId the new timeSpanId of this instance.
      */
     public void setTimeSpanId(long timeSpanId)
     {
-        _timeSpan.setTimeSpanId(timeSpanId);
-    }
-    
-    
-
-    /**
-     * @return
-     * @see at.easydiet.model.TimeSpan#getDietPlan()
-     */
-    public DietPlan getDietPlan()
-    {
-        return _timeSpan.getDietPlan();
+        _model.setTimeSpanId(timeSpanId);
     }
 
     /**
-     * @param dietPlan
-     * @see at.easydiet.model.TimeSpan#setDietPlan(at.easydiet.model.DietPlan)
-     */
-    public void setDietPlan(DietPlan dietPlan)
-    {
-        _timeSpan.setDietPlan(dietPlan);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.TimeSpan#getStart()
+     * Gets the start of this instance.
+     * @return the start currently set for this instance.
      */
     public Date getStart()
     {
-        return _timeSpan.getStart();
-    }
-    
-    public CalendarDate getStartDate()
-    {
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTime(_timeSpan.getStart());
-        return new CalendarDate(calendar);
+        return _model.getStart();
     }
 
     /**
-     * @param start
-     * @see at.easydiet.model.TimeSpan#setStart(java.util.Date)
+     * Sets the start of this instance.
+     * @param start the new start of this instance.
      */
     public void setStart(Date start)
     {
-        _timeSpan.setStart(start);
+        _model.setStart(start);
     }
-    
+
+    /**
+     * Gets the duration of this instance.
+     * @return the duration currently set for this instance.
+     */
+    public int getDuration()
+    {
+        return _model.getDuration();
+    }
+
+    /**
+     * Sets the duration of this instance.
+     * @param duration the new duration of this instance.
+     */
+    public void setDuration(int duration)
+    {
+        _model.setDuration(duration);
+    }
+
+    private DietPlanBO _dietPlan;
+
+    /**
+     * Gets the currently referenced DietPlan of this instance.
+     * @return the DietPlan currently referenced in this TimeSpan.
+     */
+    public DietPlanBO getDietPlan()
+    {
+        if (_dietPlan == null)
+        {
+            _dietPlan = new DietPlanBO(_model.getDietPlan());
+        }
+        return _dietPlan;
+    }
+
+    /**
+     * Sets the DietPlan to be referenced in this instance
+     * @param dietPlan the DietPlan to reference in this TimeSpan.
+     */
+    public void setDietPlan(DietPlanBO dietPlan)
+    {
+        _dietPlan = dietPlan;
+        _model.setDietPlan(dietPlan.getModel());
+    }
+
+    private List<DietParameterBO> _dietParameters;
+
+/**
+     * Gets a list of referenced DietParameters of this instance.
+     * This list is cached, use {@link TimeSpan#updateDietParametersCache()) to update this cache.
+     * @return a cached list of referenced DietParameters wrapped into the correct businessobject. 
+     */
+    public List<DietParameterBO> getDietParameters()
+    {
+        if (_dietParameters == null)
+        {
+            _dietParameters = new ArrayList<DietParameterBO>();
+            for (DietParameter dietParameters : _model.getDietParameters())
+            {
+                _dietParameters.add(new DietParameterBO(dietParameters));
+            }
+        }
+        return _dietParameters;
+    }
+
+    /**
+     * Adds a new DietParameter to the list of referenced dietParameters. The
+     * cache will updated
+     * @param dietParameters the DietParameter to add.
+     */
+    public void addDietParameters(DietParameterBO dietParameters)
+    {
+        getDietParameters().add(dietParameters);
+        _model.getDietParameters().add(dietParameters.getModel());
+    }
+
+    /**
+     * Removes the given DietParameter from the list of referenced
+     * dietParameters. The cache will updated
+     * @param dietParameters the timespan to add.
+     */
+    public void removeDietParameters(DietParameterBO dietParameters)
+    {
+        getDietParameters().remove(dietParameters);
+        _model.getDietParameters().remove(dietParameters.getModel());
+    }
+
+    /**
+     * Rebuilds the cache for referenced dietParameters.
+     */
+    public void updateDietParametersCache()
+    {
+        _dietParameters = null;
+        getDietParameters();
+    }
+
+    private List<MealBO> _meals;
+
+/**
+     * Gets a list of referenced Meals of this instance.
+     * This list is cached, use {@link TimeSpan#updateMealsCache()) to update this cache.
+     * @return a cached list of referenced Meals wrapped into the correct businessobject. 
+     */
+    public List<MealBO> getMeals()
+    {
+        if (_meals == null)
+        {
+            _meals = new ArrayList<MealBO>();
+            for (Meal meals : _model.getMeals())
+            {
+                _meals.add(new MealBO(meals));
+            }
+        }
+        return _meals;
+    }
+
+    /**
+     * Adds a new Meal to the list of referenced meals. The cache will updated
+     * @param meals the Meal to add.
+     */
+    public void addMeals(MealBO meals)
+    {
+        getMeals().add(meals);
+        _model.getMeals().add(meals.getModel());
+    }
+
+    /**
+     * Removes the given Meal from the list of referenced meals. The cache will
+     * updated
+     * @param meals the timespan to add.
+     */
+    public void removeMeals(MealBO meals)
+    {
+        getMeals().remove(meals);
+        _model.getMeals().remove(meals.getModel());
+    }
+
+    /**
+     * Rebuilds the cache for referenced meals.
+     */
+    public void updateMealsCache()
+    {
+        _meals = null;
+        getMeals();
+    }
+
+    public CalendarDate getStartDate()
+    {
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(getStart());
+        return new CalendarDate(calendar);
+    }
 
     public Date getEnd()
     {
@@ -118,96 +239,11 @@ public class TimeSpanBO
         g.add(GregorianCalendar.DAY_OF_YEAR, getDuration());
         return g.getTime();
     }
-    
-    
-    
 
-    /**
-     * @return
-     * @see at.easydiet.model.TimeSpan#getDuration()
-     */
-    public int getDuration()
-    {
-        return _timeSpan.getDuration();
-    }
-
-    /**
-     * @param duration
-     * @see at.easydiet.model.TimeSpan#setDuration(int)
-     */
-    public void setDuration(int duration)
-    {
-        _timeSpan.setDuration(duration);
-    }
-    
-    
     public CalendarDate getEndDate()
     {
         CalendarDate end = getStartDate();
         end.add(getDuration());
         return end;
     }
-
-
-    /**
-     * @return
-     * @see at.easydiet.model.TimeSpan#getDietParameters()
-     */
-    public Set<DietParameter> getDietParameters()
-    {
-        return _timeSpan.getDietParameters();
-    }
-
-    /**
-     * @param dietParameters
-     * @see at.easydiet.model.TimeSpan#setDietParameters(java.util.Set)
-     */
-    public void setDietParameters(Set<DietParameter> dietParameters)
-    {
-        _timeSpan.setDietParameters(dietParameters);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.TimeSpan#getMeals()
-     */
-    public List<Meal> getMeals()
-    {
-        return _timeSpan.getMeals();
-    }
-
-    /**
-     * @param meals
-     * @see at.easydiet.model.TimeSpan#setMeals(java.util.Set)
-     */
-    public void setMeals(List<Meal> meals)
-    {
-        _timeSpan.setMeals(meals);
-    }
-    
-    public void removeFromDietPlan()
-    {
-        if(_timeSpan.getDietPlan() != null)
-        {
-            _timeSpan.getDietPlan().getTimeSpans().remove(this);
-            _timeSpan.setDietPlan(null);
-        }
-    }
-    
-    public void addToDietPlan(DietPlanBO dietPlan)
-    {
-        dietPlan.getDietPlan().getTimeSpans().add(_timeSpan);
-        _timeSpan.setDietPlan(dietPlan.getDietPlan());
-    }
-
-    public ArrayList<MealBO> getMealBOs()
-    {
-        ArrayList<MealBO> bos = new ArrayList<MealBO>();
-        for (Meal meal : getMeals())
-        {
-            bos.add(new MealBO(meal));
-        }
-        return bos;
-    }
-
 }

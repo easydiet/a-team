@@ -45,15 +45,15 @@ public class ParameterValidator {
 		//compare all parameters
 		for(DietParameterBO checkParameter : checkSet)
 		{
-			ParameterDefinitionBO checkParameterDefinition = checkParameter.getParameterDefinitionBO();
-			CheckOperatorBO checkParameterOperator = checkParameter.getCheckOperatorBO();
+			ParameterDefinitionBO checkParameterDefinition = checkParameter.getParameterDefinition();
+			CheckOperatorBO checkParameterOperator = checkParameter.getCheckOperator();
 			
 			//remove this parameter from the comparison set
 			compareSet.remove(checkParameter);
 			
 			for(DietParameterBO compareParameter : compareSet)
 			{
-				ParameterDefinitionBO compareParameterDefinition = compareParameter.getParameterDefinitionBO();
+				ParameterDefinitionBO compareParameterDefinition = compareParameter.getParameterDefinition();
 				
 				//DEBUG:
 				System.out.println(">>>checkParameterDefinition: " + checkParameterDefinition.getName() + ".equals(compareParameterDefinition: " + compareParameterDefinition.getName() +") = " + (checkParameterDefinition.equals(compareParameterDefinition)));
@@ -61,12 +61,8 @@ public class ParameterValidator {
 				//if definition is the same
 				if(checkParameterDefinition.equals(compareParameterDefinition))
 				{
-					//DEBUG:
-					System.out.println(">>>checkParameter.getUnitBO().getTypeBO().getName(): " + checkParameter.getUnitBO().getTypeBO().getName() + " == ParameterDefinitionDataTypeBO.NUMBERS.getName(): " + ParameterDefinitionDataTypeBO.NUMBERS.getName() + " = " + (checkParameter.getUnitBO().getTypeBO() == ParameterDefinitionDataTypeBO.NUMBERS));
-					System.out.println(">>>compareParameter.getUnitBO().getTypeBO().getName(): " + compareParameter.getUnitBO().getTypeBO().getName() + " == ParameterDefinitionDataTypeBO.NUMBERS.getName(): " + ParameterDefinitionDataTypeBO.NUMBERS.getName()  + " = " + (compareParameter.getUnitBO().getTypeBO() == ParameterDefinitionDataTypeBO.NUMBERS));
-					
 					//if both are numbers			
-					if(checkParameter.getUnitBO().getTypeBO() == ParameterDefinitionDataTypeBO.NUMBERS && compareParameter.getUnitBO().getTypeBO() == ParameterDefinitionDataTypeBO.NUMBERS)
+					if(checkParameter.getParameterDefinitionUnit().getType() == ParameterDefinitionDataTypeBO.NUMBERS && compareParameter.getParameterDefinitionUnit().getType() == ParameterDefinitionDataTypeBO.NUMBERS)
 					{
 						//get number values
 						double checkNumberValue;
@@ -77,11 +73,8 @@ public class ParameterValidator {
 							
 							
 						//TODO: check if parameters say no to each other
-						CheckOperatorBO compareParameterOperator = compareParameter.getCheckOperatorBO();
+						CheckOperatorBO compareParameterOperator = compareParameter.getCheckOperator();
 						
-						//DEBUG:
-						System.out.println(">>>checkParameterOperator.getName(): " + checkParameterOperator.getName());
-						System.out.println(">>>compareParameterOperator.getName(): " + compareParameterOperator.getName());
 						
 						// > && >=
 						if(checkParameterOperator == CheckOperatorBO.BIGGER || checkParameterOperator == CheckOperatorBO.EQUALORBIGGER )

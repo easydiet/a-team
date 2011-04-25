@@ -39,6 +39,7 @@ public class DashboardView extends EasyDietContentView implements Bindable
     @Override
     public void onLoad()
     {
+        DashboardViewController.getInstance().refreshPatients();
         _searchBox.setText(DashboardViewController.getInstance().getPatientFilter());
         _searchBox.requestFocus();
     }

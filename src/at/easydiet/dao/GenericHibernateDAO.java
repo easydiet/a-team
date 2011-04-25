@@ -9,7 +9,6 @@ import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
-import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Order;
 
 import at.easydiet.model.Recipe;
@@ -82,7 +81,6 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
                     LockOptions.UPGRADE);
         else
             entity = (T) getSession().load(getPersistentClass(), id);
-
         return entity;
     }
 
@@ -132,6 +130,25 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
     }
 
     /**
+     * Re-read the state of the given instance from the underlying database. It
+     * is inadvisable to use this to implement long-running sessions that span
+     * many business tasks. This method is, however, useful in certain special
+     * circumstances. For example
+     * <ul>
+     * <li>where a database trigger alters the object state upon insert or
+     * update</li>
+     * <li>after executing direct SQL (eg. a mass update) in the same session</li>
+     * <li>after inserting a Blob or Clob</li>
+     * </ul>
+     * 
+     * @param entity a persistent or detached instance
+     */
+    public void refresh(T entity)
+    {
+        getSession().refresh(entity);
+    }
+
+    /**
      * Remove a persistent instance from the datastore. The argument may be an
      * instance associated with the receiving Session or a transient instance
      * with an identifier associated with existing persistent state. This
@@ -155,7 +172,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
     {
         getSession().flush();
     }
-
+    
     /**
      * Completely clear the session. Evict all loaded instances and cancel all
      * pending saves, updates and deletions. Do not close open iterators or

@@ -10,7 +10,6 @@ import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Orientation;
-import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.content.ButtonDataRenderer;
 
 public class EasyDietContentView extends BoxPane

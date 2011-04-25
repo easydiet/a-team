@@ -4,13 +4,13 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="at.easydiet.model">
 	<class name="Gender">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
 	</class>
 
 	<class name="Patient">
-
 		<id name="patientId" column="PatientId" type="long">
 			<generator class="native" />
 		</id>
@@ -110,10 +110,11 @@
 		<many-to-one class="SystemUser" name="createdBy" column="CreatedBy" not-null="true" />
 		<many-to-one class="ContactType" name="contactType" column="ContactType" not-null="true" />
 		<!-- Bidirectional assoc to treatment -->
-		<many-to-one name="dietTreatment" column="DietTreatmentId" class="DietTreatment" not-null="true" insert="false" update="false"/>
+		<many-to-one name="dietTreatment" column="DietTreatmentId" class="DietTreatment" not-null="true" insert="true" update="true"/>
 	</class>
 
 	<class name="ContactType">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
@@ -135,6 +136,7 @@
 	</class>
 
 	<class name="ParameterDefinitionDataType">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
@@ -191,7 +193,7 @@
 		</joined-subclass>-->
 		
 		<!-- Bidirectional assoc to patient -->
-		<many-to-one name="patient" column="PatientId" class="Patient" not-null="true" insert="false" update="false"/>
+		<many-to-one name="patient" column="PatientId" class="Patient" not-null="true" insert="true" update="true"/>
 	</class>
 
 	<class name="DietTreatmentSystemUser">
@@ -203,12 +205,14 @@
 	</class>
 
 	<class name="SystemUserFunction">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
 	</class>
 
 	<class name="TreatmentState">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
@@ -224,7 +228,7 @@
 		<many-to-one class="PlanType" name="planType" column="PlanType" not-null="true" />
 	
 		<!-- Bidirectional assoc to treatment -->
-		<many-to-one name="dietTreatment" column="DietTreatmentId" class="DietTreatment" not-null="true" insert="false" update="false"/>
+		<many-to-one name="dietTreatment" column="DietTreatmentId" class="DietTreatment" not-null="true" insert="true" update="true"/>
 
 		<set name="dietParameters" table="DietPlanDietParameter">
 			<key column="DietPlanId" not-null="true" />
@@ -249,6 +253,7 @@
 	</class>
 
 	<class name="PlanType">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
@@ -262,7 +267,7 @@
 		<property name="duration" column="Duration" type="int" not-null="true" />
 
 		<!-- Bidirectional assoc to plan -->
-		<many-to-one name="dietPlan" column="DietPlanId" class="DietPlan" not-null="true" insert="false" update="false"/>
+		<many-to-one name="dietPlan" column="DietPlanId" class="DietPlan" not-null="true" insert="true" update="true"/>
 
 		<set name="dietParameters" table="TimeSpanDietParameter">
 			<key column="TimeSpanId" not-null="true" />
@@ -306,13 +311,18 @@
 		<property name="quantity" column="Quantity" type="float" not-null="true" />
 		<property name="info" column="Info" type="clob" />
 
-		<set name="mealLines" cascade="all">
+		<list name="alternatives" cascade="all">
 			<key column="ParentMealLineId" not-null="false" />
+			<index column="Idx"/>
 			<one-to-many class="MealLine" />
-		</set>
+		</list>
 
 		<many-to-one class="Recipe" name="recipe" not-null="true" />
+		<many-to-one class="ParameterDefinitionUnit" name="unit" not-null="true" />
 		
+		<!-- Bidirectional assoc to parent mealLine -->
+		<many-to-one name="parent" column="ParentMealLineId" class="MealLine" insert="true" update="true"/>
+
 		<!-- Bidirectional assoc to meal -->
 		<many-to-one name="meal" column="MealId" class="Meal" not-null="true" insert="false" update="false"/>
 
@@ -355,7 +365,7 @@
 		<many-to-one name="ingredient" column="IngredientId" class="Recipe" />
 		
 		<!-- Bidirectional assoc to recipe -->
-		<many-to-one name="recipe" column="RecipeId" class="Recipe" not-null="true" insert="false" update="false"/>
+		<many-to-one name="recipe" column="RecipeId" class="Recipe" not-null="true" insert="true" update="true"/>
 
 	</class>
 
@@ -370,6 +380,7 @@
 	</class>
 
 	<class name="PatientStateType">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
@@ -383,10 +394,10 @@
 
 		<property name="date" column="Date" type="timestamp" not-null="true" />
 		<property name="anamnesis" column="Anamnesis" type="clob" />
-		<property name="weight" column="Weight" type="integer" />
+		<property name="weight" column="Weight" type="int" />
 		<property name="weightPercentile" column="WeightPercentile"
 			type="float" />
-		<property name="height" column="Height" type="integer" />
+		<property name="height" column="Height" type="int" />
 		<property name="heightPercentile" column="HeightPercentile"
 			type="float" />
 		<property name="compliance" column="Compliance" type="int" />
@@ -402,7 +413,7 @@
 		</set>
 		
 		<!-- Bidirectional assoc to patient -->
-		<many-to-one name="patient" column="PatientId" class="Patient" not-null="true" insert="false" update="false"/>
+		<many-to-one name="patient" column="PatientId" class="Patient" not-null="true" insert="true" update="true"/>
 
 	</class>
 
@@ -422,7 +433,7 @@
 		</set>
 		
 		<!-- Bidirectional assoc to patient -->
-		<many-to-one name="patient" column="PatientId" class="Patient" not-null="true" insert="false" update="false"/>
+		<many-to-one name="patient" column="PatientId" class="Patient" not-null="true" insert="true" update="true"/>
 
 	</class>
 
@@ -447,6 +458,7 @@
 	</class>
 
 	<class name="CheckOperator">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
@@ -466,6 +478,7 @@
 	</class>
 
 	<class name="DietParameterType">
+		<meta attribute="is-enum">true</meta>
 		<id name="name" column="Name" type="string">
 			<meta attribute="use-in-tostring">true</meta>
 		</id>

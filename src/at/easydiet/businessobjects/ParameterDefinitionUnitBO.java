@@ -1,23 +1,49 @@
 package at.easydiet.businessobjects;
 
-import at.easydiet.model.ParameterDefinitionDataType;
+
 import at.easydiet.model.ParameterDefinitionUnit;
 
-public class ParameterDefinitionUnitBO {
-	private ParameterDefinitionUnit _parameterDefinitionUnit;
+/**
+ * This class encapsules a ParameterDefinitionUnit instance.
+ */
+public class ParameterDefinitionUnitBO
+{
+	private ParameterDefinitionUnit _model;
 	
-	public ParameterDefinitionUnitBO(ParameterDefinitionUnit parameterDefinitionUnit) 
+    /**
+     * Initializes a new instance of the {@link ParameterDefinitionUnitBO} class.
+     */
+	public ParameterDefinitionUnitBO()
 	{
-		_parameterDefinitionUnit = parameterDefinitionUnit;
+		// TODO: add default values
+		this(new ParameterDefinitionUnit());
 	}
 	
-	/**       
+    /**
+     * Initializes a new instance of the {@link ParameterDefinitionUnitBO} class.
+     * @param model the original model object
+     */
+	public ParameterDefinitionUnitBO(ParameterDefinitionUnit model)
+	{
+		_model = model;
+	}
+	
+	/**
+	 * Gets the original model object used as object store for this BusinessObject.
+	 * @return the original {@link ParameterDefinitionUnit} object.
+	 */
+ 	public ParameterDefinitionUnit getModel()
+	{
+		return _model;
+	}
+	
+    /**       
      * Gets the parameterDefinitionUnitId of this instance. 
      * @return the parameterDefinitionUnitId currently set for this instance.
      */
     public long getParameterDefinitionUnitId() 
     {
-        return _parameterDefinitionUnit.getParameterDefinitionUnitId();
+        return _model.getParameterDefinitionUnitId();
     }
     
     /**       
@@ -26,16 +52,16 @@ public class ParameterDefinitionUnitBO {
      */    
     public void setParameterDefinitionUnitId(long parameterDefinitionUnitId) 
     {
-        _parameterDefinitionUnit.setParameterDefinitionUnitId(parameterDefinitionUnitId);
+        _model.setParameterDefinitionUnitId(parameterDefinitionUnitId);
     }
-    
+
     /**       
      * Gets the name of this instance. 
      * @return the name currently set for this instance.
      */
     public String getName() 
     {
-        return _parameterDefinitionUnit.getName();
+        return _model.getName();
     }
     
     /**       
@@ -44,26 +70,38 @@ public class ParameterDefinitionUnitBO {
      */    
     public void setName(String name) 
     {
-        _parameterDefinitionUnit.setName(name);
+        _model.setName(name);
     }
-    
-    /**       
-     * Gets the type of this instance. 
-     * @return the type currently set for this instance.
-     */
-    public ParameterDefinitionDataTypeBO getTypeBO() 
-    {
-        return ParameterDefinitionDataTypeBO.getForOperator(_parameterDefinitionUnit.getType());
-    }
-    
-    /**       
-     * Sets the type of this instance. 
-     * @param type the new type of this instance.
-     */    
-    public void setType(ParameterDefinitionDataType type) 
-    {
-        _parameterDefinitionUnit.setType(type);
-    }
-	
 
+	
+    private ParameterDefinitionDataTypeBO _type;
+    
+    /**
+     * Gets the currently referenced Type of this instance.
+     * @return the ParameterDefinitionDataType currently referenced in this ParameterDefinitionUnit. 
+     */
+    public ParameterDefinitionDataTypeBO getType()
+    {
+        if(_type == null)
+        {
+            _type = ParameterDefinitionDataTypeBO.getForModel(_model.getType());
+        }
+        return _type;
+    }
+    
+    /**
+     * Sets the Type to be referenced in this instance
+     * @param type the ParameterDefinitionDataType to reference in this ParameterDefinitionUnit. 
+     */
+    public void setType(ParameterDefinitionDataTypeBO type)
+    {
+        _type = type;
+        _model.setType(type.getModel());
+    }
+    
+    @Override
+    public String toString()
+    {
+        return getName();
+    }
 }

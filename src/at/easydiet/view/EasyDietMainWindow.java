@@ -10,7 +10,6 @@ import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.FlowPane;
 import org.apache.pivot.wtk.Prompt;
-import org.apache.pivot.wtk.TablePane;
 import org.apache.pivot.wtk.Window;
 
 public class EasyDietMainWindow extends Window implements Bindable

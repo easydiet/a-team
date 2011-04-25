@@ -10,9 +10,10 @@ import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.PushButton;
 
-import at.easydiet.businesslogic.CreateDietPlanViewController;
+import at.easydiet.businesslogic.DietTreatmentDetailViewController;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.TimeSpanBO;
+import at.easydiet.domainlogic.DietPlanEditingController;
 
 public class CreateDietPlanView extends EasyDietContentView implements Bindable
 { 
@@ -20,6 +21,12 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable
                                                             .getLogger(CreateDietPlanView.class);
 
     private BoxPane _timeSpanContainer;
+    
+    
+    
+    public CreateDietPlanView()
+    {
+    }
     
     public void initialize(Map<String, Object> namespace, URL location,
             Resources resources)
@@ -30,11 +37,21 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable
         {
             
             public void buttonPressed(Button button)
-            {
-                addTimeSpan(CreateDietPlanViewController.getInstance().createTimeSpan());
+            { 
+                addTimeSpan(DietPlanEditingController.getInstance().createTimeSpan());
                 //rebuildUI();
             }
         };
+        
+        Button saveButton = (Button)namespace.get("save");
+        saveButton.getButtonPressListeners().add(new ButtonPressListener()
+        {
+            public void buttonPressed(Button button)
+            {
+                DietPlanEditingController.getInstance().saveDietPlan();
+                ViewController.getInstance().loadContent("DietTreatmentDetailView", CreateDietPlanView.this);
+            }
+        });
         
         Button refreshUIButton = (Button) namespace.get("refreshUI");
         refreshUIButton.getButtonPressListeners().add(new ButtonPressListener()
@@ -56,15 +73,16 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable
     @Override
     public void onLoad()
     {
-        CreateDietPlanViewController.getInstance().createNew();
+        DietPlanEditingController.getInstance().createNew(DietTreatmentDetailViewController.getInstance().getDietTreatment());
+        DietPlanEditingController.getInstance().refresh();
     }
     
     public void rebuildUI()
     {
-        DietPlanBO dietPlan = CreateDietPlanViewController.getInstance().getDietPlan();
+        DietPlanBO dietPlan = DietPlanEditingController.getInstance().getDietPlan();
         
         _timeSpanContainer.removeAll();
-        for (TimeSpanBO timeSpan : dietPlan.getSortedTimeSpanBOs())
+        for (TimeSpanBO timeSpan : dietPlan.getSortedTimeSpans())
         {
             addTimeSpan(timeSpan);
         }

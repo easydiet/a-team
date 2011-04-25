@@ -1,9 +1,10 @@
 package at.easydiet.businessobjects;
 
+
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Set;
 
+import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.ArrayList;
 
 import at.easydiet.model.ContactJournal;
@@ -12,72 +13,488 @@ import at.easydiet.model.DietPlan;
 import at.easydiet.model.DietTreatment;
 import at.easydiet.model.DietTreatmentSystemUser;
 import at.easydiet.model.NutritionProtocol;
-import at.easydiet.model.Patient;
 import at.easydiet.model.PatientState;
-import at.easydiet.model.TreatmentState;
 
+/**
+ * This class encapsules a DietTreatment instance.
+ */
 public class DietTreatmentBO
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(DietTreatmentBO.class);
-
-    private DietTreatment                       _treatment;
-
+	private DietTreatment _model;
+	
     /**
      * Initializes a new instance of the {@link DietTreatmentBO} class.
-     * @param treatment
      */
-    public DietTreatmentBO(DietTreatment treatment)
-    {
-        super();
-        _treatment = treatment;
-    }
-
+	public DietTreatmentBO()
+	{
+		// TODO: add default values
+		this(new DietTreatment());
+	}
+	
     /**
-     * Gets the treatment.
-     * @return the treatment
+     * Initializes a new instance of the {@link DietTreatmentBO} class.
+     * @param model the original model object
      */
-    public DietTreatment getTreatment()
+	public DietTreatmentBO(DietTreatment model)
+	{
+		_model = model;
+	}
+	
+	/**
+	 * Gets the original model object used as object store for this BusinessObject.
+	 * @return the original {@link DietTreatment} object.
+	 */
+ 	public DietTreatment getModel()
+	{
+		return _model;
+	}
+	
+    /**       
+     * Gets the dietTreatmentId of this instance. 
+     * @return the dietTreatmentId currently set for this instance.
+     */
+    public long getDietTreatmentId() 
     {
-        return _treatment;
+        return _model.getDietTreatmentId();
+    }
+    
+    /**       
+     * Sets the dietTreatmentId of this instance. 
+     * @param dietTreatmentId the new dietTreatmentId of this instance.
+     */    
+    public void setDietTreatmentId(long dietTreatmentId) 
+    {
+        _model.setDietTreatmentId(dietTreatmentId);
     }
 
+    /**       
+     * Gets the start of this instance. 
+     * @return the start currently set for this instance.
+     */
+    public Date getStart() 
+    {
+        return _model.getStart();
+    }
+    
+    /**       
+     * Sets the start of this instance. 
+     * @param start the new start of this instance.
+     */    
+    public void setStart(Date start) 
+    {
+        _model.setStart(start);
+    }
+
+    /**       
+     * Gets the duration of this instance. 
+     * @return the duration currently set for this instance.
+     */
+    public int getDuration() 
+    {
+        return _model.getDuration();
+    }
+    
+    /**       
+     * Sets the duration of this instance. 
+     * @param duration the new duration of this instance.
+     */    
+    public void setDuration(int duration) 
+    {
+        _model.setDuration(duration);
+    }
+
+    /**       
+     * Gets the name of this instance. 
+     * @return the name currently set for this instance.
+     */
+    public String getName() 
+    {
+        return _model.getName();
+    }
+    
+    /**       
+     * Sets the name of this instance. 
+     * @param name the new name of this instance.
+     */    
+    public void setName(String name) 
+    {
+        _model.setName(name);
+    }
+
+
+	private List<NutritionProtocolBO> _nutritionProtocols;
+	
     /**
-     * @return
-     * @see at.easydiet.model.DietTreatment#getDietTreatmentId()
+     * Gets a list of referenced NutritionProtocols of this instance.
+     * This list is cached, use {@link DietTreatment#updateNutritionProtocolsCache()) to update this cache.
+     * @return a cached list of referenced NutritionProtocols wrapped into the correct businessobject. 
      */
-    public long getDietTreatmentId()
+    public List<NutritionProtocolBO> getNutritionProtocols()
     {
-        return _treatment.getDietTreatmentId();
+        if(_nutritionProtocols == null) 
+        {
+            _nutritionProtocols = new ArrayList<NutritionProtocolBO>();
+            for(NutritionProtocol nutritionProtocols : _model.getNutritionProtocols())
+            {
+                _nutritionProtocols.add(new NutritionProtocolBO(nutritionProtocols));
+            }
+        }
+        return _nutritionProtocols;
     }
-
+	
     /**
-     * @param dietTreatmentId
-     * @see at.easydiet.model.DietTreatment#setDietTreatmentId(long)
+     * Adds a new NutritionProtocol to the list of referenced nutritionProtocols.
+     * The cache will updated
+     * @param nutritionProtocols the NutritionProtocol to add. 
      */
-    public void setDietTreatmentId(long dietTreatmentId)
+    public void addNutritionProtocols(NutritionProtocolBO nutritionProtocols)
     {
-        _treatment.setDietTreatmentId(dietTreatmentId);
+        getNutritionProtocols().add(nutritionProtocols);
+        _model.getNutritionProtocols().add(nutritionProtocols.getModel());
     }
-
+    
+        
     /**
-     * @return
-     * @see at.easydiet.model.DietTreatment#getStart()
+     * Removes the given NutritionProtocol from the list of referenced nutritionProtocols.
+     * The cache will updated
+     * @param nutritionProtocols the timespan to add. 
      */
-    public Date getStart()
+    public void removeNutritionProtocols(NutritionProtocolBO nutritionProtocols)
     {
-        return _treatment.getStart();
+        getNutritionProtocols().remove(nutritionProtocols);
+        _model.getNutritionProtocols().remove(nutritionProtocols.getModel());
     }
-
+	
     /**
-     * @param start
-     * @see at.easydiet.model.DietTreatment#setStart(java.util.Date)
+     * Rebuilds the cache for referenced nutritionProtocols.
      */
-    public void setStart(Date start)
+    public void updateNutritionProtocolsCache()
     {
-        _treatment.setStart(start);
+        _nutritionProtocols = null;
+        getNutritionProtocols();
     }
 
+
+	private List<DietPlanBO> _dietPlans;
+	
+    /**
+     * Gets a list of referenced DietPlans of this instance.
+     * This list is cached, use {@link DietTreatment#updateDietPlansCache()) to update this cache.
+     * @return a cached list of referenced DietPlans wrapped into the correct businessobject. 
+     */
+    public List<DietPlanBO> getDietPlans()
+    {
+        if(_dietPlans == null) 
+        {
+            _dietPlans = new ArrayList<DietPlanBO>();
+            for(DietPlan dietPlans : _model.getDietPlans())
+            {
+                _dietPlans.add(new DietPlanBO(dietPlans));
+            }
+        }
+        return _dietPlans;
+    }
+	
+    /**
+     * Adds a new DietPlan to the list of referenced dietPlans.
+     * The cache will updated
+     * @param dietPlans the DietPlan to add. 
+     */
+    public void addDietPlans(DietPlanBO dietPlans)
+    {
+        getDietPlans().add(dietPlans);
+        _model.getDietPlans().add(dietPlans.getModel());
+    }
+    
+        
+    /**
+     * Removes the given DietPlan from the list of referenced dietPlans.
+     * The cache will updated
+     * @param dietPlans the timespan to add. 
+     */
+    public void removeDietPlans(DietPlanBO dietPlans)
+    {
+        getDietPlans().remove(dietPlans);
+        _model.getDietPlans().remove(dietPlans.getModel());
+    }
+	
+    /**
+     * Rebuilds the cache for referenced dietPlans.
+     */
+    public void updateDietPlansCache()
+    {
+        _dietPlans = null;
+        getDietPlans();
+    }
+
+
+	private List<DietParameterBO> _dietParameters;
+	
+    /**
+     * Gets a list of referenced DietParameters of this instance.
+     * This list is cached, use {@link DietTreatment#updateDietParametersCache()) to update this cache.
+     * @return a cached list of referenced DietParameters wrapped into the correct businessobject. 
+     */
+    public List<DietParameterBO> getDietParameters()
+    {
+        if(_dietParameters == null) 
+        {
+            _dietParameters = new ArrayList<DietParameterBO>();
+            for(DietParameter dietParameters : _model.getDietParameters())
+            {
+                _dietParameters.add(new DietParameterBO(dietParameters));
+            }
+        }
+        return _dietParameters;
+    }
+	
+    /**
+     * Adds a new DietParameter to the list of referenced dietParameters.
+     * The cache will updated
+     * @param dietParameters the DietParameter to add. 
+     */
+    public void addDietParameters(DietParameterBO dietParameters)
+    {
+        getDietParameters().add(dietParameters);
+        _model.getDietParameters().add(dietParameters.getModel());
+    }
+    
+        
+    /**
+     * Removes the given DietParameter from the list of referenced dietParameters.
+     * The cache will updated
+     * @param dietParameters the timespan to add. 
+     */
+    public void removeDietParameters(DietParameterBO dietParameters)
+    {
+        getDietParameters().remove(dietParameters);
+        _model.getDietParameters().remove(dietParameters.getModel());
+    }
+	
+    /**
+     * Rebuilds the cache for referenced dietParameters.
+     */
+    public void updateDietParametersCache()
+    {
+        _dietParameters = null;
+        getDietParameters();
+    }
+
+
+	private List<PatientStateBO> _patientStates;
+	
+    /**
+     * Gets a list of referenced PatientStates of this instance.
+     * This list is cached, use {@link DietTreatment#updatePatientStatesCache()) to update this cache.
+     * @return a cached list of referenced PatientStates wrapped into the correct businessobject. 
+     */
+    public List<PatientStateBO> getPatientStates()
+    {
+        if(_patientStates == null) 
+        {
+            _patientStates = new ArrayList<PatientStateBO>();
+            for(PatientState patientStates : _model.getPatientStates())
+            {
+                _patientStates.add(new PatientStateBO(patientStates));
+            }
+        }
+        return _patientStates;
+    }
+	
+    /**
+     * Adds a new PatientState to the list of referenced patientStates.
+     * The cache will updated
+     * @param patientStates the PatientState to add. 
+     */
+    public void addPatientStates(PatientStateBO patientStates)
+    {
+        getPatientStates().add(patientStates);
+        _model.getPatientStates().add(patientStates.getModel());
+    }
+    
+        
+    /**
+     * Removes the given PatientState from the list of referenced patientStates.
+     * The cache will updated
+     * @param patientStates the timespan to add. 
+     */
+    public void removePatientStates(PatientStateBO patientStates)
+    {
+        getPatientStates().remove(patientStates);
+        _model.getPatientStates().remove(patientStates.getModel());
+    }
+	
+    /**
+     * Rebuilds the cache for referenced patientStates.
+     */
+    public void updatePatientStatesCache()
+    {
+        _patientStates = null;
+        getPatientStates();
+    }
+
+
+	private List<DietTreatmentSystemUserBO> _systemUsers;
+	
+    /**
+     * Gets a list of referenced SystemUsers of this instance.
+     * This list is cached, use {@link DietTreatment#updateSystemUsersCache()) to update this cache.
+     * @return a cached list of referenced SystemUsers wrapped into the correct businessobject. 
+     */
+    public List<DietTreatmentSystemUserBO> getSystemUsers()
+    {
+        if(_systemUsers == null) 
+        {
+            _systemUsers = new ArrayList<DietTreatmentSystemUserBO>();
+            for(DietTreatmentSystemUser systemUsers : _model.getSystemUsers())
+            {
+                _systemUsers.add(new DietTreatmentSystemUserBO(systemUsers));
+            }
+        }
+        return _systemUsers;
+    }
+	
+    /**
+     * Adds a new DietTreatmentSystemUser to the list of referenced systemUsers.
+     * The cache will updated
+     * @param systemUsers the DietTreatmentSystemUser to add. 
+     */
+    public void addSystemUsers(DietTreatmentSystemUserBO systemUsers)
+    {
+        getSystemUsers().add(systemUsers);
+        _model.getSystemUsers().add(systemUsers.getModel());
+    }
+    
+        
+    /**
+     * Removes the given DietTreatmentSystemUser from the list of referenced systemUsers.
+     * The cache will updated
+     * @param systemUsers the timespan to add. 
+     */
+    public void removeSystemUsers(DietTreatmentSystemUserBO systemUsers)
+    {
+        getSystemUsers().remove(systemUsers);
+        _model.getSystemUsers().remove(systemUsers.getModel());
+    }
+	
+    /**
+     * Rebuilds the cache for referenced systemUsers.
+     */
+    public void updateSystemUsersCache()
+    {
+        _systemUsers = null;
+        getSystemUsers();
+    }
+
+
+	private List<ContactJournalBO> _contactJournals;
+	
+    /**
+     * Gets a list of referenced ContactJournals of this instance.
+     * This list is cached, use {@link DietTreatment#updateContactJournalsCache()) to update this cache.
+     * @return a cached list of referenced ContactJournals wrapped into the correct businessobject. 
+     */
+    public List<ContactJournalBO> getContactJournals()
+    {
+        if(_contactJournals == null) 
+        {
+            _contactJournals = new ArrayList<ContactJournalBO>();
+            for(ContactJournal contactJournals : _model.getContactJournals())
+            {
+                _contactJournals.add(new ContactJournalBO(contactJournals));
+            }
+        }
+        return _contactJournals;
+    }
+	
+    /**
+     * Adds a new ContactJournal to the list of referenced contactJournals.
+     * The cache will updated
+     * @param contactJournals the ContactJournal to add. 
+     */
+    public void addContactJournals(ContactJournalBO contactJournals)
+    {
+        getContactJournals().add(contactJournals);
+        _model.getContactJournals().add(contactJournals.getModel());
+    }
+    
+        
+    /**
+     * Removes the given ContactJournal from the list of referenced contactJournals.
+     * The cache will updated
+     * @param contactJournals the timespan to add. 
+     */
+    public void removeContactJournals(ContactJournalBO contactJournals)
+    {
+        getContactJournals().remove(contactJournals);
+        _model.getContactJournals().remove(contactJournals.getModel());
+    }
+	
+    /**
+     * Rebuilds the cache for referenced contactJournals.
+     */
+    public void updateContactJournalsCache()
+    {
+        _contactJournals = null;
+        getContactJournals();
+    }
+
+	
+    private TreatmentStateBO _treatmentState;
+    
+    /**
+     * Gets the currently referenced TreatmentState of this instance.
+     * @return the TreatmentState currently referenced in this DietTreatment. 
+     */
+    public TreatmentStateBO getTreatmentState()
+    {
+        if(_treatmentState == null)
+        {
+            _treatmentState = TreatmentStateBO.getForModel(_model.getTreatmentState());
+        }
+        return _treatmentState;
+    }
+    
+    /**
+     * Sets the TreatmentState to be referenced in this instance
+     * @param treatmentState the TreatmentState to reference in this DietTreatment. 
+     */
+    public void setTreatmentState(TreatmentStateBO treatmentState)
+    {
+        _treatmentState = treatmentState;
+        _model.setTreatmentState(treatmentState.getModel());
+    }
+	
+    private PatientBO _patient;
+    
+    /**
+     * Gets the currently referenced Patient of this instance.
+     * @return the Patient currently referenced in this DietTreatment. 
+     */
+    public PatientBO getPatient()
+    {
+        if(_patient == null)
+        {
+            _patient = new PatientBO(_model.getPatient());
+        }
+        return _patient;
+    }
+    
+    /**
+     * Sets the Patient to be referenced in this instance
+     * @param patient the Patient to reference in this DietTreatment. 
+     */
+    public void setPatient(PatientBO patient)
+    {
+        _patient = patient;
+        _model.setPatient(patient.getModel());
+    }
+
+    public String getDisplayName()
+    {
+        return getName();
+    }
+    
     /**
      * Returns the end date of the diet.
      * @return
@@ -90,229 +507,4 @@ public class DietTreatmentBO
         return calendar.getTime();
     }
     
-    
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietTreatment#getPatient()
-     */
-    public Patient getPatient()
-    {
-        return _treatment.getPatient();
-    }
-
-    /**
-     * @param patient
-     * @see at.easydiet.model.DietTreatment#setPatient(at.easydiet.model.Patient)
-     */
-    public void setPatient(Patient patient)
-    {
-        _treatment.setPatient(patient);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietTreatment#getDuration()
-     */
-    public int getDuration()
-    {
-        return _treatment.getDuration();
-    }
-
-    /**
-     * @param duration
-     * @see at.easydiet.model.DietTreatment#setDuration(int)
-     */
-    public void setDuration(int duration)
-    {
-        _treatment.setDuration(duration);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietTreatment#getName()
-     */
-    public String getName()
-    {
-        return _treatment.getName();
-    }
-
-    /**
-     * @param name
-     * @see at.easydiet.model.DietTreatment#setName(java.lang.String)
-     */
-    public void setName(String name)
-    {
-        _treatment.setName(name);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietTreatment#getNutritionProtocols()
-     */
-    public Set<NutritionProtocol> getNutritionProtocols()
-    {
-        return _treatment.getNutritionProtocols();
-    }
-
-    /**
-     * @param nutritionProtocols
-     * @see at.easydiet.model.DietTreatment#setNutritionProtocols(java.util.Set)
-     */
-    public void setNutritionProtocols(Set<NutritionProtocol> nutritionProtocols)
-    {
-        _treatment.setNutritionProtocols(nutritionProtocols);
-    }
-
-    /**
-     * @return a new list of {@link NutritionProtocolBO} according to {@link DietTreatmentBO#getNutritionProtocols()}
-     */
-    public ArrayList<NutritionProtocolBO> getNutritionProtocolBOs()
-    {
-        ArrayList<NutritionProtocolBO> bos = new ArrayList<NutritionProtocolBO>();
-        for (NutritionProtocol contactJournal : getNutritionProtocols())
-        {
-            bos.add(new NutritionProtocolBO(contactJournal));
-        }
-        return bos;
-    }
-
-    
-    /**
-     * @return
-     * @see at.easydiet.model.DietTreatment#getDietPlans()
-     */
-    public Set<DietPlan> getDietPlans()
-    {
-        return _treatment.getDietPlans();
-    }
-
-    /**
-     * @param dietPlans
-     * @see at.easydiet.model.DietTreatment#setDietPlans(java.util.Set)
-     */
-    public void setDietPlans(Set<DietPlan> dietPlans)
-    {
-        _treatment.setDietPlans(dietPlans);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietTreatment#getDietParameters()
-     */
-    public Set<DietParameter> getDietParameters()
-    {
-        return _treatment.getDietParameters();
-    }
-
-    /**
-     * @param dietParameters
-     * @see at.easydiet.model.DietTreatment#setDietParameters(java.util.Set)
-     */
-    public void setDietParameters(Set<DietParameter> dietParameters)
-    {
-        _treatment.setDietParameters(dietParameters);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietTreatment#getPatientStates()
-     */
-    public Set<PatientState> getPatientStates()
-    {
-        return _treatment.getPatientStates();
-    }
-
-    /**
-     * @param patientStates
-     * @see at.easydiet.model.DietTreatment#setPatientStates(java.util.Set)
-     */
-    public void setPatientStates(Set<PatientState> patientStates)
-    {
-        _treatment.setPatientStates(patientStates);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietTreatment#getSystemUsers()
-     */
-    public Set<DietTreatmentSystemUser> getSystemUsers()
-    {
-        return _treatment.getSystemUsers();
-    }
-
-    /**
-     * @param systemUsers
-     * @see at.easydiet.model.DietTreatment#setSystemUsers(java.util.Set)
-     */
-    public void setSystemUsers(Set<DietTreatmentSystemUser> systemUsers)
-    {
-        _treatment.setSystemUsers(systemUsers);
-    }
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietTreatment#getContactJournals()
-     */
-    public Set<ContactJournal> getContactJournals()
-    {
-        return _treatment.getContactJournals();
-    }
-
-    /**
-     * @param contactJournals
-     * @see at.easydiet.model.DietTreatment#setContactJournals(java.util.Set)
-     */
-    public void setContactJournals(Set<ContactJournal> contactJournals)
-    {
-        _treatment.setContactJournals(contactJournals);
-    }
-    
-    /**
-     * @return a new list of {@link ContactJournalBO} according to {@link DietTreatmentBO#getContactJournals()}
-     */
-    public ArrayList<ContactJournalBO> getContactJournalBOs()
-    {
-        ArrayList<ContactJournalBO> bos = new ArrayList<ContactJournalBO>();
-        for (ContactJournal contactJournal : getContactJournals())
-        {
-            bos.add(new ContactJournalBO(contactJournal));
-        }
-        return bos;
-    }
-
-
-    /**
-     * @return
-     * @see at.easydiet.model.DietTreatment#getTreatmentState()
-     */
-    public TreatmentState getTreatmentState()
-    {
-        return _treatment.getTreatmentState();
-    }
-
-    /**
-     * @param treatmentState
-     * @see at.easydiet.model.DietTreatment#setTreatmentState(at.easydiet.model.TreatmentState)
-     */
-    public void setTreatmentState(TreatmentState treatmentState)
-    {
-        _treatment.setTreatmentState(treatmentState);
-    }
-
-    public ArrayList<DietPlanBO> getDietPlanBOs()
-    {
-        ArrayList<DietPlanBO> bos = new ArrayList<DietPlanBO>();
-        for (DietPlan dietPlan : getDietPlans())
-        {
-            bos.add(new DietPlanBO(dietPlan));
-        }
-        return bos;
-    }
-
-    public String getDisplayName()
-    {
-        return getName();
-    }
-
 }

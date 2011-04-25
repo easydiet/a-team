@@ -1,4 +1,4 @@
-package at.easydiet.businesslogic;
+package at.easydiet.domainlogic;
 
 import java.util.List;
 

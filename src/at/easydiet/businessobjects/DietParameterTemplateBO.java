@@ -1,25 +1,49 @@
 package at.easydiet.businessobjects;
 
-import at.easydiet.model.CheckOperator;
-import at.easydiet.model.DietParameterTemplate;
-import at.easydiet.model.DietParameterType;
-import at.easydiet.model.ParameterDefinition;
 
-public class DietParameterTemplateBO {
+import at.easydiet.model.DietParameterTemplate;
+
+/**
+ * This class encapsules a DietParameterTemplate instance.
+ */
+public class DietParameterTemplateBO
+{
+	private DietParameterTemplate _model;
 	
-	private DietParameterTemplate _dietParameterTemplate;
-	
-	public DietParameterTemplateBO(DietParameterTemplate dietParameterTemplate) {
-		_dietParameterTemplate = dietParameterTemplate;
+    /**
+     * Initializes a new instance of the {@link DietParameterTemplateBO} class.
+     */
+	public DietParameterTemplateBO()
+	{
+		// TODO: add default values
+		this(new DietParameterTemplate());
 	}
 	
-	/**       
+    /**
+     * Initializes a new instance of the {@link DietParameterTemplateBO} class.
+     * @param model the original model object
+     */
+	public DietParameterTemplateBO(DietParameterTemplate model)
+	{
+		_model = model;
+	}
+	
+	/**
+	 * Gets the original model object used as object store for this BusinessObject.
+	 * @return the original {@link DietParameterTemplate} object.
+	 */
+ 	public DietParameterTemplate getModel()
+	{
+		return _model;
+	}
+	
+    /**       
      * Gets the dietParameterTemplateId of this instance. 
      * @return the dietParameterTemplateId currently set for this instance.
      */
     public long getDietParameterTemplateId() 
     {
-        return _dietParameterTemplate.getDietParameterTemplateId();
+        return _model.getDietParameterTemplateId();
     }
     
     /**       
@@ -28,34 +52,41 @@ public class DietParameterTemplateBO {
      */    
     public void setDietParameterTemplateId(long dietParameterTemplateId) 
     {
-    	_dietParameterTemplate.setDietParameterTemplateId(dietParameterTemplateId);
+        _model.setDietParameterTemplateId(dietParameterTemplateId);
     }
+
+	
+    private CheckOperatorBO _checkOperator;
     
-    /**       
-     * Gets the checkOperator of this instance. 
-     * @return the checkOperator currently set for this instance.
+    /**
+     * Gets the currently referenced CheckOperator of this instance.
+     * @return the CheckOperator currently referenced in this DietParameterTemplate. 
      */
-    public CheckOperator getCheckOperator() 
+    public CheckOperatorBO getCheckOperator()
     {
-        return _dietParameterTemplate.getCheckOperator();
+        if(_checkOperator == null)
+        {
+            _checkOperator = CheckOperatorBO.getForModel(_model.getCheckOperator());
+        }
+        return _checkOperator;
     }
     
-    /**       
-     * Sets the checkOperator of this instance. 
-     * @param checkOperator the new checkOperator of this instance.
-     */    
-    public void setCheckOperator(CheckOperator checkOperator) 
+    /**
+     * Sets the CheckOperator to be referenced in this instance
+     * @param checkOperator the CheckOperator to reference in this DietParameterTemplate. 
+     */
+    public void setCheckOperator(CheckOperatorBO checkOperator)
     {
-    	_dietParameterTemplate.setCheckOperator(checkOperator);
+        _checkOperator = checkOperator;
+        _model.setCheckOperator(checkOperator.getModel());
     }
-    
     /**       
      * Gets the duration of this instance. 
      * @return the duration currently set for this instance.
      */
     public int getDuration() 
     {
-    	return _dietParameterTemplate.getDuration();
+        return _model.getDuration();
     }
     
     /**       
@@ -64,16 +95,16 @@ public class DietParameterTemplateBO {
      */    
     public void setDuration(int duration) 
     {
-    	_dietParameterTemplate.setDuration(duration);
+        _model.setDuration(duration);
     }
-    
+
     /**       
      * Gets the value of this instance. 
      * @return the value currently set for this instance.
      */
     public String getValue() 
     {
-    	return _dietParameterTemplate.getValue();
+        return _model.getValue();
     }
     
     /**       
@@ -82,47 +113,82 @@ public class DietParameterTemplateBO {
      */    
     public void setValue(String value) 
     {
-    	_dietParameterTemplate.setValue(value);
+        _model.setValue(value);
     }
-    
-    /**       
-     * Gets the dietParameterType of this instance. 
-     * @return the dietParameterType currently set for this instance.
-     */
-    public DietParameterType getDietParameterType() 
-    {
-    	return _dietParameterTemplate.getDietParameterType();
-    }
-    
-    /**       
-     * Sets the dietParameterType of this instance. 
-     * @param dietParameterType the new dietParameterType of this instance.a
-     */    
-    public void setDietParameterType(DietParameterType dietParameterType) 
-    {
-    	_dietParameterTemplate.setDietParameterType(dietParameterType);
-    }
-    
-    /**       
-     * Gets the parameterDefinition of this instance. 
-     * @return the parameterDefinition currently set for this instance.
-     */
-    public ParameterDefinition getParameterDefinition() 
-    {
-        return _dietParameterTemplate.getParameterDefinition();
-    }
-    
-    /**       
-     * Sets the parameterDefinition of this instance. 
-     * @param parameterDefinition the new parameterDefinition of this instance.
-     */    
-    public void setParameterDefinition(ParameterDefinition parameterDefinition) 
-    {
-    	_dietParameterTemplate.setParameterDefinition(parameterDefinition);
-    }	
-    
 
-	public ParameterDefinitionUnitBO getUnitBO() {
-		return new ParameterDefinitionUnitBO(_dietParameterTemplate.getParameterDefinitionUnit());
-	}
+	
+    private ParameterDefinitionUnitBO _parameterDefinitionUnit;
+    
+    /**
+     * Gets the currently referenced ParameterDefinitionUnit of this instance.
+     * @return the ParameterDefinitionUnit currently referenced in this DietParameterTemplate. 
+     */
+    public ParameterDefinitionUnitBO getParameterDefinitionUnit()
+    {
+        if(_parameterDefinitionUnit == null)
+        {
+            _parameterDefinitionUnit = new ParameterDefinitionUnitBO(_model.getParameterDefinitionUnit());
+        }
+        return _parameterDefinitionUnit;
+    }
+    
+    /**
+     * Sets the ParameterDefinitionUnit to be referenced in this instance
+     * @param parameterDefinitionUnit the ParameterDefinitionUnit to reference in this DietParameterTemplate. 
+     */
+    public void setParameterDefinitionUnit(ParameterDefinitionUnitBO parameterDefinitionUnit)
+    {
+        _parameterDefinitionUnit = parameterDefinitionUnit;
+        _model.setParameterDefinitionUnit(parameterDefinitionUnit.getModel());
+    }
+	
+    private DietParameterTypeBO _dietParameterType;
+    
+    /**
+     * Gets the currently referenced DietParameterType of this instance.
+     * @return the DietParameterType currently referenced in this DietParameterTemplate. 
+     */
+    public DietParameterTypeBO getDietParameterType()
+    {
+        if(_dietParameterType == null)
+        {
+            _dietParameterType = DietParameterTypeBO.getForModel(_model.getDietParameterType());
+        }
+        return _dietParameterType;
+    }
+    
+    /**
+     * Sets the DietParameterType to be referenced in this instance
+     * @param dietParameterType the DietParameterType to reference in this DietParameterTemplate. 
+     */
+    public void setDietParameterType(DietParameterTypeBO dietParameterType)
+    {
+        _dietParameterType = dietParameterType;
+        _model.setDietParameterType(dietParameterType.getModel());
+    }
+	
+    private ParameterDefinitionBO _parameterDefinition;
+    
+    /**
+     * Gets the currently referenced ParameterDefinition of this instance.
+     * @return the ParameterDefinition currently referenced in this DietParameterTemplate. 
+     */
+    public ParameterDefinitionBO getParameterDefinition()
+    {
+        if(_parameterDefinition == null)
+        {
+            _parameterDefinition = new ParameterDefinitionBO(_model.getParameterDefinition());
+        }
+        return _parameterDefinition;
+    }
+    
+    /**
+     * Sets the ParameterDefinition to be referenced in this instance
+     * @param parameterDefinition the ParameterDefinition to reference in this DietParameterTemplate. 
+     */
+    public void setParameterDefinition(ParameterDefinitionBO parameterDefinition)
+    {
+        _parameterDefinition = parameterDefinition;
+        _model.setParameterDefinition(parameterDefinition.getModel());
+    }
 }

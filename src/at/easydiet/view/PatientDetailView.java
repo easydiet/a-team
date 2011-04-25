@@ -31,6 +31,7 @@ public class PatientDetailView extends EasyDietContentView implements Bindable
     @Override
     public void onLoad()
     {
+        PatientDetailViewController.getInstance().refresh();
         setPatient(PatientDetailViewController.getInstance().getPatient());
     }
 
