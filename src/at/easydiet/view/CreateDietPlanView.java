@@ -19,6 +19,7 @@ import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.DietParameterTypeBO;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
+import at.easydiet.businessobjects.ParameterDefinitionDataTypeBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.dao.DAOFactory;
@@ -119,13 +120,8 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable 
 				.getInstance().getDietPlan().getDietParameters();
 
 		_parameterTableView.setTableData(listData);
-		ParameterValidator parameterValidator = new ParameterValidator();
-		parameterValidator.isValid(listData);
+		_parameterTableView.initialize();
 
-		for (Column col : _parameterTableView.getColumns()) {
-			((ParameterCellRenderer) col.getCellRenderer())
-					.setValidator(parameterValidator);
-		}
 	}
 
 	public void rebuildUI() {
@@ -150,18 +146,31 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable 
 		System.out.println("add parameters");
 
 		DietParameterBO newBo = new DietParameterBO();
+		
 		newBo.setCheckOperator(CheckOperatorBO.BIGGER);
 		newBo.setDietParameterType(DietParameterTypeBO.DEFAULT);
+		
 		ParameterDefinitionBO newDefinition = new ParameterDefinitionBO();
 		newDefinition.setName("Alanin");
-		newBo.setParameterDefinition(newDefinition);
+		
 		ParameterDefinitionUnitBO newUnit = new ParameterDefinitionUnitBO();
 		newUnit.setName("mg");
+		
+		ParameterDefinitionUnitBO secondUnit = new ParameterDefinitionUnitBO();
+		secondUnit.setName("mg/100g");
+		
+		newDefinition.addUnit(newUnit);
+		newDefinition.addUnit(secondUnit);
+		newBo.setParameterDefinition(newDefinition);
+		
+		
+		newUnit.setType(ParameterDefinitionDataTypeBO.NUMBERS);
 		newBo.setParameterDefinitionUnit(newUnit);
 		
 		newBo.setValue("15");
 		
 		DietParameterBO secondBo = new DietParameterBO();
+		
 		secondBo.setCheckOperator(CheckOperatorBO.SMALLER);
 		secondBo.setDietParameterType(DietParameterTypeBO.DEFAULT);
 		secondBo.setParameterDefinition(newDefinition);
@@ -170,6 +179,8 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable 
 		
 		((List<DietParameterBO>)_parameterTableView.getTableData()).add(newBo);
 		((List<DietParameterBO>)_parameterTableView.getTableData()).add(secondBo);
+		
+		_parameterTableView.validateView();
 	}
 
 	private void removeParameter(DietParameterBO dietParameter) {

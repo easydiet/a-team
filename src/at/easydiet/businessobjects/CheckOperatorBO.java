@@ -77,4 +77,9 @@ public enum CheckOperatorBO
 		}
 		return list;
 	}
+	
+	public String toString()
+	{
+		return getName();
+	}
 }

@@ -104,17 +104,17 @@
 							editEffect="horizontal_slide"
 						>
 							<cellEditors>
-								<parameterDefinitionBO.name>
+								<parameterDefinition.name>
 									<ListButton
 										selectedItemKey="parameterDefinition"
 										selectedItemBindType="store" />
-								</parameterDefinitionBO.name>
+								</parameterDefinition.name>
 
-								<checkOperatorBO.name>
+								<checkOperator.name>
 									<ListButton
 										selectedItemKey="checkOperator"
 										selectedItemBindType="store" />
-								</checkOperatorBO.name>
+								</checkOperator.name>
 
 								<value>
 									<TextInput
@@ -123,11 +123,11 @@
 									</TextInput>
 								</value>
 
-								<selectedUnitBO.name>
+								<parameterDefinitionUnit.name>
 									<ListButton
 										selectedItemKey="parameterDefinitionUnit"
 										selectedItemBindType="store" />
-								</selectedUnitBO.name>
+								</parameterDefinitionUnit.name>
 
 								<validationResult>
 									<Label />

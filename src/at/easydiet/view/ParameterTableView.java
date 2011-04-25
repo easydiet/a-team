@@ -26,11 +26,6 @@ public class ParameterTableView extends TableView {
 	public ParameterTableView() {
 		_validator = new ParameterValidator();
 	}
-	
-	public void setTableData(List<?> data)
-	{
-		super.setTableData(data);
-	}
 
 	@SuppressWarnings("unchecked")
 	public void initialize() {
@@ -70,7 +65,7 @@ public class ParameterTableView extends TableView {
 			@Override
 			public void changesSaved(RowEditor rowEditor, TableView tableView,
 					int rowIndex, int columnIndex) {
-				_validator.isValid((ArrayList<DietParameterBO>)tableView.getTableData());
+				validateView();
 				
 			}
 
@@ -96,7 +91,7 @@ public class ParameterTableView extends TableView {
 						// define listbutton
 						_definitionListButton = (ListButton) _editor
 								.getCellEditors().get(
-										"parameterDefinitionBO.name");
+										"parameterDefinition.name");
 
 						// get all possible definitions for the listbutton
 						_definitionListButton.setListData(getAllDefinitions());
@@ -141,7 +136,7 @@ public class ParameterTableView extends TableView {
 							TableView tableView, int rowIndex, int columnIndex) {
 						// update list of units
 						_checkOperatorListButton = (ListButton) _editor
-								.getCellEditors().get("checkOperatorBO.name");
+								.getCellEditors().get("checkOperator.name");
 						DietParameterBO row = (DietParameterBO) getTableData()
 								.get(rowIndex);
 
@@ -174,13 +169,11 @@ public class ParameterTableView extends TableView {
 							TableView tableView, int rowIndex, int columnIndex) {
 						// update list of units
 						_parameterDefinitionUnitListButton = (ListButton) _editor
-								.getCellEditors().get("selectedUnitBO.name");
+								.getCellEditors().get("parameterDefinitionUnit.name");
 						DietParameterBO row = (DietParameterBO) getTableData()
 								.get(rowIndex);
 
-						_parameterDefinitionUnitListButton.setListData(row
-								.getParameterDefinition()
-								.getUnits());
+						_parameterDefinitionUnitListButton.setListData(row.getParameterDefinition().getUnits());
 
 						for (int i = 0; i < _parameterDefinitionUnitListButton
 								.getListData().getLength(); i++) {
@@ -235,5 +228,19 @@ public class ParameterTableView extends TableView {
 		}
 		return definitions;
 	}
+	
+	public void setValidator(ParameterValidator parameterValidator)
+	{
+		_validator = parameterValidator;
+		for(Column col : getColumns())
+		{
+			((ParameterCellRenderer)col.getCellRenderer()).setValidator(parameterValidator);
+		}
+	}
 
+	@SuppressWarnings("unchecked")
+	public boolean validateView()
+	{
+		return _validator.isValid((List<DietParameterBO>)this.getTableData());
+	}
 }

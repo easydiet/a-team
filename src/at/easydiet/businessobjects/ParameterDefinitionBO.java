@@ -121,10 +121,10 @@ public class ParameterDefinitionBO
      * The cache will updated
      * @param units the ParameterDefinitionUnit to add. 
      */
-    public void addUnits(ParameterDefinitionUnitBO units)
+    public void addUnit(ParameterDefinitionUnitBO unit)
     {
-        getUnits().add(units);
-        _model.getUnits().add(units.getModel());
+        getUnits().add(unit);
+        _model.getUnits().add(unit.getModel());
     }
     
         
@@ -148,4 +148,15 @@ public class ParameterDefinitionBO
         getUnits();
     }
 
+    public String toString()
+    {
+    	return getName();
+    }
+    
+    public boolean equals(Object obj)
+    {
+    	ParameterDefinitionBO bo = (ParameterDefinitionBO) obj;
+    	//TODO:
+    	return false;
+    }
 }
