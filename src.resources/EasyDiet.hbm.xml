@@ -427,7 +427,7 @@
 
 		<many-to-one class="SystemUser" name="creator" column="Creator" not-null="true" />
 
-		<set name="dietParameters" table="LaborReportDietParameter" lazy="true" cascade="all" inverse="true">
+		<set name="dietParameters" table="LaborReportDietParameter" lazy="true" cascade="all">
 			<key column="LaborReportId" not-null="true" />
 			<many-to-many class="DietParameter" column="DietParameterId" unique="true" />
 		</set>
