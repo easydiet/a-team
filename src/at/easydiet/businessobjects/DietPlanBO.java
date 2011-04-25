@@ -317,5 +317,30 @@ public class DietPlanBO
         if (cache.getLength() == 0) return new Date();
         return cache.get(cache.getLength() - 1).getEnd();
     }
+    
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (int) (_model.getDietPlanId() ^ (_model.getDietPlanId() >>> 32));
+        return result;
+    }
 
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (!(obj instanceof DietPlanBO)) return false;
+        DietPlanBO other = (DietPlanBO) obj;
+        if (_model.getDietPlanId() != other._model.getDietPlanId()) return false;
+        return true;
+    }
 }
