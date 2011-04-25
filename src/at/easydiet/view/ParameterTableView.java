@@ -221,7 +221,7 @@ public class ParameterTableView extends TableView {
 	private ArrayList<ParameterDefinitionBO> getAllDefinitions() {
 		ArrayList<ParameterDefinitionBO> definitions = new ArrayList<ParameterDefinitionBO>();
 
-		// own controller?
+		//TODO: own controller?
 		for (ParameterDefinition parameterDefinition : DAOFactory.getInstance()
 				.getParameterDefinitionDAO().findAll()) {
 			definitions.add(new ParameterDefinitionBO(parameterDefinition));

@@ -1,8 +1,6 @@
 package at.easydiet.view;
 
 import java.net.URL;
-import java.util.Set;
-
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Map;
@@ -11,8 +9,6 @@ import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.PushButton;
-import org.apache.pivot.wtk.TableView.Column;
-
 import at.easydiet.businesslogic.DietTreatmentDetailViewController;
 import at.easydiet.businessobjects.CheckOperatorBO;
 import at.easydiet.businessobjects.DietParameterBO;
@@ -22,16 +18,7 @@ import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.businessobjects.ParameterDefinitionDataTypeBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
 import at.easydiet.businessobjects.TimeSpanBO;
-import at.easydiet.dao.DAOFactory;
 import at.easydiet.domainlogic.DietPlanEditingController;
-import at.easydiet.model.CheckOperator;
-import at.easydiet.model.DietParameter;
-import at.easydiet.model.DietParameterType;
-import at.easydiet.model.ParameterDefinition;
-import at.easydiet.model.ParameterDefinitionDataType;
-import at.easydiet.model.ParameterDefinitionUnit;
-import at.easydiet.validation.ParameterValidator;
-import at.easydiet.view.content.ParameterCellRenderer;
 
 public class CreateDietPlanView extends EasyDietContentView implements Bindable {
 	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
@@ -152,6 +139,7 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable 
 		
 		ParameterDefinitionBO newDefinition = new ParameterDefinitionBO();
 		newDefinition.setName("Alanin");
+		newDefinition.setParameterDefinitionId(1);
 		
 		ParameterDefinitionUnitBO newUnit = new ParameterDefinitionUnitBO();
 		newUnit.setName("mg");
