@@ -1,5 +1,8 @@
 package at.easydiet.businessobjects;
 
+import org.apache.pivot.collections.ArrayList;
+import org.apache.pivot.collections.List;
+
 import at.easydiet.model.CheckOperator;
 
 /**
@@ -59,4 +62,19 @@ public enum CheckOperatorBO
         }
         return EQUAL;
     }
+    
+    /**
+     * Returns a list of all Operators
+     * @return List of all Operators
+     * @author Mathias
+     */
+	public static List<CheckOperatorBO> getAllOperators()
+	{
+		ArrayList<CheckOperatorBO> list = new ArrayList<CheckOperatorBO>();
+		for(CheckOperatorBO current : values())
+		{
+			list.add(current);
+		}
+		return list;
+	}
 }
