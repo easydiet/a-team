@@ -508,7 +508,6 @@ public class DietTreatmentBO
         return calendar.getTime();
     }
     
-    
     /**
      * @see java.lang.Object#hashCode()
      */
@@ -534,6 +533,4 @@ public class DietTreatmentBO
         if (_model.getDietTreatmentId() != other._model.getDietTreatmentId()) return false;
         return true;
     }
-    
-    
 }

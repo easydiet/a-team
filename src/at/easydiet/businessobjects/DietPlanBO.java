@@ -317,7 +317,6 @@ public class DietPlanBO
         if (cache.getLength() == 0) return new Date();
         return cache.get(cache.getLength() - 1).getEnd();
     }
-
     
     /**
      * @see java.lang.Object#hashCode()
@@ -344,6 +343,4 @@ public class DietPlanBO
         if (_model.getDietPlanId() != other._model.getDietPlanId()) return false;
         return true;
     }
-    
-    
 }
