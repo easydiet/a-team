@@ -6,7 +6,7 @@ import at.easydiet.model.CheckOperator;
  * A DAO implementation for CheckOperator objects.
  */
 public class CheckOperatorDAO 
-        extends GenericHibernateDAO<CheckOperator, Long>
+        extends GenericHibernateDAO<CheckOperator, String>
 {
 	// implementation in parent class
 }

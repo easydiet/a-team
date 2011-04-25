@@ -31,7 +31,12 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable
     public void initialize(Map<String, Object> namespace, URL location,
             Resources resources)
     {
+    	
+    	ParameterTableView tableview = (ParameterTableView) namespace.get("dietPlanTableView");
+    	//TODO: set table data
+    	
         _timeSpanContainer = (BoxPane) namespace.get("timeSpanContainer");
+        
         
         ButtonPressListener createTimeSpan = new ButtonPressListener()
         {

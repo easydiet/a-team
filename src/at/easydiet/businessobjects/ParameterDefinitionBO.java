@@ -3,6 +3,9 @@ package at.easydiet.businessobjects;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.pivot.collections.ArrayList;
+import org.apache.pivot.collections.List;
+
 import at.easydiet.model.ParameterDefinition;
 import at.easydiet.model.ParameterDefinitionUnit;
 
@@ -112,5 +115,22 @@ public class ParameterDefinitionBO {
     	//default value
     	return false;
     		
+    	
     }
+
+	public List<ParameterDefinitionUnitBO> getParameterDefinitionUnitBOList() {
+		List<ParameterDefinitionUnitBO> list = new ArrayList<ParameterDefinitionUnitBO>();
+		
+		for(ParameterDefinitionUnit parameterDefinitionUnit : _parameterDefinition.getUnits())
+		{
+			list.add(new ParameterDefinitionUnitBO(parameterDefinitionUnit));
+		}
+		
+		return list;
+	}
+	
+	public String toString()
+	{
+		return _parameterDefinition.getName();
+	}
 }

@@ -2,8 +2,8 @@ package at.easydiet.businessobjects;
 
 import java.util.Date;
 
+import at.easydiet.dao.DAOFactory;
 import at.easydiet.model.DietParameter;
-import at.easydiet.model.ParameterDefinition;
 
 public class DietParameterBO extends DietParameterTemplateBO
 {
@@ -14,36 +14,16 @@ public class DietParameterBO extends DietParameterTemplateBO
 		_dietParameter = dietParameter;
 	}
 	
-	public String getParameterDefinitionName()
+	
+	public String getParameterValue()
 	{
-		return _dietParameter.getParameterDefinition().getName();
+		return _dietParameter.getValue();
 	}
 	
-	public void setParameterDefinitionName(String name)
+	public void setParameterValue(String value)
 	{
-		_dietParameter.setParameterDefinition(new ParameterDefinition(name));
+		_dietParameter.setValue(value);
 	}
-	
-	public String getCheckOperatorName()
-	{
-		return _dietParameter.getCheckOperator().getName();
-	}
-	
-	//TODO: setCheckOperatorName()
-	
-	public double getParameterValue()
-	{
-		return Double.parseDouble(_dietParameter.getValue());
-	}
-	
-	//TODO: setParameterValue()
-	
-	public String getSelectedUnit()
-	{
-		return _dietParameter.getParameterDefinitionUnit().getName();
-	}
-	
-	//TODO: setSelectedValue()
 	
     /**       
      * Gets the start of this instance. 
@@ -93,9 +73,28 @@ public class DietParameterBO extends DietParameterTemplateBO
 	public ParameterDefinitionBO getParameterDefinitionBO() {
 		return new ParameterDefinitionBO(_dietParameter.getParameterDefinition());
 	}
-
+	
+	public void setParameterDefinitionBO(ParameterDefinitionBO parameterDefinitionBO) {
+		_dietParameter.setParameterDefinition(DAOFactory.getInstance().getParameterDefinitionDAO().findById(parameterDefinitionBO.getParameterDefinitionId(), false));
+	}
+	
 	public CheckOperatorBO getCheckOperatorBO() {
 		return CheckOperatorBO.getForOperator(_dietParameter.getCheckOperator());
 	}
+	
+	public void setCheckOperatorBO(CheckOperatorBO checkOperatorBO)
+	{
+		_dietParameter.setCheckOperator(checkOperatorBO.getCheckOperator());
+	}
 
+	public ParameterDefinitionUnitBO getSelectedUnitBO()
+	{
+		return new ParameterDefinitionUnitBO(_dietParameter.getParameterDefinitionUnit());
+	}
+	
+	public void setSelectedUnitBO(ParameterDefinitionUnitBO parameterDefinitionUnitBO)
+	{
+		//TODO: check
+		_dietParameter.setParameterDefinitionUnit(parameterDefinitionUnitBO.getParameterDefinitionUnit());
+	}
 }

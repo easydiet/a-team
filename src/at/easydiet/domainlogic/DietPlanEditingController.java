@@ -2,11 +2,13 @@ package at.easydiet.domainlogic;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 import org.apache.pivot.collections.ArrayList;
 import org.hibernate.HibernateException;
 
 import at.easydiet.EasyDietApplication;
+import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.DietTreatmentBO;
 import at.easydiet.businessobjects.MealBO;
@@ -171,5 +173,10 @@ public class DietPlanEditingController
     public ArrayList<String> getMealNames()
     {
         return _mealNames;
+    }
+    
+    public Set<DietParameterBO> getDietPlanParameters()
+    {
+    	return _dietPlan.getDietParameterBOs();
     }
 }

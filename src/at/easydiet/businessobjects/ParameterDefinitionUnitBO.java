@@ -7,7 +7,7 @@ public class ParameterDefinitionUnitBO
 {
     private ParameterDefinitionUnit _parameterDefinitionUnit;
     
-    public ParameterDefinitionUnit getParameterDefinitionUnit()
+    ParameterDefinitionUnit getParameterDefinitionUnit()
     {
         return _parameterDefinitionUnit;
     }
