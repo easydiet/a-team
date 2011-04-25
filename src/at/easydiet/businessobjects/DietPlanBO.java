@@ -272,6 +272,7 @@ public class DietPlanBO
      */
     public void addTimeSpans(TimeSpanBO timeSpans)
     {
+        timeSpans.setDietPlan(this);
         getTimeSpans().add(timeSpans);
         _model.getTimeSpans().add(timeSpans.getModel());
     }

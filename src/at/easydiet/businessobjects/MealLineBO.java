@@ -122,6 +122,7 @@ public class MealLineBO
      */
     public void addAlternatives(MealLineBO alternatives)
     {
+        alternatives.setParent(this);
         getAlternatives().add(alternatives);
         _model.getAlternatives().add(alternatives.getModel());
     }
