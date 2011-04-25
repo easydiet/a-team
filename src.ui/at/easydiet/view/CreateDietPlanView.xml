@@ -53,7 +53,7 @@
 				>
 					<columns>
 						<TableView.Column
-							name="parameterDefinitionBO.name"
+							name="parameterDefinition.name"
 							headerData="Definition"
 							width="150"
 						>
@@ -62,9 +62,9 @@
 							</cellRenderer>
 						</TableView.Column>
 						<TableView.Column
-							name="checkOperatorBO.name"
+							name="checkOperator.name"
 							headerData="Operator"
-							width="-1"
+							width="100"
 						>
 							<cellRenderer>
 								<easycontent:ParameterCellRenderer />
@@ -80,7 +80,7 @@
 							</cellRenderer>
 						</TableView.Column>
 						<TableView.Column
-							name="selectedUnitBO.name"
+							name="parameterDefinitionUnit.name"
 							headerData="Einheit"
 							width="150"
 						>
@@ -106,13 +106,13 @@
 							<cellEditors>
 								<parameterDefinitionBO.name>
 									<ListButton
-										selectedItemKey="parameterDefinitionBO"
+										selectedItemKey="parameterDefinition"
 										selectedItemBindType="store" />
 								</parameterDefinitionBO.name>
 
 								<checkOperatorBO.name>
 									<ListButton
-										selectedItemKey="checkOperatorBO"
+										selectedItemKey="checkOperator"
 										selectedItemBindType="store" />
 								</checkOperatorBO.name>
 
@@ -125,7 +125,7 @@
 
 								<selectedUnitBO.name>
 									<ListButton
-										selectedItemKey="selectedUnitBO"
+										selectedItemKey="parameterDefinitionUnit"
 										selectedItemBindType="store" />
 								</selectedUnitBO.name>
 
