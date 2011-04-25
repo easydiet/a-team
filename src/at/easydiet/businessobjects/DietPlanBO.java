@@ -317,5 +317,10 @@ public class DietPlanBO
         if (cache.getLength() == 0) return new Date();
         return cache.get(cache.getLength() - 1).getEnd();
     }
-
+    
+    public List<TimeSpanBO> getSortedTimeSpanBOs(){
+    	ArrayList<TimeSpanBO> source = ((ArrayList<TimeSpanBO>) _sortedTimeSpans
+                .getCache());
+    	return source;
+    }
 }

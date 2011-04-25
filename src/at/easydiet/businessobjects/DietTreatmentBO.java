@@ -508,4 +508,11 @@ public class DietTreatmentBO
         return calendar.getTime();
     }
     
+    public ArrayList<DietPlanBO> getDietPlanBOs(){
+    	ArrayList<DietPlanBO> source = new ArrayList<DietPlanBO>();
+    	for (DietPlan plan : _model.getDietPlans()) {
+    		source.add(new DietPlanBO(plan));			
+		}
+    	return source;
+    }  
 }
