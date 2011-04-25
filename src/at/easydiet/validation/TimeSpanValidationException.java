@@ -3,9 +3,6 @@ package at.easydiet.validation;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.DietTreatmentBO;
 import at.easydiet.businessobjects.TimeSpanBO;
-import at.easydiet.model.DietPlan;
-import at.easydiet.model.DietTreatment;
-import at.easydiet.model.TimeSpan;
 
 public class TimeSpanValidationException extends Exception {
 	public static enum TimeSpanValidationExceptionType
