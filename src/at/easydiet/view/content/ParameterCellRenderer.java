@@ -19,26 +19,23 @@ import at.easydiet.validation.ParameterValidator;
 import at.easydiet.view.EasyDietMainWindow;
 
 public class ParameterCellRenderer extends BoxPane implements CellRenderer {
-	 public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-     .getLogger(MealLineCellRenderer.class);
-	
-	private static final Image                  ERROR_IMAGE;
+	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+			.getLogger(MealLineCellRenderer.class);
 
-    static
-    {
-        Image img = null;
-        try
-        {
-            img = Image.load(EasyDietMainWindow.class.getResource("error_small.png"));
-        }
-        catch (TaskExecutionException e)
-        {
-            LOG.debug(e);
-        }
-        ERROR_IMAGE = img;
+	private static final Image ERROR_IMAGE;
 
-    }
-	
+	static {
+		Image img = null;
+		try {
+			img = Image.load(EasyDietMainWindow.class
+					.getResource("error_small.png"));
+		} catch (TaskExecutionException e) {
+			LOG.debug(e);
+		}
+		ERROR_IMAGE = img;
+
+	}
+
 	private ParameterValidator _validator;
 	private ImageView _errorImage;
 	private Label _textLabel;
@@ -56,20 +53,16 @@ public class ParameterCellRenderer extends BoxPane implements CellRenderer {
 		_textLabel.setPreferredHeight(getPreferredHeight());
 	}
 
-	private void rebuildUI()
-	{
+	private void rebuildUI() {
 		this.rebuildUI(false);
 	}
-	
+
 	private void rebuildUI(boolean isError) {
 		removeAll();
-		if(isErrorImageVisible() && isError)
-		{
+		if (isErrorImageVisible() && isError) {
 			add(_errorImage);
 			add(new Label("Konflikte mit anderen Parametern!"));
-		}
-		else
-		{
+		} else {
 			add(_textLabel);
 		}
 	}
@@ -89,16 +82,30 @@ public class ParameterCellRenderer extends BoxPane implements CellRenderer {
 		if (row != null && columnName != null) {
 			text = toString(row, columnName);
 		}
-		
+
 		_textLabel.setText(text);
+
+		// TODO: color
+		Component.StyleDictionary tableViewStyles = tableView.getStyles();
 		
-		// TODO: check if the cell is valid
 		if (!_validator.isValid((DietParameterBO) row)) {
 			rebuildUI(true);
-			getStyles().put("backgroundColor", new Color(0xFF0000));
-		} else {
+			if(selected)
+			{
+				getStyles().put("backgroundColor", new Color(0xFF6666));
+			}
+			else
+			{
+				getStyles().put("backgroundColor", new Color(0xFFAAAA));
+			}
+		} else if(selected)
+		{
 			rebuildUI(false);
-			getStyles().put("backgroundColor", tableView.getStyles().get("backgroundColor"));
+			getStyles().put("backgroundColor", tableViewStyles.get("selectionBackgroundColor"));
+		}else
+			{
+			rebuildUI(false);
+			getStyles().put("backgroundColor", tableViewStyles.get("getInactiveSelectionBackgroundColor"));
 		}
 
 		renderStyles(tableView, selected, disabled);
@@ -133,12 +140,12 @@ public class ParameterCellRenderer extends BoxPane implements CellRenderer {
 
 	@Override
 	public String toString(Object row, String columnName) {
-		if(!isErrorImageVisible())
-		{
+		if (!isErrorImageVisible()) {
 			Object cellData = JSON.get(row, columnName);
-			String cellString = (cellData == null) ? "{null}" : cellData.toString();
+			String cellString = (cellData == null) ? "{null}" : cellData
+					.toString();
 
-			return cellString;	
+			return cellString;
 		}
 		return "";
 	}
@@ -147,22 +154,17 @@ public class ParameterCellRenderer extends BoxPane implements CellRenderer {
 		_validator = validator;
 	}
 
-	public boolean isErrorImageVisible()
-	{
-	    return _errorImage != null;
+	public boolean isErrorImageVisible() {
+		return _errorImage != null;
 	}
 
-	public void setErrorImageVisible(boolean visible)
-    {
-        if (visible)
-        {
-            _errorImage = new ImageView(ERROR_IMAGE);
-            _errorImage.setPreferredHeight(getPreferredHeight());
-        }
-        else
-        {
-            _errorImage = null;
-        }
-        rebuildUI();
-    }
+	public void setErrorImageVisible(boolean visible) {
+		if (visible) {
+			_errorImage = new ImageView(ERROR_IMAGE);
+			_errorImage.setPreferredHeight(getPreferredHeight());
+		} else {
+			_errorImage = null;
+		}
+		rebuildUI();
+	}
 }

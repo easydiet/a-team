@@ -57,109 +57,130 @@
 		</TablePane.Row>
 		<TablePane.Row>
 			<!-- START: Parameter of Meal -->
-			<Rollup
-				styles="{fill:true}"
-			>
-				<heading>
+			<Rollup>
+					<heading>
+						<BoxPane
+							styles="{padding: 5}"
+						>
+							<Label
+								text="Zielparameter der Mahlzeit festlegen" />
+						</BoxPane>
+					</heading>
 					<BoxPane
+						orientation="vertical"
 						styles="{padding: 5}"
 					>
-						<Label
-							text="Zielparameter der Mahlzeit festlegen" />
+						<Border>
+							<ScrollPane
+								preferredHeight="150"
+							>
+								<easy:ParameterTableView
+									bxml:id="mealParameterTableView"
+								>
+									<columns>
+										<TableView.Column
+											name="parameterDefinition.name"
+											headerData="Definition"
+											width="150"
+										>
+											<cellRenderer>
+												<easycontent:ParameterCellRenderer />
+											</cellRenderer>
+										</TableView.Column>
+										<TableView.Column
+											name="checkOperator.name"
+											headerData="Operator"
+											width="100"
+										>
+											<cellRenderer>
+												<easycontent:ParameterCellRenderer />
+											</cellRenderer>
+										</TableView.Column>
+										<TableView.Column
+											name="value"
+											headerData="Wert"
+											width="100"
+										>
+											<cellRenderer>
+												<easycontent:ParameterCellRenderer />
+											</cellRenderer>
+										</TableView.Column>
+										<TableView.Column
+											name="parameterDefinitionUnit.name"
+											headerData="Einheit"
+											width="150"
+										>
+											<cellRenderer>
+												<easycontent:ParameterCellRenderer />
+											</cellRenderer>
+										</TableView.Column>
+										<TableView.Column
+											name="validationResult"
+											width="-1"
+										>
+											<cellRenderer>
+												<easycontent:ParameterCellRenderer
+													errorImageVisible="true" />
+											</cellRenderer>
+										</TableView.Column>
+									</columns>
+
+									<rowEditor>
+										<easy:EasyTableViewRowEditor
+											editEffect="horizontal_slide"
+										>
+											<cellEditors>
+												<parameterDefinition.name>
+													<ListButton
+														selectedItemKey="parameterDefinition"
+														selectedItemBindType="store" />
+												</parameterDefinition.name>
+
+												<checkOperator.name>
+													<ListButton
+														selectedItemKey="checkOperator"
+														selectedItemBindType="store" />
+												</checkOperator.name>
+
+												<value>
+													<TextInput
+														textKey="value"
+													>
+													</TextInput>
+												</value>
+
+												<parameterDefinitionUnit.name>
+													<ListButton
+														selectedItemKey="parameterDefinitionUnit"
+														selectedItemBindType="store" />
+												</parameterDefinitionUnit.name>
+
+												<validationResult>
+													<Label />
+												</validationResult>
+											</cellEditors>
+										</easy:EasyTableViewRowEditor>
+									</rowEditor>
+
+								</easy:ParameterTableView>
+								<columnHeader>
+									<TableViewHeader
+										tableView="$mealParameterTableView" />
+								</columnHeader>
+							</ScrollPane>
+						</Border>
+
+						<BoxPane>
+							<easy:SimpleButton
+								text="Parameter hinzufügen"
+								bxml:id="addMealParameters" />
+							<easy:SimpleButton
+								text="Parameter entfernen"
+								bxml:id="removeMealParameter" />
+						</BoxPane>
 					</BoxPane>
-				</heading>
-				<BoxPane
-					styles="{padding: 5}"
-				>
-					<ScrollPane>
-						<easy:ParameterTableView
-							bxml:id="mealContainerParameterTableView"
-						>
-							<columns>
-								<TableView.Column
-									name="parameterDefinitionBO.name"
-									width="100"
-								>
-									<cellRenderer>
-										<easycontent:ParameterCellRenderer />
-									</cellRenderer>
-								</TableView.Column>
-								<TableView.Column
-									name="checkOperatorBO.name"
-									width="40"
-								>
-									<cellRenderer>
-										<easycontent:ParameterCellRenderer />
-									</cellRenderer>
-								</TableView.Column>
-								<TableView.Column
-									name="value"
-									width="100"
-								>
-									<cellRenderer>
-										<easycontent:ParameterCellRenderer />
-									</cellRenderer>
-								</TableView.Column>
-								<TableView.Column
-									name="selectedUnitBO.name"
-									width="100"
-								>
-									<cellRenderer>
-										<easycontent:ParameterCellRenderer />
-									</cellRenderer>
-								</TableView.Column>
-								<TableView.Column
-									name="validationResult"
-									width="-1"
-								>
-									<cellRenderer>
-										<easycontent:ParameterCellRenderer
-											errorImageVisible="true" />
-									</cellRenderer>
-								</TableView.Column>
-							</columns>
 
-							<rowEditor>
-								<easy:EasyTableViewRowEditor
-									editEffect="horizontal_slide"
-								>
-									<cellEditors>
-										<parameterDefinitionBO.name>
-											<ListButton
-												selectedItemKey="parameterDefinitionBO"
-												selectedItemBindType="store" />
-										</parameterDefinitionBO.name>
-
-										<checkOperatorBO.name>
-											<ListButton
-												selectedItemKey="checkOperatorBO"
-												selectedItemBindType="store" />
-										</checkOperatorBO.name>
-
-										<value>
-											<TextInput
-												textKey="value"
-											>
-											</TextInput>
-										</value>
-
-										<selectedUnitBO.name>
-											<ListButton
-												selectedItemKey="selectedUnitBO"
-												selectedItemBindType="store" />
-										</selectedUnitBO.name>
-
-										<validationResult>
-											<Label />
-										</validationResult>
-									</cellEditors>
-								</easy:EasyTableViewRowEditor>
-							</rowEditor>
-
-						</easy:ParameterTableView>
-					</ScrollPane>
-				</BoxPane>
-			</Rollup>
+				</Rollup>
 			<!-- END: Parameter of Meal -->
 		</TablePane.Row>
 		<TablePane.Row

@@ -37,9 +37,9 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable 
 		_parameterTableView = (ParameterTableView) namespace
 				.get("dietPlanParameterTableView");
 
-		Button addDietParameterButton = (Button) namespace
+		Button addDietPlanParameterButton = (Button) namespace
 				.get("addDietPlanParameters");
-		addDietParameterButton.getButtonPressListeners().add(
+		addDietPlanParameterButton.getButtonPressListeners().add(
 				new ButtonPressListener() {
 
 					@Override
@@ -48,9 +48,9 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable 
 					}
 				});
 
-		Button removeDietParameterButton = (Button) namespace
+		Button removeDietPlanParameterButton = (Button) namespace
 				.get("removeDietPlanParameter");
-		removeDietParameterButton.getButtonPressListeners().add(
+		removeDietPlanParameterButton.getButtonPressListeners().add(
 				new ButtonPressListener() {
 
 					@Override
@@ -173,6 +173,7 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable 
 
 	private void removeParameter(DietParameterBO dietParameter) {
 		// TODO: remove parameter
-		System.out.println("remove parameter: " + dietParameter.toString());
+		((List<DietParameterBO>)_parameterTableView.getTableData()).remove(dietParameter);
+		_parameterTableView.validateView();
 	}
 }

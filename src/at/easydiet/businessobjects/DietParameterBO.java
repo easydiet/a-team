@@ -57,5 +57,23 @@ public class DietParameterBO extends DietParameterTemplateBO
     {
         _model.setStart(start);
     }
+    
+    public String toString()
+    {
+    	StringBuilder builder = new StringBuilder();
+        builder.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
+		// interesting values
+        builder.append("DietParameterTemplateID").append("='").append(getDietParameterTemplateId()).append("' ");		
+        builder.append("Duration").append("='").append(getDuration()).append("' ");		
+        builder.append("Value").append("='").append(getValue()).append("' ");
+        builder.append("CheckOperator").append("='").append(getCheckOperator()).append("' ");
+        builder.append("DietParameterType").append("='").append(getDietParameterType()).append("' ");	
+        builder.append("ParameterDefinition").append("='").append(getParameterDefinition()).append("' ");		
+        builder.append("ParameterDefinitionUnit").append("='").append(getParameterDefinitionUnit()).append("' ");
+        builder.append("Start").append("='").append(getStart()).append("' ");		
+        builder.append("]");
+      
+        return builder.toString();
+    }
 
 }
