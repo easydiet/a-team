@@ -14,6 +14,13 @@ xmlns="org.apache.pivot.wtk">
 		<easy:EasyDietContentView.ToolbarButton text="GUI Aktualisieren" icon="@refresh.png" bxml:id="refreshUI" />
 		<easy:EasyDietContentView.ToolbarButton action="showHelp" text="Hilfe" icon="@help.png" />
 	</toolbarButtons>
+	<Border styleName="errorBox" bxml:id="errorBorder">
+		<ListView bxml:id="errorBox">
+			<itemRenderer>
+				<easycontent:ErrorRenderer />
+			</itemRenderer>
+		</ListView>
+	</Border>
 	<Label text="Neuer Diätplan" />
 	<Rollup>
 		<heading>

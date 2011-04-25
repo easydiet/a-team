@@ -277,7 +277,7 @@ public class TimeSpanContainer extends BoxPane
             createMealTop.getButtonPressListeners().add(createMeal);
             createMealBottom.getButtonPressListeners().add(createMeal);
 
-            CalendarButtonSelectionListener updateDurationListener = new CalendarButtonSelectionListener()
+            CalendarButtonSelectionListener dateChangedListener = new CalendarButtonSelectionListener()
             {
 
                 public void selectedDateChanged(CalendarButton calendarButton,
@@ -292,17 +292,28 @@ public class TimeSpanContainer extends BoxPane
                                 .toCalendar()));
                         return;
                     }
-
+                    
                     int days = end.subtract(start);
+                    
+                    _timeSpan.setStartDate(start);
                     _timeSpan.setDuration(days);
+                    System.out.println("From: " + _timeSpan.getStart());
+                    System.out.println("End: " + _timeSpan.getEnd());
+                    System.out.println("EndDate: " + _timeSpan.getEndDate());
+                    System.out.println("Duration:" + _timeSpan.getDuration());
+                    
                     String dayLabel = days > 0 ? "Tage" : "Tag";
                     _durationLabel.setText((days + 1) + " " + dayLabel);
+                    
+                    
+                    
+                    DietPlanEditingController.getInstance().validateDietPlan();
                 }
             };
             _startDateButton.getCalendarButtonSelectionListeners().add(
-                    updateDurationListener);
+                    dateChangedListener);
             _endDateButton.getCalendarButtonSelectionListeners().add(
-                    updateDurationListener);
+                    dateChangedListener);
         }
         catch (IOException e)
         {
@@ -324,6 +335,6 @@ public class TimeSpanContainer extends BoxPane
     private void deleteTimeSpan()
     {
         getParent().remove(this);
-        _timeSpan.getDietPlan().removeTimeSpans(_timeSpan);
+        DietPlanEditingController.getInstance().deleteTimeSpan(_timeSpan);
     }
 }

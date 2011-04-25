@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.pivot.collections.ArrayList;
+import org.apache.pivot.collections.List;
 import org.hibernate.HibernateException;
 
 import at.easydiet.EasyDietApplication;
@@ -25,8 +26,9 @@ public class DietPlanEditingController
                                                             .getLogger(DietPlanEditingController.class);
 
     private DietPlanBO                          _dietPlan;
-    private ArrayList<String>                   _mealCodes;
-    private ArrayList<String>                   _mealNames;
+    private List<String>                        _mealCodes;
+    private List<String>                        _mealNames;
+    private List<String>                        _errors;
 
     /**
      * Gets the dietPlan.
@@ -46,6 +48,7 @@ public class DietPlanEditingController
     {
         TimeSpanBO t = new TimeSpanBO();
         _dietPlan.addTimeSpans(t);
+        validateTimeSpan(t);
         return t;
     }
 
@@ -99,8 +102,7 @@ public class DietPlanEditingController
         alternative.setQuantity(recipe.getAmount());
 
         // insert alternative after mealLine
-        int index = mealLine.getMeal().getMealLines()
-                .indexOf(mealLine) + 1;
+        int index = mealLine.getMeal().getMealLines().indexOf(mealLine) + 1;
         mealLine.getMeal().addMealLines(index, alternative);
         return alternative;
     }
@@ -142,12 +144,43 @@ public class DietPlanEditingController
 
     public void validateDietPlan()
     {
+        _errors.clear();
+        
+        for (TimeSpanBO timeSpan : _dietPlan.getTimeSpans())
+        {
+            validateTimeSpan(timeSpan);
+        }
+    }
 
+    private void validateTimeSpan(TimeSpanBO t)
+    {
+        // check for timespan collisions
+        List<Object> timeSpanCollisions = TimeSpanController.getInstance().validateCollisions(t);
+        
+        // generate error messages 
+        for (Object object : timeSpanCollisions)
+        {
+            if(TimeSpanBO.class.isAssignableFrom(object.getClass()))
+            {
+                _errors.add(String.format("Der Zeitraum '%s' überschneidet sich mit dem Zeitraum '%s'",
+                        t.getDisplayName(), ((TimeSpanBO)object).getDisplayName()));
+            }
+            else if(DietPlanBO.class.isAssignableFrom(object.getClass()))
+            {
+                _errors.add(String.format("Der Zeitraum '%s' überschneidet sich mit dem Diätplan '%s'",
+                        t.getDisplayName(), ((DietPlanBO)object).getName()));
+            }
+            else if(DietTreatmentBO.class.isAssignableFrom(object.getClass()))
+            {
+                _errors.add(String.format("Der Zeitraum '%s' überschneidet sich mit der Diätbehandlung '%s'",
+                        t.getDisplayName(), ((DietTreatmentBO)object).getName()));
+            }
+        }
     }
 
     private DietPlanEditingController()
     {
-
+        _errors = new ArrayList<String>();
     }
 
     public void refresh()
@@ -163,13 +196,29 @@ public class DietPlanEditingController
         _mealNames = CollectionUtils.toPivotList(mealDao.findNames());
     }
 
-    public ArrayList<String> getMealCodes()
+    public List<String> getMealCodes()
     {
         return _mealCodes;
     }
 
-    public ArrayList<String> getMealNames()
+    public List<String> getMealNames()
     {
         return _mealNames;
+    }
+
+    public List<String> getErrors()
+    {
+        return _errors;
+    }
+
+    public void deleteTimeSpan(TimeSpanBO timeSpan)
+    {
+        timeSpan.getDietPlan().removeTimeSpans(timeSpan);
+        validateDietPlan();
+    }
+
+    public void deleteMeal(MealBO meal)
+    {
+        meal.getTimeSpan().removeMeals(meal);
     }
 }

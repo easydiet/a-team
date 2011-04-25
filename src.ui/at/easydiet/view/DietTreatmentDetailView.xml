@@ -13,14 +13,17 @@ xmlns="org.apache.pivot.wtk">
 		<easy:EasyDietContentView.ToolbarButton action="todo" text="Ernährungsprotokoll anlegen" icon="@report_add.png" />
 		<easy:EasyDietContentView.ToolbarButton action="showHelp" text="Hilfe" icon="@help.png" />
 	</toolbarButtons>
-	<Form>
+	<Form styles="{fill:true}">
 		<Form.Section heading="Diätpläne">
+			<Border styleName="infoBox">
+				<easy:ImageLabel image="@info_small.png" text="Dies sind die Diätpläne welche bereits für diese Diät angelegt wurden. Klicken Sie Doppelt auf einen vorhandenen Eintrag um diesen zu bearbeiten. In der Symbolleiste finden Sie einen Button mit welchem Sie neue Pläne anlegen können" />
+			</Border>
 			<Border>
 				<ScrollPane preferredHeight="200"
 				horizontalScrollBarPolicy="fill"
 				verticalScrollBarPolicy="fill_to_capacity">
 					<TableView bxml:id="_dietPlanTable" selectMode="single">
-						<columns>
+					<columns>
 							<TableView.Column name="Start" width="150" headerData="Von">
 								<cellRenderer>
 									<easycontent:DateCellRenderer />
@@ -41,6 +44,9 @@ xmlns="org.apache.pivot.wtk">
 			</Border>
 		</Form.Section>
 		<Form.Section heading="Kontaktjournal">
+			<Border styleName="infoBox">
+				<easy:ImageLabel image="@info_small.png" text="Alle Kontakte mit dem Patienten werden in diesem Kontaktjournal abgelegt." />
+			</Border>
 			<Border>
 				<ScrollPane preferredHeight="200"
 				horizontalScrollBarPolicy="fill"
@@ -71,6 +77,9 @@ xmlns="org.apache.pivot.wtk">
 			</Border>
 		</Form.Section>
 		<Form.Section heading="Ernährungsprotokoll">
+			<Border styleName="infoBox">
+				<easy:ImageLabel image="@info_small.png" text="Alle Ernährungsprotokolle welche während der Behandlungen angelegt wurden, sind hier aufgelistet." />
+			</Border>
 			<Border>
 				<ScrollPane preferredHeight="200"
 				horizontalScrollBarPolicy="fill"

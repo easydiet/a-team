@@ -38,6 +38,7 @@ public class EasyDietApplication implements Application
     public void startup(Display display, Map<String, String> arg1)
             throws Exception
     {
+        ApplicationContext.applyStylesheet("/at/easydiet/view/EasyStyles.json");
         Theme.getTheme().setFont(new Font("Arial", Font.PLAIN, 12));
 
         BXMLSerializer bxmlSerializer = new BXMLSerializer();
