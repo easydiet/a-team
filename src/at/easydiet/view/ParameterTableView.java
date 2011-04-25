@@ -6,6 +6,8 @@ import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.ListButton;
 import org.apache.pivot.wtk.ListButtonSelectionListener;
 import org.apache.pivot.wtk.TableView;
+
+import at.easydiet.businesslogic.ParameterTableViewController;
 import at.easydiet.businessobjects.CheckOperatorBO;
 import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
@@ -17,30 +19,51 @@ import at.easydiet.view.EasyTableViewRowEditor.RowEditorListener;
 import at.easydiet.view.content.ParameterCellRenderer;
 
 public class ParameterTableView extends TableView {
+	private ParameterTableViewController _controller = new ParameterTableViewController();
+
 	private EasyTableViewRowEditor _editor;
 	private ListButton _definitionListButton;
 	private ListButton _checkOperatorListButton;
 	private ListButton _parameterDefinitionUnitListButton;
 	private ParameterValidator _validator;
+	
+	public ParameterTableView(List<?> tableData) {
+		super(tableData);
+		_validator = new ParameterValidator();
+	}
 
 	public ParameterTableView() {
-		_validator = new ParameterValidator();
+		this(new ArrayList<DietParameterBO>());}
+
+	public void setTableData(List<?> data)
+	{
+		super.setTableData(data);
+		_controller = getController();
+		_controller.setData(data);
+	}
+	
+	private ParameterTableViewController getController() {
+		if(_controller != null)
+		{
+			return _controller;
+		}
+		return new ParameterTableViewController();
 	}
 
 	@SuppressWarnings("unchecked")
 	public void initialize() {
-		
-		//set the validator into all cell renderers
+
+		// set the validator into all cell renderers
 		_validator.isValid((ArrayList<DietParameterBO>) getTableData());
-		for(Column col : getColumns())
-		{
-			((ParameterCellRenderer)col.getCellRenderer()).setValidator(_validator);
+		for (Column col : getColumns()) {
+			((ParameterCellRenderer) col.getCellRenderer())
+					.setValidator(_validator);
 		}
 
 		// get editor
 		_editor = (EasyTableViewRowEditor) getRowEditor();
-		
-		_editor.getRowEditorListeners().add(new RowEditorListener(){
+
+		_editor.getRowEditorListeners().add(new RowEditorListener() {
 
 			@Override
 			public Vote previewEditRow(RowEditor rowEditor,
@@ -52,30 +75,30 @@ public class ParameterTableView extends TableView {
 			@Override
 			public void editRowVetoed(RowEditor rowEditor, Vote reason) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void rowEditing(RowEditor rowEditor, TableView tableView,
 					int rowIndex, int columnIndex) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void changesSaved(RowEditor rowEditor, TableView tableView,
 					int rowIndex, int columnIndex) {
 				validateView();
-				
+
 			}
 
 			@Override
 			public void editCancelled(RowEditor rowEditor, TableView tableView,
 					int rowIndex, int columnIndex) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 		});
 
 		// add parameternames to the listbutton
@@ -94,7 +117,9 @@ public class ParameterTableView extends TableView {
 										"parameterDefinition.name");
 
 						// get all possible definitions for the listbutton
-						_definitionListButton.setListData(getAllDefinitions());
+						_definitionListButton
+								.setListData(_controller
+										.getAllDefinitions());
 
 						// set listeners
 						_definitionListButton.getListButtonSelectionListeners()
@@ -169,11 +194,13 @@ public class ParameterTableView extends TableView {
 							TableView tableView, int rowIndex, int columnIndex) {
 						// update list of units
 						_parameterDefinitionUnitListButton = (ListButton) _editor
-								.getCellEditors().get("parameterDefinitionUnit.name");
+								.getCellEditors().get(
+										"parameterDefinitionUnit.name");
 						DietParameterBO row = (DietParameterBO) getTableData()
 								.get(rowIndex);
 
-						_parameterDefinitionUnitListButton.setListData(row.getParameterDefinition().getUnits());
+						_parameterDefinitionUnitListButton.setListData(row
+								.getParameterDefinition().getUnits());
 
 						for (int i = 0; i < _parameterDefinitionUnitListButton
 								.getListData().getLength(); i++) {
@@ -181,7 +208,8 @@ public class ParameterTableView extends TableView {
 									.getListData().get(i);
 							if (parameterDefinitionUnitBO.getName()
 									.equalsIgnoreCase(
-											row.getParameterDefinitionUnit().getName())) {
+											row.getParameterDefinitionUnit()
+													.getName())) {
 								_parameterDefinitionUnitListButton
 										.setSelectedIndex(i);
 								layout();
@@ -218,29 +246,41 @@ public class ParameterTableView extends TableView {
 		}
 	}
 
-	private ArrayList<ParameterDefinitionBO> getAllDefinitions() {
-		ArrayList<ParameterDefinitionBO> definitions = new ArrayList<ParameterDefinitionBO>();
-
-		//TODO: own controller?
-		for (ParameterDefinition parameterDefinition : DAOFactory.getInstance()
-				.getParameterDefinitionDAO().findAll()) {
-			definitions.add(new ParameterDefinitionBO(parameterDefinition));
-		}
-		return definitions;
-	}
-	
-	public void setValidator(ParameterValidator parameterValidator)
-	{
+	public void setValidator(ParameterValidator parameterValidator) {
 		_validator = parameterValidator;
-		for(Column col : getColumns())
-		{
-			((ParameterCellRenderer)col.getCellRenderer()).setValidator(parameterValidator);
+		for (Column col : getColumns()) {
+			((ParameterCellRenderer) col.getCellRenderer())
+					.setValidator(parameterValidator);
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+	public void beginEdit() {
+		layout();
+		//TODO: not on it's place
+		//_editor.beginEdit(this, getTableData().getLength() - 1, 0);
+
+	}
+
 	public boolean validateView()
 	{
-		return _validator.isValid((List<DietParameterBO>)this.getTableData());
+		return _validator.isValid((List<DietParameterBO>)getTableData());
+	}
+	
+	public void addParameterTemplate()
+	{
+		_controller.addTemplate();
+		validateView();
+		
+		beginEdit();
+		this.invalidate();
+		this.repaint(true);
+	}
+	
+	public void remove(DietParameterBO dietParameter)
+	{
+		_controller.remove(dietParameter);
+		validateView();
+		
+		this.invalidate();
 	}
 }

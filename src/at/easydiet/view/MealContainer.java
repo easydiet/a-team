@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.apache.pivot.beans.BXMLSerializer;
 import org.apache.pivot.collections.ArrayList;
+import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.util.Vote;
@@ -23,8 +24,13 @@ import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.TextInputContentListener;
 
 import at.easydiet.businesslogic.MealContainerController;
+import at.easydiet.businessobjects.CheckOperatorBO;
+import at.easydiet.businessobjects.DietParameterBO;
+import at.easydiet.businessobjects.DietParameterTypeBO;
 import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.MealLineBO;
+import at.easydiet.businessobjects.ParameterDefinitionBO;
+import at.easydiet.businessobjects.ParameterDefinitionDataTypeBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
 import at.easydiet.businessobjects.RecipeBO;
 import at.easydiet.domainlogic.DietPlanEditingController;
@@ -46,6 +52,10 @@ public class MealContainer extends BoxPane
     private TextInput                           _mealCode;
 
     private TableView                           _mealLineBox;
+    
+    private ParameterTableView					_mealParameterTableView;
+	private Button _removeMealParameterButton;
+	private Button _addMealParameterButton;
 
     static
     {
@@ -65,6 +75,36 @@ public class MealContainer extends BoxPane
         {
             Border content = (Border) serializer.readObject(
                     TimeSpanContainer.class, "MealContainerContent.xml");
+            
+         // start parameterView
+			_mealParameterTableView = (ParameterTableView) serializer
+					.getNamespace().get("mealParameterTableView");
+			_mealParameterTableView.initialize();
+
+			_addMealParameterButton = (Button) serializer.getNamespace()
+					.get("addMealParameters");
+			_addMealParameterButton.getButtonPressListeners().add(
+					new ButtonPressListener() {
+
+						@Override
+						public void buttonPressed(Button arg0) {
+							addNewParameters();
+						}
+					});
+
+			_removeMealParameterButton = (Button) serializer.getNamespace()
+					.get("removeMealParameter");
+			_removeMealParameterButton.getButtonPressListeners().add(
+					new ButtonPressListener() {
+
+						@Override
+						public void buttonPressed(Button arg0) {
+							removeParameter((DietParameterBO) _mealParameterTableView
+									.getSelectedRow());
+						}
+					});
+			// end parameterview
+            
 
             final TableView recipeSearchResult = (TableView) serializer
                     .getNamespace().get("recipeSearchResult");
@@ -346,6 +386,11 @@ public class MealContainer extends BoxPane
     public void setMeal(MealBO meal)
     {
         _meal = meal;
+        
+      //tableview
+		List<DietParameterBO> listData = _meal.getDietParameters();
+		_mealParameterTableView.setTableData(listData);
+		
         updateUI();
     }
 
@@ -357,5 +402,13 @@ public class MealContainer extends BoxPane
         _controller.setMeal(_meal);
         _mealLineBox.setTableData(_controller.getMealLines());
     }
+    
+    private void addNewParameters() {		
+		_mealParameterTableView.addParameterTemplate();
+	}
+
+	private void removeParameter(DietParameterBO dietParameter) {
+		_mealParameterTableView.remove(dietParameter);
+	}
 
 }

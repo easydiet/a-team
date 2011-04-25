@@ -331,57 +331,12 @@ public class TimeSpanContainer extends BoxPane {
 		_timeSpan.getDietPlan().removeTimeSpans(_timeSpan);
 	}
 
-	@SuppressWarnings("unchecked")
-	private void addNewParameters() {
-		// TODO: show sheet
-		System.out.println("add parameters");
-
-		DietParameterBO newBo = new DietParameterBO();
-
-		newBo.setCheckOperator(CheckOperatorBO.SMALLER);
-		newBo.setDietParameterType(DietParameterTypeBO.DEFAULT);
-
-		ParameterDefinitionBO newDefinition = new ParameterDefinitionBO();
-		newDefinition.setName("Alanin");
-		newDefinition.setParameterDefinitionId(1);
-
-		ParameterDefinitionUnitBO newUnit = new ParameterDefinitionUnitBO();
-		newUnit.setName("mg");
-
-		ParameterDefinitionUnitBO secondUnit = new ParameterDefinitionUnitBO();
-		secondUnit.setName("mg/100g");
-
-		newDefinition.addUnit(newUnit);
-		newDefinition.addUnit(secondUnit);
-		newBo.setParameterDefinition(newDefinition);
-
-		newUnit.setType(ParameterDefinitionDataTypeBO.NUMBERS);
-		newBo.setParameterDefinitionUnit(newUnit);
-
-		newBo.setValue("15");
-
-		DietParameterBO secondBo = new DietParameterBO();
-
-		secondBo.setCheckOperator(CheckOperatorBO.BIGGER);
-		secondBo.setDietParameterType(DietParameterTypeBO.DEFAULT);
-		secondBo.setParameterDefinition(newDefinition);
-		secondBo.setParameterDefinitionUnit(newUnit);
-		secondBo.setValue("10");
-
-		((List<DietParameterBO>) _timeSpanParameterTableView.getTableData())
-				.add(newBo);
-		((List<DietParameterBO>) _timeSpanParameterTableView.getTableData())
-				.add(secondBo);
-
-		_timeSpanParameterTableView.validateView();
+	private void addNewParameters() {		
+		_timeSpanParameterTableView.addParameterTemplate();
 	}
 
-	@SuppressWarnings("unchecked")
 	private void removeParameter(DietParameterBO dietParameter) {
-		// TODO: remove parameter
-		((List<DietParameterBO>) _timeSpanParameterTableView.getTableData())
-				.remove(dietParameter);
-		_timeSpanParameterTableView.validateView();
+		_timeSpanParameterTableView.remove(dietParameter);
 	}
 
 }

@@ -87,7 +87,7 @@
 								<TableView.Column
 									name="parameterDefinitionUnit.name"
 									headerData="Einheit"
-									width="150"
+									width="100"
 								>
 									<cellRenderer>
 										<easycontent:ParameterCellRenderer />

@@ -57,7 +57,10 @@
 		</TablePane.Row>
 		<TablePane.Row>
 			<!-- START: Parameter of Meal -->
-			<Rollup>
+			<BoxPane
+				TablePane.columnSpan="3"
+			>
+				<Rollup>
 					<heading>
 						<BoxPane
 							styles="{padding: 5}"
@@ -108,7 +111,7 @@
 										<TableView.Column
 											name="parameterDefinitionUnit.name"
 											headerData="Einheit"
-											width="150"
+											width="100"
 										>
 											<cellRenderer>
 												<easycontent:ParameterCellRenderer />
@@ -181,6 +184,7 @@
 					</BoxPane>
 
 				</Rollup>
+			</BoxPane>
 			<!-- END: Parameter of Meal -->
 		</TablePane.Row>
 		<TablePane.Row
