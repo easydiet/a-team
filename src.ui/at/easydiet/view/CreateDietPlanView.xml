@@ -48,8 +48,6 @@
 	</Border>
 	<Label
 		text="Neuer Diätplan" />
-	<Label
-		text="Neuer Diätplan" />
 	<Border
 		styles="{padding: {left: 5}, color:'#d0d0d0'}"
 	>
