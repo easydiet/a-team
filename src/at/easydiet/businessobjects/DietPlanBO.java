@@ -343,4 +343,9 @@ public class DietPlanBO implements IDietParameterizable
         if (_model.getDietPlanId() != other._model.getDietPlanId()) return false;
         return true;
     }
+    
+    public String getDisplayText()
+    {
+        return getName();
+    }
 }

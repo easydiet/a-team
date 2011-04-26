@@ -238,5 +238,8 @@ public class MealBO implements IDietParameterizable
         getMealLines();
     }
 
-
+    public String getDisplayText()
+    {
+        return String.format("%s - %s", getCode(), getName());
+    }
 }

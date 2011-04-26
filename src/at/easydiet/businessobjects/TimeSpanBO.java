@@ -291,7 +291,7 @@ public class TimeSpanBO implements IDietParameterizable
         return true;
     }
 
-    public String getDisplayName()
+    public String getDisplayText()
     {
         SimpleDateFormat formatter = new SimpleDateFormat(
                 EasyDietApplication.DATE_FORMAT);
