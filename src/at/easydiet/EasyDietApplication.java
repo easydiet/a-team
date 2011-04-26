@@ -6,6 +6,7 @@ import org.apache.pivot.beans.BXMLSerializer;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.wtk.Application;
 import org.apache.pivot.wtk.ApplicationContext;
+import org.apache.pivot.wtk.DesktopApplicationContext;
 import org.apache.pivot.wtk.Display;
 import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Window;
@@ -19,6 +20,7 @@ public class EasyDietApplication implements Application
 
     public static final String                  APPLICATION_TITLE = "EasyDiet v0.1(dev) ~ ";
     public static final String                  DATE_FORMAT       = "dd.MM.yyyy";
+    public static final String                  DATETIME_FORMAT       = "dd.MM.yyyy HH:mm";
 
     private Window                              window            = null;
 
@@ -49,5 +51,9 @@ public class EasyDietApplication implements Application
 
     public void suspend() throws Exception
     {}
+    
+    public static void main(String[] args) {
+		DesktopApplicationContext.main(EasyDietApplication.class, args);
+	}
 
 }

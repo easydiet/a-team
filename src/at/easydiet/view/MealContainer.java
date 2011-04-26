@@ -243,7 +243,7 @@ public class MealContainer extends BoxPane
                             EasyAlerts
                                     .warning(
                                             "Wollen Sie diese Mahlzeit wirklich löschen?",
-                                            EasyAlerts.YES_NO, getWindow(),
+                                            EasyAlerts.YES_NO, EasyAlerts.NO, getWindow(),
                                             new DialogCloseListener()
                                             {
 
