@@ -14,7 +14,7 @@
 		<easy:EasyDietContentView.ToolbarButton
 			text="Speichern" icon="@save.png" bxml:id="save" />
 		<easy:EasyDietContentView.ToolbarButton
-			action="todo" text="Validieren" icon="@validate.png" />
+			text="Validieren" icon="@validate.png"  bxml:id="validate" />
 		<easy:EasyDietContentView.ToolbarButton
 			text="GUI Aktualisieren" icon="@refresh.png" bxml:id="refreshUI" />
 		<easy:EasyDietContentView.ToolbarButton

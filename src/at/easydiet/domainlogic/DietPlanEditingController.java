@@ -18,6 +18,7 @@ import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.DietPlanDAO;
 import at.easydiet.dao.HibernateUtil;
 import at.easydiet.dao.MealDAO;
+import at.easydiet.domainlogic.DietParameterController.ValidationResult;
 import at.easydiet.util.CollectionUtils;
 import at.easydiet.validation.ParameterValidator;
 
@@ -178,11 +179,22 @@ public class DietPlanEditingController
 
     private void validateDietPlanParameters()
     {
-//        DietParameter
-//        for (TimeSpanBO timeSpan : _dietPlan.getTimeSpans())
-//        {
-//            validateTimeSpanParameters()
-//        }
+        List<ValidationResult> violations = DietParameterController.getInstance().validateDietPlanDietParameters(_dietPlan);
+        
+        for (ValidationResult validationResult : violations)
+        {
+            
+            String error = String.format("Der Zielparameter '%s' des Objektes '%s' wird nicht eingehalten. Der Gesamtwert %f%s ist %s %s%s", 
+                    validationResult.getDietParameter().getParameterDefinition().getName(),
+                    validationResult.getAffectedObject().getDisplayText(),
+                    validationResult.getCurrentValue(),
+                    validationResult.getDietParameter().getParameterDefinitionUnit().getName(),
+                    validationResult.getErrorType().getDisplayText(),
+                    validationResult.getDietParameter().getValue(),
+                    validationResult.getDietParameter().getParameterDefinitionUnit().getName());
+            
+            _errors.add(error);
+        }
     }
 
     private void validateTimeSpan(TimeSpanBO t)
