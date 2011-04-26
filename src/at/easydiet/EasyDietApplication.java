@@ -19,6 +19,7 @@ public class EasyDietApplication implements Application
 
     public static final String                  APPLICATION_TITLE = "EasyDiet v0.1(dev) ~ ";
     public static final String                  DATE_FORMAT       = "dd.MM.yyyy";
+    public static final String                  DATETIME_FORMAT       = "dd.MM.yyyy HH:mm";
 
     private Window                              window            = null;
 
