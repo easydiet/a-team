@@ -101,7 +101,7 @@ public class EditDietPlanView extends EasyDietContentView implements Bindable {
 		List<DietParameterBO> listData = DietPlanEditingController
 				.getInstance().getDietPlan().getDietParameters();
 
-		_dietPlanParameterTableView.setTableData(listData);
+		_dietPlanParameterTableView.setParameterProvider(DietPlanEditingController.getInstance().getDietPlan());
 		_dietPlanParameterTableView.initialize();
 	}
 

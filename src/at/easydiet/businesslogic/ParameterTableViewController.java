@@ -5,20 +5,17 @@ import org.apache.pivot.collections.List;
 import at.easydiet.businessobjects.CheckOperatorBO;
 import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.DietParameterTypeBO;
+import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.dao.DAOFactory;
-import at.easydiet.domainlogic.DietPlanEditingController;
 import at.easydiet.model.ParameterDefinition;
-import at.easydiet.validation.ParameterValidator;
-import at.easydiet.view.ParameterTableView;
 
 public class ParameterTableViewController {
 	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
 			.getLogger(MealContainerController.class);
 
 	private List<DietParameterBO> _list;
-
-	private ParameterValidator _parameterValidator;
+	private IDietParameterizable _parameterProvider;
 
 	public ParameterTableViewController() {
 	}
@@ -42,7 +39,7 @@ public class ParameterTableViewController {
 						.findById((long) 1, false));
 
 		newBo.setCheckOperator(CheckOperatorBO.SMALLER);
-		newBo.setDietParameterType(DietParameterTypeBO.DEFAULT);
+		newBo.setDietParameterType(DietParameterTypeBO.TARGET_PARAMETER);
 
 		newBo.setParameterDefinition(newDefinition);
 
@@ -54,17 +51,21 @@ public class ParameterTableViewController {
 		return newBo;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void addTemplate() {
-		DietPlanEditingController.getInstance().getDietPlan().addDietParameters(getParameterTemplate());
+		_parameterProvider.addDietParameters(getParameterTemplate());
 	}
 
 	public void remove(DietParameterBO dietParameter) {
-		_list.remove(dietParameter);
+		_parameterProvider.removeDietParameters(dietParameter);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void setData(List<?> data) {
 		_list = (List<DietParameterBO>) data;
+	}
+
+	public void setParameterProvider(IDietParameterizable provider) {
+		_parameterProvider = provider;
 	}
 
 }

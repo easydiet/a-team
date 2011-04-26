@@ -73,6 +73,7 @@ public class TimeSpanContainer extends BoxPane
     public void setTimeSpan(TimeSpanBO timeSpan)
     {
         _timeSpan = timeSpan;
+        _timeSpanParameterTableView.setParameterProvider(timeSpan);
         refreshUI();
     }
 
@@ -243,6 +244,7 @@ public class TimeSpanContainer extends BoxPane
 			_timeSpanParameterTableView = (ParameterTableView) serializer
 					.getNamespace().get("timeSpanParameterTableView");
 			_timeSpanParameterTableView.initialize();
+			//TODO: setParameterProvider - but where?
 
 			_addTimeSpanParameterButton = (Button) serializer.getNamespace()
 					.get("addTimeSpanParameters");

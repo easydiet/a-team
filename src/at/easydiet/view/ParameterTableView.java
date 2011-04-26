@@ -10,6 +10,7 @@ import org.apache.pivot.wtk.TableView;
 import at.easydiet.businesslogic.ParameterTableViewController;
 import at.easydiet.businessobjects.CheckOperatorBO;
 import at.easydiet.businessobjects.DietParameterBO;
+import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
 import at.easydiet.dao.DAOFactory;
@@ -26,6 +27,7 @@ public class ParameterTableView extends TableView {
 	private ListButton _definitionListButton;
 	private ListButton _checkOperatorListButton;
 	private ListButton _parameterDefinitionUnitListButton;
+	
 	private ParameterValidator _validator;
 	
 	public ParameterTableView(List<?> tableData) {
@@ -36,6 +38,13 @@ public class ParameterTableView extends TableView {
 	public ParameterTableView() {
 		this(new ArrayList<DietParameterBO>());}
 
+	public void setParameterProvider(IDietParameterizable provider)
+	{
+		setTableData(provider.getDietParameters());
+		_controller.setData(provider.getDietParameters());
+		_controller.setParameterProvider(provider);
+	}
+	
 	public void setTableData(List<?> data)
 	{
 		super.setTableData(data);

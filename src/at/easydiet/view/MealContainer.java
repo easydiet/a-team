@@ -44,7 +44,6 @@ public class MealContainer extends BoxPane
 
     private static final SuggestionPopup        SUGGESTIONS = new SuggestionPopup();
 
-    private MealBO                              _meal;
     private RecipeSearchController              _searcher   = new RecipeSearchController();
     private MealContainerController             _controller = new MealContainerController();
 
@@ -171,7 +170,7 @@ public class MealContainer extends BoxPane
                         @Override
                         public void textChanged(TextInput textInput)
                         {
-                            _meal.setName(textInput.getText());
+                            getMeal().setName(textInput.getText());
                         }
 
                         @Override
@@ -213,7 +212,7 @@ public class MealContainer extends BoxPane
                         @Override
                         public void textChanged(TextInput textInput)
                         {
-                            _meal.setCode(textInput.getText());
+                            getMeal().setCode(textInput.getText());
                         }
 
                         @Override
@@ -358,7 +357,7 @@ public class MealContainer extends BoxPane
 
         for (int i = 0; i < recipes.getLength(); i++)
         {
-            DietPlanEditingController.getInstance().addRecipeToMeal(_meal,
+            DietPlanEditingController.getInstance().addRecipeToMeal(getMeal(),
                     recipes.get(i));
         }
         updateUI();
@@ -367,7 +366,7 @@ public class MealContainer extends BoxPane
     private void deleteMeal()
     {
         getParent().remove(this);
-        DietPlanEditingController.getInstance().deleteMeal(_meal);
+        DietPlanEditingController.getInstance().deleteMeal(getMeal());
     }
 
     /**
@@ -376,7 +375,7 @@ public class MealContainer extends BoxPane
      */
     public MealBO getMeal()
     {
-        return _meal;
+        return _controller.getMeal();
     }
 
     /**
@@ -385,21 +384,20 @@ public class MealContainer extends BoxPane
      */
     public void setMeal(MealBO meal)
     {
-        _meal = meal;
+        _controller.setMeal(meal);
         
       //tableview
-		List<DietParameterBO> listData = _meal.getDietParameters();
-		_mealParameterTableView.setTableData(listData);
+		List<DietParameterBO> listData = getMeal().getDietParameters();
+		_mealParameterTableView.setParameterProvider(getMeal());
 		
         updateUI();
     }
 
     private void updateUI()
     {
-        _mealName.setText(_meal.getName());
-        _mealCode.setText(_meal.getCode());
+        _mealName.setText(getMeal().getName());
+        _mealCode.setText(getMeal().getCode());
 
-        _controller.setMeal(_meal);
         _mealLineBox.setTableData(_controller.getMealLines());
     }
     
