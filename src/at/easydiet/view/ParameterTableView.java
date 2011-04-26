@@ -41,7 +41,6 @@ public class ParameterTableView extends TableView {
 	public void setParameterProvider(IDietParameterizable provider)
 	{
 		setTableData(provider.getDietParameters());
-		_controller.setData(provider.getDietParameters());
 		_controller.setParameterProvider(provider);
 	}
 	
@@ -49,7 +48,6 @@ public class ParameterTableView extends TableView {
 	{
 		super.setTableData(data);
 		_controller = getController();
-		_controller.setData(data);
 	}
 	
 	private ParameterTableViewController getController() {
