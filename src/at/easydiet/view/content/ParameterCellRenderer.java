@@ -138,7 +138,6 @@ public class ParameterCellRenderer extends BoxPane implements CellRenderer {
 		labelStyles.put("color", color);
 	}
 
-	@Override
 	public String toString(Object row, String columnName) {
 		if (!isErrorImageVisible()) {
 			Object cellData = JSON.get(row, columnName);

@@ -2,16 +2,18 @@ package at.easydiet.domainlogic;
 
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.HashMap;
-import org.apache.pivot.collections.HashSet;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Map;
-import org.apache.pivot.collections.Set;
 
 import at.easydiet.businessobjects.CheckOperatorBO;
 import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.DietPlanBO;
+import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.MealBO;
+import at.easydiet.businessobjects.MealLineBO;
+import at.easydiet.businessobjects.NutrimentParameterBO;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
+import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 
 public class DietParameterController
@@ -44,7 +46,7 @@ public class DietParameterController
         List<ValidationResult> violations = new ArrayList<ValidationResult>();
 
         // at first receive a list of dietparameters we need to validate
-        Set<ParameterDefinitionBO> parametersToValidate = new HashSet<ParameterDefinitionBO>();
+        Map<ParameterDefinitionBO, DietParameterBO> parametersToValidate = new HashMap<ParameterDefinitionBO, DietParameterBO>();
         addDietParametersToList(parametersToValidate, plan);
 
         // now as we have all parameters
@@ -54,82 +56,234 @@ public class DietParameterController
         return violations;
     }
 
-    private Map<ParameterDefinitionBO, Float> buildSumMap(
-            Set<ParameterDefinitionBO> parameters)
+    private static class ValidationSumValue
     {
-        Map<ParameterDefinitionBO, Float> map = new HashMap<ParameterDefinitionBO, Float>();
-        for (ParameterDefinitionBO param : parameters)
+        private float                     _sum;
+        private ParameterDefinitionUnitBO _unit;
+
+        /**
+         * Gets the sum.
+         * @return the sum
+         */
+        public float getSum()
         {
-            map.put(param, 0f);
+            return _sum;
+        }
+
+        /**
+         * Sets the sum.
+         * @param sum the sum to set
+         */
+        public void setSum(float sum)
+        {
+            _sum = sum;
+        }
+
+        /**
+         * Gets the unit.
+         * @return the unit
+         */
+        public ParameterDefinitionUnitBO getUnit()
+        {
+            return _unit;
+        }
+
+        /**
+         * Initializes a new instance of the {@link ValidationSumValue} class.
+         * @param sum
+         * @param unit
+         */
+        private ValidationSumValue(ParameterDefinitionUnitBO unit)
+        {
+            super();
+            _sum = 0;
+            _unit = unit;
+        }
+    }
+
+    private Map<ParameterDefinitionBO, ValidationSumValue> buildSumMap(
+            Map<ParameterDefinitionBO, DietParameterBO> parameters)
+    {
+        Map<ParameterDefinitionBO, ValidationSumValue> map = new HashMap<ParameterDefinitionBO, ValidationSumValue>();
+        for (ParameterDefinitionBO key : parameters)
+        {
+            DietParameterBO value = parameters.get(key);
+            map.put(value.getParameterDefinition(), new ValidationSumValue(
+                    value.getParameterDefinitionUnit()));
         }
         return map;
     }
 
+    // for dietplans
     private void validateDietParameters(
-            Set<ParameterDefinitionBO> parametersToValidate,
+            Map<ParameterDefinitionBO, DietParameterBO> parametersToValidate,
             List<ValidationResult> violations, DietPlanBO plan)
     {
         // store sums of dietplan
-        Map<ParameterDefinitionBO, Float> dietPlanSums = buildSumMap(parametersToValidate);
+        Map<ParameterDefinitionBO, ValidationSumValue> currentLevelSums = buildSumMap(parametersToValidate);
 
         // process deeper hierachies first for summing
         for (TimeSpanBO timeSpan : plan.getTimeSpans())
         {
-            validateDietParameters(parametersToValidate, dietPlanSums,
+            validateDietParameters(parametersToValidate, currentLevelSums,
                     violations, timeSpan);
         }
 
         // validate parameters of dietplan
         for (DietParameterBO parameter : plan.getDietParameters())
         {
-            CheckOperatorBO violation = parameter.getCheckOperator().isValid(parameter.getFloatValue(),
-                    dietPlanSums.get(parameter.getParameterDefinition()));
-            
-            // test if checkoperator applies for specified value and summed value
+            CheckOperatorBO violation = parameter.getCheckOperator().isValid(
+                    parameter.getFloatValue(),
+                    currentLevelSums.get(parameter.getParameterDefinition())
+                            .getSum());
+
+            // test if checkoperator applies for specified value and summed
+            // value
             if (violation != null)
             {
                 // if not add a violation
-                violations.add(new ValidationResult(plan, violation, parameter));
+                violations
+                        .add(new ValidationResult(plan, violation, parameter));
             }
         }
-
-        // add sums
     }
 
+    // for timespans
     private void validateDietParameters(
-            Set<ParameterDefinitionBO> parametersToValidate,
-            Map<ParameterDefinitionBO, Float> dietPlanSums,
+            Map<ParameterDefinitionBO, DietParameterBO> parametersToValidate,
+            Map<ParameterDefinitionBO, ValidationSumValue> dietPlanSums,
             List<ValidationResult> violations, TimeSpanBO timeSpan)
     {
-
-    }
-
-    private void validateDietParameters(Map<ParameterDefinitionBO, Float> sums,
-            List<ValidationResult> violations, TimeSpanBO timeSpan)
-    {
-        Map<ParameterDefinitionBO, Float> timeSpanSums = new HashMap<ParameterDefinitionBO, Float>();
+        // store sums of timespan
+        Map<ParameterDefinitionBO, ValidationSumValue> timeSpanSums = buildSumMap(parametersToValidate);
 
         // process deeper hierachies first for summing
         for (MealBO meal : timeSpan.getMeals())
         {
-            validateDietParameters(timeSpanSums, violations, meal);
+            validateDietParameters(parametersToValidate, dietPlanSums,
+                    timeSpanSums, violations, meal);
         }
 
-        // validate parameters of timeSpan
+        // validate parameters of timespan
+        for (DietParameterBO parameter : timeSpan.getDietParameters())
+        {
+            CheckOperatorBO violation = parameter.getCheckOperator().isValid(
+                    parameter.getFloatValue(),
+                    timeSpanSums.get(parameter.getParameterDefinition())
+                            .getSum());
 
-        // add sums of timespan to dietplan sum
+            // test if checkoperator applies for specified value and summed
+            // value
+            if (violation != null)
+            {
+                // if not add a violation
+                violations.add(new ValidationResult(timeSpan, violation,
+                        parameter));
+            }
+        }
     }
 
+    // for meals
     private void validateDietParameters(
-            Map<ParameterDefinitionBO, Float> timeSpanSums,
+            Map<ParameterDefinitionBO, DietParameterBO> parametersToValidate,
+            Map<ParameterDefinitionBO, ValidationSumValue> dietPlanSums,
+            Map<ParameterDefinitionBO, ValidationSumValue> timeSpanSums,
             List<ValidationResult> violations, MealBO meal)
     {
-        // we need to sum up
+        // store sums of meal
+        Map<ParameterDefinitionBO, ValidationSumValue> mealSums = buildSumMap(parametersToValidate);
 
+        // process all lines in recipe
+        for (MealLineBO line : meal.getMealLines())
+        {
+            // iterate over all nutrimentparameters to sum up
+            for (NutrimentParameterBO nutrimentParameter : line.getRecipe()
+                    .getNutrimentParameters())
+            {
+                // do we need this parameter for validation?
+                if (parametersToValidate.containsKey(nutrimentParameter
+                        .getParameterDefinition()))
+                {
+                    // can we convert the unit of the current nutrimentParameter
+                    // to the required
+                    // unit in sum?
+                    ParameterDefinitionUnitBO summingUnit = parametersToValidate
+                            .get(nutrimentParameter.getParameterDefinition())
+                            .getParameterDefinitionUnit();
+
+                    if (DietParameterUnitController.getInstance().canConvert(
+                            nutrimentParameter.getUnit(), summingUnit))
+                    {
+                        try
+                        {
+                            float nutrimentAmount = Float
+                                    .valueOf(nutrimentParameter.getValue());
+
+                            // step 1
+                            // convert the recipeAmount from the recipeUnit to
+                            // the mealLineUnit
+                            float recipeAmountInMealLineUnit = DietParameterUnitController
+                                    .getInstance().convert(
+                                            line.getRecipe().getUnit(),
+                                            line.getUnit(),
+                                            line.getRecipe().getAmount());
+
+                            // step 2
+                            // convert the nutritionParameterValue form the
+                            // nutritionParameterUnit to the
+                            // summingUnit
+                            float nutrimenAmountInSummingUnit = DietParameterUnitController
+                                    .getInstance().convert(
+                                            nutrimentParameter.getUnit(),
+                                            summingUnit, nutrimentAmount);
+
+                            // step 3
+                            // interpolate from the definition to the data set
+                            // in the mealLine
+                            float realAmountOfNutriment = (line.getQuantity() * nutrimenAmountInSummingUnit)
+                                    / recipeAmountInMealLineUnit;
+
+                            // add value to all sum collections
+                            ValidationSumValue sum = mealSums
+                                    .get(nutrimentParameter
+                                            .getParameterDefinition());
+                            sum.setSum(sum.getSum() + realAmountOfNutriment);
+                            sum = timeSpanSums.get(nutrimentParameter
+                                    .getParameterDefinition());
+                            sum.setSum(sum.getSum() + realAmountOfNutriment);
+                            sum = dietPlanSums.get(nutrimentParameter
+                                    .getParameterDefinition());
+                            sum.setSum(sum.getSum() + realAmountOfNutriment);
+                        }
+                        catch (Exception e)
+                        {
+                            LOG.warn("Could not validate parameter", e);
+                        }
+                    }
+                }
+            }
+        }
+
+        // validate parameters of meal
+        for (DietParameterBO parameter : meal.getDietParameters())
+        {
+            CheckOperatorBO violation = parameter.getCheckOperator().isValid(
+                    parameter.getFloatValue(),
+                    mealSums.get(parameter.getParameterDefinition()).getSum());
+
+            // test if checkoperator applies for specified value and summed
+            // value
+            if (violation != null)
+            {
+                // if not add a violation
+                violations
+                        .add(new ValidationResult(meal, violation, parameter));
+            }
+        }
     }
 
-    private void addDietParametersToList(Set<ParameterDefinitionBO> toFill,
-            DietPlanBO plan)
+    private void addDietParametersToList(
+            Map<ParameterDefinitionBO, DietParameterBO> toFill, DietPlanBO plan)
     {
         addDietParametersToList(toFill, plan.getDietParameters());
 
@@ -139,33 +293,37 @@ public class DietParameterController
         }
     }
 
-    private void addDietParametersToList(Set<ParameterDefinitionBO> toFill,
+    private void addDietParametersToList(
+            Map<ParameterDefinitionBO, DietParameterBO> toFill,
             TimeSpanBO timeSpan)
     {
+        addDietParametersToList(toFill, timeSpan.getDietParameters());
+
         for (MealBO meal : timeSpan.getMeals())
         {
             addDietParametersToList(toFill, meal.getDietParameters());
         }
     }
 
-    private void addDietParametersToList(Set<ParameterDefinitionBO> toFill,
+    private void addDietParametersToList(
+            Map<ParameterDefinitionBO, DietParameterBO> toFill,
             List<DietParameterBO> dietParameters)
     {
         for (DietParameterBO param : dietParameters)
         {
-            if (!toFill.contains(param.getParameterDefinition()))
+            if (!toFill.containsKey(param.getParameterDefinition()))
             {
-                toFill.add(param.getParameterDefinition());
+                toFill.put(param.getParameterDefinition(), param);
             }
         }
     }
 
     public static class ValidationResult
     {
-        private Object          _affectedObject;
-        private CheckOperatorBO _errorType;
-        private DietParameterBO _dietParameter;
-        private float           _currentValue;
+        private IDietParameterizable _affectedObject;
+        private CheckOperatorBO      _errorType;
+        private DietParameterBO      _dietParameter;
+        private float                _currentValue;
 
         /**
          * Gets the dietParameter which got violated.
@@ -180,7 +338,7 @@ public class DietParameterController
          * Gets the object which contained the dietparameter which got violated.
          * @return the object
          */
-        public Object getAffectedObject()
+        public IDietParameterizable getAffectedObject()
         {
             return _affectedObject;
         }
@@ -210,7 +368,7 @@ public class DietParameterController
          * @param errorType
          * @param dietParameter
          */
-        private ValidationResult(Object affectedObject,
+        private ValidationResult(IDietParameterizable affectedObject,
                 CheckOperatorBO errorType, DietParameterBO dietParameter)
         {
             super();

@@ -1,15 +1,10 @@
-<easy:CreateDietPlanView
-	xmlns:bxml="http://pivot.apache.org/bxml"
-	xmlns:easy="at.easydiet.view"
-	xmlns:easycontent="at.easydiet.view.content"
-	xmlns="org.apache.pivot.wtk"
->
+<easy:CreateDietPlanView xmlns:bxml="http://pivot.apache.org/bxml"
+	xmlns:easy="at.easydiet.view" xmlns:easycontent="at.easydiet.view.content"
+	xmlns="org.apache.pivot.wtk">
 	<navigationButtons>
 		<easy:EasyDietContentView.NavigationButton
-			text="Dashboard"
-			view="DashboardView" />
-		<easy:PatientNavigationButton
-			view="PatientDetailView" />
+			text="Dashboard" view="DashboardView" />
+		<easy:PatientNavigationButton view="PatientDetailView" />
 		<easy:DietTreatmentNavigationButton
 			view="DietTreatmentDetailView" />
 		<easy:EasyDietContentView.NavigationButton
@@ -17,101 +12,62 @@
 	</navigationButtons>
 	<toolbarButtons>
 		<easy:EasyDietContentView.ToolbarButton
-			text="Speichern"
-			icon="@save.png"
-			bxml:id="save" />
+			text="Speichern" icon="@save.png" bxml:id="save" />
 		<easy:EasyDietContentView.ToolbarButton
-			action="todo"
-			text="Validieren"
-			icon="@validate.png" />
+			action="todo" text="Validieren" icon="@validate.png" />
 		<easy:EasyDietContentView.ToolbarButton
-			text="GUI Aktualisieren"
-			icon="@refresh.png"
-			bxml:id="refreshUI" />
+			text="GUI Aktualisieren" icon="@refresh.png" bxml:id="refreshUI" />
 		<easy:EasyDietContentView.ToolbarButton
-			action="showHelp"
-			text="Hilfe"
-			icon="@help.png" />
+			action="showHelp" text="Hilfe" icon="@help.png" />
 	</toolbarButtons>
 
-	<Border
-		styleName="errorBox"
-		bxml:id="errorBorder"
-	>
-		<ListView
-			bxml:id="errorBox"
-		>
+	<Border styleName="errorBox" bxml:id="errorBorder">
+		<ListView bxml:id="errorBox">
 			<itemRenderer>
 				<easycontent:ErrorRenderer />
 			</itemRenderer>
 		</ListView>
 	</Border>
-	<Label
-		text="Neuer Diätplan" />
-	<Border
-		styles="{padding: {left: 5}, color:'#d0d0d0'}"
-	>
+	<Label text="Neuer Diätplan" />
+	<Border styles="{padding: {left: 5}, color:'#d0d0d0'}">
 		<Rollup>
 			<heading>
-				<BoxPane
-					styles="{padding: 5}"
-				>
-					<Label
-						text="Zielparameter des Diätplans festlegen" />
+				<BoxPane styles="{padding: 5}">
+					<Label text="Zielparameter des Diätplans festlegen" />
 				</BoxPane>
 			</heading>
-			<BoxPane
-				orientation="vertical"
-				styles="{padding: 5}"
-			>
+			<BoxPane orientation="vertical" styles="{padding: 5}">
+				<!-- start parameter view -->
 				<Border>
-					<ScrollPane
-						preferredHeight="150"
-					>
-						<easy:ParameterTableView
-							bxml:id="dietPlanParameterTableView"
-						>
+					<ScrollPane preferredHeight="150">
+						<easy:ParameterTableView bxml:id="dietPlanParameterTableView">
 							<columns>
-								<TableView.Column
-									name="parameterDefinition.name"
-									headerData="Definition"
-									width="150"
-								>
+								<TableView.Column name="parameterDefinition.name"
+									headerData="Definition" width="150">
 									<cellRenderer>
 										<easycontent:ParameterCellRenderer />
 									</cellRenderer>
 								</TableView.Column>
-								<TableView.Column
-									name="checkOperator.name"
-									headerData="Operator"
-									width="100"
-								>
+								<TableView.Column name="checkOperator.name"
+									headerData="Operator" width="100">
 									<cellRenderer>
 										<easycontent:ParameterCellRenderer />
 									</cellRenderer>
 								</TableView.Column>
-								<TableView.Column
-									name="value"
-									headerData="Wert"
-									width="100"
-								>
+								<TableView.Column name="value" headerData="Wert"
+									width="100">
 									<cellRenderer>
 										<easycontent:ParameterCellRenderer />
 									</cellRenderer>
 								</TableView.Column>
-								<TableView.Column
-									name="parameterDefinitionUnit.name"
-									headerData="Einheit"
-									width="100"
-								>
+								<TableView.Column name="parameterDefinitionUnit.name"
+									headerData="Einheit" width="100">
 									<cellRenderer>
 										<easycontent:ParameterCellRenderer />
 									</cellRenderer>
 								</TableView.Column>
-								<TableView.Column
-									name="validationResult"
-									width="-1"
-								>
+								<TableView.Column name="validationResult"
+									width="-1">
 									<cellRenderer>
 										<easycontent:ParameterCellRenderer
 											errorImageVisible="true" />
@@ -121,31 +77,31 @@
 
 							<rowEditor>
 								<easy:EasyTableViewRowEditor
-									editEffect="horizontal_slide"
-								>
+									editEffect="horizontal_slide">
 									<cellEditors>
 										<parameterDefinition.name>
-											<ListButton
-												selectedItemKey="parameterDefinition"
+											<ListButton selectedItemKey="parameterDefinition"
 												selectedItemBindType="store" />
 										</parameterDefinition.name>
 
 										<checkOperator.name>
-											<ListButton
-												selectedItemKey="checkOperator"
+											<ListButton selectedItemKey="checkOperator"
 												selectedItemBindType="store" />
 										</checkOperator.name>
 
 										<value>
-											<TextInput
-												textKey="value"
-											>
+											<TextInput strictValidation="true" textKey="value">
+												<validator>
+													<easycontent:QuantityValidator />
+												</validator>
+												<textBindMapping>
+													<easycontent:QuantityBindMapping />
+												</textBindMapping>
 											</TextInput>
 										</value>
 
 										<parameterDefinitionUnit.name>
-											<ListButton
-												selectedItemKey="parameterDefinitionUnit"
+											<ListButton selectedItemKey="parameterDefinitionUnit"
 												selectedItemBindType="store" />
 										</parameterDefinitionUnit.name>
 
@@ -158,18 +114,15 @@
 
 						</easy:ParameterTableView>
 						<columnHeader>
-							<TableViewHeader
-								tableView="$dietPlanParameterTableView" />
+							<TableViewHeader tableView="$dietPlanParameterTableView" />
 						</columnHeader>
 					</ScrollPane>
 				</Border>
 
 				<BoxPane>
-					<easy:SimpleButton
-						text="Parameter hinzufügen"
+					<easy:SimpleButton text="Parameter hinzufügen"
 						bxml:id="addDietPlanParameters" />
-					<easy:SimpleButton
-						text="Parameter entfernen"
+					<easy:SimpleButton text="Parameter entfernen"
 						bxml:id="removeDietPlanParameter" />
 				</BoxPane>
 
@@ -177,16 +130,10 @@
 
 		</Rollup>
 	</Border>
-	<easy:SimpleButton
-		text="Neuer Zeitraum"
-		bxml:id="createTimeSpanTop" />
-	<BoxPane
-		bxml:id="timeSpanContainer"
-		orientation="vertical"
-		styles="{fill:true}"
-	>
+	<!-- end parameterview -->
+	<easy:SimpleButton text="Neuer Zeitraum" bxml:id="createTimeSpanTop" />
+	<BoxPane bxml:id="timeSpanContainer" orientation="vertical"
+		styles="{fill:true}">
 	</BoxPane>
-	<easy:SimpleButton
-		text="Neuer Zeitraum"
-		bxml:id="createTimeSpanBottom" />
+	<easy:SimpleButton text="Neuer Zeitraum" bxml:id="createTimeSpanBottom" />
 </easy:CreateDietPlanView>

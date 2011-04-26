@@ -18,7 +18,6 @@ import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.DietPlanDAO;
 import at.easydiet.dao.HibernateUtil;
 import at.easydiet.dao.MealDAO;
-import at.easydiet.dao.TimeSpanDAO;
 import at.easydiet.util.CollectionUtils;
 
 public class DietPlanEditingController

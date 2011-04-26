@@ -312,17 +312,17 @@
 		<property name="quantity" column="Quantity" type="float" not-null="true" />
 		<property name="info" column="Info" type="clob" />
 
-		<list name="alternatives" cascade="all">
-			<key column="ParentMealLineId" not-null="false" />
+		<list name="alternatives" cascade="all" >
+			<key column="ParentMealLineId" />
 			<index column="Idx"/>
-			<one-to-many class="MealLine" />
+			<one-to-many class="MealLine"  />
 		</list>
 
 		<many-to-one class="Recipe" name="recipe" not-null="true" />
 		<many-to-one class="ParameterDefinitionUnit" name="unit" not-null="true" />
 		
 		<!-- Bidirectional assoc to parent mealLine -->
-		<many-to-one name="parent" column="ParentMealLineId" class="MealLine" insert="true" update="true"/>
+		<many-to-one name="parent" column="ParentMealLineId" class="MealLine"/>
 
 		<!-- Bidirectional assoc to meal -->
 		<many-to-one name="meal" column="MealId" class="Meal" not-null="true" insert="false" update="false"/>

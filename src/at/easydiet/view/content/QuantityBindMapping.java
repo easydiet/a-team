@@ -13,6 +13,10 @@ public class QuantityBindMapping implements TextBindMapping
 
     public String toString(Object value)
     {
+    	if(value instanceof String)
+    	{
+    		value = Float.valueOf((String) value);
+    	}
         return FORMAT.format(value);
     }
 

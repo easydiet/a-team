@@ -13,13 +13,13 @@ import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
-import at.easydiet.dao.DAOFactory;
-import at.easydiet.domainlogic.DietPlanEditingController;
-import at.easydiet.model.ParameterDefinition;
 import at.easydiet.validation.ParameterValidator;
 import at.easydiet.view.EasyTableViewRowEditor.RowEditorListener;
 import at.easydiet.view.content.ParameterCellRenderer;
 
+/**
+ * Shows a tableView which handles parameters
+ */
 public class ParameterTableView extends TableView {
 	private ParameterTableViewController _controller = new ParameterTableViewController();
 
@@ -28,28 +28,31 @@ public class ParameterTableView extends TableView {
 	private ListButton _checkOperatorListButton;
 	private ListButton _parameterDefinitionUnitListButton;
 	
-	private ParameterValidator _validator;
+	//used for validation of this tableview
+	private ParameterValidator _validator = new ParameterValidator();
 	
 	public ParameterTableView(List<?> tableData) {
 		super(tableData);
-		_validator = new ParameterValidator();
 	}
 
 	public ParameterTableView() {
 		this(new ArrayList<DietParameterBO>());}
 
+	/**
+	 * Set a new parameter data provider
+	 * @param provider parameter data provider
+	 */
 	public void setParameterProvider(IDietParameterizable provider)
 	{
 		setTableData(provider.getDietParameters());
-		_controller.setParameterProvider(provider);
+		refreshView();
+		getController().setParameterProvider(provider);
 	}
 	
-	public void setTableData(List<?> data)
-	{
-		super.setTableData(data);
-		_controller = getController();
-	}
-	
+	/**
+	 * returns the controller
+	 * @return
+	 */
 	private ParameterTableViewController getController() {
 		if(_controller != null)
 		{
@@ -58,55 +61,22 @@ public class ParameterTableView extends TableView {
 		return new ParameterTableViewController();
 	}
 
-	@SuppressWarnings("unchecked")
+	/**
+	 * initalize this view and set cellrenderers
+	 */
 	public void initialize() {
 
 		// set the validator into all cell renderers
-		_validator.isValid((ArrayList<DietParameterBO>) getTableData());
-		for (Column col : getColumns()) {
-			((ParameterCellRenderer) col.getCellRenderer())
-					.setValidator(_validator);
-		}
+		setValidatorToCellRenderers();
 
 		// get editor
 		_editor = (EasyTableViewRowEditor) getRowEditor();
 
-		_editor.getRowEditorListeners().add(new RowEditorListener() {
-
-			@Override
-			public Vote previewEditRow(RowEditor rowEditor,
-					TableView tableView, int rowIndex, int columnIndex) {
-				// TODO Auto-generated method stub
-				return Vote.APPROVE;
-			}
-
-			@Override
-			public void editRowVetoed(RowEditor rowEditor, Vote reason) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void rowEditing(RowEditor rowEditor, TableView tableView,
-					int rowIndex, int columnIndex) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
+		_editor.getRowEditorListeners().add(new RowEditorListener.Adapter() {
 			public void changesSaved(RowEditor rowEditor, TableView tableView,
 					int rowIndex, int columnIndex) {
-				validateView();
-
+				refreshView();
 			}
-
-			@Override
-			public void editCancelled(RowEditor rowEditor, TableView tableView,
-					int rowIndex, int columnIndex) {
-				// TODO Auto-generated method stub
-
-			}
-
 		});
 
 		// add parameternames to the listbutton
@@ -231,7 +201,11 @@ public class ParameterTableView extends TableView {
 				});
 
 	}
-
+	
+	/**
+	 * refresh the listbutton to choose operators
+	 * @param parameterDefinitionBO
+	 */
 	public void refreshOperatorButton(
 			ParameterDefinitionBO parameterDefinitionBO) {
 		if (_checkOperatorListButton != null && parameterDefinitionBO != null) {
@@ -242,6 +216,10 @@ public class ParameterTableView extends TableView {
 		}
 	}
 
+	/**
+	 * refresh the listbutton to choose units
+	 * @param parameterDefinitionBO
+	 */
 	public void refreshUnitButton(ParameterDefinitionBO parameterDefinitionBO) {
 		if (_parameterDefinitionUnitListButton != null
 				&& parameterDefinitionBO != null) {
@@ -254,14 +232,19 @@ public class ParameterTableView extends TableView {
 		}
 	}
 
-	public void setValidator(ParameterValidator parameterValidator) {
-		_validator = parameterValidator;
+	/**
+	 * Set the Validator into all cell renderers
+	 */
+	private void setValidatorToCellRenderers() {
 		for (Column col : getColumns()) {
 			((ParameterCellRenderer) col.getCellRenderer())
-					.setValidator(parameterValidator);
+					.setValidator(_validator);
 		}
 	}
 
+	/**
+	 * Starts a table view row editor
+	 */
 	public void beginEdit() {
 		layout();
 		//TODO: not on it's place
@@ -269,26 +252,40 @@ public class ParameterTableView extends TableView {
 
 	}
 
+	public void refreshView()
+	{
+		validateView();
+		this.invalidate();
+	}
+	
+	/**
+	 * Validates this view
+	 * @return true if no conflicts are found
+	 */
+	@SuppressWarnings("unchecked")
 	public boolean validateView()
 	{
 		return _validator.isValid((List<DietParameterBO>)getTableData());
 	}
 	
+	/**
+	 * Add a new template parameter to this view
+	 */
 	public void addParameterTemplate()
 	{
 		_controller.addTemplate();
-		validateView();
+		refreshView();
 		
 		beginEdit();
-		this.invalidate();
-		this.repaint(true);
 	}
 	
+	/**
+	 * Remove a parameter from the view
+	 * @param dietParameter parameter to remove
+	 */
 	public void remove(DietParameterBO dietParameter)
 	{
 		_controller.remove(dietParameter);
-		validateView();
-		
-		this.invalidate();
+		refreshView();
 	}
 }

@@ -1,6 +1,7 @@
 package at.easydiet.businesslogic;
 
 import org.apache.pivot.collections.List;
+import org.hibernate.UnresolvableObjectException;
 
 import at.easydiet.businessobjects.DietTreatmentBO;
 import at.easydiet.businessobjects.LaborReportBO;
@@ -15,9 +16,9 @@ public class PatientDetailViewController
                                                             .getLogger(PatientDetailViewController.class);
 
     private PatientBO                           _patient;
-    private List<DietTreatmentBO>          _dietTreatments;
-    private List<PatientStateBO>           _patientStates;
-    private List<LaborReportBO>            _laborReports;
+    private List<DietTreatmentBO>               _dietTreatments;
+    private List<PatientStateBO>                _patientStates;
+    private List<LaborReportBO>                 _laborReports;
 
     private static PatientDetailViewController  _singleton;
 
@@ -68,11 +69,18 @@ public class PatientDetailViewController
         _patientStates = _patient.getPatientStates();
         _laborReports = _patient.getLaborReports();
     }
-    
+
     public void refresh()
     {
-        PatientDAO dao = DAOFactory.getInstance().getPatientDAO();
-        dao.refresh(_patient.getModel());
+        try
+        {
+            PatientDAO dao = DAOFactory.getInstance().getPatientDAO();
+            dao.refresh(_patient.getModel());
+        }
+        catch (UnresolvableObjectException e)
+        {
+            LOG.error("Couldn't refresh dietplan");
+        }
         _patient.updateDisfavorsCache();
         _patient.updateFamilyanamnesisCache();
         _patient.updateLaborReportsCache();

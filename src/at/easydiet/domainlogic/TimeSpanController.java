@@ -42,7 +42,7 @@ public class TimeSpanController
         List<TimeSpanBO> timeSpans = timespan.getDietPlan().getTimeSpans();
         for (TimeSpanBO other : timeSpans)
         {
-            if (other == timespan) continue;
+            if (other == timespan || (timespan.getTimeSpanId() > 0 && timespan.equals(other))) continue;
             if (isCollision(timespan.getStart(), timespan.getEnd(), other.getStart(), other.getEnd()))
             {
                 collisions.add(other);

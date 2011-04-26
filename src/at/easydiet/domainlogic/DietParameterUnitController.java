@@ -145,6 +145,11 @@ public class DietParameterUnitController
         return _unitConverters.get(unit.getName()).keySet();
     }
     
+    public boolean canConvert(ParameterDefinitionUnitBO from, ParameterDefinitionUnitBO to)
+    {
+        return _unitConverters.get(from).containsKey(to);
+    }
+    
     /**
      * Converts the given value from one unit to the other.
      * @param from the unit in which the value is currently
