@@ -18,6 +18,7 @@ import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.CalendarButton;
+import org.apache.pivot.wtk.CalendarButtonListener;
 import org.apache.pivot.wtk.CalendarButtonSelectionListener;
 import org.apache.pivot.wtk.Dialog;
 import org.apache.pivot.wtk.DialogCloseListener;
@@ -46,16 +47,17 @@ public class TimeSpanContainer extends BoxPane
     private BoxPane                             _mealBox;
     private Button                              _deleteButton;
 
-    private Button _addTimeSpanParameterButton;
-	private Button _removeTimeSpanParameterButton;
-    
+    private Button                              _addTimeSpanParameterButton;
+    private Button                              _removeTimeSpanParameterButton;
+
     private TimeSpanBO                          _timeSpan;
 
     private ArrayList<MealContainer>            _mealContainers;
     private MealContainerSequence               _mealContainerSequence      = new MealContainerSequence();
     private TimeSpanContainerListenerList       _timeSpanContainerListeners = new TimeSpanContainerListenerList();
 
-	private ParameterTableView _timeSpanParameterTableView;
+    private ParameterTableView                  _timeSpanParameterTableView;
+    private boolean                             _guiLoading;
 
     /**
      * Gets the timeSpan.
@@ -79,6 +81,7 @@ public class TimeSpanContainer extends BoxPane
 
     private void refreshUI()
     {
+        _guiLoading = true;
         _startDateButton.setSelectedDate(_timeSpan.getStartDate());
         _endDateButton.setSelectedDate(_timeSpan.getEndDate());
         _mealBox.removeAll();
@@ -86,6 +89,8 @@ public class TimeSpanContainer extends BoxPane
         {
             addMeal(meal);
         }
+        _guiLoading = false;
+        updateDurationLabel();
     }
 
     public final class MealContainerSequence implements
@@ -239,34 +244,38 @@ public class TimeSpanContainer extends BoxPane
                     "durationLabel");
             _deleteButton = (Button) serializer.getNamespace().get(
                     "deleteButton");
-            
-         // start parameterView
-			_timeSpanParameterTableView = (ParameterTableView) serializer
-					.getNamespace().get("timeSpanParameterTableView");
-			_timeSpanParameterTableView.initialize();
-			//TODO: setParameterProvider - but where?
 
-			_addTimeSpanParameterButton = (Button) serializer.getNamespace()
-					.get("addTimeSpanParameters");
-			_addTimeSpanParameterButton.getButtonPressListeners().add(
-					new ButtonPressListener() {
+            // start parameterView
+            _timeSpanParameterTableView = (ParameterTableView) serializer
+                    .getNamespace().get("timeSpanParameterTableView");
+            _timeSpanParameterTableView.initialize();
+            // TODO: setParameterProvider - but where?
 
-						public void buttonPressed(Button arg0) {
-							addNewParameters();
-						}
-					});
+            _addTimeSpanParameterButton = (Button) serializer.getNamespace()
+                    .get("addTimeSpanParameters");
+            _addTimeSpanParameterButton.getButtonPressListeners().add(
+                    new ButtonPressListener()
+                    {
 
-			_removeTimeSpanParameterButton = (Button) serializer.getNamespace()
-					.get("removeTimeSpanParameter");
-			_removeTimeSpanParameterButton.getButtonPressListeners().add(
-					new ButtonPressListener() {
+                        public void buttonPressed(Button arg0)
+                        {
+                            addNewParameters();
+                        }
+                    });
 
-						public void buttonPressed(Button arg0) {
-							removeParameter((DietParameterBO) _timeSpanParameterTableView
-									.getSelectedRow());
-						}
-					});
-			// end parameterview
+            _removeTimeSpanParameterButton = (Button) serializer.getNamespace()
+                    .get("removeTimeSpanParameter");
+            _removeTimeSpanParameterButton.getButtonPressListeners().add(
+                    new ButtonPressListener()
+                    {
+
+                        public void buttonPressed(Button arg0)
+                        {
+                            removeParameter((DietParameterBO) _timeSpanParameterTableView
+                                    .getSelectedRow());
+                        }
+                    });
+            // end parameterview
 
             _mealBox = (BoxPane) serializer.getNamespace().get("mealBox");
 
@@ -320,37 +329,34 @@ public class TimeSpanContainer extends BoxPane
 
             CalendarButtonSelectionListener dateChangedListener = new CalendarButtonSelectionListener()
             {
-
                 public void selectedDateChanged(CalendarButton calendarButton,
                         CalendarDate previousSelectedDate)
                 {
+                    if (_guiLoading)
+                    {
+                        return;
+                    }
+                    LOG.debug(calendarButton == _startDateButton);
+                    LOG.debug(calendarButton == _endDateButton);
+                    LOG.debug(calendarButton.getSelectedDate());
                     CalendarDate start = _startDateButton.getSelectedDate();
-                    CalendarDate end = _endDateButton.getSelectedDate();
+                    _timeSpan.setStartDate(start);
 
+                    CalendarDate end = _endDateButton.getSelectedDate();
                     if (end.compareTo(start) < 0)
                     {
                         _endDateButton.setSelectedDate(new CalendarDate(start
                                 .toCalendar()));
                         return;
                     }
-                    
+
                     int days = end.subtract(start);
-                    
-                    _timeSpan.setStartDate(start);
                     _timeSpan.setDuration(days);
-                    System.out.println("From: " + _timeSpan.getStart());
-                    System.out.println("End: " + _timeSpan.getEnd());
-                    System.out.println("EndDate: " + _timeSpan.getEndDate());
-                    System.out.println("Duration:" + _timeSpan.getDuration());
                     
-                    String dayLabel = days > 0 ? "Tage" : "Tag";
-                    _durationLabel.setText((days + 1) + " " + dayLabel);
-                    
-                    
-                    
-                    DietPlanEditingController.getInstance().validateDietPlan();
+                    updateDurationLabel();
                 }
             };
+
             _startDateButton.getCalendarButtonSelectionListeners().add(
                     dateChangedListener);
             _endDateButton.getCalendarButtonSelectionListeners().add(
@@ -366,6 +372,14 @@ public class TimeSpanContainer extends BoxPane
         }
     }
 
+    protected void updateDurationLabel()
+    {
+        int days = _timeSpan.getDuration();
+        String dayLabel = days > 0 ? "Tage" : "Tag";
+        _durationLabel.setText((days + 1) + " " + dayLabel);
+        DietPlanEditingController.getInstance().validateDietPlan();
+    }
+
     protected void addMeal(MealBO meal)
     {
         MealContainer mealContainer = new MealContainer();
@@ -378,12 +392,14 @@ public class TimeSpanContainer extends BoxPane
         getParent().remove(this);
         DietPlanEditingController.getInstance().deleteTimeSpan(_timeSpan);
     }
-    
-    private void addNewParameters() {		
-		_timeSpanParameterTableView.addParameterTemplate();
-	}
 
-	private void removeParameter(DietParameterBO dietParameter) {
-		_timeSpanParameterTableView.remove(dietParameter);
-	}
+    private void addNewParameters()
+    {
+        _timeSpanParameterTableView.addParameterTemplate();
+    }
+
+    private void removeParameter(DietParameterBO dietParameter)
+    {
+        _timeSpanParameterTableView.remove(dietParameter);
+    }
 }

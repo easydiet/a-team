@@ -13,13 +13,13 @@ import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
-import at.easydiet.dao.DAOFactory;
-import at.easydiet.domainlogic.DietPlanEditingController;
-import at.easydiet.model.ParameterDefinition;
 import at.easydiet.validation.ParameterValidator;
 import at.easydiet.view.EasyTableViewRowEditor.RowEditorListener;
 import at.easydiet.view.content.ParameterCellRenderer;
 
+/**
+ * Shows a tableView which handles parameters
+ */
 public class ParameterTableView extends TableView {
 	private ParameterTableViewController _controller = new ParameterTableViewController();
 
@@ -72,29 +72,10 @@ public class ParameterTableView extends TableView {
 		_editor = (EasyTableViewRowEditor) getRowEditor();
 
 		_editor.getRowEditorListeners().add(new RowEditorListener.Adapter() {
-		    
-			public Vote previewEditRow(RowEditor rowEditor,
-					TableView tableView, int rowIndex, int columnIndex) {
-				return Vote.APPROVE;
-			}
-
-			public void editRowVetoed(RowEditor rowEditor, Vote reason) {
-			}
-
-			public void rowEditing(RowEditor rowEditor, TableView tableView,
-					int rowIndex, int columnIndex) {
-			}
-
 			public void changesSaved(RowEditor rowEditor, TableView tableView,
 					int rowIndex, int columnIndex) {
 				validateView();
-
 			}
-
-			public void editCancelled(RowEditor rowEditor, TableView tableView,
-					int rowIndex, int columnIndex) {
-			}
-
 		});
 
 		// add parameternames to the listbutton
@@ -257,6 +238,7 @@ public class ParameterTableView extends TableView {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public boolean validateView()
 	{
 		return _validator.isValid((List<DietParameterBO>)getTableData());

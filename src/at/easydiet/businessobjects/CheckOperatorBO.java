@@ -62,7 +62,6 @@ public enum CheckOperatorBO
     /**
      * Returns a list of all Operators
      * @return List of all Operators
-     * @author Mathias
      */
     public static List<CheckOperatorBO> getAllOperators()
     {
@@ -74,12 +73,16 @@ public enum CheckOperatorBO
         return list;
     }
 
+    /**
+     * Returns a string representation of this checkOperator
+     */
     public String toString()
     {
         return getName();
     }
 
     /**
+     * 
      * Checks if the checkoperator applies to the given two value
      * @param originalValue the value which needs to apply
      * @param actualValue the value which needs to get checked if it applies to
