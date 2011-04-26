@@ -47,11 +47,7 @@ public class MealContainer extends BoxPane
 
     private TableView                           _mealLineBox;
     
-    //start: parameterTableView
-    private ParameterTableView					_mealParameterTableView;
-	private Button _removeMealParameterButton;
-	private Button _addMealParameterButton;
-	//end: parameterTableView
+    private ParameterTableViewTemplate					_parameterTableViewTemplate;
 
     static
     {
@@ -73,33 +69,9 @@ public class MealContainer extends BoxPane
             Border content = (Border) serializer.readObject(
                     TimeSpanContainer.class, "MealContainerContent.xml");
             
-         //start: parameterTableView
-			_mealParameterTableView = (ParameterTableView) serializer
-					.getNamespace().get("parameterTableView");
-			_mealParameterTableView.initialize();
-
-			_addMealParameterButton = (Button) serializer.getNamespace()
-					.get("addTableViewParameters");
-			_addMealParameterButton.getButtonPressListeners().add(
-					new ButtonPressListener() {
-
-						public void buttonPressed(Button arg0) {
-							addNewParameters();
-						}
-					});
-
-			_removeMealParameterButton = (Button) serializer.getNamespace()
-					.get("removeTableViewParameter");
-			_removeMealParameterButton.getButtonPressListeners().add(
-					new ButtonPressListener() {
-
-						public void buttonPressed(Button arg0) {
-							removeParameter((DietParameterBO) _mealParameterTableView
-									.getSelectedRow());
-						}
-					});
-			//end: parameterTableView
-            
+			_parameterTableViewTemplate = (ParameterTableViewTemplate) serializer
+					.getNamespace().get("parameterTableViewTemplate");
+			
 
             final TableView recipeSearchResult = (TableView) serializer
                     .getNamespace().get("recipeSearchResult");
@@ -383,7 +355,7 @@ public class MealContainer extends BoxPane
         _controller.setMeal(meal);
         
         //parameterTableView
-        _mealParameterTableView.setParameterProvider(getMeal());
+        _parameterTableViewTemplate.setParameterProvider(getMeal());
 		
         updateUI();
     }
@@ -395,22 +367,4 @@ public class MealContainer extends BoxPane
 
         _mealLineBox.setTableData(_controller.getMealLines());
     }
-    
-    //start: parameterTableView
-    /**
-     * Adds a new Parameter to the parameter table view
-     */
-    private void addNewParameters() {		
-		_mealParameterTableView.addParameterTemplate();
-	}
-
-    /**
-     * Remove parameter from parameter table view
-     * @param dietParameter
-     */
-	private void removeParameter(DietParameterBO dietParameter) {
-		_mealParameterTableView.remove(dietParameter);
-	}
-	//end: parameterTableView
-
 }

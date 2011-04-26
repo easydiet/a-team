@@ -59,8 +59,8 @@
 								text="Zielparameter des Zeitraumes festlegen" />
 						</BoxPane>
 					</heading>
-					<bxml:include
-						src="@parameterView.xml" />
+					<bxml:include bxml:id="parameterTableViewTemplate"
+						src="parameterView.bxml" />
 
 				</Rollup>
 				<!-- END: Parameter of Timespan -->

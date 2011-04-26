@@ -42,7 +42,9 @@
 							<Label text="Zielparameter der Mahlzeit festlegen" />
 						</BoxPane>
 					</heading>
-					<bxml:include src="@parameterView.xml" />
+					<bxml:include
+	bxml:id="parameterTableViewTemplate"
+	src="parameterView.bxml" />
 				</Rollup>
 			</BoxPane>
 			<!-- END: Parameter of Meal -->

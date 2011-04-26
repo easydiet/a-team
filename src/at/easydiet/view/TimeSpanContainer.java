@@ -46,10 +46,7 @@ public class TimeSpanContainer extends BoxPane
     private MealContainerSequence               _mealContainerSequence      = new MealContainerSequence();
     private TimeSpanContainerListenerList       _timeSpanContainerListeners = new TimeSpanContainerListenerList();
 
-    private ParameterTableView                  _timeSpanParameterTableView;
-
-    private Button                              _addTimeSpanParameterButton;
-    private Button                              _removeTimeSpanParameterButton;
+    private ParameterTableViewTemplate 			_parameterTableViewTemplate;
 
     private boolean                             _guiLoading;
 
@@ -70,7 +67,7 @@ public class TimeSpanContainer extends BoxPane
     {
         _timeSpan = timeSpan;
         // parameterTableView
-        _timeSpanParameterTableView.setParameterProvider(timeSpan);
+        _parameterTableViewTemplate.setParameterProvider(timeSpan);
         refreshUI();
     }
 
@@ -240,38 +237,8 @@ public class TimeSpanContainer extends BoxPane
             _deleteButton = (Button) serializer.getNamespace().get(
                     "deleteButton");
 
-            // start: parameterTableView
-            _timeSpanParameterTableView = (ParameterTableView) serializer
-                    .getNamespace().get("parameterTableView");
-            _timeSpanParameterTableView.initialize();
-            // TODO: setParameterProvider - but where?
-
-            _addTimeSpanParameterButton = (Button) serializer.getNamespace()
-                    .get("addTableViewParameters");
-            _addTimeSpanParameterButton.getButtonPressListeners().add(
-                    new ButtonPressListener()
-                    {
-
-                        public void buttonPressed(Button arg0)
-                        {
-                            addNewParameters();
-                        }
-                    });
-
-            _removeTimeSpanParameterButton = (Button) serializer.getNamespace()
-                    .get("removeTableViewParameter");
-            _removeTimeSpanParameterButton.getButtonPressListeners().add(
-                    new ButtonPressListener()
-                    {
-
-                        public void buttonPressed(Button arg0)
-                        {
-                            removeParameter((DietParameterBO) _timeSpanParameterTableView
-                                    .getSelectedRow());
-                        }
-                    });
-            // end: parameterTableView
-
+            _parameterTableViewTemplate = (ParameterTableViewTemplate) serializer.getNamespace().get("parameterTableViewTemplate");
+            
             _mealBox = (BoxPane) serializer.getNamespace().get("mealBox");
 
             // listeners
@@ -383,23 +350,4 @@ public class TimeSpanContainer extends BoxPane
                 });
 
     }
-
-    // start: parameterTableView
-    /**
-     * Adds a new parameter into the view
-     */
-    private void addNewParameters()
-    {
-        _timeSpanParameterTableView.addParameterTemplate();
-    }
-
-    /**
-     * Removes a parameter from the view
-     * @param dietParameter parameter to remove
-     */
-    private void removeParameter(DietParameterBO dietParameter)
-    {
-        _timeSpanParameterTableView.remove(dietParameter);
-    }
-    // end: parameterTableView
 }

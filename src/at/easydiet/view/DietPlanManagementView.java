@@ -28,7 +28,7 @@ public abstract class DietPlanManagementView extends EasyDietContentView impleme
     .getLogger(DietPlanManagementView.class);
 
 	protected BoxPane                             _timeSpanContainer;
-    protected ParameterTableView                  _dietPlanParameterTableView;
+    protected ParameterTableViewTemplate                 _parameterTableViewTemplate;
 
     public void initialize(Map<String, Object> namespace, URL location,
             Resources resources)
@@ -36,8 +36,8 @@ public abstract class DietPlanManagementView extends EasyDietContentView impleme
         _timeSpanContainer = (BoxPane) namespace.get("timeSpanContainer");
 
         // parameterTableView
-        _dietPlanParameterTableView = (ParameterTableView) namespace
-                .get("parameterTableView");
+        _parameterTableViewTemplate= (ParameterTableViewTemplate) namespace
+                .get("parameterTableViewTemplate");
 
         final Border errorBorder = (Border) namespace.get("errorBorder");
         ListView errorBox = (ListView) namespace.get("errorBox");
@@ -70,34 +70,6 @@ public abstract class DietPlanManagementView extends EasyDietContentView impleme
         
         
         errorBorder.setVisible((errorBox.getListData().getLength() > 0));
-
-        // start:parameterTableView
-        // add button listeners
-        Button addDietPlanParameterButton = (Button) namespace
-                .get("addTableViewParameters");
-        addDietPlanParameterButton.getButtonPressListeners().add(
-                new ButtonPressListener()
-                {
-
-                    public void buttonPressed(Button arg0)
-                    {
-                        addNewParameters();
-                    }
-                });
-
-        Button removeDietPlanParameterButton = (Button) namespace
-                .get("removeTableViewParameter");
-        removeDietPlanParameterButton.getButtonPressListeners().add(
-                new ButtonPressListener()
-                {
-
-                    public void buttonPressed(Button arg0)
-                    {
-                        removeParameter((DietParameterBO) _dietPlanParameterTableView
-                                .getSelectedRow());
-                    }
-                });
-        // end:parameterTableView
 
         ButtonPressListener createTimeSpan = new ButtonPressListener()
         {
@@ -187,24 +159,6 @@ public abstract class DietPlanManagementView extends EasyDietContentView impleme
         _timeSpanContainer.add(container);
     }
 
-    // start:parameterTableView
-    /**
-     * Adds a new parameter into the view
-     */
-    private void addNewParameters()
-    {
-        _dietPlanParameterTableView.addParameterTemplate();
-    }
-
-    /**
-     * Removes a parameter from the view
-     * @param dietParameter parameter to remove
-     */
-    private void removeParameter(DietParameterBO dietParameter)
-    {
-        _dietPlanParameterTableView.remove(dietParameter);
-    }
-    // end:ParameterTableView
     
     @Override
     public boolean onClose()

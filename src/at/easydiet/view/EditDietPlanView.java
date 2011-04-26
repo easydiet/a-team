@@ -16,12 +16,9 @@ public class EditDietPlanView extends DietPlanManagementView implements
 
 		rebuildUI();
 
-		// start: parameterTableView
-		_dietPlanParameterTableView
+		_parameterTableViewTemplate
 				.setParameterProvider(DietPlanEditingController.getInstance()
 						.getDietPlan());
-		_dietPlanParameterTableView.initialize();
-		// end: parameterTableView
 	}
 
 }

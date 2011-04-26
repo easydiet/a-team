@@ -19,12 +19,9 @@ public class CreateDietPlanView extends DietPlanManagementView implements Bindab
                         .getDietTreatment());
         DietPlanEditingController.getInstance().refresh();
 
-        // start: parameterTableView
-        _dietPlanParameterTableView
+        _parameterTableViewTemplate
                 .setParameterProvider(DietPlanEditingController.getInstance()
                         .getDietPlan());
-        _dietPlanParameterTableView.initialize();
-        // end: parameterTableView
     }
 
 
