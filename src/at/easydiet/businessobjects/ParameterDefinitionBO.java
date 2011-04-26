@@ -148,4 +148,36 @@ public class ParameterDefinitionBO
         getUnits();
     }
 
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((_model.getName() == null) ? 0 : _model.getName().hashCode());
+        return result;
+    }
+
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (!(obj instanceof ParameterDefinitionBO)) return false;
+        ParameterDefinitionBO other = (ParameterDefinitionBO) obj;
+        if (_model.getName() == null)
+        {
+            if (other._model.getName() != null) return false;
+        }
+        else if (!_model.getName().equals(other._model.getName())) return false;
+        return true;
+    }
+    
+    
+    
 }

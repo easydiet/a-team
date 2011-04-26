@@ -53,7 +53,7 @@
 			<one-to-many class="LaborReport" />
 		</set>
 		
-		<set name="treatments" lazy="true" inverse="true">
+		<set name="treatments" lazy="true" inverse="true" cascade="all,delete-orphan">
 			<key column="PatientId" />
 			<one-to-many class="DietTreatment" />
 		</set>
@@ -162,11 +162,11 @@
 			<key column="DietTreatmentId" not-null="true"/>
 			<one-to-many class="NutritionProtocol" />
 		</set>		
-		<set name="dietPlans" lazy="true" cascade="all" inverse="true">
+		<set name="dietPlans" lazy="true" cascade="all,delete-orphan" inverse="true">
 			<key column="DietTreatmentId" />
 			<one-to-many class="DietPlan" />
 		</set> 		
-		<set name="dietParameters" table="DietTreatmentDietParameter" lazy="true" cascade="all" >
+		<set name="dietParameters" table="DietTreatmentDietParameter" lazy="true"  cascade="all,delete-orphan">
 			<key column="DietTreatmentId" not-null="true" />
 			<many-to-many class="DietParameter" column="DietParameterId"  unique="true" />
 		</set>		
@@ -230,14 +230,14 @@
 		<!-- Bidirectional assoc to treatment -->
 		<many-to-one name="dietTreatment" column="DietTreatmentId" class="DietTreatment" not-null="true" insert="true" update="true"/>
 
-		<set name="dietParameters" table="DietPlanDietParameter" lazy="true" cascade="all" >
+		<set name="dietParameters" table="DietPlanDietParameter" lazy="true" cascade="all,delete-orphan">
 			<key column="DietPlanId" not-null="true" />
 			<many-to-many class="DietParameter" column="DietParameterId" unique="true" />
 		</set>	
 
 		<many-to-one class="SystemUser" name="creator" column="Creator" not-null="true" />	
 
-		<set name="timeSpans" lazy="true" cascade="all" inverse="true">
+		<set name="timeSpans" lazy="true" cascade="all,delete-orphan" inverse="true">
 			<key column="DietPlanId" not-null="true" />
 			<one-to-many class="TimeSpan" />
 		</set>		
@@ -269,12 +269,12 @@
 		<!-- Bidirectional assoc to plan -->
 		<many-to-one name="dietPlan" column="DietPlanId" class="DietPlan" not-null="true" insert="true" update="true"/>
 
-		<set name="dietParameters" table="TimeSpanDietParameter" lazy="true" cascade="all" >
+		<set name="dietParameters" table="TimeSpanDietParameter" lazy="true" cascade="all,delete-orphan" >
 			<key column="TimeSpanId" not-null="true" />
 			<many-to-many class="DietParameter" column="DietParameterId" unique="true" />
 		</set>
 
-		<list name="meals" cascade="all" inverse="false">
+		<list name="meals" cascade="all,delete-orphan" inverse="false">
 			<key column="TimeSpanId" not-null="true" />
             <index column="Idx"/>
 			<one-to-many class="Meal" />
@@ -292,12 +292,12 @@
 		<!-- Bidirectional assoc to timespan -->
 		<many-to-one name="timeSpan" column="TimeSpanId" class="TimeSpan" not-null="true" insert="false" update="false"/>
 
-		<set name="dietParameters" table="MealDietParameter" lazy="true" cascade="all" >
+		<set name="dietParameters" table="MealDietParameter" lazy="true" cascade="all,delete-orphan" >
 			<key column="MealId" not-null="true" />
 			<many-to-many class="DietParameter" column="DietParameterId" unique="true" />
 		</set>
  
-		<list name="mealLines" cascade="all" inverse="false">
+		<list name="mealLines" cascade="all,delete-orphan" inverse="false">
 			<key column="MealId" not-null="true" />
             <index column="Idx"/>
 			<one-to-many class="MealLine" />

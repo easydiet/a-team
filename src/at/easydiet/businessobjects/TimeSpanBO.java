@@ -36,14 +36,8 @@ public class TimeSpanBO
     public TimeSpanBO(TimeSpan model)
     {
         // remove time from start date. 
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(model.getStart());
-        cal.set(Calendar.HOUR_OF_DAY, 0);  
-        cal.set(Calendar.MINUTE, 0);  
-        cal.set(Calendar.SECOND, 0);  
-        cal.set(Calendar.MILLISECOND, 0);  
         _model = model;
-        _model.setStart(cal.getTime());
+        setStart(_model.getStart());
     }
 
     /**
@@ -89,7 +83,14 @@ public class TimeSpanBO
      */
     public void setStart(Date start)
     {
-        _model.setStart(start);
+        // remove time part
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(start);
+        cal.set(Calendar.HOUR_OF_DAY, 0);  
+        cal.set(Calendar.MINUTE, 0);  
+        cal.set(Calendar.SECOND, 0);  
+        cal.set(Calendar.MILLISECOND, 0);
+        _model.setStart(cal.getTime());
     }
 
     /**

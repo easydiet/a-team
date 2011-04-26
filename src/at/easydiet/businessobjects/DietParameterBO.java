@@ -58,4 +58,17 @@ public class DietParameterBO extends DietParameterTemplateBO
         _model.setStart(start);
     }
 
+    public float getFloatValue()
+    {
+        // TODO: Mention datatype here!
+        try
+        {
+            return Float.valueOf(getValue());
+        }
+        catch(Exception e)
+        {
+            return 0;
+        }
+    }
+
 }

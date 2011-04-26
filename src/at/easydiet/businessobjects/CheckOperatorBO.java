@@ -59,4 +59,15 @@ public enum CheckOperatorBO
         }
         return EQUAL;
     }
+    
+    /**
+     * Checks if the checkoperator applies to the given two value
+     * @param checkValue the value which needs to apply
+     * @param actualValue this 
+     * @return
+     */
+    public CheckOperatorBO isValid(float checkValue, float actualValue)
+    {
+        return null;
+    }
 }

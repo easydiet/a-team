@@ -18,6 +18,7 @@ import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.DietPlanDAO;
 import at.easydiet.dao.HibernateUtil;
 import at.easydiet.dao.MealDAO;
+import at.easydiet.dao.TimeSpanDAO;
 import at.easydiet.util.CollectionUtils;
 
 public class DietPlanEditingController
@@ -42,13 +43,14 @@ public class DietPlanEditingController
     public void setDietPlan(DietPlanBO dietPlan)
     {
         _dietPlan = dietPlan;
+        validateDietPlan();
     }
 
     public TimeSpanBO createTimeSpan()
     {
         TimeSpanBO t = new TimeSpanBO();
         _dietPlan.addTimeSpans(t);
-        validateTimeSpan(t);
+        validateDietPlan();
         return t;
     }
 
@@ -73,6 +75,7 @@ public class DietPlanEditingController
     {
         MealBO meal = new MealBO();
         timeSpan.addMeals(meal);
+        validateDietPlan();
         return meal;
     }
 
@@ -83,6 +86,7 @@ public class DietPlanEditingController
         line.setRecipe(recipe);
         line.setQuantity(recipe.getAmount());
         meal.addMealLines(line);
+        validateDietPlan();
         return line;
     }
 
@@ -90,6 +94,7 @@ public class DietPlanEditingController
     {
         if (selectedRow == null) return;
         selectedRow.getMeal().removeMealLines(selectedRow);
+        validateDietPlan();
     }
 
     public MealLineBO addRecipeAsAlternative(MealLineBO mealLine,
@@ -104,6 +109,7 @@ public class DietPlanEditingController
         // insert alternative after mealLine
         int index = mealLine.getMeal().getMealLines().indexOf(mealLine) + 1;
         mealLine.getMeal().addMealLines(index, alternative);
+        validateDietPlan();
         return alternative;
     }
 
@@ -146,10 +152,36 @@ public class DietPlanEditingController
     {
         _errors.clear();
         
+        // validate all timespans
+        validateTimeSpans();
+        
+        // validate all dietparameters for conflicts
+        validateDietParameterConflicts();
+        
+        // validate all dietparameters if they match for hierarchy
+        validateDietPlanParameters();
+    }
+
+    private void validateTimeSpans()
+    {
         for (TimeSpanBO timeSpan : _dietPlan.getTimeSpans())
         {
             validateTimeSpan(timeSpan);
         }
+    }
+
+    private void validateDietParameterConflicts()
+    {
+        // TODO: Joschi code
+    }
+
+    private void validateDietPlanParameters()
+    {
+//        DietParameter
+//        for (TimeSpanBO timeSpan : _dietPlan.getTimeSpans())
+//        {
+//            validateTimeSpanParameters()
+//        }
     }
 
     private void validateTimeSpan(TimeSpanBO t)
@@ -178,14 +210,18 @@ public class DietPlanEditingController
         }
     }
 
-    private DietPlanEditingController()
+    protected DietPlanEditingController()
     {
         _errors = new ArrayList<String>();
     }
 
     public void refresh()
     {
-        if (_dietPlan != null && _dietPlan.getDietPlanId() > 0)
+        refresh(true);
+    }
+    public void refresh(boolean refreshDietPlan)
+    {
+        if (refreshDietPlan && _dietPlan != null && _dietPlan.getDietPlanId() > 0)
         {
             DietPlanDAO dao = DAOFactory.getInstance().getDietPlanDAO();
             dao.refresh(_dietPlan.getModel());
@@ -220,5 +256,6 @@ public class DietPlanEditingController
     public void deleteMeal(MealBO meal)
     {
         meal.getTimeSpan().removeMeals(meal);
+        validateDietPlan();
     }
 }
