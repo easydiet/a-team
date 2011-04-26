@@ -281,26 +281,7 @@ public class TimeSpanContainer extends BoxPane
 
                         public void buttonPressed(Button button)
                         {
-                            EasyAlerts
-                                    .warning(
-                                            "Wollen Sie diesen Zeitraum wirklich löschen?",
-                                            EasyAlerts.YES_NO, getWindow(),
-                                            new DialogCloseListener()
-                                            {
-
-                                                public void dialogClosed(
-                                                        Dialog dialog,
-                                                        boolean modal)
-                                                {
-                                                    if (((Alert) dialog)
-                                                            .getSelectedOption()
-                                                            .equals(EasyAlerts.YES))
-                                                    {
-                                                        deleteTimeSpan();
-                                                    }
-                                                }
-
-                                            });
+                            deleteTimeSpan();
                         }
                     });
 
@@ -384,8 +365,23 @@ public class TimeSpanContainer extends BoxPane
 
     private void deleteTimeSpan()
     {
-        getParent().remove(this);
-        DietPlanEditingController.getInstance().deleteTimeSpan(_timeSpan);
+        EasyAlerts.warning("Wollen Sie diesen Zeitraum wirklich löschen?",
+                EasyAlerts.YES_NO, EasyAlerts.NO, getWindow(), new DialogCloseListener()
+                {
+
+                    public void dialogClosed(Dialog dialog, boolean modal)
+                    {
+                        if (((Alert) dialog).getSelectedOption().equals(
+                                EasyAlerts.YES))
+                        {
+                            getParent().remove(TimeSpanContainer.this);
+                            DietPlanEditingController.getInstance()
+                                    .deleteTimeSpan(_timeSpan);
+                        }
+                    }
+
+                });
+
     }
 
     // start: parameterTableView

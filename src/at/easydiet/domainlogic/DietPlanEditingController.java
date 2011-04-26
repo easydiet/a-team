@@ -22,6 +22,7 @@ import at.easydiet.dao.MealDAO;
 import at.easydiet.domainlogic.DietParameterController.ValidationResult;
 import at.easydiet.util.CollectionUtils;
 import at.easydiet.util.StringUtils;
+import at.easydiet.view.EasyAlerts;
 
 public class DietPlanEditingController
 {
@@ -117,7 +118,7 @@ public class DietPlanEditingController
 
     public boolean saveDietPlan()
     {
-        validateDietPlan();
+        validateDietPlan(true);
 
         if (getErrors().getLength() > 0) return false;
 
@@ -178,9 +179,16 @@ public class DietPlanEditingController
         validateDietPlanParameters();
     }
 
+    public boolean isDietParameterOnlyPlan()
+    {
+        return _dietPlan.getPlanType().equals(
+                PlanTypeBO.NUTRITION_RECOMMENDATION);
+    }
+
     private void validateEmptyElements()
     {
         int planParameterCount = 0;
+
         for (TimeSpanBO timeSpan : _dietPlan.getTimeSpans())
         {
             int timeSpanParameterCount = 0;
@@ -210,8 +218,7 @@ public class DietPlanEditingController
                 }
 
                 // no meallines required for nutrition recommendations
-                if (!_dietPlan.getPlanType().equals(
-                        PlanTypeBO.NUTRITION_RECOMMENDATION))
+                if (!isDietParameterOnlyPlan())
                 {
                     if (meal.getMealLines().getLength() == 0)
                     {
@@ -238,7 +245,7 @@ public class DietPlanEditingController
                 }
             }
 
-            if (timeSpanParameterCount == 0
+            if (isDietParameterOnlyPlan() && timeSpanParameterCount == 0
                     && timeSpan.getDietParameters().getLength() == 0)
             {
                 getErrors()
@@ -249,7 +256,16 @@ public class DietPlanEditingController
             }
             planParameterCount += timeSpanParameterCount;
         }
-        if (planParameterCount == 0
+
+        if (_dietPlan.getTimeSpans().getLength() == 0)
+        {
+            getErrors().add(
+                    String.format(
+                            "Keine Zeiträume im Diätplan '%s' vorhanden!",
+                            _dietPlan.getDisplayText()));
+
+        }
+        else if (isDietParameterOnlyPlan() && planParameterCount == 0
                 && _dietPlan.getDietParameters().getLength() == 0)
         {
             getErrors()

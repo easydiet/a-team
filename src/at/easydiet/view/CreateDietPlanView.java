@@ -102,9 +102,7 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable
         {
             public void buttonPressed(Button button)
             {
-                DietPlanEditingController.getInstance().saveDietPlan();
-                ViewController.getInstance().loadContent(
-                        "DietTreatmentDetailView", CreateDietPlanView.this);
+                save();
             }
         });
 
@@ -131,9 +129,27 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable
         {
             public void buttonPressed(Button button)
             {
-                DietPlanEditingController.getInstance().validateDietPlan();                
+                DietPlanEditingController.getInstance().validateDietPlan(true);                
             }
         });
+    }
+
+    private void save()
+    {
+        boolean saved = DietPlanEditingController.getInstance().saveDietPlan();
+        if(saved)
+        {
+            ViewController.getInstance().loadContent(
+                    "DietTreatmentDetailView", CreateDietPlanView.this);
+        }
+        else if(DietPlanEditingController.getInstance().getErrors().getLength() == 0)
+        {
+            EasyAlerts.error("Es ist ein Fehler beim Speichern des Plans aufgetreten, bitte versuchen Sie es erneut!", EasyAlerts.OK_ONLY, EasyAlerts.OK, getWindow(), null);
+        }
+        else
+        {
+            EasyAlerts.error("Es sind noch Fehler im Plan vorhanden! Bitte korrigieren Sie diese!", EasyAlerts.OK_ONLY, EasyAlerts.OK, getWindow(), null);
+        }
     }
 
     @Override
