@@ -72,6 +72,8 @@ public class ParameterTableViewController {
 	 */
 	public void addTemplate() {
 		_parameterProvider.addDietParameters(getParameterTemplate());
+		isValid();
+		DietPlanEditingController.getInstance().validateDietPlan();
 	}
 
 	/**
@@ -82,6 +84,8 @@ public class ParameterTableViewController {
 	 */
 	public void remove(DietParameterBO dietParameter) {
 		_parameterProvider.removeDietParameters(dietParameter);
+		isValid();
+		DietPlanEditingController.getInstance().validateDietPlan();
 	}
 
 	/**
@@ -97,18 +101,8 @@ public class ParameterTableViewController {
 		return _parameterProvider;
 	}
 
-	public void setError() {
-		// TODO: setErrors in dietplaneditingcontroller
-	}
-
 	public boolean isValid() {
-		DietPlanEditingController.getInstance().validateDietPlan();
-		if (getValidator().isValid(_parameterProvider)) {
-			return true;
-		} else {
-			setError();
-			return false;
-		}
+		return getValidator().isValid(_parameterProvider);
 	}
 
 	public ParameterValidator getValidator() {

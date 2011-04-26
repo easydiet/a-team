@@ -10,6 +10,7 @@ import org.hibernate.HibernateException;
 import at.easydiet.EasyDietApplication;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.DietTreatmentBO;
+import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.MealLineBO;
 import at.easydiet.businessobjects.RecipeBO;
@@ -174,7 +175,11 @@ public class DietPlanEditingController
 
     private void validateDietParameterConflicts()
     {
-        // TODO: Joschi code
+        List<IDietParameterizable> conflicts = ParameterValidator.getInstance().getConflictingComponents();
+        for(IDietParameterizable component : conflicts)
+        {
+        	getErrors().add("Parameterkonflikt in: " + component.getDisplayText());
+        }
     }
 
     private void validateDietPlanParameters()
@@ -270,10 +275,5 @@ public class DietPlanEditingController
     {
         meal.getTimeSpan().removeMeals(meal);
         validateDietPlan();
-    }
-    
-    public void onClose()
-    {
-    	ParameterValidator.getInstance().clearCache();
     }
 }

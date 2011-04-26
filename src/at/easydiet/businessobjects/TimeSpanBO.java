@@ -268,11 +268,12 @@ public class TimeSpanBO implements IDietParameterizable
     @Override
     public int hashCode()
     {
-        final int prime = 31;
+        final int prime = 17;
         int result = 1;
         result = prime
                 * result
-                + (int) (_model.getTimeSpanId() ^ (_model.getTimeSpanId() >>> 32));
+                + (int) (_model.getTimeSpanId() ^ (_model.getTimeSpanId() >>> 32))
+                + super.hashCode();
         return result;
     }
 
@@ -298,5 +299,4 @@ public class TimeSpanBO implements IDietParameterizable
         return String.format("%s bis %s", formatter.format(getStart()),
                 formatter.format(getEnd()));
     }
-
 }

@@ -346,6 +346,7 @@ public class DietPlanBO implements IDietParameterizable
     
     public String getDisplayText()
     {
-        return getName();
+    	//TODO: should we really do this
+        return (getName().length() > 0) ? getName() : "Neuer Diätplan";
     }
 }

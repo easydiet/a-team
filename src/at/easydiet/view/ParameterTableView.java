@@ -42,6 +42,8 @@ public class ParameterTableView extends TableView {
 	{
 		setTableData(provider.getDietParameters());
 		getController().setParameterProvider(provider);
+		// set the validator into all cell renderers
+		setValidatorToCellRenderers();
 		refreshView();
 	}
 	
@@ -54,17 +56,13 @@ public class ParameterTableView extends TableView {
 		{
 			return _controller;
 		}
-		return new ParameterTableViewController();
+		return _controller = new ParameterTableViewController();
 	}
 
 	/**
 	 * initalize this view and set cellrenderers
 	 */
 	public void initialize() {
-
-		// set the validator into all cell renderers
-		setValidatorToCellRenderers();
-
 		// get editor
 		_editor = (EasyTableViewRowEditor) getRowEditor();
 

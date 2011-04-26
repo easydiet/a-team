@@ -16,6 +16,7 @@ import org.apache.pivot.wtk.media.Image;
 
 import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.IDietParameterizable;
+import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.validation.ParameterValidator;
 import at.easydiet.view.EasyDietMainWindow;
 
@@ -91,6 +92,11 @@ public class ParameterCellRenderer extends BoxPane implements CellRenderer {
 		_textLabel.setText(text);
 
 		Component.StyleDictionary tableViewStyles = tableView.getStyles();
+		
+		if(_parameterizable instanceof TimeSpanBO)
+		{
+			boolean hello = true; 
+		}
 		
 		if (!ParameterValidator.getInstance().isValid(_parameterizable,(DietParameterBO) row)) {
 			rebuildUI(true);
