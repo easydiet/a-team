@@ -473,7 +473,7 @@
 		<property name="name" column="Name" type="string" not-null="true" unique="true" />
 
 		<set name="dietParameterTemplates" lazy="true">
-			<key column="DietParameterSetId" not-null="true" />
+			<key column="DietParameterSetId" />
 			<one-to-many class="DietParameterTemplate" />
 		</set>
 	</class>
