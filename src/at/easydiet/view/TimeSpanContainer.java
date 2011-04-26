@@ -6,6 +6,7 @@ import java.util.Iterator;
 import org.apache.pivot.beans.BXMLSerializer;
 import org.apache.pivot.beans.DefaultProperty;
 import org.apache.pivot.collections.ArrayList;
+import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.serialization.SerializationException;
 import org.apache.pivot.util.CalendarDate;
@@ -23,7 +24,13 @@ import org.apache.pivot.wtk.DialogCloseListener;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.Orientation;
 
+import at.easydiet.businessobjects.CheckOperatorBO;
+import at.easydiet.businessobjects.DietParameterBO;
+import at.easydiet.businessobjects.DietParameterTypeBO;
 import at.easydiet.businessobjects.MealBO;
+import at.easydiet.businessobjects.ParameterDefinitionBO;
+import at.easydiet.businessobjects.ParameterDefinitionDataTypeBO;
+import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.domainlogic.DietPlanEditingController;
 
@@ -39,11 +46,16 @@ public class TimeSpanContainer extends BoxPane
     private BoxPane                             _mealBox;
     private Button                              _deleteButton;
 
+    private Button _addTimeSpanParameterButton;
+	private Button _removeTimeSpanParameterButton;
+    
     private TimeSpanBO                          _timeSpan;
 
     private ArrayList<MealContainer>            _mealContainers;
     private MealContainerSequence               _mealContainerSequence      = new MealContainerSequence();
     private TimeSpanContainerListenerList       _timeSpanContainerListeners = new TimeSpanContainerListenerList();
+
+	private ParameterTableView _timeSpanParameterTableView;
 
     /**
      * Gets the timeSpan.
@@ -61,6 +73,7 @@ public class TimeSpanContainer extends BoxPane
     public void setTimeSpan(TimeSpanBO timeSpan)
     {
         _timeSpan = timeSpan;
+        _timeSpanParameterTableView.setParameterProvider(timeSpan);
         refreshUI();
     }
 
@@ -226,6 +239,34 @@ public class TimeSpanContainer extends BoxPane
                     "durationLabel");
             _deleteButton = (Button) serializer.getNamespace().get(
                     "deleteButton");
+            
+         // start parameterView
+			_timeSpanParameterTableView = (ParameterTableView) serializer
+					.getNamespace().get("timeSpanParameterTableView");
+			_timeSpanParameterTableView.initialize();
+			//TODO: setParameterProvider - but where?
+
+			_addTimeSpanParameterButton = (Button) serializer.getNamespace()
+					.get("addTimeSpanParameters");
+			_addTimeSpanParameterButton.getButtonPressListeners().add(
+					new ButtonPressListener() {
+
+						public void buttonPressed(Button arg0) {
+							addNewParameters();
+						}
+					});
+
+			_removeTimeSpanParameterButton = (Button) serializer.getNamespace()
+					.get("removeTimeSpanParameter");
+			_removeTimeSpanParameterButton.getButtonPressListeners().add(
+					new ButtonPressListener() {
+
+						public void buttonPressed(Button arg0) {
+							removeParameter((DietParameterBO) _timeSpanParameterTableView
+									.getSelectedRow());
+						}
+					});
+			// end parameterview
 
             _mealBox = (BoxPane) serializer.getNamespace().get("mealBox");
 
@@ -337,4 +378,12 @@ public class TimeSpanContainer extends BoxPane
         getParent().remove(this);
         DietPlanEditingController.getInstance().deleteTimeSpan(_timeSpan);
     }
+    
+    private void addNewParameters() {		
+		_timeSpanParameterTableView.addParameterTemplate();
+	}
+
+	private void removeParameter(DietParameterBO dietParameter) {
+		_timeSpanParameterTableView.remove(dietParameter);
+	}
 }

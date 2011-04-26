@@ -1,5 +1,8 @@
 package at.easydiet.businessobjects;
 
+import org.apache.pivot.collections.ArrayList;
+import org.apache.pivot.collections.List;
+
 import at.easydiet.model.CheckOperator;
 
 /**
@@ -57,6 +60,26 @@ public enum CheckOperatorBO
     }
 
     /**
+     * Returns a list of all Operators
+     * @return List of all Operators
+     * @author Mathias
+     */
+    public static List<CheckOperatorBO> getAllOperators()
+    {
+        ArrayList<CheckOperatorBO> list = new ArrayList<CheckOperatorBO>();
+        for (CheckOperatorBO current : values())
+        {
+            list.add(current);
+        }
+        return list;
+    }
+
+    public String toString()
+    {
+        return getName();
+    }
+
+    /**
      * Checks if the checkoperator applies to the given two value
      * @param originalValue the value which needs to apply
      * @param actualValue the value which needs to get checked if it applies to
@@ -76,25 +99,25 @@ public enum CheckOperatorBO
                 }
             break;
             case SMALLER:
-                if(actualValue >= originalValue)
+                if (actualValue >= originalValue)
                 {
                     return EQUALORBIGGER;
                 }
             break;
             case EQUAL:
-                if(actualValue != originalValue)
+                if (actualValue != originalValue)
                 {
                     return NOTEQUAL;
                 }
             break;
             case EQUALORBIGGER:
-                if(actualValue < originalValue)
+                if (actualValue < originalValue)
                 {
                     return SMALLER;
                 }
             break;
             case EQUALORSMALLER:
-                if(actualValue > originalValue)
+                if (actualValue > originalValue)
                 {
                     return BIGGER;
                 }

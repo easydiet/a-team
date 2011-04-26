@@ -142,6 +142,7 @@ public class DietPlanEditingController
         }
         catch (HibernateException e)
         {
+        	LOG.error("Could not save dietplan", e);
             HibernateUtil.currentSession().getTransaction().rollback();
             return false;
         }
