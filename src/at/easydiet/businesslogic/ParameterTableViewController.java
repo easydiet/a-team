@@ -7,6 +7,7 @@ import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.DietParameterTypeBO;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.dao.DAOFactory;
+import at.easydiet.domainlogic.DietPlanEditingController;
 import at.easydiet.model.ParameterDefinition;
 import at.easydiet.validation.ParameterValidator;
 import at.easydiet.view.ParameterTableView;
@@ -55,7 +56,7 @@ public class ParameterTableViewController {
 
 	@SuppressWarnings("unchecked")
 	public void addTemplate() {
-		_list.add(getParameterTemplate());
+		DietPlanEditingController.getInstance().getDietPlan().addDietParameters(getParameterTemplate());
 	}
 
 	public void remove(DietParameterBO dietParameter) {

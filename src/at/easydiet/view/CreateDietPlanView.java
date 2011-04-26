@@ -5,9 +5,12 @@ import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
+import org.apache.pivot.wtk.Border;
 import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
+import org.apache.pivot.wtk.ListView;
+import org.apache.pivot.wtk.ListViewItemListener;
 import org.apache.pivot.wtk.PushButton;
 import org.omg.CORBA._PolicyStub;
 
@@ -22,115 +25,143 @@ import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.domainlogic.DietPlanEditingController;
 
-public class CreateDietPlanView extends EasyDietContentView implements Bindable {
-	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-			.getLogger(CreateDietPlanView.class);
+public class CreateDietPlanView extends EasyDietContentView implements Bindable
+{
+    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+                                                            .getLogger(CreateDietPlanView.class);
 
-	private BoxPane _timeSpanContainer;
-	private ParameterTableView _dietPlanParameterTableView;
+    private BoxPane                             _timeSpanContainer;
+    private ParameterTableView _dietPlanParameterTableView;
 
-	public CreateDietPlanView() {
-		
-	}
+    public CreateDietPlanView()
+    {}
 
-	public void initialize(Map<String, Object> namespace, URL location,
-			Resources resources) {
-		_timeSpanContainer = (BoxPane) namespace.get("timeSpanContainer");
+    public void initialize(Map<String, Object> namespace, URL location,
+            Resources resources)
+    {
+        _timeSpanContainer = (BoxPane) namespace.get("timeSpanContainer");
 
-		_dietPlanParameterTableView = (ParameterTableView) namespace
-				.get("dietPlanParameterTableView");
+        final Border errorBorder = (Border) namespace.get("errorBorder");
+        ListView errorBox = (ListView) namespace.get("errorBox");
+        errorBox.setListData(DietPlanEditingController.getInstance()
+                .getErrors());
+        errorBox.getListViewItemListeners().add(
+                new ListViewItemListener.Adapter()
+                {
+                    @Override
+                    public void itemsRemoved(ListView listView, int index,
+                            int count)
+                    {
+                        errorBorder.setVisible((listView.getListData().getLength() > 0));
+                    }
 
-		Button addDietPlanParameterButton = (Button) namespace
-				.get("addDietPlanParameters");
-		addDietPlanParameterButton.getButtonPressListeners().add(
-				new ButtonPressListener() {
+                    @Override
+                    public void itemInserted(ListView listView, int index)
+                    {
+                        errorBorder.setVisible((listView.getListData().getLength() > 0));
+                    }
+                });
+        errorBorder.setVisible((errorBox.getListData().getLength() > 0));
 
-					@Override
-					public void buttonPressed(Button arg0) {
-						addNewParameters();
-					}
-				});
+        Button addDietPlanParameterButton = (Button) namespace
+		.get("addDietPlanParameters");
+addDietPlanParameterButton.getButtonPressListeners().add(
+		new ButtonPressListener() {
 
-		Button removeDietPlanParameterButton = (Button) namespace
-				.get("removeDietPlanParameter");
-		removeDietPlanParameterButton.getButtonPressListeners().add(
-				new ButtonPressListener() {
-
-					@Override
-					public void buttonPressed(Button arg0) {
-						removeParameter((DietParameterBO) _dietPlanParameterTableView
-								.getSelectedRow());
-					}
-				});
-
-		ButtonPressListener createTimeSpan = new ButtonPressListener() {
-
-			public void buttonPressed(Button button) {
-				addTimeSpan(DietPlanEditingController.getInstance()
-						.createTimeSpan());
-				// rebuildUI();
-			}
-		};
-
-		Button saveButton = (Button) namespace.get("save");
-		saveButton.getButtonPressListeners().add(new ButtonPressListener() {
-			public void buttonPressed(Button button) {
-				DietPlanEditingController.getInstance().saveDietPlan();
-				ViewController.getInstance().loadContent(
-						"DietTreatmentDetailView", CreateDietPlanView.this);
+			@Override
+			public void buttonPressed(Button arg0) {
+				addNewParameters();
 			}
 		});
 
-		Button refreshUIButton = (Button) namespace.get("refreshUI");
-		refreshUIButton.getButtonPressListeners().add(
-				new ButtonPressListener() {
+Button removeDietPlanParameterButton = (Button) namespace
+		.get("removeDietPlanParameter");
+removeDietPlanParameterButton.getButtonPressListeners().add(
+		new ButtonPressListener() {
 
-					public void buttonPressed(Button button) {
-						rebuildUI();
-					}
-				});
+			@Override
+			public void buttonPressed(Button arg0) {
+				removeParameter((DietParameterBO) _dietPlanParameterTableView
+						.getSelectedRow());
+			}
+		});
+        
+        ButtonPressListener createTimeSpan = new ButtonPressListener()
+        {
 
-		PushButton createTimeSpanTop = (PushButton) namespace
-				.get("createTimeSpanTop");
-		PushButton createTimeSpanBottom = (PushButton) namespace
-				.get("createTimeSpanBottom");
+            public void buttonPressed(Button button)
+            {
+                addTimeSpan(DietPlanEditingController.getInstance()
+                        .createTimeSpan());
+                // rebuildUI();
+            }
+        };
 
-		createTimeSpanTop.getButtonPressListeners().add(createTimeSpan);
-		createTimeSpanBottom.getButtonPressListeners().add(createTimeSpan);
-	}
+        Button saveButton = (Button) namespace.get("save");
+        saveButton.getButtonPressListeners().add(new ButtonPressListener()
+        {
+            public void buttonPressed(Button button)
+            {
+                DietPlanEditingController.getInstance().saveDietPlan();
+                ViewController.getInstance().loadContent(
+                        "DietTreatmentDetailView", CreateDietPlanView.this);
+            }
+        });
 
-	@Override
-	public void onLoad() {
-		DietPlanEditingController.getInstance().createNew(
-				DietTreatmentDetailViewController.getInstance()
-						.getDietTreatment());
-		DietPlanEditingController.getInstance().refresh();
+        Button refreshUIButton = (Button) namespace.get("refreshUI");
+        refreshUIButton.getButtonPressListeners().add(new ButtonPressListener()
+        {
 
-		List<DietParameterBO> listData = DietPlanEditingController
-				.getInstance().getDietPlan().getDietParameters();
+            public void buttonPressed(Button button)
+            {
+                rebuildUI();
+            }
+        });
 
-		_dietPlanParameterTableView.setTableData(listData);
-		_dietPlanParameterTableView.initialize();
+        PushButton createTimeSpanTop = (PushButton) namespace
+                .get("createTimeSpanTop");
+        PushButton createTimeSpanBottom = (PushButton) namespace
+                .get("createTimeSpanBottom");
 
-	}
+        createTimeSpanTop.getButtonPressListeners().add(createTimeSpan);
+        createTimeSpanBottom.getButtonPressListeners().add(createTimeSpan);
+    }
 
-	public void rebuildUI() {
-		DietPlanBO dietPlan = DietPlanEditingController.getInstance()
-				.getDietPlan();
+    @Override
+    public void onLoad()
+    {
+        DietPlanEditingController.getInstance().createNew(
+                DietTreatmentDetailViewController.getInstance()
+                        .getDietTreatment());
+        DietPlanEditingController.getInstance().refresh();
+        
+        List<DietParameterBO> listData = DietPlanEditingController
+		.getInstance().getDietPlan().getDietParameters();
 
-		_timeSpanContainer.removeAll();
-		for (TimeSpanBO timeSpan : dietPlan.getSortedTimeSpans()) {
-			addTimeSpan(timeSpan);
-		}
-	}
+_dietPlanParameterTableView.setTableData(listData);
+_dietPlanParameterTableView.initialize();
+    }
 
-	private void addTimeSpan(TimeSpanBO timeSpan) {
-		TimeSpanContainer container = new TimeSpanContainer();
-		container.setTimeSpan(timeSpan);
-		_timeSpanContainer.add(container);
-	}
+    public void rebuildUI()
+    {
+        DietPlanBO dietPlan = DietPlanEditingController.getInstance()
+                .getDietPlan();
 
-	private void addNewParameters() {		
+        _timeSpanContainer.removeAll();
+        for (TimeSpanBO timeSpan : dietPlan.getSortedTimeSpans())
+        {
+            addTimeSpan(timeSpan);
+        }
+    }
+
+    private void addTimeSpan(TimeSpanBO timeSpan)
+    {
+        TimeSpanContainer container = new TimeSpanContainer();
+        container.setTimeSpan(timeSpan);
+        _timeSpanContainer.add(container);
+    }
+    
+    private void addNewParameters() {		
 		_dietPlanParameterTableView.addParameterTemplate();
 	}
 

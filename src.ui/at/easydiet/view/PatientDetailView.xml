@@ -13,8 +13,11 @@ xmlns="org.apache.pivot.wtk">
 		<easy:EasyDietContentView.ToolbarButton action="todo" text="Laborbefund anlegen" icon="@report_add.png" />
 		<easy:EasyDietContentView.ToolbarButton action="showHelp" text="Hilfe" icon="@help.png" />
 	</toolbarButtons>
-	<Form>
-		<Form.Section heading="Diäten">
+	<Form styles="{fill:true}">
+		<Form.Section heading="Diätbehandlungen">
+			<Border styleName="infoBox">
+				<easy:ImageLabel image="@info_small.png" text="Dies sind alle Diätbehandlungen die der Patient bisher erhalten hat. Klicken Sie doppelt auf eine Diätbehandlung um deren Detailansicht zu öffnen." />
+			</Border>
 			<Border>
 				<ScrollPane preferredHeight="200"
 				horizontalScrollBarPolicy="fill"
@@ -46,6 +49,9 @@ xmlns="org.apache.pivot.wtk">
 			</Border>
 		</Form.Section>
 		<Form.Section heading="Patientenstatus">
+			<Border styleName="infoBox">
+				<easy:ImageLabel image="@info_small.png" text="Hier finden Sie eine Liste aller Statuserfassungen welche für den Patienten durchgeführt wurden." />
+			</Border>
 			<Border>
 				<ScrollPane preferredHeight="200"
 				horizontalScrollBarPolicy="fill"
@@ -71,6 +77,9 @@ xmlns="org.apache.pivot.wtk">
 			</Border>
 		</Form.Section>
 		<Form.Section heading="Laborbefunde">
+			<Border styleName="infoBox">
+				<easy:ImageLabel image="@info_small.png" text="Laborbefunde welche bereits erfasst wurden, sind hier aufgelistet." />
+			</Border>
 			<Border>
 				<ScrollPane preferredHeight="200"
 				horizontalScrollBarPolicy="fill"

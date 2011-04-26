@@ -8,9 +8,8 @@ import at.easydiet.model.DietParameterType;
  */
 public enum DietParameterTypeBO
 {
-	// TODO: Add correct values here
-	DEFAULT("")
-	;
+    CHECK_PARAMETER("Überwachungsparameter"),
+    TARGET_PARAMETER("Zielparameter");
 
 	private DietParameterType _model;
 
@@ -54,6 +53,6 @@ public enum DietParameterTypeBO
 				return bo;
 			}
 		}
-		return DEFAULT;
+		return TARGET_PARAMETER;
 	}
 }

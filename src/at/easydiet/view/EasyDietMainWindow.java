@@ -1,19 +1,16 @@
 package at.easydiet.view;
 
-import java.awt.Font;
 import java.net.URL;
 
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Action;
-import org.apache.pivot.wtk.ApplicationContext;
 import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.FlowPane;
 import org.apache.pivot.wtk.MenuBar;
 import org.apache.pivot.wtk.Prompt;
-import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Window;
 
 public class EasyDietMainWindow extends Window implements Bindable

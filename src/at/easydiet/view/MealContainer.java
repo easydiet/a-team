@@ -59,7 +59,7 @@ public class MealContainer extends BoxPane
 
     static
     {
-        DietPlanEditingController.getInstance().refresh();
+        DietPlanEditingController.getInstance().refresh(false);
         SUGGESTIONS.setSuggestionData(DietPlanEditingController.getInstance()
                 .getMealCodes());
         SUGGESTIONS.setListSize(5);
@@ -367,7 +367,7 @@ public class MealContainer extends BoxPane
     private void deleteMeal()
     {
         getParent().remove(this);
-        _meal.getTimeSpan().removeMeals(_meal);
+        DietPlanEditingController.getInstance().deleteMeal(_meal);
     }
 
     /**

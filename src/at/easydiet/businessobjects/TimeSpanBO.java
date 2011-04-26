@@ -1,5 +1,7 @@
 package at.easydiet.businessobjects;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -7,6 +9,7 @@ import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.util.CalendarDate;
 
+import at.easydiet.EasyDietApplication;
 import at.easydiet.model.DietParameter;
 import at.easydiet.model.Meal;
 import at.easydiet.model.TimeSpan;
@@ -32,7 +35,9 @@ public class TimeSpanBO
      */
     public TimeSpanBO(TimeSpan model)
     {
+        // remove time from start date. 
         _model = model;
+        setStart(_model.getStart());
     }
 
     /**
@@ -78,7 +83,14 @@ public class TimeSpanBO
      */
     public void setStart(Date start)
     {
-        _model.setStart(start);
+        // remove time part
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(start);
+        cal.set(Calendar.HOUR_OF_DAY, 0);  
+        cal.set(Calendar.MINUTE, 0);  
+        cal.set(Calendar.SECOND, 0);  
+        cal.set(Calendar.MILLISECOND, 0);
+        _model.setStart(cal.getTime());
     }
 
     /**
@@ -233,18 +245,58 @@ public class TimeSpanBO
         return new CalendarDate(calendar);
     }
 
-    public Date getEnd()
+    public void setStartDate(CalendarDate start)
     {
-        GregorianCalendar g = new GregorianCalendar();
-        g.setTime(getStart());
-        g.add(GregorianCalendar.DAY_OF_YEAR, getDuration());
-        return g.getTime();
+        _model.setStart(start.toCalendar().getTime());
     }
 
     public CalendarDate getEndDate()
     {
         CalendarDate end = getStartDate();
-        end.add(getDuration());
+        end = end.add(getDuration());
         return end;
     }
+    
+    public Date getEnd()
+    {
+        return getEndDate().toCalendar().getTime();
+    }
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime
+                * result
+                + (int) (_model.getTimeSpanId() ^ (_model.getTimeSpanId() >>> 32));
+        return result;
+    }
+
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (!(obj instanceof TimeSpanBO)) return false;
+        TimeSpanBO other = (TimeSpanBO) obj;
+        if (_model.getTimeSpanId() != other._model.getTimeSpanId())
+            return false;
+        return true;
+    }
+
+    public String getDisplayName()
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat(
+                EasyDietApplication.DATE_FORMAT);
+        return String.format("%s bis %s", formatter.format(getStart()),
+                formatter.format(getEnd()));
+    }
+
 }

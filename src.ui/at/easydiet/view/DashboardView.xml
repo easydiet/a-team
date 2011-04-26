@@ -10,10 +10,16 @@ xmlns="org.apache.pivot.wtk">
 		<easy:EasyDietContentView.ToolbarButton action="todo" text="Patient anlegen" icon="@user_add.png"/>
 		<easy:EasyDietContentView.ToolbarButton action="showHelp" text="Help" icon="@help.png"/>
 	</toolbarButtons>
-	<Form>
-		<Form.Section heading="Zuletzt verwendetet Patienten">
-			<ScrollPane>
-				<TableView bxml:id="_lastUsedPatientsTable">
+	<Form styles="{fill:true}">
+		<Form.Section heading="Zuletzt geöffnete Behandlungen">
+			<Border styleName="infoBox">
+				<easy:ImageLabel image="@info_small.png" text="Hier finden Sie alle Behandlungen die Sie in letzter Zeit geöffnet hatten." />
+			</Border>
+			<Border styleName="warningBox">
+				<easy:ImageLabel image="@warning_small.png" text="Dieses Feature ist zurzeit noch nicht verfügbar!" />
+			</Border>
+			<ScrollPane horizontalScrollBarPolicy="fill">
+				<TableView bxml:id="_lastUsedPatientsTable" preferredHeight="100">
 					<columns>
 						<TableView.Column name="forname" width="110" headerData="Vorname"/>
 						<TableView.Column name="lastname" width="110" headerData="Nachname"/>
@@ -27,10 +33,12 @@ xmlns="org.apache.pivot.wtk">
 			</ScrollPane>
 		</Form.Section>
 		<Form.Section heading="Patientensuche">
-
-			<TextInput bxml:id="_searchBox"/>
+			<Border styleName="infoBox">
+				<easy:ImageLabel image="@info_small.png" text="Hier finden Sie eine Liste aller Patienten im System. Suchen Sie nach Namen oder Sozialversicherungsnummern um den gewünschten Patienten zu finden. Klicken Sie doppelt auf einen Patienten um zu dessen Detailansicht zu wechseln." />
+			</Border>
+			<TextInput bxml:id="_searchBox" prompt="Suche" />
 			<Border>
-				<ScrollPane horizontalScrollBarPolicy="fill">
+				<ScrollPane horizontalScrollBarPolicy="fill" preferredHeight="300">
 					<TableView bxml:id="_patientSearchTable">
 						<columns>
 							<TableView.Column name="insuranceNumber" width="150" headerData="SzvNr."/>

@@ -13,6 +13,7 @@ import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
 import at.easydiet.dao.DAOFactory;
+import at.easydiet.domainlogic.DietPlanEditingController;
 import at.easydiet.model.ParameterDefinition;
 import at.easydiet.validation.ParameterValidator;
 import at.easydiet.view.EasyTableViewRowEditor.RowEditorListener;
