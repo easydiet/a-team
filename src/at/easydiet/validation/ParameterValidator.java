@@ -7,10 +7,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.pivot.collections.ArrayList;
+import org.apache.pivot.collections.HashMap;
 import org.apache.pivot.collections.List;
-
 import at.easydiet.businessobjects.CheckOperatorBO;
 import at.easydiet.businessobjects.DietParameterBO;
+import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.businessobjects.ParameterDefinitionDataTypeBO;
 
@@ -21,12 +22,38 @@ public class ParameterValidator {
 	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
 			.getLogger(ParameterValidator.class);
 
-	private Set<DietParameterBO> _conflictingParameters;
+	private static ParameterValidator _singleton;
 
-	public ParameterValidator() {
-		_conflictingParameters = null;
+	private HashMap<IDietParameterizable, Set<DietParameterBO>> _cache;
+
+	private ParameterValidator() {
+		_cache = new HashMap<IDietParameterizable, Set<DietParameterBO>>();
 	}
 
+	public static ParameterValidator getInstance() {
+		if (_singleton == null) {
+			_singleton = new ParameterValidator();
+		}
+		return _singleton;
+	}
+
+	/**
+	 * Get all conflicting components
+	 * @return A list with conflicting components, if the list is empty, theres no conflict
+	 */
+	public List<IDietParameterizable> getConflictingComponents()
+	{
+		List<IDietParameterizable> conflicts = new ArrayList<IDietParameterizable>();
+		for(IDietParameterizable comp : _cache)
+		{
+			if(!_cache.get(comp).isEmpty())
+			{
+				conflicts.add(comp);
+			}
+		}
+		return conflicts;
+	}
+	
 	/**
 	 * Check if a dietParameter is valid
 	 * 
@@ -34,9 +61,14 @@ public class ParameterValidator {
 	 *            dietParameter to check
 	 * @return true if it is
 	 */
-	public boolean isValid(DietParameterBO dietParameterBO) {
-		if (_conflictingParameters != null) {
-			return !_conflictingParameters.contains(dietParameterBO);
+	public boolean isValid(IDietParameterizable paramterizable,
+			DietParameterBO dietParameterBO) {
+		if(paramterizable == null)
+		{
+			return true;
+		}
+		else if (_cache.containsKey(paramterizable)) {
+			return !_cache.get(paramterizable).contains(dietParameterBO);
 		} else {
 			// default value if the validator wasn't run
 			return false;
@@ -44,57 +76,8 @@ public class ParameterValidator {
 
 	}
 
-	/**
-	 * Checks if parameters in a list don't conflict with each other
-	 * 
-	 * @param checkList
-	 *            list to check
-	 * @return true if no conflict was found
-	 */
-	public boolean isValid(List<DietParameterBO> checkList) {
-
-		return this.isValid(listToSet(checkList));
-	}
-
-	/**
-	 * Checks if parameters in a list don't conflict with each other and adds
-	 * them to the list of conflicting Parameters if they conflict
-	 * 
-	 * @param checkList
-	 *            list to check
-	 * @param conflictingParameters
-	 *            list with the conflicting parameters
-	 * 
-	 * @return
-	 */
-	public boolean isValid(ArrayList<DietParameterBO> checkList,
-			Set<DietParameterBO> conflictingParameters) {
-		return this.isValid(listToSet(checkList), conflictingParameters);
-	}
-
-	/**
-	 * Converts a list to a set
-	 * 
-	 * @param checkList
-	 *            list to convert
-	 * @return set filled with the list values
-	 */
-	private Set<DietParameterBO> listToSet(List<DietParameterBO> checkList) {
-		Set<DietParameterBO> checkSet = new HashSet<DietParameterBO>();
-		for (DietParameterBO dietParameterBO : checkList) {
-			checkSet.add(dietParameterBO);
-		}
-		return checkSet;
-	}
-
-	/**
-	 * check if any parameters are conflicting
-	 * 
-	 * @param checkSet
-	 * @return true if no parameters are conflicting
-	 */
-	public boolean isValid(Set<DietParameterBO> checkSet) {
-		return this.isValid(checkSet, new HashSet<DietParameterBO>());
+	public boolean isValid(IDietParameterizable parameterizable) {
+		return this.isValid(parameterizable, new HashSet<DietParameterBO>());
 	}
 
 	/**
@@ -106,11 +89,25 @@ public class ParameterValidator {
 	 *            an empty set to add the conflicting Parameters
 	 * @return true if no parameters are conflicting
 	 */
-	public boolean isValid(Set<DietParameterBO> checkSet,
+	public boolean isValid(IDietParameterizable parameterizable,
 			Set<DietParameterBO> conflictingParameters) {
-		// delete old conflicts
-		_conflictingParameters = new HashSet<DietParameterBO>();
+		
+		if(parameterizable == null)
+		{
+			return false;
+		}
+		
+		if (_cache.containsKey(parameterizable)) {
+			_cache.get(parameterizable).clear();
+		} else {
+			_cache.put(parameterizable, new HashSet<DietParameterBO>());
+		}
+		
 
+		List<DietParameterBO> checkSet = parameterizable.getDietParameters();
+
+		
+		
 		// fill a new set for better comparison
 		Set<DietParameterBO> compareSet = new HashSet<DietParameterBO>();
 		for (DietParameterBO copyParameter : checkSet) {
@@ -192,31 +189,31 @@ public class ParameterValidator {
 								// the lower limit needs to be smaller than the
 								// upper limit
 								if (!(checkNumberValue < compareNumberValue)) {
-									addConflicting(conflictingParameters,
+									addConflicting(parameterizable, conflictingParameters,
 											checkParameter, compareParameter);
 								}
 							} else if (compareParameterOperator == CheckOperatorBO.EQUALORSMALLER) {
 								// the lower limit needs to be smaller or equal
 								// than the upper limit
 								if (!(checkNumberValue <= compareNumberValue)) {
-									addConflicting(conflictingParameters,
+									addConflicting(parameterizable, conflictingParameters,
 											checkParameter, compareParameter);
 								}
 							} else if (compareParameterOperator == CheckOperatorBO.BIGGER) {
 								// is not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							} else if (compareParameterOperator == CheckOperatorBO.EQUALORBIGGER) {
 								// is not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							} else if (compareParameterOperator == CheckOperatorBO.EQUAL) {
 								// is not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							} else if (compareParameterOperator == CheckOperatorBO.NOTEQUAL) {
 								// is not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							}
 						}
@@ -226,33 +223,33 @@ public class ParameterValidator {
 								|| checkParameterOperator == CheckOperatorBO.EQUALORSMALLER) {
 							if (compareParameterOperator == CheckOperatorBO.SMALLER) {
 								// not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							} else if (compareParameterOperator == CheckOperatorBO.EQUALORSMALLER) {
 								// not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							} else if (compareParameterOperator == CheckOperatorBO.BIGGER) {
 								// the upper limit has to be bigger than the
 								// lower limit
 								if (!(checkNumberValue > compareNumberValue)) {
-									addConflicting(conflictingParameters,
+									addConflicting(parameterizable, conflictingParameters,
 											checkParameter, compareParameter);
 								}
 							} else if (compareParameterOperator == CheckOperatorBO.EQUALORBIGGER) {
 								// the upper limit has to be bigger than the
 								// lower limit
 								if (!(checkNumberValue >= compareNumberValue)) {
-									addConflicting(conflictingParameters,
+									addConflicting(parameterizable, conflictingParameters,
 											checkParameter, compareParameter);
 								}
 							} else if (compareParameterOperator == CheckOperatorBO.EQUAL) {
 								// is not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							} else if (compareParameterOperator == CheckOperatorBO.NOTEQUAL) {
 								// is not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							}
 						}
@@ -261,29 +258,29 @@ public class ParameterValidator {
 						else if (checkParameterOperator == CheckOperatorBO.EQUAL) {
 							if (compareParameterOperator == CheckOperatorBO.SMALLER) {
 								// not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							} else if (compareParameterOperator == CheckOperatorBO.EQUALORSMALLER) {
 								// not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							} else if (compareParameterOperator == CheckOperatorBO.BIGGER) {
 								// not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							} else if (compareParameterOperator == CheckOperatorBO.EQUALORBIGGER) {
 								// not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							} else if (compareParameterOperator == CheckOperatorBO.EQUAL) {
 								// is not allowed
 								if (!(checkNumberValue == compareNumberValue)) {
-									addConflicting(conflictingParameters,
+									addConflicting(parameterizable, conflictingParameters,
 											checkParameter, compareParameter);
 								}
 							} else if (compareParameterOperator == CheckOperatorBO.NOTEQUAL) {
 								// is not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							}
 						}
@@ -292,28 +289,28 @@ public class ParameterValidator {
 						else if (checkParameterOperator == CheckOperatorBO.NOTEQUAL) {
 							if (compareParameterOperator == CheckOperatorBO.SMALLER) {
 								// not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							} else if (compareParameterOperator == CheckOperatorBO.EQUALORSMALLER) {
 								// not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							} else if (compareParameterOperator == CheckOperatorBO.BIGGER) {
 								// not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							} else if (compareParameterOperator == CheckOperatorBO.EQUALORBIGGER) {
 								// not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							} else if (compareParameterOperator == CheckOperatorBO.EQUAL) {
 								// not allowed
-								addConflicting(conflictingParameters,
+								addConflicting(parameterizable, conflictingParameters,
 										checkParameter, compareParameter);
 							} else if (compareParameterOperator == CheckOperatorBO.NOTEQUAL) {
 								// is not allowed
 								if (!(checkNumberValue == compareNumberValue)) {
-									addConflicting(conflictingParameters,
+									addConflicting(parameterizable, conflictingParameters,
 											checkParameter, compareParameter);
 								}
 							}
@@ -341,7 +338,7 @@ public class ParameterValidator {
 	 * @param checkParameter
 	 * @param compareParameter
 	 */
-	private void addConflicting(Set<DietParameterBO> conflictingParameters,
+	private void addConflicting(IDietParameterizable parameterizable, Set<DietParameterBO> conflictingParameters,
 			DietParameterBO checkParameter, DietParameterBO compareParameter) {
 
 		// fill two sets, because when you change the set, that's accesible from
@@ -355,12 +352,16 @@ public class ParameterValidator {
 			conflictingParameters.add(compareParameter);
 		}
 
-		if (!_conflictingParameters.contains(checkParameter)) {
-			_conflictingParameters.add(checkParameter);
+		if (!_cache.get(parameterizable).contains(checkParameter)) {
+			_cache.get(parameterizable).add(checkParameter);
 		}
-		if (!_conflictingParameters.contains(compareParameter)) {
-			_conflictingParameters.add(compareParameter);
+		if (!_cache.get(parameterizable).contains(compareParameter)) {
+			_cache.get(parameterizable).add(compareParameter);
 		}
 	}
 
+	public void clearCache()
+	{
+		_cache.clear();
+	}
 }

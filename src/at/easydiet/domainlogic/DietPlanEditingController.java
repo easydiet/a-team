@@ -10,6 +10,7 @@ import org.hibernate.HibernateException;
 import at.easydiet.EasyDietApplication;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.DietTreatmentBO;
+import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.MealLineBO;
 import at.easydiet.businessobjects.PlanTypeBO;
@@ -22,7 +23,7 @@ import at.easydiet.dao.MealDAO;
 import at.easydiet.domainlogic.DietParameterController.ValidationResult;
 import at.easydiet.util.CollectionUtils;
 import at.easydiet.util.StringUtils;
-import at.easydiet.view.EasyAlerts;
+import at.easydiet.validation.ParameterValidator;
 
 public class DietPlanEditingController
 {
@@ -286,7 +287,11 @@ public class DietPlanEditingController
 
     private void validateDietParameterConflicts()
     {
-        // TODO: Joschi code
+        List<IDietParameterizable> conflicts = ParameterValidator.getInstance().getConflictingComponents();
+        for(IDietParameterizable component : conflicts)
+        {
+        	getErrors().add("Parameterkonflikt in: " + component.getDisplayText());
+        }
     }
 
     private void validateDietPlanParameters()

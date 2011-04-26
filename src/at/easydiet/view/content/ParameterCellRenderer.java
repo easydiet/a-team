@@ -15,9 +15,14 @@ import org.apache.pivot.wtk.TableView.CellRenderer;
 import org.apache.pivot.wtk.media.Image;
 
 import at.easydiet.businessobjects.DietParameterBO;
+import at.easydiet.businessobjects.IDietParameterizable;
+import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.validation.ParameterValidator;
 import at.easydiet.view.EasyDietMainWindow;
 
+/**
+ * Renderer for our ParameterTableView
+ */
 public class ParameterCellRenderer extends BoxPane implements CellRenderer {
 	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
 			.getLogger(MealLineCellRenderer.class);
@@ -36,9 +41,10 @@ public class ParameterCellRenderer extends BoxPane implements CellRenderer {
 
 	}
 
-	private ParameterValidator _validator;
 	private ImageView _errorImage;
 	private Label _textLabel;
+
+	private IDietParameterizable _parameterizable;
 
 	public ParameterCellRenderer() {
 		_textLabel = new Label();
@@ -85,10 +91,14 @@ public class ParameterCellRenderer extends BoxPane implements CellRenderer {
 
 		_textLabel.setText(text);
 
-		// TODO: color
 		Component.StyleDictionary tableViewStyles = tableView.getStyles();
 		
-		if (!_validator.isValid((DietParameterBO) row)) {
+		if(_parameterizable instanceof TimeSpanBO)
+		{
+			boolean hello = true; 
+		}
+		
+		if (!ParameterValidator.getInstance().isValid(_parameterizable,(DietParameterBO) row)) {
 			rebuildUI(true);
 			if(selected)
 			{
@@ -149,8 +159,8 @@ public class ParameterCellRenderer extends BoxPane implements CellRenderer {
 		return "";
 	}
 
-	public void setValidator(ParameterValidator validator) {
-		_validator = validator;
+	public void setParameterizable(IDietParameterizable parameterizable) {
+		_parameterizable = parameterizable;
 	}
 
 	public boolean isErrorImageVisible() {

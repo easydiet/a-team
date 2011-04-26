@@ -185,10 +185,13 @@ public class DietParameterUnitController
         Map<ParameterDefinitionUnitBO, Float> unitConverters = new HashMap<ParameterDefinitionUnitBO, Float>();
         _unitConverters.put(unit, unitConverters);
         
-        // get list of conversions of this unit by accessing the name-stored converters 
-        for (Entry<String, Float> converter : _fixedConversions.get(unit.getName()).entrySet())
+        if(_fixedConversions.containsKey(unit.getName()))
         {
-            unitConverters.put(_unitsByName.get(converter.getKey()), converter.getValue());
+	        // get list of conversions of this unit by accessing the name-stored converters 
+	        for (Entry<String, Float> converter : _fixedConversions.get(unit.getName()).entrySet())
+	        {
+	            unitConverters.put(_unitsByName.get(converter.getKey()), converter.getValue());
+	        }
         }
     }
 }

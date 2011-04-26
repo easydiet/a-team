@@ -242,4 +242,31 @@ public class MealBO implements IDietParameterizable
     {
         return String.format("%s - %s", getCode(), getName());
     }
+    
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 13;
+        int result = 1;
+        result = prime * result + (int) (_model.getMealId() ^ (_model.getMealId() >>> 32))
+        + super.hashCode();
+        return result;
+    }
+
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (!(obj instanceof MealBO)) return false;
+        MealBO other = (MealBO) obj;
+        if (_model.getMealId() != other._model.getMealId()) return false;
+        return true;
+    }
 }

@@ -18,6 +18,7 @@ import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.domainlogic.DietPlanEditingController;
+import at.easydiet.validation.ParameterValidator;
 
 public class EditDietPlanView extends EasyDietContentView implements Bindable
 {
@@ -190,5 +191,12 @@ public class EditDietPlanView extends EasyDietContentView implements Bindable
                         .getDietPlan());
         _dietPlanParameterTableView.initialize();
         // end: parameterTableView
+    }
+    
+    @Override
+    public boolean onClose()
+    {
+    	ParameterValidator.getInstance().clearCache();
+    	return true;
     }
 }
