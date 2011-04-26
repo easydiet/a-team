@@ -14,7 +14,7 @@ import at.easydiet.util.CollectionCache;
 /**
  * This class encapsules a DietPlan instance.
  */
-public class DietPlanBO
+public class DietPlanBO implements IDietParameterizable
 {
     private DietPlan                    _model;
     private CollectionCache<TimeSpanBO> _sortedTimeSpans;
