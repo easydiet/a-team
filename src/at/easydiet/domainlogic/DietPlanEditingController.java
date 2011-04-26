@@ -163,6 +163,7 @@ public class DietPlanEditingController
         
         // validate all dietparameters if they match for hierarchy
         validateDietPlanParameters();
+
     }
 
     private void validateTimeSpans()

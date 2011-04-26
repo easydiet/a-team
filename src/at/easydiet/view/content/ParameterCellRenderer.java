@@ -93,11 +93,6 @@ public class ParameterCellRenderer extends BoxPane implements CellRenderer {
 
 		Component.StyleDictionary tableViewStyles = tableView.getStyles();
 		
-		if(_parameterizable instanceof TimeSpanBO)
-		{
-			boolean hello = true; 
-		}
-		
 		if (!ParameterValidator.getInstance().isValid(_parameterizable,(DietParameterBO) row)) {
 			rebuildUI(true);
 			if(selected)
