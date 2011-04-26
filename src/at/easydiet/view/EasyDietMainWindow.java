@@ -18,7 +18,8 @@ public class EasyDietMainWindow extends Window implements Bindable
     public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(EasyDietMainWindow.class);
 
-    private MenuBar                             _menu;
+    @SuppressWarnings("unused")
+	private MenuBar                             _menu;
     private FlowPane                            _navigation;
     private BoxPane                             _content;
     private BoxPane                             _toolbar;

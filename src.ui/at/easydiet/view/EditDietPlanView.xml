@@ -86,7 +86,13 @@
 												selectedItemBindType="store" />
 										</checkOperator.name>
 										<value>
-											<TextInput textKey="value">
+											<TextInput strictValidation="true" textKey="value">
+												<validator>
+													<easycontent:QuantityValidator />
+												</validator>
+												<textBindMapping>
+													<easycontent:QuantityBindMapping />
+												</textBindMapping>
 											</TextInput>
 										</value>
 										<parameterDefinitionUnit.name>

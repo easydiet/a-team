@@ -160,9 +160,12 @@ public class ParameterValidator {
 									.getType() == ParameterDefinitionDataTypeBO.NUMBERS));
 
 					// if both are numbers
-					if (checkParameter.getParameterDefinitionUnit().getType() == ParameterDefinitionDataTypeBO.NUMBERS
-							&& compareParameter.getParameterDefinitionUnit()
-									.getType() == ParameterDefinitionDataTypeBO.NUMBERS) {
+					if ((checkParameter.getParameterDefinitionUnit()
+							.equals(compareParameter
+									.getParameterDefinitionUnit()))
+							&& (checkParameter.getParameterDefinitionUnit()
+									.getType() == ParameterDefinitionDataTypeBO.NUMBERS && compareParameter
+									.getParameterDefinitionUnit().getType() == ParameterDefinitionDataTypeBO.NUMBERS)) {
 						// get number values
 						double checkNumberValue;
 						double compareNumberValue;

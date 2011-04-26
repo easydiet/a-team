@@ -37,6 +37,7 @@
 				</BoxPane>
 			</heading>
 			<BoxPane orientation="vertical" styles="{padding: 5}">
+				<!-- start parameter view -->
 				<Border>
 					<ScrollPane preferredHeight="150">
 						<easy:ParameterTableView bxml:id="dietPlanParameterTableView">
@@ -89,7 +90,13 @@
 										</checkOperator.name>
 
 										<value>
-											<TextInput textKey="value">
+											<TextInput strictValidation="true" textKey="value">
+												<validator>
+													<easycontent:QuantityValidator />
+												</validator>
+												<textBindMapping>
+													<easycontent:QuantityBindMapping />
+												</textBindMapping>
 											</TextInput>
 										</value>
 
@@ -123,6 +130,7 @@
 
 		</Rollup>
 	</Border>
+	<!-- end parameterview -->
 	<easy:SimpleButton text="Neuer Zeitraum" bxml:id="createTimeSpanTop" />
 	<BoxPane bxml:id="timeSpanContainer" orientation="vertical"
 		styles="{fill:true}">

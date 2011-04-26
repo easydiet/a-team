@@ -1,244 +1,163 @@
 <!-- START: Meal -->
-<Border
-	styles="{padding: 10, cornerRadii:10, padding:5}"
-	xmlns:bxml="http://pivot.apache.org/bxml"
-	xmlns:easy="at.easydiet.view"
-	xmlns:easycontent="at.easydiet.view.content"
-	xmlns:content="org.apache.pivot.wtk.content"
-	xmlns:effects="org.apache.pivot.wtk.effects"
-	xmlns:collections="org.apache.pivot.collections"
-	xmlns="org.apache.pivot.wtk"
->
+<Border styles="{padding: 10, cornerRadii:10, padding:5}"
+	xmlns:bxml="http://pivot.apache.org/bxml" xmlns:easy="at.easydiet.view"
+	xmlns:easycontent="at.easydiet.view.content" xmlns:content="org.apache.pivot.wtk.content"
+	xmlns:effects="org.apache.pivot.wtk.effects" xmlns:collections="org.apache.pivot.collections"
+	xmlns="org.apache.pivot.wtk">
 	<TablePane>
 		<columns>
-			<TablePane.Column
-				width="450" />
-			<TablePane.Column
-				width="30" />
-			<TablePane.Column
-				width="250" />
+			<TablePane.Column width="450" />
+			<TablePane.Column width="30" />
+			<TablePane.Column width="250" />
 		</columns>
 		<TablePane.Row>
 			<!-- START: Meal Setup -->
 			<TablePane>
 				<columns>
-					<TablePane.Column
-						width="30" />
-					<TablePane.Column
-						width="5" />
-					<TablePane.Column
-						width="1*" />
+					<TablePane.Column width="30" />
+					<TablePane.Column width="5" />
+					<TablePane.Column width="1*" />
 				</columns>
 				<TablePane.Row>
-					<TextInput
-						bxml:id="mealCode"
-						prompt="FR"
-						maximumLength="2" />
-					<Label
-						text="-" />
-					<TextInput
-						bxml:id="mealName"
-						prompt="Frühstück" />
+					<TextInput bxml:id="mealCode" prompt="FR" maximumLength="2" />
+					<Label text="-" />
+					<TextInput bxml:id="mealName" prompt="Frühstück" />
 				</TablePane.Row>
 			</TablePane>
 			<TablePane.Filler />
-			<BoxPane
-				styles="{horizontalAlignment: 'right'}"
-			>
-				<LinkButton
-					bxml:id="deleteMealButton"
-					styles="{color:'#DD0000'}"
-				>
-					<content:ButtonData
-						text="Mahlzeit löschen" />
+			<BoxPane styles="{horizontalAlignment: 'right'}">
+				<LinkButton bxml:id="deleteMealButton" styles="{color:'#DD0000'}">
+					<content:ButtonData text="Mahlzeit löschen" />
 				</LinkButton>
 			</BoxPane>
 			<!-- END: Meal SETUP -->
 		</TablePane.Row>
 		<TablePane.Row>
 			<!-- START: Parameter of Meal -->
-			<BoxPane
-				TablePane.columnSpan="3"
-			>
+			<BoxPane TablePane.columnSpan="3">
 				<Rollup>
 					<heading>
-						<BoxPane
-							styles="{padding: 5}"
-						>
-							<Label
-								text="Zielparameter der Mahlzeit festlegen" />
+						<BoxPane styles="{padding: 5}">
+							<Label text="Zielparameter der Mahlzeit festlegen" />
 						</BoxPane>
 					</heading>
-					<BoxPane
-						orientation="vertical"
-						styles="{padding: 5}"
-					>
+					<BoxPane orientation="vertical" styles="{padding: 5}">
 						<Border>
-							<ScrollPane
-								preferredHeight="150"
-							>
-								<easy:ParameterTableView
-									bxml:id="mealParameterTableView"
-								>
+							<ScrollPane preferredHeight="150">
+								<easy:ParameterTableView bxml:id="mealParameterTableView">
 									<columns>
-										<TableView.Column
-											name="parameterDefinition.name"
-											headerData="Definition"
-											width="150"
-										>
+										<TableView.Column name="parameterDefinition.name"
+											headerData="Definition" width="150">
 											<cellRenderer>
 												<easycontent:ParameterCellRenderer />
 											</cellRenderer>
 										</TableView.Column>
-										<TableView.Column
-											name="checkOperator.name"
-											headerData="Operator"
-											width="100"
-										>
+										<TableView.Column name="checkOperator.name"
+											headerData="Operator" width="100">
 											<cellRenderer>
 												<easycontent:ParameterCellRenderer />
 											</cellRenderer>
 										</TableView.Column>
-										<TableView.Column
-											name="value"
-											headerData="Wert"
-											width="100"
-										>
+										<TableView.Column name="value" headerData="Wert"
+											width="100">
 											<cellRenderer>
 												<easycontent:ParameterCellRenderer />
 											</cellRenderer>
 										</TableView.Column>
-										<TableView.Column
-											name="parameterDefinitionUnit.name"
-											headerData="Einheit"
-											width="100"
-										>
+										<TableView.Column name="parameterDefinitionUnit.name"
+											headerData="Einheit" width="100">
 											<cellRenderer>
 												<easycontent:ParameterCellRenderer />
 											</cellRenderer>
 										</TableView.Column>
-										<TableView.Column
-											name="validationResult"
-											width="-1"
-										>
+										<TableView.Column name="validationResult"
+											width="-1">
 											<cellRenderer>
 												<easycontent:ParameterCellRenderer
 													errorImageVisible="true" />
 											</cellRenderer>
 										</TableView.Column>
 									</columns>
-
 									<rowEditor>
 										<easy:EasyTableViewRowEditor
-											editEffect="horizontal_slide"
-										>
+											editEffect="horizontal_slide">
 											<cellEditors>
 												<parameterDefinition.name>
-													<ListButton
-														selectedItemKey="parameterDefinition"
+													<ListButton selectedItemKey="parameterDefinition"
 														selectedItemBindType="store" />
 												</parameterDefinition.name>
-
 												<checkOperator.name>
-													<ListButton
-														selectedItemKey="checkOperator"
+													<ListButton selectedItemKey="checkOperator"
 														selectedItemBindType="store" />
 												</checkOperator.name>
-
 												<value>
-													<TextInput
-														textKey="value"
-													>
+													<TextInput strictValidation="true" textKey="value">
+														<validator>
+															<easycontent:QuantityValidator />
+														</validator>
+														<textBindMapping>
+															<easycontent:QuantityBindMapping />
+														</textBindMapping>
 													</TextInput>
 												</value>
-
 												<parameterDefinitionUnit.name>
-													<ListButton
-														selectedItemKey="parameterDefinitionUnit"
+													<ListButton selectedItemKey="parameterDefinitionUnit"
 														selectedItemBindType="store" />
 												</parameterDefinitionUnit.name>
-
 												<validationResult>
 													<Label />
 												</validationResult>
 											</cellEditors>
 										</easy:EasyTableViewRowEditor>
 									</rowEditor>
-
 								</easy:ParameterTableView>
 								<columnHeader>
-									<TableViewHeader
-										tableView="$mealParameterTableView" />
+									<TableViewHeader tableView="$mealParameterTableView" />
 								</columnHeader>
 							</ScrollPane>
 						</Border>
-
 						<BoxPane>
-							<easy:SimpleButton
-								text="Parameter hinzufügen"
+							<easy:SimpleButton text="Parameter hinzufügen"
 								bxml:id="addMealParameters" />
-							<easy:SimpleButton
-								text="Parameter entfernen"
+							<easy:SimpleButton text="Parameter entfernen"
 								bxml:id="removeMealParameter" />
 						</BoxPane>
 					</BoxPane>
-
 				</Rollup>
 			</BoxPane>
 			<!-- END: Parameter of Meal -->
 		</TablePane.Row>
-		<TablePane.Row
-			height="30"
-		>
+		<TablePane.Row height="30">
 			<!-- START: Headings of Recipe Setup -->
-			<Label
-				text="Angelegte Rezepte (Alternativen sind eingerückt)"
+			<Label text="Angelegte Rezepte (Alternativen sind eingerückt)"
 				styles="{verticalAlignment: 'center'}" />
 			<TablePane.Filler />
-			<BoxPane
-				styles="{verticalAlignment: 'center'}"
-			>
-				<TextInput
-					prompt="Rezepte suchen"
-					bxml:id="recipeSearchBox" />
+			<BoxPane styles="{verticalAlignment: 'center'}">
+				<TextInput prompt="Rezepte suchen" bxml:id="recipeSearchBox" />
 			</BoxPane>
 			<!-- END: Headings of Recipe Setup -->
 		</TablePane.Row>
-		<TablePane.Row
-			height="200"
-		>
+		<TablePane.Row height="200">
 			<!-- START: Recipe Setup -->
 			<Border>
 				<ScrollPane>
-					<TableView
-						bxml:id="mealLines"
-						selectMode="multi"
-					>
+					<TableView bxml:id="mealLines" selectMode="multi">
 						<columns>
-							<TableView.Column
-								name="quantity"
-								width="70"
-								headerData="Menge"
-							>
+							<TableView.Column name="quantity" width="70"
+								headerData="Menge">
 								<cellRenderer>
 									<easycontent:MealLineCellRenderer
 										arrowVisible="true" />
 								</cellRenderer>
 							</TableView.Column>
-							<TableView.Column
-								name="unit.name"
-								width="75"
-								headerData="Einheit"
-							>
+							<TableView.Column name="unit.name" width="75"
+								headerData="Einheit">
 								<cellRenderer>
 									<easycontent:MealLineCellRenderer />
 								</cellRenderer>
 							</TableView.Column>
-							<TableView.Column
-								name="recipe.name"
-								width="300"
-								headerData="Name"
-							>
+							<TableView.Column name="recipe.name" width="300"
+								headerData="Name">
 								<cellRenderer>
 									<easycontent:MealLineCellRenderer />
 								</cellRenderer>
@@ -246,14 +165,10 @@
 						</columns>
 						<rowEditor>
 							<easy:EasyTableViewRowEditor
-								editEffect="horizontal_slide"
-							>
+								editEffect="horizontal_slide">
 								<cellEditors>
 									<quantity>
-										<TextInput
-											strictValidation="true"
-											textKey="quantity"
-										>
+										<TextInput strictValidation="true" textKey="quantity">
 											<validator>
 												<easycontent:QuantityValidator />
 											</validator>
@@ -263,59 +178,38 @@
 										</TextInput>
 									</quantity>
 									<unit.name>
-										<ListButton
-											selectedItemKey="unit"
+										<ListButton selectedItemKey="unit"
 											selectedItemBindType="store" />
 									</unit.name>
 									<recipe.name>
-										<Label
-											textKey="recipe.name"
-											styles="{verticalAlignment: 'center'}" />
+										<Label textKey="recipe.name" styles="{verticalAlignment: 'center'}" />
 									</recipe.name>
 								</cellEditors>
 							</easy:EasyTableViewRowEditor>
 						</rowEditor>
 					</TableView>
 					<columnHeader>
-						<TableViewHeader
-							tableView="$mealLines" />
+						<TableViewHeader tableView="$mealLines" />
 					</columnHeader>
 				</ScrollPane>
 			</Border>
-			<BoxPane
-				orientation="vertical"
-				styles="{fill:true}"
-			>
-				<easy:SimpleButton
-					text="&lt;"
-					bxml:id="addRecipeToMeal" />
-				<easy:SimpleButton
-					text="&lt;~"
-					bxml:id="addRecipeToMealLine" />
-				<easy:SimpleButton
-					text="&gt;"
-					bxml:id="removeRecipeFromMeal" />
+			<BoxPane orientation="vertical" styles="{fill:true}">
+				<easy:SimpleButton text="&lt;" bxml:id="addRecipeToMeal" />
+				<easy:SimpleButton text="&lt;~" bxml:id="addRecipeToMealLine" />
+				<easy:SimpleButton text="&gt;" bxml:id="removeRecipeFromMeal" />
 			</BoxPane>
 			<Border>
 				<ScrollPane>
-					<TableView
-						bxml:id="recipeSearchResult"
-						selectMode="multi"
-					>
+					<TableView bxml:id="recipeSearchResult" selectMode="multi">
 						<columns>
-							<TableView.Column
-								name="blsCode"
-								width="50"
+							<TableView.Column name="blsCode" width="50"
 								headerData="BLS" />
-							<TableView.Column
-								name="name"
-								width="190"
+							<TableView.Column name="name" width="190"
 								headerData="Name" />
 						</columns>
 					</TableView>
 					<columnHeader>
-						<TableViewHeader
-							tableView="$recipeSearchResult" />
+						<TableViewHeader tableView="$recipeSearchResult" />
 					</columnHeader>
 				</ScrollPane>
 			</Border>
