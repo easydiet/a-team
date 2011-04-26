@@ -7,12 +7,8 @@ import at.easydiet.model.CheckOperator;
  */
 public enum CheckOperatorBO
 {
-    BIGGER (">"),
-    SMALLER ("<"),
-    EQUALORBIGGER (">="),
-    EQUALORSMALLER ("<="),
-    EQUAL ("="),
-    NOTEQUAL ("!=");
+    BIGGER(">"), SMALLER("<"), EQUALORBIGGER(">="), EQUALORSMALLER("<="), EQUAL(
+            "="), NOTEQUAL("!=");
 
     private CheckOperator _model;
 
@@ -43,7 +39,7 @@ public enum CheckOperatorBO
     {
         return _model.getName();
     }
-    
+
     /**
      * Returns the BusinessObject matching to the specified model object.
      * @returns the enum value matching to the given model or the default value.
@@ -59,15 +55,51 @@ public enum CheckOperatorBO
         }
         return EQUAL;
     }
-    
+
     /**
      * Checks if the checkoperator applies to the given two value
-     * @param checkValue the value which needs to apply
-     * @param actualValue this 
-     * @return
+     * @param originalValue the value which needs to apply
+     * @param actualValue the value which needs to get checked if it applies to
+     *            the operator
+     * @return null if the operator is valid, otherwise the Operator which
+     *         applies for the error (i.E. if actualValue is to small for the
+     *         BIGGER this method will return EQUALORSMALLER)
      */
-    public CheckOperatorBO isValid(float checkValue, float actualValue)
+    public CheckOperatorBO isValid(float originalValue, float actualValue)
     {
+        switch (this)
+        {
+            case BIGGER:
+                if (actualValue <= originalValue)
+                {
+                    return EQUALORSMALLER;
+                }
+            break;
+            case SMALLER:
+                if(actualValue >= originalValue)
+                {
+                    return EQUALORBIGGER;
+                }
+            break;
+            case EQUAL:
+                if(actualValue != originalValue)
+                {
+                    return NOTEQUAL;
+                }
+            break;
+            case EQUALORBIGGER:
+                if(actualValue < originalValue)
+                {
+                    return SMALLER;
+                }
+            break;
+            case EQUALORSMALLER:
+                if(actualValue > originalValue)
+                {
+                    return BIGGER;
+                }
+            break;
+        }
         return null;
     }
 }

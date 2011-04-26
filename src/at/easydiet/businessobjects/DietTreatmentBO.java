@@ -48,7 +48,16 @@ public class DietTreatmentBO implements IDietParameterizable
 	{
 		return _model;
 	}
-	
+ 	
+ 	/**
+ 	 * Overrides the model stored in the backstore. 
+ 	 * @param model
+ 	 */
+ 	void setModel(DietTreatment model)
+    {
+        _model = model;
+    }
+ 	
     /**       
      * Gets the dietTreatmentId of this instance. 
      * @return the dietTreatmentId currently set for this instance.

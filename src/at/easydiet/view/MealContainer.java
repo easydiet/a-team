@@ -49,6 +49,7 @@ public class MealContainer extends BoxPane
 
     static
     {
+        
         DietPlanEditingController.getInstance().refresh(false);
         SUGGESTIONS.setSuggestionData(DietPlanEditingController.getInstance()
                 .getMealCodes());
