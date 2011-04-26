@@ -13,13 +13,13 @@ import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
-import at.easydiet.dao.DAOFactory;
-import at.easydiet.domainlogic.DietPlanEditingController;
-import at.easydiet.model.ParameterDefinition;
 import at.easydiet.validation.ParameterValidator;
 import at.easydiet.view.EasyTableViewRowEditor.RowEditorListener;
 import at.easydiet.view.content.ParameterCellRenderer;
 
+/**
+ * Shows a tableView which handles parameters
+ */
 public class ParameterTableView extends TableView {
 	private ParameterTableViewController _controller = new ParameterTableViewController();
 
@@ -71,42 +71,13 @@ public class ParameterTableView extends TableView {
 		// get editor
 		_editor = (EasyTableViewRowEditor) getRowEditor();
 
-		_editor.getRowEditorListeners().add(new RowEditorListener() {
-
-			@Override
-			public Vote previewEditRow(RowEditor rowEditor,
-					TableView tableView, int rowIndex, int columnIndex) {
-				// TODO Auto-generated method stub
-				return Vote.APPROVE;
-			}
-
-			@Override
-			public void editRowVetoed(RowEditor rowEditor, Vote reason) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void rowEditing(RowEditor rowEditor, TableView tableView,
-					int rowIndex, int columnIndex) {
-				// TODO Auto-generated method stub
-
-			}
+		_editor.getRowEditorListeners().add(new RowEditorListener.Adapter() {
 
 			@Override
 			public void changesSaved(RowEditor rowEditor, TableView tableView,
 					int rowIndex, int columnIndex) {
 				validateView();
-
 			}
-
-			@Override
-			public void editCancelled(RowEditor rowEditor, TableView tableView,
-					int rowIndex, int columnIndex) {
-				// TODO Auto-generated method stub
-
-			}
-
 		});
 
 		// add parameternames to the listbutton
@@ -269,6 +240,7 @@ public class ParameterTableView extends TableView {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public boolean validateView()
 	{
 		return _validator.isValid((List<DietParameterBO>)getTableData());

@@ -2,7 +2,6 @@ package at.easydiet.view;
 
 import java.net.URL;
 import org.apache.pivot.beans.Bindable;
-import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Border;
@@ -31,6 +30,7 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable 
 	public void initialize(Map<String, Object> namespace, URL location,
 			Resources resources) {
 		
+		//parameterTableView
 		_dietPlanParameterTableView = (ParameterTableView)namespace.get("dietPlanParameterTableView");
 		
 		_timeSpanContainer = (BoxPane) namespace.get("timeSpanContainer");
@@ -56,6 +56,8 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable 
 				});
 		errorBorder.setVisible((errorBox.getListData().getLength() > 0));
 
+		//start:parameterTableView
+		//add button listeners
 		Button addDietPlanParameterButton = (Button) namespace
 				.get("addDietPlanParameters");
 		addDietPlanParameterButton.getButtonPressListeners().add(
@@ -78,7 +80,9 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable 
 								.getSelectedRow());
 					}
 				});
-
+		//end:parameterTableView
+		
+		
 		ButtonPressListener createTimeSpan = new ButtonPressListener() {
 
 			public void buttonPressed(Button button) {
@@ -122,8 +126,10 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable 
 						.getDietTreatment());
 		DietPlanEditingController.getInstance().refresh();
 
+		//start: parameterTableView
 		_dietPlanParameterTableView.setParameterProvider(DietPlanEditingController.getInstance().getDietPlan());
 		_dietPlanParameterTableView.initialize();
+		//end: parameterTableView
 	}
 
 	public void rebuildUI() {
@@ -142,11 +148,20 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable 
 		_timeSpanContainer.add(container);
 	}
 
+	//start:parameterTableView
+	/**
+	 * Adds a new parameter into the view
+	 */
 	private void addNewParameters() {
 		_dietPlanParameterTableView.addParameterTemplate();
 	}
 
+	/**
+	 * Removes a parameter from the view
+	 * @param dietParameter parameter to remove
+	 */
 	private void removeParameter(DietParameterBO dietParameter) {
 		_dietPlanParameterTableView.remove(dietParameter);
 	}
+	//end:ParameterTableView
 }

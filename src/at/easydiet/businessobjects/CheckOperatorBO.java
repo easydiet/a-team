@@ -3,6 +3,8 @@ package at.easydiet.businessobjects;
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.List;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import at.easydiet.model.CheckOperator;
 
 /**
@@ -66,7 +68,6 @@ public enum CheckOperatorBO
     /**
      * Returns a list of all Operators
      * @return List of all Operators
-     * @author Mathias
      */
 	public static List<CheckOperatorBO> getAllOperators()
 	{
@@ -78,12 +79,16 @@ public enum CheckOperatorBO
 		return list;
 	}
 	
+	/**
+	 * Returns a string representation of this checkOperator
+	 */
 	public String toString()
 	{
 		return getName();
 	}
 
 	/**
+	 *
      * Checks if the checkoperator applies to the given two value
      * @param checkValue the value which needs to apply
      * @param actualValue this 
@@ -91,6 +96,6 @@ public enum CheckOperatorBO
      */
     public CheckOperatorBO isValid(float checkValue, float actualValue)
     {
-        return null;
+    	throw new NotImplementedException();
     }
 }

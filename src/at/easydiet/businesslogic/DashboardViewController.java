@@ -10,6 +10,9 @@ import at.easydiet.dao.PatientDAO;
 import at.easydiet.model.Patient;
 import at.easydiet.util.StringUtils;
 
+/**
+ * Controls the dashboard
+ */
 public class DashboardViewController
 {
     public static final org.apache.log4j.Logger LOG            = org.apache.log4j.Logger
@@ -17,6 +20,7 @@ public class DashboardViewController
     private ArrayList<PatientBO>                _patients      = null;
     private String                              _patientFilter = "";
 
+    //this is a unique instance
     private static DashboardViewController      _singleton;
 
     public static DashboardViewController getInstance()
@@ -33,6 +37,10 @@ public class DashboardViewController
 
     }
 
+    /**
+     * Gets all patients
+     * @return list of all patients
+     */
     public ArrayList<PatientBO> getPatients()
     {
         if (_patients == null)

@@ -3,7 +3,6 @@ package at.easydiet.view;
 import java.net.URL;
 
 import org.apache.pivot.beans.Bindable;
-import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.BoxPane;
@@ -11,13 +10,8 @@ import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.PushButton;
 
-import at.easydiet.businessobjects.CheckOperatorBO;
 import at.easydiet.businessobjects.DietParameterBO;
-import at.easydiet.businessobjects.DietParameterTypeBO;
 import at.easydiet.businessobjects.DietPlanBO;
-import at.easydiet.businessobjects.ParameterDefinitionBO;
-import at.easydiet.businessobjects.ParameterDefinitionDataTypeBO;
-import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.domainlogic.DietPlanEditingController;
 
@@ -26,12 +20,14 @@ public class EditDietPlanView extends EasyDietContentView implements Bindable {
 			.getLogger(CreateDietPlanView.class);
 
 	private BoxPane _timeSpanContainer;
+	
 	private ParameterTableView _dietPlanParameterTableView;
 
 	public void initialize(Map<String, Object> namespace, URL location,
 			Resources resources) {
 		_timeSpanContainer = (BoxPane) namespace.get("timeSpanContainer");
 
+		//start: parameterTableView
 		_dietPlanParameterTableView = (ParameterTableView) namespace
 				.get("dietPlanParameterTableView");
 
@@ -57,7 +53,8 @@ public class EditDietPlanView extends EasyDietContentView implements Bindable {
 								.getSelectedRow());
 					}
 				});
-
+		//end:parameterTableView
+		
 		ButtonPressListener createTimeSpan = new ButtonPressListener() {
 
 			public void buttonPressed(Button button) {
@@ -98,11 +95,10 @@ public class EditDietPlanView extends EasyDietContentView implements Bindable {
 	public void onLoad() {
 		rebuildUI();
 
-		List<DietParameterBO> listData = DietPlanEditingController
-				.getInstance().getDietPlan().getDietParameters();
-
+		//start: parameterTableView
 		_dietPlanParameterTableView.setParameterProvider(DietPlanEditingController.getInstance().getDietPlan());
 		_dietPlanParameterTableView.initialize();
+		//end: parameterTableView
 	}
 
 	public void rebuildUI() {
@@ -121,11 +117,20 @@ public class EditDietPlanView extends EasyDietContentView implements Bindable {
 		_timeSpanContainer.add(container);
 	}
 
+	//start: parameterTableView
+	/**
+	 * Adds a new parameter to the parameter view
+	 */
 	private void addNewParameters() {		
 		_dietPlanParameterTableView.addParameterTemplate();
 	}
 
+	/**
+	 * Removes a parameter from the parameter view
+	 * @param dietParameter
+	 */
 	private void removeParameter(DietParameterBO dietParameter) {
 		_dietPlanParameterTableView.remove(dietParameter);
 	}
+	//end: parameterTableView
 }
