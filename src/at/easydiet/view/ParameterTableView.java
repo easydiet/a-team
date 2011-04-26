@@ -13,7 +13,6 @@ import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
-import at.easydiet.validation.ParameterValidator;
 import at.easydiet.view.EasyTableViewRowEditor.RowEditorListener;
 import at.easydiet.view.content.ParameterCellRenderer;
 
@@ -27,9 +26,6 @@ public class ParameterTableView extends TableView {
 	private ListButton _definitionListButton;
 	private ListButton _checkOperatorListButton;
 	private ListButton _parameterDefinitionUnitListButton;
-	
-	//used for validation of this tableview
-	private ParameterValidator _validator = new ParameterValidator();
 	
 	public ParameterTableView(List<?> tableData) {
 		super(tableData);
@@ -45,8 +41,8 @@ public class ParameterTableView extends TableView {
 	public void setParameterProvider(IDietParameterizable provider)
 	{
 		setTableData(provider.getDietParameters());
-		refreshView();
 		getController().setParameterProvider(provider);
+		refreshView();
 	}
 	
 	/**
@@ -238,7 +234,7 @@ public class ParameterTableView extends TableView {
 	private void setValidatorToCellRenderers() {
 		for (Column col : getColumns()) {
 			((ParameterCellRenderer) col.getCellRenderer())
-					.setValidator(_validator);
+					.setParameterizable(_controller.getParameterProvider());
 		}
 	}
 
@@ -262,10 +258,10 @@ public class ParameterTableView extends TableView {
 	 * Validates this view
 	 * @return true if no conflicts are found
 	 */
-	@SuppressWarnings("unchecked")
 	public boolean validateView()
 	{
-		return _validator.isValid((List<DietParameterBO>)getTableData());
+		return _controller.isValid();
+		//return _validator.isValid((List<DietParameterBO>)getTableData());
 	}
 	
 	/**

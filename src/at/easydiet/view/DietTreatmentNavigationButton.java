@@ -12,7 +12,7 @@ public class DietTreatmentNavigationButton extends NavigationButton
     public void refresh()
     {
         setText(DietTreatmentDetailViewController.getInstance()
-                .getDietTreatment().getDisplayName());
+                .getDietTreatment().getDisplayText());
     }
 
 }

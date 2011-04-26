@@ -19,6 +19,7 @@ import at.easydiet.dao.DietPlanDAO;
 import at.easydiet.dao.HibernateUtil;
 import at.easydiet.dao.MealDAO;
 import at.easydiet.util.CollectionUtils;
+import at.easydiet.validation.ParameterValidator;
 
 public class DietPlanEditingController
 {
@@ -195,17 +196,17 @@ public class DietPlanEditingController
             if(TimeSpanBO.class.isAssignableFrom(object.getClass()))
             {
                 _errors.add(String.format("Der Zeitraum '%s' überschneidet sich mit dem Zeitraum '%s'",
-                        t.getDisplayName(), ((TimeSpanBO)object).getDisplayName()));
+                        t.getDisplayText(), ((TimeSpanBO)object).getDisplayText()));
             }
             else if(DietPlanBO.class.isAssignableFrom(object.getClass()))
             {
                 _errors.add(String.format("Der Zeitraum '%s' überschneidet sich mit dem Diätplan '%s'",
-                        t.getDisplayName(), ((DietPlanBO)object).getName()));
+                        t.getDisplayText(), ((DietPlanBO)object).getName()));
             }
             else if(DietTreatmentBO.class.isAssignableFrom(object.getClass()))
             {
                 _errors.add(String.format("Der Zeitraum '%s' überschneidet sich mit der Diätbehandlung '%s'",
-                        t.getDisplayName(), ((DietTreatmentBO)object).getName()));
+                        t.getDisplayText(), ((DietTreatmentBO)object).getName()));
             }
         }
     }
@@ -257,5 +258,10 @@ public class DietPlanEditingController
     {
         meal.getTimeSpan().removeMeals(meal);
         validateDietPlan();
+    }
+    
+    public void onClose()
+    {
+    	ParameterValidator.getInstance().clearCache();
     }
 }
