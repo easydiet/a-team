@@ -120,12 +120,12 @@ public class DietParameterController
             List<ValidationResult> violations, DietPlanBO plan)
     {
         // store sums of dietplan
-        Map<ParameterDefinitionBO, ValidationSumValue> currentLevelSums = buildSumMap(parametersToValidate);
+        Map<ParameterDefinitionBO, ValidationSumValue> dietPlanSums = buildSumMap(parametersToValidate);
 
         // process deeper hierachies first for summing
         for (TimeSpanBO timeSpan : plan.getTimeSpans())
         {
-            validateDietParameters(parametersToValidate, currentLevelSums,
+            validateDietParameters(parametersToValidate, dietPlanSums,
                     violations, timeSpan);
         }
 
@@ -134,7 +134,7 @@ public class DietParameterController
         {
             CheckOperatorBO violation = parameter.getCheckOperator().isValid(
                     parameter.getFloatValue(),
-                    currentLevelSums.get(parameter.getParameterDefinition())
+                    dietPlanSums.get(parameter.getParameterDefinition())
                             .getSum());
 
             // test if checkoperator applies for specified value and summed
@@ -143,7 +143,7 @@ public class DietParameterController
             {
                 // if not add a violation
                 violations
-                        .add(new ValidationResult(plan, violation, parameter));
+                        .add(new ValidationResult(plan, violation, parameter, dietPlanSums.get(parameter.getParameterDefinition()).getSum()));
             }
         }
     }
@@ -178,7 +178,7 @@ public class DietParameterController
             {
                 // if not add a violation
                 violations.add(new ValidationResult(timeSpan, violation,
-                        parameter));
+                        parameter, timeSpanSums.get(parameter.getParameterDefinition()).getSum()));
             }
         }
     }
@@ -277,7 +277,7 @@ public class DietParameterController
             {
                 // if not add a violation
                 violations
-                        .add(new ValidationResult(meal, violation, parameter));
+                        .add(new ValidationResult(meal, violation, parameter, mealSums.get(parameter.getParameterDefinition()).getSum()));
             }
         }
     }
@@ -362,20 +362,24 @@ public class DietParameterController
             return _currentValue;
         }
 
-        /**
-         * Initializes a new instance of the {@link ValidationResult} class.
+        
+        
+        /** 
+         * Initializes a new instance of the {@link ValidationResult} class. 
          * @param affectedObject
          * @param errorType
          * @param dietParameter
+         * @param currentValue
          */
         private ValidationResult(IDietParameterizable affectedObject,
-                CheckOperatorBO errorType, DietParameterBO dietParameter)
+                CheckOperatorBO errorType, DietParameterBO dietParameter,
+                float currentValue)
         {
             super();
             _affectedObject = affectedObject;
             _errorType = errorType;
             _dietParameter = dietParameter;
+            _currentValue = currentValue;
         }
-
     }
 }

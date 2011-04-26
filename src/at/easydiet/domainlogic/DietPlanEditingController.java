@@ -18,6 +18,7 @@ import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.DietPlanDAO;
 import at.easydiet.dao.HibernateUtil;
 import at.easydiet.dao.MealDAO;
+import at.easydiet.domainlogic.DietParameterController.ValidationResult;
 import at.easydiet.util.CollectionUtils;
 
 public class DietPlanEditingController
@@ -177,11 +178,22 @@ public class DietPlanEditingController
 
     private void validateDietPlanParameters()
     {
-//        DietParameter
-//        for (TimeSpanBO timeSpan : _dietPlan.getTimeSpans())
-//        {
-//            validateTimeSpanParameters()
-//        }
+        List<ValidationResult> violations = DietParameterController.getInstance().validateDietPlanDietParameters(_dietPlan);
+        
+        for (ValidationResult validationResult : violations)
+        {
+            
+            String error = String.format("Der Zielparameter '%s' des Objektes '%s' wird nicht eingehalten. Der Gesamtwert %f%s ist %s %s%s", 
+                    validationResult.getDietParameter().getParameterDefinition().getName(),
+                    validationResult.getAffectedObject().getDisplayText(),
+                    validationResult.getCurrentValue(),
+                    validationResult.getDietParameter().getParameterDefinitionUnit().getName(),
+                    validationResult.getErrorType().getDisplayText(),
+                    validationResult.getDietParameter().getValue(),
+                    validationResult.getDietParameter().getParameterDefinitionUnit().getName());
+            
+            _errors.add(error);
+        }
     }
 
     private void validateTimeSpan(TimeSpanBO t)
@@ -195,17 +207,17 @@ public class DietPlanEditingController
             if(TimeSpanBO.class.isAssignableFrom(object.getClass()))
             {
                 _errors.add(String.format("Der Zeitraum '%s' überschneidet sich mit dem Zeitraum '%s'",
-                        t.getDisplayName(), ((TimeSpanBO)object).getDisplayName()));
+                        t.getDisplayText(), ((TimeSpanBO)object).getDisplayText()));
             }
             else if(DietPlanBO.class.isAssignableFrom(object.getClass()))
             {
                 _errors.add(String.format("Der Zeitraum '%s' überschneidet sich mit dem Diätplan '%s'",
-                        t.getDisplayName(), ((DietPlanBO)object).getName()));
+                        t.getDisplayText(), ((DietPlanBO)object).getName()));
             }
             else if(DietTreatmentBO.class.isAssignableFrom(object.getClass()))
             {
                 _errors.add(String.format("Der Zeitraum '%s' überschneidet sich mit der Diätbehandlung '%s'",
-                        t.getDisplayName(), ((DietTreatmentBO)object).getName()));
+                        t.getDisplayText(), ((DietTreatmentBO)object).getName()));
             }
         }
     }

@@ -125,6 +125,15 @@ public class CreateDietPlanView extends EasyDietContentView implements Bindable
 
         createTimeSpanTop.getButtonPressListeners().add(createTimeSpan);
         createTimeSpanBottom.getButtonPressListeners().add(createTimeSpan);
+        
+        Button validateButton = (Button)namespace.get("validate");
+        validateButton.getButtonPressListeners().add(new ButtonPressListener()
+        {
+            public void buttonPressed(Button button)
+            {
+                DietPlanEditingController.getInstance().validateDietPlan();                
+            }
+        });
     }
 
     @Override
