@@ -17,7 +17,7 @@ import at.easydiet.model.TimeSpan;
 /**
  * This class encapsules a TimeSpan instance.
  */
-public class TimeSpanBO
+public class TimeSpanBO implements IDietParameterizable
 {
     private TimeSpan _model;
 

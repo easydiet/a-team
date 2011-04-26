@@ -18,7 +18,7 @@ import at.easydiet.model.PatientState;
 /**
  * This class encapsules a DietTreatment instance.
  */
-public class DietTreatmentBO
+public class DietTreatmentBO implements IDietParameterizable
 {
 	private DietTreatment _model;
 	
