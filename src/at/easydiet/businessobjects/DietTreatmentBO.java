@@ -500,7 +500,7 @@ public class DietTreatmentBO implements IDietParameterizable
         _model.setPatient(patient.getModel());
     }
 
-    public String getDisplayName()
+    public String getDisplayText()
     {
         return getName();
     }
@@ -542,4 +542,5 @@ public class DietTreatmentBO implements IDietParameterizable
         if (_model.getDietTreatmentId() != other._model.getDietTreatmentId()) return false;
         return true;
     }
+
 }
