@@ -5,6 +5,7 @@ import org.apache.pivot.collections.List;
 import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.ListButton;
 import org.apache.pivot.wtk.ListButtonSelectionListener;
+import org.apache.pivot.wtk.SortDirection;
 import org.apache.pivot.wtk.TableView;
 
 import at.easydiet.businesslogic.ParameterTableViewController;
@@ -194,6 +195,7 @@ public class ParameterTableView extends TableView {
 					}
 				});
 
+		this.setSort(this.getColumns().get(0).getName(), SortDirection.ASCENDING);
 	}
 	
 	/**

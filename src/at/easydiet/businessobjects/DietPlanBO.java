@@ -353,13 +353,13 @@ public class DietPlanBO implements IDietParameterizable, Comparable<DietPlanBO> 
 		if (plan.getStart() == null && this.getStart() == null) {
 			return 0;
 		}
-		if (this.getName() == null) {
+		if (this.getStart() == null) {
 			return 1;
 		}
-		if (plan.getName() == null) {
+		if (plan.getStart() == null) {
 			return -1;
 		}
-		return this.getName().compareTo(plan.getName());
+		return this.getStart().compareTo(plan.getStart());
 	}
 
 }

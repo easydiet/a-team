@@ -8,6 +8,7 @@ import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.ComponentMouseButtonListener;
+import org.apache.pivot.wtk.SortDirection;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.Mouse.Button;
 
@@ -39,6 +40,8 @@ public class DietTreatmentDetailView extends EasyDietContentView implements
     {
         _dietPlanTable.setTableData(DietTreatmentDetailViewController
                 .getInstance().getDietPlans());
+        _dietPlanTable.setSort(_dietPlanTable.getColumns().get(0).getName(), SortDirection.ASCENDING);
+        
         _dietPlanTable.getComponentMouseButtonListeners().add(new ComponentMouseButtonListener.Adapter()
         {
             @Override

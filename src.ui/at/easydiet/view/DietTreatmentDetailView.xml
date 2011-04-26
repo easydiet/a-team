@@ -1,101 +1,210 @@
-<easy:DietTreatmentDetailView xmlns:bxml="http://pivot.apache.org/bxml"
-xmlns:easy="at.easydiet.view"
-xmlns:easycontent="at.easydiet.view.content"
-xmlns="org.apache.pivot.wtk">
+<easy:DietTreatmentDetailView
+	xmlns:bxml="http://pivot.apache.org/bxml"
+	xmlns:easy="at.easydiet.view"
+	xmlns:easycontent="at.easydiet.view.content"
+	xmlns="org.apache.pivot.wtk"
+>
 	<navigationButtons>
-		<easy:EasyDietContentView.NavigationButton text="Dashboard" view="DashboardView" />
-		<easy:PatientNavigationButton view="PatientDetailView" />
+		<easy:EasyDietContentView.NavigationButton
+			text="Dashboard"
+			view="DashboardView" />
+		<easy:PatientNavigationButton
+			view="PatientDetailView" />
 		<easy:DietTreatmentNavigationButton />
 	</navigationButtons>
 	<toolbarButtons>
-		<easy:EasyDietContentView.ToolbarButton action="createDietPlan" text="Diätplan anlegen" icon="@diet_add.png" />
-		<easy:EasyDietContentView.ToolbarButton action="todo" text="Kontaktjournaleintrag anlegen" icon="@contact_journal_add.png" />
-		<easy:EasyDietContentView.ToolbarButton action="todo" text="Ernährungsprotokoll anlegen" icon="@report_add.png" />
-		<easy:EasyDietContentView.ToolbarButton action="showHelp" text="Hilfe" icon="@help.png" />
+		<easy:EasyDietContentView.ToolbarButton
+			action="createDietPlan"
+			text="Diätplan anlegen"
+			icon="@diet_add.png" />
+		<easy:EasyDietContentView.ToolbarButton
+			action="todo"
+			text="Kontaktjournaleintrag anlegen"
+			icon="@contact_journal_add.png" />
+		<easy:EasyDietContentView.ToolbarButton
+			action="todo"
+			text="Ernährungsprotokoll anlegen"
+			icon="@report_add.png" />
+		<easy:EasyDietContentView.ToolbarButton
+			action="showHelp"
+			text="Hilfe"
+			icon="@help.png" />
 	</toolbarButtons>
-	<Form styles="{fill:true}">
-		<Form.Section heading="Diätpläne">
-			<Border styleName="infoBox">
-				<easy:ImageLabel image="@info_small.png" text="Dies sind die Diätpläne welche bereits für diese Diät angelegt wurden. Klicken Sie Doppelt auf einen vorhandenen Eintrag um diesen zu bearbeiten. In der Symbolleiste finden Sie einen Button mit welchem Sie neue Pläne anlegen können" />
+	<Form
+		styles="{fill:true}"
+	>
+		<Form.Section
+			heading="Diätpläne"
+		>
+			<Border
+				styleName="infoBox"
+			>
+				<easy:ImageLabel
+					image="@info_small.png"
+					text="Dies sind die Diätpläne welche bereits für diese Diät angelegt wurden. Klicken Sie Doppelt auf einen vorhandenen Eintrag um diesen zu bearbeiten. In der Symbolleiste finden Sie einen Button mit welchem Sie neue Pläne anlegen können" />
 			</Border>
 			<Border>
-				<ScrollPane preferredHeight="200"
-				horizontalScrollBarPolicy="fill"
-				verticalScrollBarPolicy="fill_to_capacity">
-					<TableView bxml:id="_dietPlanTable" selectMode="single">
-					<columns>
-							<TableView.Column name="Start" width="150" headerData="Von">
+				<ScrollPane
+					preferredHeight="200"
+					horizontalScrollBarPolicy="fill"
+					verticalScrollBarPolicy="fill_to_capacity"
+				>
+					<TableView
+						bxml:id="_dietPlanTable"
+						selectMode="single"
+					>
+						<columns>
+							<TableView.Column
+								name="Start"
+								width="150"
+								headerData="Von"
+							>
 								<cellRenderer>
 									<easycontent:DateCellRenderer />
 								</cellRenderer>
 							</TableView.Column>
-							<TableView.Column name="End" width="150" headerData="Bis">
+							<TableView.Column
+								name="End"
+								width="150"
+								headerData="Bis"
+							>
 								<cellRenderer>
 									<easycontent:DateCellRenderer />
 								</cellRenderer>
 							</TableView.Column>
-							<TableView.Column name="Name" width="450" headerData="Name"/>
+							<TableView.Column
+								name="Name"
+								width="450"
+								headerData="Name" />
 						</columns>
+						<tableViewSortListeners>
+							function sortChanged(tableView) {
+							var tableData = tableView.getTableData();
+							tableData.setComparator(new org.apache.pivot.wtk.content.TableViewRowComparator(tableView));
+							}
+						</tableViewSortListeners>
 					</TableView>
 					<columnHeader>
-						<TableViewHeader tableView="$_dietPlanTable"/>
+						<TableViewHeader
+							tableView="$_dietPlanTable" sortMode="single_column"/>
 					</columnHeader>
 				</ScrollPane>
 			</Border>
 		</Form.Section>
-		<Form.Section heading="Kontaktjournal">
-			<Border styleName="infoBox">
-				<easy:ImageLabel image="@info_small.png" text="Alle Kontakte mit dem Patienten werden in diesem Kontaktjournal abgelegt." />
+		<Form.Section
+			heading="Kontaktjournal"
+		>
+			<Border
+				styleName="infoBox"
+			>
+				<easy:ImageLabel
+					image="@info_small.png"
+					text="Alle Kontakte mit dem Patienten werden in diesem Kontaktjournal abgelegt." />
 			</Border>
 			<Border>
-				<ScrollPane preferredHeight="200"
-				horizontalScrollBarPolicy="fill"
-				verticalScrollBarPolicy="fill_to_capacity">
-					<TableView bxml:id="_contactJournalTable" selectMode="single">
+				<ScrollPane
+					preferredHeight="200"
+					horizontalScrollBarPolicy="fill"
+					verticalScrollBarPolicy="fill_to_capacity"
+				>
+					<TableView
+						bxml:id="_contactJournalTable"
+						selectMode="single"
+					>
 						<columns>
-							<TableView.Column name="Date" width="150" headerData="Datum">
+							<TableView.Column
+								name="Date"
+								width="150"
+								headerData="Datum"
+							>
 								<cellRenderer>
 									<easycontent:DateCellRenderer />
 								</cellRenderer>
 							</TableView.Column>
-							<TableView.Column name="ContactType" width="450" headerData="Art">
+							<TableView.Column
+								name="ContactType"
+								width="450"
+								headerData="Art"
+							>
 								<cellRenderer>
 									<easycontent:NameCellRenderer />
 								</cellRenderer>
 							</TableView.Column>
-							<TableView.Column name="CreatedBy" width="150" headerData="Ersteller">
+							<TableView.Column
+								name="CreatedBy"
+								width="150"
+								headerData="Ersteller"
+							>
 								<cellRenderer>
 									<easycontent:NameCellRenderer />
 								</cellRenderer>
 							</TableView.Column>
 						</columns>
+						<tableViewSortListeners>
+							function sortChanged(tableView) {
+							var
+							tableData = tableView.getTableData();
+							tableData.setComparator(new
+							org.apache.pivot.wtk.content.TableViewRowComparator(tableView));
+							}
+						</tableViewSortListeners>
 					</TableView>
 					<columnHeader>
-						<TableViewHeader tableView="$_contactJournalTable"/>
+						<TableViewHeader
+							tableView="$_contactJournalTable"
+							sortMode="single_column" />
 					</columnHeader>
 				</ScrollPane>
 			</Border>
 		</Form.Section>
-		<Form.Section heading="Ernährungsprotokoll">
-			<Border styleName="infoBox">
-				<easy:ImageLabel image="@info_small.png" text="Alle Ernährungsprotokolle welche während der Behandlungen angelegt wurden, sind hier aufgelistet." />
+		<Form.Section
+			heading="Ernährungsprotokoll"
+		>
+			<Border
+				styleName="infoBox"
+			>
+				<easy:ImageLabel
+					image="@info_small.png"
+					text="Alle Ernährungsprotokolle welche während der Behandlungen angelegt wurden, sind hier aufgelistet." />
 			</Border>
 			<Border>
-				<ScrollPane preferredHeight="200"
-				horizontalScrollBarPolicy="fill"
-				verticalScrollBarPolicy="fill_to_capacity">
-					<TableView bxml:id="_nutritionProtocolTable" selectMode="single">
+				<ScrollPane
+					preferredHeight="200"
+					horizontalScrollBarPolicy="fill"
+					verticalScrollBarPolicy="fill_to_capacity"
+				>
+					<TableView
+						bxml:id="_nutritionProtocolTable"
+						selectMode="single"
+					>
 						<columns>
-							<TableView.Column name="Date" width="375" headerData="Von">
+							<TableView.Column
+								name="Date"
+								width="375"
+								headerData="Von"
+							>
 								<cellRenderer>
 									<easycontent:DateCellRenderer />
 								</cellRenderer>
 							</TableView.Column>
-							<TableView.Column name="Name" width="375" headerData="Name"/>
+							<TableView.Column
+								name="Name"
+								width="375"
+								headerData="Name" />
 						</columns>
+						<tableViewSortListeners>
+							function sortChanged(tableView) {
+							var
+							tableData = tableView.getTableData();
+							tableData.setComparator(new
+							org.apache.pivot.wtk.content.TableViewRowComparator(tableView));
+							}
+						</tableViewSortListeners>
 					</TableView>
 					<columnHeader>
-						<TableViewHeader tableView="$_nutritionProtocolTable"/>
+						<TableViewHeader
+							tableView="$_nutritionProtocolTable"
+							sortMode="single_column" />
 					</columnHeader>
 				</ScrollPane>
 			</Border>

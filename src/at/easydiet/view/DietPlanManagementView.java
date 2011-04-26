@@ -37,7 +37,7 @@ public abstract class DietPlanManagementView extends EasyDietContentView impleme
 
         // parameterTableView
         _dietPlanParameterTableView = (ParameterTableView) namespace
-                .get("dietPlanParameterTableView");
+                .get("parameterTableView");
 
         final Border errorBorder = (Border) namespace.get("errorBorder");
         ListView errorBox = (ListView) namespace.get("errorBox");
@@ -74,7 +74,7 @@ public abstract class DietPlanManagementView extends EasyDietContentView impleme
         // start:parameterTableView
         // add button listeners
         Button addDietPlanParameterButton = (Button) namespace
-                .get("addDietPlanParameters");
+                .get("addTableViewParameters");
         addDietPlanParameterButton.getButtonPressListeners().add(
                 new ButtonPressListener()
                 {
@@ -86,7 +86,7 @@ public abstract class DietPlanManagementView extends EasyDietContentView impleme
                 });
 
         Button removeDietPlanParameterButton = (Button) namespace
-                .get("removeDietPlanParameter");
+                .get("removeTableViewParameter");
         removeDietPlanParameterButton.getButtonPressListeners().add(
                 new ButtonPressListener()
                 {

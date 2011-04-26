@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BoxPane
+	orientation="vertical"
+	styles="{padding: 5}"
+>
+	<Border>
+		<ScrollPane
+			preferredHeight="150"
+		>
+			<easy:ParameterTableView
+				bxml:id="parameterTableView"
+			>
+				<columns>
+					<TableView.Column
+						name="parameterDefinition.name"
+						headerData="Definition"
+						width="150"
+					>
+						<cellRenderer>
+							<easycontent:ParameterCellRenderer />
+						</cellRenderer>
+					</TableView.Column>
+					<TableView.Column
+						name="checkOperator.name"
+						headerData="Operator"
+						width="100"
+					>
+						<cellRenderer>
+							<easycontent:ParameterCellRenderer />
+						</cellRenderer>
+					</TableView.Column>
+					<TableView.Column
+						name="value"
+						headerData="Wert"
+						width="100"
+					>
+						<cellRenderer>
+							<easycontent:ParameterCellRenderer />
+						</cellRenderer>
+					</TableView.Column>
+					<TableView.Column
+						name="parameterDefinitionUnit.name"
+						headerData="Einheit"
+						width="100"
+					>
+						<cellRenderer>
+							<easycontent:ParameterCellRenderer />
+						</cellRenderer>
+					</TableView.Column>
+					<TableView.Column
+						name="validationResult"
+						width="-1"
+					>
+						<cellRenderer>
+							<easycontent:ParameterCellRenderer
+								errorImageVisible="true" />
+						</cellRenderer>
+					</TableView.Column>
+				</columns>
+				<rowEditor>
+					<easy:EasyTableViewRowEditor
+						editEffect="horizontal_slide"
+					>
+						<cellEditors>
+							<parameterDefinition.name>
+								<ListButton
+									selectedItemKey="parameterDefinition"
+									selectedItemBindType="store" />
+							</parameterDefinition.name>
+							<checkOperator.name>
+								<ListButton
+									selectedItemKey="checkOperator"
+									selectedItemBindType="store" />
+							</checkOperator.name>
+							<value>
+								<TextInput
+									strictValidation="true"
+									textKey="value"
+								>
+									<validator>
+										<easycontent:QuantityValidator />
+									</validator>
+									<textBindMapping>
+										<easycontent:QuantityBindMapping />
+									</textBindMapping>
+								</TextInput>
+							</value>
+							<parameterDefinitionUnit.name>
+								<ListButton
+									selectedItemKey="parameterDefinitionUnit"
+									selectedItemBindType="store" />
+							</parameterDefinitionUnit.name>
+							<validationResult>
+								<Label />
+							</validationResult>
+						</cellEditors>
+					</easy:EasyTableViewRowEditor>
+				</rowEditor>
+			</easy:ParameterTableView>
+			<columnHeader>
+				<TableViewHeader
+					tableView="$parameterTableView"
+					sortMode="single_column" />
+			</columnHeader>
+		</ScrollPane>
+	</Border>
+	<BoxPane>
+		<easy:SimpleButton
+			text="Parameter hinzufügen"
+			bxml:id="addTableViewParameters" />
+		<easy:SimpleButton
+			text="Parameter entfernen"
+			bxml:id="removeTableViewParameter" />
+	</BoxPane>
+</BoxPane>

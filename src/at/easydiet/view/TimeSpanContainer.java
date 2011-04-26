@@ -242,12 +242,12 @@ public class TimeSpanContainer extends BoxPane
 
             // start: parameterTableView
             _timeSpanParameterTableView = (ParameterTableView) serializer
-                    .getNamespace().get("timeSpanParameterTableView");
+                    .getNamespace().get("parameterTableView");
             _timeSpanParameterTableView.initialize();
             // TODO: setParameterProvider - but where?
 
             _addTimeSpanParameterButton = (Button) serializer.getNamespace()
-                    .get("addTimeSpanParameters");
+                    .get("addTableViewParameters");
             _addTimeSpanParameterButton.getButtonPressListeners().add(
                     new ButtonPressListener()
                     {
@@ -259,7 +259,7 @@ public class TimeSpanContainer extends BoxPane
                     });
 
             _removeTimeSpanParameterButton = (Button) serializer.getNamespace()
-                    .get("removeTimeSpanParameter");
+                    .get("removeTableViewParameter");
             _removeTimeSpanParameterButton.getButtonPressListeners().add(
                     new ButtonPressListener()
                     {

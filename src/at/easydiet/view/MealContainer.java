@@ -75,11 +75,11 @@ public class MealContainer extends BoxPane
             
          //start: parameterTableView
 			_mealParameterTableView = (ParameterTableView) serializer
-					.getNamespace().get("mealParameterTableView");
+					.getNamespace().get("parameterTableView");
 			_mealParameterTableView.initialize();
 
 			_addMealParameterButton = (Button) serializer.getNamespace()
-					.get("addMealParameters");
+					.get("addTableViewParameters");
 			_addMealParameterButton.getButtonPressListeners().add(
 					new ButtonPressListener() {
 
@@ -89,7 +89,7 @@ public class MealContainer extends BoxPane
 					});
 
 			_removeMealParameterButton = (Button) serializer.getNamespace()
-					.get("removeMealParameter");
+					.get("removeTableViewParameter");
 			_removeMealParameterButton.getButtonPressListeners().add(
 					new ButtonPressListener() {
 
