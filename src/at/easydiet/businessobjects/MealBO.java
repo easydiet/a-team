@@ -11,7 +11,7 @@ import at.easydiet.model.MealLine;
 /**
  * This class encapsules a Meal instance.
  */
-public class MealBO
+public class MealBO implements IDietParameterizable
 {
 	private Meal _model;
 	
