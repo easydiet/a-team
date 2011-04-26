@@ -147,8 +147,15 @@
 
 												<value>
 													<TextInput
+														strictValidation="true"
 														textKey="value"
 													>
+														<validator>
+															<easycontent:QuantityValidator />
+														</validator>
+														<textBindMapping>
+															<easycontent:QuantityBindMapping />
+														</textBindMapping>
 													</TextInput>
 												</value>
 
