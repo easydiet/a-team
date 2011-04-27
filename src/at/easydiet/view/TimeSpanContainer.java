@@ -226,7 +226,7 @@ public class TimeSpanContainer extends BoxPane
         try
         {
             Border content = (Border) serializer.readObject(
-                    TimeSpanContainer.class, "TimeSpanContainerContent.xml");
+                    TimeSpanContainer.class, "TimeSpanContainerContent" + ViewController.getInstance().PIVOT_FILE_EXTENSION);
             add(content);
             _startDateButton = (CalendarButton) serializer.getNamespace().get(
                     "startDate");

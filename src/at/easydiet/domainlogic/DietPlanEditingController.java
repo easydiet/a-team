@@ -304,7 +304,7 @@ public class DietPlanEditingController
         {
 
             String error = String
-                    .format("Der Zielparameter '%s' des Objektes '%s' wird nicht eingehalten. Der Gesamtwert %f%s ist %s %s%s",
+                    .format("Zielparameter '%s' von '%s' wird nicht eingehalten: %.2f%s ist %s %s%s",
                             validationResult.getDietParameter()
                                     .getParameterDefinition().getName(),
                             validationResult.getAffectedObject()

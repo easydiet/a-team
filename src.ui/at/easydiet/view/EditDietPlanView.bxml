@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<easy:CreateDietPlanView xmlns:bxml="http://pivot.apache.org/bxml"
+
+<easy:EditDietPlanView xmlns:bxml="http://pivot.apache.org/bxml"
 	xmlns:easy="at.easydiet.view" xmlns:easycontent="at.easydiet.view.content"
 	xmlns="org.apache.pivot.wtk">
 	<navigationButtons>
@@ -9,13 +10,13 @@
 		<easy:DietTreatmentNavigationButton
 			view="DietTreatmentDetailView" />
 		<easy:EasyDietContentView.NavigationButton
-			text="Diätplan anlegen" />
+			text="Diätplan bearbeiten" />
 	</navigationButtons>
 	<toolbarButtons>
 		<easy:EasyDietContentView.ToolbarButton
 			text="Speichern" icon="@save.png" bxml:id="save" />
 		<easy:EasyDietContentView.ToolbarButton
-			text="Validieren" icon="@validate.png" bxml:id="validate"/>
+			text="Validieren" icon="@validate.png"  bxml:id="validate" />
 		<easy:EasyDietContentView.ToolbarButton
 			text="GUI Aktualisieren" icon="@refresh.png" bxml:id="refreshUI" />
 		<easy:EasyDietContentView.ToolbarButton
@@ -29,7 +30,7 @@
 			</itemRenderer>
 		</ListView>
 	</Border>
-	<Label text="Neuer Diätplan" />
+	<Label text="Diäplan bearbeiten" />
 	<Border styles="{padding: {left: 5}, color:'#d0d0d0'}">
 		<Rollup>
 			<heading>
@@ -37,14 +38,14 @@
 					<Label text="Zielparameter des Diätplans festlegen" />
 				</BoxPane>
 			</heading>
-			<bxml:include bxml:id="parameterTableViewTemplate"
-	src="parameterView.bxml" />
+			<bxml:include
+	bxml:id="parameterTableViewTemplate"
+	src="parameterTableViewTemplate.bxml" />
 		</Rollup>
 	</Border>
-	<!-- end parameterview -->
 	<easy:SimpleButton text="Neuer Zeitraum" bxml:id="createTimeSpanTop" />
 	<BoxPane bxml:id="timeSpanContainer" orientation="vertical"
 		styles="{fill:true}">
 	</BoxPane>
 	<easy:SimpleButton text="Neuer Zeitraum" bxml:id="createTimeSpanBottom" />
-</easy:CreateDietPlanView>
+</easy:EditDietPlanView>

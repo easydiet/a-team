@@ -44,7 +44,7 @@
 					</heading>
 					<bxml:include
 	bxml:id="parameterTableViewTemplate"
-	src="parameterView.bxml" />
+	src="parameterTableViewTemplate.bxml" />
 				</Rollup>
 			</BoxPane>
 			<!-- END: Parameter of Meal -->

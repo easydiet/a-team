@@ -15,6 +15,7 @@ import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Window;
 
 import at.easydiet.view.EasyDietMainWindow;
+import at.easydiet.view.ViewController;
 
 public class EasyDietApplication implements Application
 {
@@ -53,7 +54,7 @@ public class EasyDietApplication implements Application
 
         BXMLSerializer bxmlSerializer = new BXMLSerializer();
         window = (Window) bxmlSerializer.readObject(EasyDietMainWindow.class,
-                "EasyDietMainWindow.xml");
+                "EasyDietMainWindow" + ViewController.getInstance().PIVOT_FILE_EXTENSION);
         window.open(display);
     }
 

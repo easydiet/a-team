@@ -67,7 +67,7 @@ public class MealContainer extends BoxPane
         try
         {
             Border content = (Border) serializer.readObject(
-                    TimeSpanContainer.class, "MealContainerContent.xml");
+                    TimeSpanContainer.class, "MealContainerContent" + ViewController.getInstance().PIVOT_FILE_EXTENSION);
             
 			_parameterTableViewTemplate = (ParameterTableViewTemplate) serializer
 					.getNamespace().get("parameterTableViewTemplate");
