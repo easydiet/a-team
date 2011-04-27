@@ -166,13 +166,8 @@ public class DietParameterUnitController
             throw new OperationNotSupportedException("No converter available for those units");
         }
         
-        // 1 fromUnit --> converter.value toUnit
-        // fromValue fromUnit --> x
-        
-        // x = (fromValue * converter.value) / 1
-        float multiplier = _unitConverters.get(from).get(to);
-        
-        return fromValue * multiplier;        
+        float divisor = _unitConverters.get(from).get(to);
+        return fromValue / divisor;        
     }
 
     /**

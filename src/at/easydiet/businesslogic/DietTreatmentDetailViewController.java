@@ -1,26 +1,27 @@
 package at.easydiet.businesslogic;
 
-import org.apache.pivot.collections.List;
-
-import at.easydiet.businessobjects.ContactJournalBO;
-import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.DietTreatmentBO;
-import at.easydiet.businessobjects.NutritionProtocolBO;
 import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.DietTreatmentDAO;
+import at.easydiet.view.DietTreatmentDetailView;
 
+/**
+ * This controller provides data and functions for the
+ * {@link DietTreatmentDetailView}
+ */
 public class DietTreatmentDetailViewController
 {
-    public static final org.apache.log4j.Logger      LOG = org.apache.log4j.Logger
+    private static final org.apache.log4j.Logger     LOG = org.apache.log4j.Logger
                                                                  .getLogger(DietTreatmentDetailViewController.class);
 
     private DietTreatmentBO                          _dietTreatment;
-    private List<DietPlanBO>                    _dietPlans;
-    private List<ContactJournalBO>              _contactJournals;
-    private List<NutritionProtocolBO>           _nutritionProtocols;
 
     private static DietTreatmentDetailViewController _singleton;
 
+    /**
+     * Returns a globally unique instance of this class. 
+     * @return a globally unique instance which gets initiated on the first call.
+     */
     public static DietTreatmentDetailViewController getInstance()
     {
         if (_singleton == null)
@@ -30,55 +31,56 @@ public class DietTreatmentDetailViewController
         return _singleton;
     }
 
+    /**
+     * Initializes a new instance of the {@link DietTreatmentDetailViewController} class.
+     */
     private DietTreatmentDetailViewController()
     {
-
+        // Singleton
     }
 
+    /**
+     * Gets the currently selected {@link DietTreatmentBO} within this application.
+     * @return the currently selected {@link DietTreatmentBO}
+     * @see PatientDetailViewController#getPatient()
+     */
     public DietTreatmentBO getDietTreatment()
     {
         return _dietTreatment;
     }
 
+    /**
+     * Sets the selected {@link DietTreatmentBO} within this application.
+     * @param dietTreatment
+     */
     public void setDietTreatment(DietTreatmentBO dietTreatment)
     {
         _dietTreatment = dietTreatment;
         reloadTreatmentData();
     }
 
-    public List<DietPlanBO> getDietPlans()
-    {
-        return _dietPlans;
-    }
-
-    public List<ContactJournalBO> getContactJournals()
-    {
-        return _contactJournals;
-    }
-
-    public void reloadTreatmentData()
+    /**
+     * Updates the cached lists of the dietTreatment
+     */
+    private void reloadTreatmentData()
     {
         if (_dietTreatment == null) return;
-        _dietPlans = _dietTreatment.getDietPlans();
-        _contactJournals = _dietTreatment.getContactJournals();
-        _nutritionProtocols = _dietTreatment.getNutritionProtocols();
-    }
-
-    public List<NutritionProtocolBO> getNutritionProcotols()
-    {
-        return _nutritionProtocols;
-    }
-
-    public void refresh()
-    {
-        DietTreatmentDAO dao = DAOFactory.getInstance().getDietTreatmentDAO();
-        dao.refresh(_dietTreatment.getModel());
         _dietTreatment.updateContactJournalsCache();
         _dietTreatment.updateDietParametersCache();
         _dietTreatment.updateDietPlansCache();
         _dietTreatment.updateNutritionProtocolsCache();
         _dietTreatment.updatePatientStatesCache();
         _dietTreatment.updateSystemUsersCache();
+    }
+
+    /**
+     * Refreshes the currently loaded diettreamtent and it's data.
+     */
+    public void refresh()
+    {
+        LOG.trace("Refreshing DietTreatment");
+        DietTreatmentDAO dao = DAOFactory.getInstance().getDietTreatmentDAO();
+        dao.refresh(_dietTreatment.getModel());
         reloadTreatmentData();
     }
 }

@@ -39,7 +39,7 @@ public class DietTreatmentDetailView extends EasyDietContentView implements
     public void setDietTreatment(DietTreatmentBO treatment)
     {
         _dietPlanTable.setTableData(DietTreatmentDetailViewController
-                .getInstance().getDietPlans());
+                .getInstance().getDietTreatment().getDietPlans());
         _dietPlanTable.setSort(_dietPlanTable.getColumns().get(0).getName(), SortDirection.ASCENDING);
         
         _dietPlanTable.getComponentMouseButtonListeners().add(new ComponentMouseButtonListener.Adapter()
@@ -57,9 +57,9 @@ public class DietTreatmentDetailView extends EasyDietContentView implements
             }
         });
         _contactJournalTable.setTableData(DietTreatmentDetailViewController
-                .getInstance().getContactJournals());
+                .getInstance().getDietTreatment().getContactJournals());
         _nutritionProtocolTable.setTableData(DietTreatmentDetailViewController
-                .getInstance().getNutritionProcotols());
+                .getInstance().getDietTreatment().getNutritionProtocols());
     }
 
     protected void editDietPlan(DietPlanBO selectedRow)
