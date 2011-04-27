@@ -12,6 +12,9 @@ import at.easydiet.view.EasyDietContentView.ToolbarButton;
 
 public class ViewController
 {
+	public static final String PIVOT_FILE_EXTENSION = ".bxml";
+	
+	
     private static ViewController _singleton;
 
     private ViewController()
@@ -65,7 +68,7 @@ public class ViewController
             try
             {
                 EasyDietContentView newView = (EasyDietContentView) new BXMLSerializer()
-                        .readObject(ViewController.class, file + ".xml");
+                        .readObject(ViewController.class, file + PIVOT_FILE_EXTENSION);
 
                 // do onLoad method
                 newView.onLoad();

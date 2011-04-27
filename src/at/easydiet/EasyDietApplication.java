@@ -15,6 +15,7 @@ import org.apache.pivot.wtk.Theme;
 import org.apache.pivot.wtk.Window;
 
 import at.easydiet.view.EasyDietMainWindow;
+import at.easydiet.view.ViewController;
 
 /**
  * This is the main application class for starting EasyDiet.
@@ -85,8 +86,9 @@ public class EasyDietApplication implements Application
         // Startup mainwindow
         LOG.trace("Loading UI");
         BXMLSerializer bxmlSerializer = new BXMLSerializer();
+
         _mainWindow = (Window) bxmlSerializer.readObject(EasyDietMainWindow.class,
-                "EasyDietMainWindow.xml");
+                "EasyDietMainWindow" + ViewController.getInstance().PIVOT_FILE_EXTENSION);
         _mainWindow.open(display);
     }
 

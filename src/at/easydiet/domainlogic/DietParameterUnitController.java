@@ -31,7 +31,7 @@ public class DietParameterUnitController
         kg.put("kg", 1f);
         kg.put("g", 1/1000f);
         kg.put("mg", (1 / 1000f)/1000f);
-        kg.put("myg", ((1 / 1000f) / 1000f)/1000f); // micro
+        kg.put("myg", ((1 / 1000f) / 1000f) /1000f); // micro
         // kg.put("m?g", (((1 / 1000f) / 1000f)/1000f)/1000f); ???
         
         // converters for g
