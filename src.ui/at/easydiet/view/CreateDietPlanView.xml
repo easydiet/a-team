@@ -13,13 +13,13 @@
 	</navigationButtons>
 	<toolbarButtons>
 		<easy:EasyDietContentView.ToolbarButton
-			text="Speichern" icon="@save.png" bxml:id="save" />
+			text="Speichern" icon="@save.png" bxml:id="save"  tooltipText="Den aktuellen Diätplan in der Datenbank speichern." />
 		<easy:EasyDietContentView.ToolbarButton
-			text="Validieren" icon="@validate.png" bxml:id="validate"/>
+			text="Validieren" icon="@validate.png" bxml:id="validate" tooltipText="Den aktuellen Diätplan auf seine Korrektheit und Vollständigkeit prüfen." />
 		<easy:EasyDietContentView.ToolbarButton
-			text="GUI Aktualisieren" icon="@refresh.png" bxml:id="refreshUI" />
+			text="GUI Aktualisieren" icon="@refresh.png" bxml:id="refreshUI"  tooltipText="Die Oberfläche neu aufbauen um evtl. Anzeigefehler zu korrigiern." />
 		<easy:EasyDietContentView.ToolbarButton
-			action="showHelp" text="Hilfe" icon="@help.png" />
+			action="showHelp" text="Hilfe" icon="@help.png"  tooltipText="Öffnet die Hilfe für das Erstellen neuer Diätpläne." />
 	</toolbarButtons>
 
 	<Border styleName="errorBox" bxml:id="errorBorder">

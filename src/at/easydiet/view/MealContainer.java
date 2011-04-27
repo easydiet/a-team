@@ -315,6 +315,7 @@ public class MealContainer extends BoxPane
         {
             DietPlanEditingController.getInstance().removeMealLine(
                     selectedRows.get(i));
+            _controller.getMeal().updateMealLinesCache();
         }
         updateUI();
     }

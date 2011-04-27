@@ -148,8 +148,8 @@ public class DietPlanEditingController
             HibernateUtil.currentSession().beginTransaction();
             DietPlanDAO dao = DAOFactory.getInstance().getDietPlanDAO();
             dao.makePersistent(_dietPlan.getModel());
-            _dietPlan = null;
             HibernateUtil.currentSession().getTransaction().commit();
+            _dietPlan = null;
             return true;
         }
         catch (HibernateException e)
