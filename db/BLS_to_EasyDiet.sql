@@ -1065,7 +1065,8 @@ INSERT INTO fhv_easy.NutrimentParameter (Value, ParameterDefinitionId, Parameter
 
 		
 -- Update für alle NutrimentParameter das die Einheit ohne /100g da steht
-UPDATE fhv_easy.NutrimentParameter a SET a.ParameterDefinitionUnitId = (
-	SELECT c.ParameterDefinitionUnitId FROM fhv_easy.ParameterDefinitionUnit b 
-		INNER JOIN fhv_easy.ParameterDefinitionUnit c ON c.Name = REPLACE(b.Name, '/100g', '') 
-);	  
+UPDATE fhv.NutrimentParameter a SET a.ParameterDefinitionUnitId = (
+	SELECT c.ParameterDefinitionUnitId FROM fhv.ParameterDefinitionUnit b 
+		INNER JOIN fhv.ParameterDefinitionUnit c ON c.Name = REPLACE(b.Name, '/100g', '')
+    WHERE b.ParameterDefinitionUnitId = a.ParameterDefinitionUnitId
+);    

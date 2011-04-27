@@ -10,15 +10,20 @@ import org.hibernate.HibernateException;
 import at.easydiet.EasyDietApplication;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.DietTreatmentBO;
+import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.MealLineBO;
+import at.easydiet.businessobjects.PlanTypeBO;
 import at.easydiet.businessobjects.RecipeBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.DietPlanDAO;
 import at.easydiet.dao.HibernateUtil;
 import at.easydiet.dao.MealDAO;
+import at.easydiet.domainlogic.DietParameterController.ValidationResult;
 import at.easydiet.util.CollectionUtils;
+import at.easydiet.util.StringUtils;
+import at.easydiet.validation.ParameterValidator;
 
 public class DietPlanEditingController
 {
@@ -114,10 +119,12 @@ public class DietPlanEditingController
 
     public boolean saveDietPlan()
     {
-        validateDietPlan();
+        validateDietPlan(true);
+
+        if (getErrors().getLength() > 0) return false;
 
         SimpleDateFormat formatter = new SimpleDateFormat(
-                EasyDietApplication.DATE_FORMAT);
+                EasyDietApplication.DATETIME_FORMAT);
         // generate a good name if it's a new plan
         if (_dietPlan.getDietPlanId() <= 0)
         {
@@ -142,7 +149,7 @@ public class DietPlanEditingController
         }
         catch (HibernateException e)
         {
-        	LOG.error("Could not save dietplan", e);
+            LOG.error("Could not save dietplan", e);
             HibernateUtil.currentSession().getTransaction().rollback();
             return false;
         }
@@ -150,16 +157,125 @@ public class DietPlanEditingController
 
     public void validateDietPlan()
     {
+        validateDietPlan(false);
+    }
+
+    public void validateDietPlan(boolean checkForEmpty)
+    {
         _errors.clear();
-        
+
+        // validate empty elements
+        if (checkForEmpty)
+        {
+            validateEmptyElements();
+        }
+
         // validate all timespans
         validateTimeSpans();
-        
+
         // validate all dietparameters for conflicts
         validateDietParameterConflicts();
-        
+
         // validate all dietparameters if they match for hierarchy
         validateDietPlanParameters();
+
+    }
+
+    public boolean isDietParameterOnlyPlan()
+    {
+        return _dietPlan.getPlanType().equals(
+                PlanTypeBO.NUTRITION_RECOMMENDATION);
+    }
+
+    private void validateEmptyElements()
+    {
+        int planParameterCount = 0;
+
+        for (TimeSpanBO timeSpan : _dietPlan.getTimeSpans())
+        {
+            int timeSpanParameterCount = 0;
+            if (timeSpan.getMeals().getLength() == 0)
+            {
+                getErrors()
+                        .add(String
+                                .format("Kein Mahlzeiten zum Zeitraum '%s' hinzugefügt!",
+                                        timeSpan.getDisplayText()));
+            }
+
+            for (MealBO meal : timeSpan.getMeals())
+            {
+                if (StringUtils.isNullOrWhitespaceOnly(meal.getCode()))
+                {
+                    getErrors()
+                            .add(String
+                                    .format("Kein Code für die Mahlzeit '%s' angegeben!",
+                                            meal.getDisplayText()));
+                }
+                if (StringUtils.isNullOrWhitespaceOnly(meal.getName()))
+                {
+                    getErrors()
+                            .add(String
+                                    .format("Kein Name für die Mahlzeit '%s' angegeben!",
+                                            meal.getDisplayText()));
+                }
+
+                // no meallines required for nutrition recommendations
+                if (!isDietParameterOnlyPlan())
+                {
+                    if (meal.getMealLines().getLength() == 0)
+                    {
+                        getErrors()
+                                .add(String
+                                        .format("Kein Rezepte zur Mahlzeit '%s' hinzugefügt!",
+                                                meal.getDisplayText()));
+                    }
+                }
+                else
+                {
+                    if (meal.getDietParameters().getLength() == 0)
+                    {
+                        getErrors()
+                                .add(String
+                                        .format("Keine Zielparameter zur Mahlzeit '%s' hinzugefügt!",
+                                                meal.getDisplayText()));
+
+                    }
+
+                    // sum parameters for timeSpan
+                    timeSpanParameterCount += meal.getDietParameters()
+                            .getLength();
+                }
+            }
+
+            if (isDietParameterOnlyPlan() && timeSpanParameterCount == 0
+                    && timeSpan.getDietParameters().getLength() == 0)
+            {
+                getErrors()
+                        .add(String
+                                .format("Keine Zielparameter zum Zeitraum '%s' hinzugefügt!",
+                                        timeSpan.getDisplayText()));
+
+            }
+            planParameterCount += timeSpanParameterCount;
+        }
+
+        if (_dietPlan.getTimeSpans().getLength() == 0)
+        {
+            getErrors().add(
+                    String.format(
+                            "Keine Zeiträume im Diätplan '%s' vorhanden!",
+                            _dietPlan.getDisplayText()));
+
+        }
+        else if (isDietParameterOnlyPlan() && planParameterCount == 0
+                && _dietPlan.getDietParameters().getLength() == 0)
+        {
+            getErrors()
+                    .add(String
+                            .format("Keine Zielparameter zum Diätplan '%s' hinzugefügt!",
+                                    _dietPlan.getDisplayText()));
+
+        }
     }
 
     private void validateTimeSpans()
@@ -172,40 +288,68 @@ public class DietPlanEditingController
 
     private void validateDietParameterConflicts()
     {
-        // TODO: Joschi code
+        List<IDietParameterizable> conflicts = ParameterValidator.getInstance().getConflictingComponents();
+        for(IDietParameterizable component : conflicts)
+        {
+        	getErrors().add("Parameterkonflikt in: " + component.getDisplayText());
+        }
     }
 
     private void validateDietPlanParameters()
     {
-//        DietParameter
-//        for (TimeSpanBO timeSpan : _dietPlan.getTimeSpans())
-//        {
-//            validateTimeSpanParameters()
-//        }
+        List<ValidationResult> violations = DietParameterController
+                .getInstance().validateDietPlanDietParameters(_dietPlan);
+
+        for (ValidationResult validationResult : violations)
+        {
+
+            String error = String
+                    .format("Der Zielparameter '%s' des Objektes '%s' wird nicht eingehalten. Der Gesamtwert %f%s ist %s %s%s",
+                            validationResult.getDietParameter()
+                                    .getParameterDefinition().getName(),
+                            validationResult.getAffectedObject()
+                                    .getDisplayText(), validationResult
+                                    .getCurrentValue(), validationResult
+                                    .getDietParameter()
+                                    .getParameterDefinitionUnit().getName(),
+                            validationResult.getErrorType().getDisplayText(),
+                            validationResult.getDietParameter().getValue(),
+                            validationResult.getDietParameter()
+                                    .getParameterDefinitionUnit().getName());
+
+            _errors.add(error);
+        }
     }
 
     private void validateTimeSpan(TimeSpanBO t)
     {
         // check for timespan collisions
-        List<Object> timeSpanCollisions = TimeSpanController.getInstance().validateCollisions(t);
-        
-        // generate error messages 
+        List<Object> timeSpanCollisions = TimeSpanController.getInstance()
+                .validateCollisions(t);
+
+        // generate error messages
         for (Object object : timeSpanCollisions)
         {
-            if(TimeSpanBO.class.isAssignableFrom(object.getClass()))
+            if (TimeSpanBO.class.isAssignableFrom(object.getClass()))
             {
-                _errors.add(String.format("Der Zeitraum '%s' überschneidet sich mit dem Zeitraum '%s'",
-                        t.getDisplayName(), ((TimeSpanBO)object).getDisplayName()));
+                _errors.add(String
+                        .format("Der Zeitraum '%s' überschneidet sich mit dem Zeitraum '%s'",
+                                t.getDisplayText(),
+                                ((TimeSpanBO) object).getDisplayText()));
             }
-            else if(DietPlanBO.class.isAssignableFrom(object.getClass()))
+            else if (DietPlanBO.class.isAssignableFrom(object.getClass()))
             {
-                _errors.add(String.format("Der Zeitraum '%s' überschneidet sich mit dem Diätplan '%s'",
-                        t.getDisplayName(), ((DietPlanBO)object).getName()));
+                _errors.add(String
+                        .format("Der Zeitraum '%s' überschneidet sich mit dem Diätplan '%s'",
+                                t.getDisplayText(),
+                                ((DietPlanBO) object).getName()));
             }
-            else if(DietTreatmentBO.class.isAssignableFrom(object.getClass()))
+            else if (DietTreatmentBO.class.isAssignableFrom(object.getClass()))
             {
-                _errors.add(String.format("Der Zeitraum '%s' überschneidet sich mit der Diätbehandlung '%s'",
-                        t.getDisplayName(), ((DietTreatmentBO)object).getName()));
+                _errors.add(String
+                        .format("Der Zeitraum '%s' überschneidet sich mit der Diätbehandlung '%s'",
+                                t.getDisplayText(),
+                                ((DietTreatmentBO) object).getName()));
             }
         }
     }
@@ -219,9 +363,11 @@ public class DietPlanEditingController
     {
         refresh(true);
     }
+
     public void refresh(boolean refreshDietPlan)
     {
-        if (refreshDietPlan && _dietPlan != null && _dietPlan.getDietPlanId() > 0)
+        if (refreshDietPlan && _dietPlan != null
+                && _dietPlan.getDietPlanId() > 0)
         {
             DietPlanDAO dao = DAOFactory.getInstance().getDietPlanDAO();
             dao.refresh(_dietPlan.getModel());

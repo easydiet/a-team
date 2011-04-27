@@ -136,18 +136,18 @@ public class DietParameterUnitController
      */
     public Set<ParameterDefinitionUnitBO> getCompatibleUnitsFor(ParameterDefinitionUnitBO unit)
     {
-        // if we don't have initialized the converters for this unit yet, do it now
-        if(!_unitConverters.containsKey(unit.getName())) 
+        // if we don't have initialinzed the converters for this unit yet, do it now
+        if(!_unitConverters.containsKey(unit)) 
         {
             buildConverters(unit);
         }
         
-        return _unitConverters.get(unit.getName()).keySet();
+        return _unitConverters.get(unit).keySet();
     }
     
     public boolean canConvert(ParameterDefinitionUnitBO from, ParameterDefinitionUnitBO to)
     {
-        return _unitConverters.get(from).containsKey(to);
+        return getCompatibleUnitsFor(from).contains(to);
     }
     
     /**
@@ -161,7 +161,7 @@ public class DietParameterUnitController
     public float convert(ParameterDefinitionUnitBO from, ParameterDefinitionUnitBO to, float fromValue) throws OperationNotSupportedException
     {
         // get converter 
-        if(!_unitConverters.get(from).containsKey(to))
+        if(!getCompatibleUnitsFor(from).contains(to))
         {
             throw new OperationNotSupportedException("No converter available for those units");
         }
@@ -185,10 +185,13 @@ public class DietParameterUnitController
         Map<ParameterDefinitionUnitBO, Float> unitConverters = new HashMap<ParameterDefinitionUnitBO, Float>();
         _unitConverters.put(unit, unitConverters);
         
-        // get list of conversions of this unit by accessing the name-stored converters 
-        for (Entry<String, Float> converter : _fixedConversions.get(unit.getName()).entrySet())
+        if(_fixedConversions.containsKey(unit.getName()))
         {
-            unitConverters.put(_unitsByName.get(converter.getKey()), converter.getValue());
+	        // get list of conversions of this unit by accessing the name-stored converters 
+	        for (Entry<String, Float> converter : _fixedConversions.get(unit.getName()).entrySet())
+	        {
+	            unitConverters.put(_unitsByName.get(converter.getKey()), converter.getValue());
+	        }
         }
     }
 }

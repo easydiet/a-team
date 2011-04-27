@@ -69,9 +69,16 @@ xmlns="org.apache.pivot.wtk">
 								</cellRenderer>
 							</TableView.Column>
 						</columns>
+						
+						<tableViewSortListeners>
+							function sortChanged(tableView) {
+							var tableData = tableView.getTableData();
+							tableData.setComparator(new org.apache.pivot.wtk.content.TableViewRowComparator(tableView));
+							}
+						</tableViewSortListeners>
 					</TableView>
 					<columnHeader>
-						<TableViewHeader tableView="$_patientStatesTable"/>
+						<TableViewHeader tableView="$_patientStatesTable" sortMode="single_column"/>
 					</columnHeader>
 				</ScrollPane>
 			</Border>
@@ -97,6 +104,13 @@ xmlns="org.apache.pivot.wtk">
 								</cellRenderer>
 							</TableView.Column>
 						</columns>
+						
+						<tableViewSortListeners>
+							function sortChanged(tableView) {
+							var tableData = tableView.getTableData();
+							tableData.setComparator(new org.apache.pivot.wtk.content.TableViewRowComparator(tableView));
+							}
+						</tableViewSortListeners>
 					</TableView>
 					<columnHeader>
 						<TableViewHeader tableView="$_laborReportsTable"/>

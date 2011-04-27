@@ -46,10 +46,7 @@ public class TimeSpanContainer extends BoxPane
     private MealContainerSequence               _mealContainerSequence      = new MealContainerSequence();
     private TimeSpanContainerListenerList       _timeSpanContainerListeners = new TimeSpanContainerListenerList();
 
-    private ParameterTableView                  _timeSpanParameterTableView;
-
-    private Button                              _addTimeSpanParameterButton;
-    private Button                              _removeTimeSpanParameterButton;
+    private ParameterTableViewTemplate 			_parameterTableViewTemplate;
 
     private boolean                             _guiLoading;
 
@@ -70,7 +67,7 @@ public class TimeSpanContainer extends BoxPane
     {
         _timeSpan = timeSpan;
         // parameterTableView
-        _timeSpanParameterTableView.setParameterProvider(timeSpan);
+        _parameterTableViewTemplate.setParameterProvider(timeSpan);
         refreshUI();
     }
 
@@ -240,38 +237,8 @@ public class TimeSpanContainer extends BoxPane
             _deleteButton = (Button) serializer.getNamespace().get(
                     "deleteButton");
 
-            // start: parameterTableView
-            _timeSpanParameterTableView = (ParameterTableView) serializer
-                    .getNamespace().get("timeSpanParameterTableView");
-            _timeSpanParameterTableView.initialize();
-            // TODO: setParameterProvider - but where?
-
-            _addTimeSpanParameterButton = (Button) serializer.getNamespace()
-                    .get("addTimeSpanParameters");
-            _addTimeSpanParameterButton.getButtonPressListeners().add(
-                    new ButtonPressListener()
-                    {
-
-                        public void buttonPressed(Button arg0)
-                        {
-                            addNewParameters();
-                        }
-                    });
-
-            _removeTimeSpanParameterButton = (Button) serializer.getNamespace()
-                    .get("removeTimeSpanParameter");
-            _removeTimeSpanParameterButton.getButtonPressListeners().add(
-                    new ButtonPressListener()
-                    {
-
-                        public void buttonPressed(Button arg0)
-                        {
-                            removeParameter((DietParameterBO) _timeSpanParameterTableView
-                                    .getSelectedRow());
-                        }
-                    });
-            // end: parameterTableView
-
+            _parameterTableViewTemplate = (ParameterTableViewTemplate) serializer.getNamespace().get("parameterTableViewTemplate");
+            
             _mealBox = (BoxPane) serializer.getNamespace().get("mealBox");
 
             // listeners
@@ -281,26 +248,7 @@ public class TimeSpanContainer extends BoxPane
 
                         public void buttonPressed(Button button)
                         {
-                            EasyAlerts
-                                    .warning(
-                                            "Wollen Sie diesen Zeitraum wirklich löschen?",
-                                            EasyAlerts.YES_NO, getWindow(),
-                                            new DialogCloseListener()
-                                            {
-
-                                                public void dialogClosed(
-                                                        Dialog dialog,
-                                                        boolean modal)
-                                                {
-                                                    if (((Alert) dialog)
-                                                            .getSelectedOption()
-                                                            .equals(EasyAlerts.YES))
-                                                    {
-                                                        deleteTimeSpan();
-                                                    }
-                                                }
-
-                                            });
+                            deleteTimeSpan();
                         }
                     });
 
@@ -384,26 +332,22 @@ public class TimeSpanContainer extends BoxPane
 
     private void deleteTimeSpan()
     {
-        getParent().remove(this);
-        DietPlanEditingController.getInstance().deleteTimeSpan(_timeSpan);
-    }
+        EasyAlerts.warning("Wollen Sie diesen Zeitraum wirklich löschen?",
+                EasyAlerts.YES_NO, EasyAlerts.NO, getWindow(), new DialogCloseListener()
+                {
 
-    // start: parameterTableView
-    /**
-     * Adds a new parameter into the view
-     */
-    private void addNewParameters()
-    {
-        _timeSpanParameterTableView.addParameterTemplate();
-    }
+                    public void dialogClosed(Dialog dialog, boolean modal)
+                    {
+                        if (((Alert) dialog).getSelectedOption().equals(
+                                EasyAlerts.YES))
+                        {
+                            getParent().remove(TimeSpanContainer.this);
+                            DietPlanEditingController.getInstance()
+                                    .deleteTimeSpan(_timeSpan);
+                        }
+                    }
 
-    /**
-     * Removes a parameter from the view
-     * @param dietParameter parameter to remove
-     */
-    private void removeParameter(DietParameterBO dietParameter)
-    {
-        _timeSpanParameterTableView.remove(dietParameter);
+                });
+
     }
-    // end: parameterTableView
 }

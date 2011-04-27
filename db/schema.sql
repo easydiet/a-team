@@ -147,7 +147,7 @@
         Info longtext,
         recipe bigint not null,
         unit bigint not null,
-        ParentMealLineId bigint not null,
+        ParentMealLineId bigint,
         MealId bigint not null,
         Idx integer,
         primary key (MealLineId)

@@ -128,4 +128,22 @@ public enum CheckOperatorBO
         }
         return null;
     }
+
+    public String getDisplayText()
+    {
+        switch (this)
+        {
+            case BIGGER:
+                return "größer als";
+            case SMALLER:
+                return "kleiner als";
+            case EQUAL:
+                return "nicht gleich";
+            case EQUALORBIGGER:
+                return "größer gleich";
+            case EQUALORSMALLER:
+                return "kleiner gleich";
+        }
+        return "";
+    }
 }

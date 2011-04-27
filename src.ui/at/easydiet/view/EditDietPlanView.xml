@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <easy:EditDietPlanView xmlns:bxml="http://pivot.apache.org/bxml"
 	xmlns:easy="at.easydiet.view" xmlns:easycontent="at.easydiet.view.content"
 	xmlns="org.apache.pivot.wtk">
@@ -14,7 +16,7 @@
 		<easy:EasyDietContentView.ToolbarButton
 			text="Speichern" icon="@save.png" bxml:id="save" />
 		<easy:EasyDietContentView.ToolbarButton
-			action="todo" text="Validieren" icon="@validate.png" />
+			text="Validieren" icon="@validate.png"  bxml:id="validate" />
 		<easy:EasyDietContentView.ToolbarButton
 			text="GUI Aktualisieren" icon="@refresh.png" bxml:id="refreshUI" />
 		<easy:EasyDietContentView.ToolbarButton
@@ -36,88 +38,9 @@
 					<Label text="Zielparameter des Diätplans festlegen" />
 				</BoxPane>
 			</heading>
-			<BoxPane orientation="vertical" styles="{padding: 5}">
-				<Border>
-					<ScrollPane preferredHeight="150">
-						<easy:ParameterTableView bxml:id="dietPlanParameterTableView">
-							<columns>
-								<TableView.Column name="parameterDefinition.name"
-									headerData="Definition" width="150">
-									<cellRenderer>
-										<easycontent:ParameterCellRenderer />
-									</cellRenderer>
-								</TableView.Column>
-								<TableView.Column name="checkOperator.name"
-									headerData="Operator" width="100">
-									<cellRenderer>
-										<easycontent:ParameterCellRenderer />
-									</cellRenderer>
-								</TableView.Column>
-								<TableView.Column name="value" headerData="Wert"
-									width="100">
-									<cellRenderer>
-										<easycontent:ParameterCellRenderer />
-									</cellRenderer>
-								</TableView.Column>
-								<TableView.Column name="parameterDefinitionUnit.name"
-									headerData="Einheit" width="100">
-									<cellRenderer>
-										<easycontent:ParameterCellRenderer />
-									</cellRenderer>
-								</TableView.Column>
-								<TableView.Column name="validationResult"
-									width="-1">
-									<cellRenderer>
-										<easycontent:ParameterCellRenderer
-											errorImageVisible="true" />
-									</cellRenderer>
-								</TableView.Column>
-							</columns>
-							<rowEditor>
-								<easy:EasyTableViewRowEditor
-									editEffect="horizontal_slide">
-									<cellEditors>
-										<parameterDefinition.name>
-											<ListButton selectedItemKey="parameterDefinition"
-												selectedItemBindType="store" />
-										</parameterDefinition.name>
-										<checkOperator.name>
-											<ListButton selectedItemKey="checkOperator"
-												selectedItemBindType="store" />
-										</checkOperator.name>
-										<value>
-											<TextInput strictValidation="true" textKey="value">
-												<validator>
-													<easycontent:QuantityValidator />
-												</validator>
-												<textBindMapping>
-													<easycontent:QuantityBindMapping />
-												</textBindMapping>
-											</TextInput>
-										</value>
-										<parameterDefinitionUnit.name>
-											<ListButton selectedItemKey="parameterDefinitionUnit"
-												selectedItemBindType="store" />
-										</parameterDefinitionUnit.name>
-										<validationResult>
-											<Label />
-										</validationResult>
-									</cellEditors>
-								</easy:EasyTableViewRowEditor>
-							</rowEditor>
-						</easy:ParameterTableView>
-						<columnHeader>
-							<TableViewHeader tableView="$dietPlanParameterTableView" />
-						</columnHeader>
-					</ScrollPane>
-				</Border>
-				<BoxPane>
-					<easy:SimpleButton text="Parameter hinzufügen"
-						bxml:id="addDietPlanParameters" />
-					<easy:SimpleButton text="Parameter entfernen"
-						bxml:id="removeDietPlanParameter" />
-				</BoxPane>
-			</BoxPane>
+			<bxml:include
+	bxml:id="parameterTableViewTemplate"
+	src="parameterView.bxml" />
 		</Rollup>
 	</Border>
 	<easy:SimpleButton text="Neuer Zeitraum" bxml:id="createTimeSpanTop" />

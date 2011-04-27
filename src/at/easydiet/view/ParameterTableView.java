@@ -5,6 +5,7 @@ import org.apache.pivot.collections.List;
 import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.ListButton;
 import org.apache.pivot.wtk.ListButtonSelectionListener;
+import org.apache.pivot.wtk.SortDirection;
 import org.apache.pivot.wtk.TableView;
 
 import at.easydiet.businesslogic.ParameterTableViewController;
@@ -13,7 +14,6 @@ import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
-import at.easydiet.validation.ParameterValidator;
 import at.easydiet.view.EasyTableViewRowEditor.RowEditorListener;
 import at.easydiet.view.content.ParameterCellRenderer;
 
@@ -27,9 +27,6 @@ public class ParameterTableView extends TableView {
 	private ListButton _definitionListButton;
 	private ListButton _checkOperatorListButton;
 	private ListButton _parameterDefinitionUnitListButton;
-	
-	//used for validation of this tableview
-	private ParameterValidator _validator = new ParameterValidator();
 	
 	public ParameterTableView(List<?> tableData) {
 		super(tableData);
@@ -45,8 +42,10 @@ public class ParameterTableView extends TableView {
 	public void setParameterProvider(IDietParameterizable provider)
 	{
 		setTableData(provider.getDietParameters());
-		refreshView();
 		getController().setParameterProvider(provider);
+		// set the validator into all cell renderers
+		setValidatorToCellRenderers();
+		refreshView();
 	}
 	
 	/**
@@ -58,17 +57,13 @@ public class ParameterTableView extends TableView {
 		{
 			return _controller;
 		}
-		return new ParameterTableViewController();
+		return _controller = new ParameterTableViewController();
 	}
 
 	/**
 	 * initalize this view and set cellrenderers
 	 */
 	public void initialize() {
-
-		// set the validator into all cell renderers
-		setValidatorToCellRenderers();
-
 		// get editor
 		_editor = (EasyTableViewRowEditor) getRowEditor();
 
@@ -200,6 +195,7 @@ public class ParameterTableView extends TableView {
 					}
 				});
 
+		this.setSort(this.getColumns().get(0).getName(), SortDirection.ASCENDING);
 	}
 	
 	/**
@@ -238,7 +234,7 @@ public class ParameterTableView extends TableView {
 	private void setValidatorToCellRenderers() {
 		for (Column col : getColumns()) {
 			((ParameterCellRenderer) col.getCellRenderer())
-					.setValidator(_validator);
+					.setParameterizable(_controller.getParameterProvider());
 		}
 	}
 
@@ -262,10 +258,10 @@ public class ParameterTableView extends TableView {
 	 * Validates this view
 	 * @return true if no conflicts are found
 	 */
-	@SuppressWarnings("unchecked")
 	public boolean validateView()
 	{
-		return _validator.isValid((List<DietParameterBO>)getTableData());
+		return _controller.isValid();
+		//return _validator.isValid((List<DietParameterBO>)getTableData());
 	}
 	
 	/**
