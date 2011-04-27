@@ -98,6 +98,11 @@ public class DietPlanEditingController
     {
         if (selectedRow == null) return;
         selectedRow.getMeal().removeMealLines(selectedRow);
+        // If alternative, remove from parent too
+        if(selectedRow.isAlternative())
+        {
+            selectedRow.getParent().getAlternatives().remove(selectedRow);
+        }
         validateDietPlan();
     }
 
