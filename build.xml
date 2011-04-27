@@ -26,7 +26,7 @@
 		<antcall target="rebuild-src" />
 		<antcall target="package-jar">
 			<param name="binary-name" value="${main-binary}" />
-			<param name="main-class" value="" />
+			<param name="main-class" value="at.easydiet.EasyDietApplication" />
 		</antcall>
 	</target>
 
@@ -43,7 +43,7 @@
 		<delete file="${binary-name}" />
 		<jar destfile="${binary-name}">
 			<fileset dir="${binaries}" includes="**/*.*" />
-			<zipgroupfileset dir="${libraries}" includes="*.jar" excludes="EasyHibernate.jar" />
+			<zipgroupfileset dir="${libraries}" includes="**/*.jar" excludes="EasyHibernate.jar" />
 			<manifest>
 				<attribute name="Main-Class" value="${main-class}" />
 			</manifest>
