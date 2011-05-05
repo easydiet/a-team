@@ -1,0 +1,5 @@
+Diät anlegen (für patienten)
+Parameterset anlegen (allgemein)
+Disfavors anlegen
+    - Erweitern: Was mag er wie gerne
+    - Gar nicht essen vorlieben/abneigungen

@@ -81,7 +81,7 @@ public class PatientDetailViewController
         {
             LOG.error("Couldn't refresh dietplan");
         }
-        _patient.updateDisfavorsCache();
+        _patient.updateLikesCache();
         _patient.updateFamilyanamnesisCache();
         _patient.updateLaborReportsCache();
         _patient.updatePatientStatesCache();

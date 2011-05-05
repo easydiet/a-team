@@ -35,7 +35,7 @@ public class Patient  implements java.io.Serializable
     private Set<PatientState> _patientStates = new HashSet<PatientState>(0);
     private Set<LaborReport> _laborReports = new HashSet<LaborReport>(0);
     private Set<DietTreatment> _treatments = new HashSet<DietTreatment>(0);
-    private Set<Recipe> _disfavors = new HashSet<Recipe>(0);
+    private Set<PatientLike> _likes = new HashSet<PatientLike>(0);
 
     /**
      * Initializes a new instance of the {@link Patient} class.
@@ -95,7 +95,7 @@ public class Patient  implements java.io.Serializable
      * @param treatments the treatments to set for this instance
      * @param disfavors the disfavors to set for this instance
      */
-    public Patient(String insuranceNumber, String forename, String lastname, String title, String street, String zip, String place, String country, Date birthday, String job, String religion, String regime, Clob notice, Gender gender, Set<String> illnesses, Set<FamilyAnamnesis> familyanamnesis, Set<PatientState> patientStates, Set<LaborReport> laborReports, Set<DietTreatment> treatments, Set<Recipe> disfavors) 
+    public Patient(String insuranceNumber, String forename, String lastname, String title, String street, String zip, String place, String country, Date birthday, String job, String religion, String regime, Clob notice, Gender gender, Set<String> illnesses, Set<FamilyAnamnesis> familyanamnesis, Set<PatientState> patientStates, Set<LaborReport> laborReports, Set<DietTreatment> treatments, Set<PatientLike> likes) 
     {
        _insuranceNumber = insuranceNumber;
        _forename = forename;
@@ -116,7 +116,7 @@ public class Patient  implements java.io.Serializable
        _patientStates = patientStates;
        _laborReports = laborReports;
        _treatments = treatments;
-       _disfavors = disfavors;
+       _likes = likes;
     }
    
     /**       
@@ -480,21 +480,21 @@ public class Patient  implements java.io.Serializable
     }
     
     /**       
-     * Gets the disfavors of this instance. 
-     * @return the disfavors currently set for this instance.
+     * Gets the likes of this instance. 
+     * @return the likes currently set for this instance.
      */
-    public Set<Recipe> getDisfavors() 
+    public Set<PatientLike> getLikes() 
     {
-        return _disfavors;
+        return _likes;
     }
     
     /**       
-     * Sets the disfavors of this instance. 
-     * @param disfavors the new disfavors of this instance.
+     * Sets the likes of this instance. 
+     * @param likes the new likes of this instance.
      */    
-    public void setDisfavors(Set<Recipe> disfavors) 
+    public void setLikes(Set<PatientLike> likes) 
     {
-        _disfavors = disfavors;
+        _likes = likes;
     }
     
     /**

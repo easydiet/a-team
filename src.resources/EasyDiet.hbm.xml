@@ -58,10 +58,21 @@
 			<one-to-many class="DietTreatment" />
 		</set>
 
-		<set name="disfavors" table="PatientDisfavors" lazy="true">
-			<key column="PatientId" not-null="true" />
-			<many-to-many class="Recipe" column="RecipeId" />
+		<set name="likes" lazy="true" inverse="true" cascade="all,delete-orphan">
+			<key column="PatientId" />
+			<one-to-many class="PatientLike" />
 		</set>
+		
+	</class>
+	
+	<class name="PatientLike">
+		<id name="patientLikeId" column="PatientLikeId" type="long">
+			<generator class="native" />
+		</id>
+		
+		<property name="blsPattern" column="BlsPattern" type="string" not-null="true" />
+		<property name="grade" column="Grade" type="int" not-null="true" />
+		<property name="notice" column="Notice" type="string" />
 	</class>
 
 	<class name="FamilyAnamnesis">
@@ -198,7 +209,7 @@
 	</class>
 
 	<class name="DietTreatmentSystemUser">
-		<id name="dietTreatmentSystemUserId" column="DietTreatmentSystemUserId" type="int">
+		<id name="dietTreatmentSystemUserId" column="DietTreatmentSystemUserId" type="long">
 			<generator class="native" />
 		</id>
 		<many-to-one name="systemUser" class="SystemUser" column="SystemUserId" not-null="true" />
