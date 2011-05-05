@@ -70,9 +70,19 @@
 			<generator class="native" />
 		</id>
 		
+		<!-- Bidirectional assoc to patient -->
+		<many-to-one name="patient" column="PatientId" class="Patient" not-null="true" insert="true" update="true"/>
+		
 		<property name="blsPattern" column="BlsPattern" type="string" not-null="true" />
-		<property name="grade" column="Grade" type="int" not-null="true" />
+		<many-to-one class="PatientLikeGrade" name="grade" column="Grade"
+			not-null="true" />
+		
 		<property name="notice" column="Notice" type="string" />
+	</class>
+	
+	<class name="PatientLikeGrade">
+		<id name="patientLikeGradeId" column="PatientLikeGradeId" type="long" />
+		<property name="name" column="Name" type="string" not-null="true" />
 	</class>
 
 	<class name="FamilyAnamnesis">

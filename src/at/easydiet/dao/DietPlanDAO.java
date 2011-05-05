@@ -1,7 +1,5 @@
 package at.easydiet.dao;
 
-import java.util.List;
-
 import at.easydiet.model.DietPlan;
 
 /**
@@ -10,9 +8,9 @@ import at.easydiet.model.DietPlan;
 public class DietPlanDAO 
         extends GenericHibernateDAO<DietPlan, Long>
 {
-    @Override
-    public List<DietPlan> findAll()
-    {
-        return findByCriteria(new TypeEqualityExpression("class", DietPlan.class));
-    }
+//    @Override
+//    public List<DietPlan> findAll()
+//    {
+//        return findByCriteria(new TypeEqualityExpression("class", DietPlan.class));
+//    }
 }

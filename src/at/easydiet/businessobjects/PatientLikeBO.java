@@ -1,6 +1,7 @@
 package at.easydiet.businessobjects;
 
 import at.easydiet.model.PatientLike;
+import at.easydiet.model.PatientLikeGrade;
 
 /**
  * This class encapsules a PatientLike instance.
@@ -14,7 +15,7 @@ public class PatientLikeBO
      */
 	public PatientLikeBO()
 	{
-		this(new PatientLike("", 0, ""));
+		this(new PatientLike(null, "", new PatientLikeGrade(), ""));
 	}
 	
     /**
@@ -52,6 +53,31 @@ public class PatientLikeBO
     {
         _model.setPatientLikeId(patientLikeId);
     }
+    
+    private PatientBO _patient;
+    
+    /**
+     * Gets the currently referenced Patient of this instance.
+     * @return the Patient currently referenced in this PatientLike. 
+     */
+    public PatientBO getPatient()
+    {
+        if(_patient == null)
+        {
+            _patient = new PatientBO(_model.getPatient());
+        }
+        return _patient;
+    }
+    
+    /**
+     * Sets the Patient to be referenced in this instance
+     * @param patient the Patient to reference in this PatientLike. 
+     */
+    public void setPatient(PatientBO patient)
+    {
+        _patient = patient;
+        _model.setPatient(patient.getModel());
+    }
 
     /**       
      * Gets the blsPattern of this instance. 
@@ -71,24 +97,31 @@ public class PatientLikeBO
         _model.setBlsPattern(blsPattern);
     }
 
-    /**       
-     * Gets the grade of this instance. 
-     * @return the grade currently set for this instance.
+	
+    private PatientLikeGradeBO _grade;
+    
+    /**
+     * Gets the currently referenced Grade of this instance.
+     * @return the PatientLikeGrade currently referenced in this PatientLike. 
      */
-    public int getGrade() 
+    public PatientLikeGradeBO getGrade()
     {
-        return _model.getGrade();
+        if(_grade == null)
+        {
+            _grade = new PatientLikeGradeBO(_model.getGrade());
+        }
+        return _grade;
     }
     
-    /**       
-     * Sets the grade of this instance. 
-     * @param grade the new grade of this instance.
-     */    
-    public void setGrade(int grade) 
+    /**
+     * Sets the Grade to be referenced in this instance
+     * @param grade the PatientLikeGrade to reference in this PatientLike. 
+     */
+    public void setGrade(PatientLikeGradeBO grade)
     {
-        _model.setGrade(grade);
+        _grade = grade;
+        _model.setGrade(grade.getModel());
     }
-
     /**       
      * Gets the notice of this instance. 
      * @return the notice currently set for this instance.

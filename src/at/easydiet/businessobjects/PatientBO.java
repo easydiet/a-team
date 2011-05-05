@@ -427,6 +427,7 @@ public class PatientBO
      */
     public void updateFamilyanamnesisCache()
     {
+        if(_familyanamnesis == null) return;
         _familyanamnesis = null;
         getFamilyanamnesis();
     }
@@ -480,6 +481,7 @@ public class PatientBO
      */
     public void updatePatientStatesCache()
     {
+        if(_patientStates == null) return;
         _patientStates = null;
         getPatientStates();
     }
@@ -533,6 +535,7 @@ public class PatientBO
      */
     public void updateLaborReportsCache()
     {
+        if(_laborReports == null) return;
         _laborReports = null;
         getLaborReports();
     }
@@ -586,7 +589,8 @@ public class PatientBO
      */
     public void updateTreatmentsCache()
     {
-        _treatments = null;
+        if(_treatments == null) return;
+       _treatments = null;
         getTreatments();
     }
 
@@ -617,6 +621,7 @@ public class PatientBO
      */
     public void addLikes(PatientLikeBO likes)
     {
+        likes.setPatient(this);
         getLikes().add(likes);
         _model.getLikes().add(likes.getModel());
     }
@@ -638,6 +643,7 @@ public class PatientBO
      */
     public void updateLikesCache()
     {
+        if(_likes == null) return;
         _likes = null;
         getLikes();
     }
@@ -656,6 +662,17 @@ public class PatientBO
             source.add(new DietTreatmentBO(treatment));
         }
         return source;
+    }
+
+    public void setModel(Patient model)
+    {
+        _model = model;
+        updateFamilyanamnesisCache();
+        updateLaborReportsCache();
+        updateLikesCache();
+        updatePatientStatesCache();
+        updateTreatmentsCache();
+
     }
 
 }

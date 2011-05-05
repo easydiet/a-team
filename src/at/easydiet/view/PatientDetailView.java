@@ -6,8 +6,10 @@ import org.apache.pivot.beans.BXML;
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
+import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.Component;
 import org.apache.pivot.wtk.ComponentMouseButtonListener;
+import org.apache.pivot.wtk.PushButton;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.Mouse.Button;
 
@@ -62,6 +64,22 @@ public class PatientDetailView extends EasyDietContentView implements Bindable
                         return false;
                     }
                 });
+        
+        PushButton editLikes = (PushButton) namespace.get("editLikes");
+        editLikes.getButtonPressListeners().add(new ButtonPressListener()
+        {
+            
+            @Override
+            public void buttonPressed(org.apache.pivot.wtk.Button button)
+            {
+                openPatientLikeManagementView();
+            }
+        });
+    }
+
+    protected void openPatientLikeManagementView()
+    {
+        ViewController.getInstance().loadContent("PatientLikeManagementView", this);
     }
 
     protected void openDietTreatmentDetailView(DietTreatmentBO dietTreatment)

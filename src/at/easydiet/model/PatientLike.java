@@ -1,6 +1,5 @@
 package at.easydiet.model;
 
-
 /**
  * Represents a PatientLike
  */
@@ -12,8 +11,9 @@ public class PatientLike  implements java.io.Serializable
      */
     private static final long serialVersionUID = -5658630105110533222L;
     private long _patientLikeId;
+    private Patient _patient;
     private String _blsPattern;
-    private int _grade;
+    private PatientLikeGrade _grade;
     private String _notice;
 
     /**
@@ -26,23 +26,27 @@ public class PatientLike  implements java.io.Serializable
 
     /**
      * Initializes a new instance of the {@link PatientLike} class.
+     * @param patient the patient to set for this instance
      * @param blsPattern the blsPattern to set for this instance
      * @param grade the grade to set for this instance
      */
-    public PatientLike(String blsPattern, int grade) 
+    public PatientLike(Patient patient, String blsPattern, PatientLikeGrade grade) 
     {
+        _patient = patient;
         _blsPattern = blsPattern;
         _grade = grade;
     }
 
     /**
      * Initializes a new instance of the {@link PatientLike} class.
+     * @param patient the patient to set for this instance
      * @param blsPattern the blsPattern to set for this instance
      * @param grade the grade to set for this instance
      * @param notice the notice to set for this instance
      */
-    public PatientLike(String blsPattern, int grade, String notice) 
+    public PatientLike(Patient patient, String blsPattern, PatientLikeGrade grade, String notice) 
     {
+       _patient = patient;
        _blsPattern = blsPattern;
        _grade = grade;
        _notice = notice;
@@ -67,6 +71,24 @@ public class PatientLike  implements java.io.Serializable
     }
     
     /**       
+     * Gets the patient of this instance. 
+     * @return the patient currently set for this instance.
+     */
+    public Patient getPatient() 
+    {
+        return _patient;
+    }
+    
+    /**       
+     * Sets the patient of this instance. 
+     * @param patient the new patient of this instance.
+     */    
+    public void setPatient(Patient patient) 
+    {
+        _patient = patient;
+    }
+    
+    /**       
      * Gets the blsPattern of this instance. 
      * @return the blsPattern currently set for this instance.
      */
@@ -88,7 +110,7 @@ public class PatientLike  implements java.io.Serializable
      * Gets the grade of this instance. 
      * @return the grade currently set for this instance.
      */
-    public int getGrade() 
+    public PatientLikeGrade getGrade() 
     {
         return _grade;
     }
@@ -97,7 +119,7 @@ public class PatientLike  implements java.io.Serializable
      * Sets the grade of this instance. 
      * @param grade the new grade of this instance.
      */    
-    public void setGrade(int grade) 
+    public void setGrade(PatientLikeGrade grade) 
     {
         _grade = grade;
     }
@@ -129,7 +151,7 @@ public class PatientLike  implements java.io.Serializable
     {
         StringBuilder builder = new StringBuilder();
         builder.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-		// interesting values
+        // interesting values
         builder.append("]");
       
         return builder.toString();

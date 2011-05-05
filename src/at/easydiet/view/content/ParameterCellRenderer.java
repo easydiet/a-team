@@ -16,7 +16,6 @@ import org.apache.pivot.wtk.media.Image;
 
 import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.IDietParameterizable;
-import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.validation.ParameterValidator;
 import at.easydiet.view.EasyDietMainWindow;
 

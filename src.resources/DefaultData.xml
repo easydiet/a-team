@@ -283,4 +283,38 @@
 			<name>Vorlage</name>
 		</TreatmentState>
 	</TreatmentStates>
+	<PatientLikeGrades>
+		<PatientLikeGrade>
+			<patientLikeGradeId>-10</patientLikeGradeId>
+			<name>Allergie</name>
+		</PatientLikeGrade>
+		<PatientLikeGrade>
+			<patientLikeGradeId>-7</patientLikeGradeId>
+			<name>Totale Abneigung</name>
+		</PatientLikeGrade>
+		<PatientLikeGrade>
+			<patientLikeGradeId>-4</patientLikeGradeId>
+			<name>Starke Abneigung</name>
+		</PatientLikeGrade>
+		<PatientLikeGrade>
+			<patientLikeGradeId>-1</patientLikeGradeId>
+			<name>Schwache Abneigung</name>
+		</PatientLikeGrade>
+		<PatientLikeGrade>
+			<patientLikeGradeId>1</patientLikeGradeId>
+			<name>Schwache Vorliebe</name>
+		</PatientLikeGrade>
+		<PatientLikeGrade>
+			<patientLikeGradeId>4</patientLikeGradeId>
+			<name>Starke Vorliebe</name>
+		</PatientLikeGrade>
+		<PatientLikeGrade>
+			<patientLikeGradeId>7</patientLikeGradeId>
+			<name>Totale Vorliebe</name>
+		</PatientLikeGrade>
+		<PatientLikeGrade>
+			<patientLikeGradeId>10</patientLikeGradeId>
+			<name>Leibspeise</name>
+		</PatientLikeGrade>
+	</PatientLikeGrades>
 </Data>

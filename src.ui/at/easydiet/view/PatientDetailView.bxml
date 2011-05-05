@@ -11,6 +11,7 @@ xmlns="org.apache.pivot.wtk">
 		<easy:EasyDietContentView.ToolbarButton action="todo" text="Diät anlegen" icon="@diet_add.png" />
 		<easy:EasyDietContentView.ToolbarButton action="todo" text="Patientenstatus anlegen" icon="@patientstate_add.png" />
 		<easy:EasyDietContentView.ToolbarButton action="todo" text="Laborbefund anlegen" icon="@report_add.png" />
+		<easy:EasyDietContentView.ToolbarButton bxml:id="editLikes" text="Vorlieben bearbeiten" icon="@likes.png" />
 		<easy:EasyDietContentView.ToolbarButton action="showHelp" text="Hilfe" icon="@help.png" />
 	</toolbarButtons>
 	<Form styles="{fill:true}">

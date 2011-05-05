@@ -1,5 +1,11 @@
 package at.easydiet.dao;
 
+import java.util.List;
+
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Restrictions;
+
+import at.easydiet.model.Patient;
 import at.easydiet.model.PatientLike;
 
 /**
@@ -8,5 +14,13 @@ import at.easydiet.model.PatientLike;
 public class PatientLikeDAO 
         extends GenericHibernateDAO<PatientLike, Long>
 {
-	// implementation in parent class
+
+    public List<PatientLike> findByPatient(Patient patient)
+    {
+        PatientLike like = new PatientLike();
+        like.setPatient(patient);
+        
+        Example ex = Example.create(like).excludeZeroes();
+        return findByCriteria(ex);
+    }
 }

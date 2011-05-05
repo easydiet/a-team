@@ -88,7 +88,7 @@ public class EasyDietApplication implements Application
         BXMLSerializer bxmlSerializer = new BXMLSerializer();
 
         _mainWindow = (Window) bxmlSerializer.readObject(EasyDietMainWindow.class,
-                "EasyDietMainWindow" + ViewController.getInstance().PIVOT_FILE_EXTENSION);
+                "EasyDietMainWindow" + ViewController.PIVOT_FILE_EXTENSION);
         _mainWindow.open(display);
     }
 
