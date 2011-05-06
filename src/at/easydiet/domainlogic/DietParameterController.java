@@ -108,7 +108,7 @@ public class DietParameterController
         Map<ParameterDefinitionBO, ValidationSumValue> map = new HashMap<ParameterDefinitionBO, ValidationSumValue>();
         for (ParameterDefinitionBO key : parametersToValidate)
         {
-            DietParameterBO value = (DietParameterBO) parametersToValidate.get(key);
+            DietParameterTemplateBO value = (DietParameterTemplateBO) parametersToValidate.get(key);
             map.put(value.getParameterDefinition(), new ValidationSumValue(
                     value.getParameterDefinitionUnit()));
         }
