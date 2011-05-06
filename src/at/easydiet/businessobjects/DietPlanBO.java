@@ -168,18 +168,18 @@ public class DietPlanBO implements IDietParameterizable, Comparable<DietPlanBO> 
 		_model.setDietTreatment(dietTreatment.getModel());
 	}
 
-	private List<DietParameterBO> _dietParameters;
+	private ArrayList<DietParameterTemplateBO> _dietParameters;
 
 /**
      * Gets a list of referenced DietParameters of this instance.
      * This list is cached, use {@link DietPlan#updateDietParametersCache()) to update this cache.
      * @return a cached list of referenced DietParameters wrapped into the correct businessobject. 
      */
-	public List<DietParameterBO> getDietParameters() {
+	public List<DietParameterTemplateBO> getDietParameters() {
 		if (_dietParameters == null) {
-			_dietParameters = new ArrayList<DietParameterBO>();
+			_dietParameters = new ArrayList<DietParameterTemplateBO>();
 			for (DietParameter dietParameters : _model.getDietParameters()) {
-				_dietParameters.add(new DietParameterBO(dietParameters));
+				_dietParameters.add((DietParameterTemplateBO)new DietParameterBO(dietParameters));
 			}
 		}
 		return _dietParameters;
@@ -192,9 +192,9 @@ public class DietPlanBO implements IDietParameterizable, Comparable<DietPlanBO> 
 	 * @param dietParameters
 	 *            the DietParameter to add.
 	 */
-	public void addDietParameters(DietParameterBO dietParameters) {
+	public void addDietParameters(DietParameterTemplateBO dietParameters) {
 		getDietParameters().add(dietParameters);
-		_model.getDietParameters().add(dietParameters.getModel());
+		_model.getDietParameters().add((DietParameter) dietParameters.getModel());
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class DietPlanBO implements IDietParameterizable, Comparable<DietPlanBO> 
 	 * @param dietParameters
 	 *            the timespan to add.
 	 */
-	public void removeDietParameters(DietParameterBO dietParameters) {
+	public void removeDietParameters(DietParameterTemplateBO dietParameters) {
 		getDietParameters().remove(dietParameters);
 		_model.getDietParameters().remove(dietParameters.getModel());
 	}

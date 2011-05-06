@@ -191,4 +191,17 @@ public class DietParameterTemplateBO
         _parameterDefinition = parameterDefinition;
         _model.setParameterDefinition(parameterDefinition.getModel());
     }
+    
+    public float getFloatValue()
+    {
+        // TODO: Mention datatype here!
+        try
+        {
+            return Float.valueOf(getValue());
+        }
+        catch(Exception e)
+        {
+            return 0;
+        }
+    }
 }

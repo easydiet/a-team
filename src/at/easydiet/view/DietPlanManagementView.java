@@ -18,7 +18,7 @@ import org.apache.pivot.wtk.PushButton;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.domainlogic.DietPlanEditingController;
-import at.easydiet.validation.ParameterValidator;
+import at.easydiet.validation.ParameterTemplateValidator;
 
 public abstract class DietPlanManagementView extends EasyDietContentView implements Bindable {
 	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
@@ -160,7 +160,7 @@ public abstract class DietPlanManagementView extends EasyDietContentView impleme
     @Override
     public boolean onClose()
     {
-    	ParameterValidator.getInstance().clearCache();
+    	ParameterTemplateValidator.getInstance().clearCache();
     	return true;
     }
 }

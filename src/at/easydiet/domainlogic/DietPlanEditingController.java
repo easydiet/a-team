@@ -23,7 +23,7 @@ import at.easydiet.dao.MealDAO;
 import at.easydiet.domainlogic.DietParameterController.ValidationResult;
 import at.easydiet.util.CollectionUtils;
 import at.easydiet.util.StringUtils;
-import at.easydiet.validation.ParameterValidator;
+import at.easydiet.validation.ParameterTemplateValidator;
 
 public class DietPlanEditingController
 {
@@ -293,7 +293,7 @@ public class DietPlanEditingController
 
     private void validateDietParameterConflicts()
     {
-        List<IDietParameterizable> conflicts = ParameterValidator.getInstance().getConflictingComponents();
+        List<IDietParameterizable> conflicts = ParameterTemplateValidator.getInstance().getConflictingComponents();
         for(IDietParameterizable component : conflicts)
         {
         	getErrors().add("Parameterkonflikt in: " + component.getDisplayText());
