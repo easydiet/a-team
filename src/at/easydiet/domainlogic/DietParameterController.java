@@ -7,6 +7,7 @@ import org.apache.pivot.collections.Map;
 
 import at.easydiet.businessobjects.CheckOperatorBO;
 import at.easydiet.businessobjects.DietParameterBO;
+import at.easydiet.businessobjects.DietParameterTemplateBO;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.MealBO;
@@ -46,7 +47,7 @@ public class DietParameterController
         List<ValidationResult> violations = new ArrayList<ValidationResult>();
 
         // at first receive a list of dietparameters we need to validate
-        Map<ParameterDefinitionBO, DietParameterBO> parametersToValidate = new HashMap<ParameterDefinitionBO, DietParameterBO>();
+        Map<ParameterDefinitionBO, DietParameterTemplateBO> parametersToValidate = new HashMap<ParameterDefinitionBO, DietParameterTemplateBO>();
         addDietParametersToList(parametersToValidate, plan);
 
         // now as we have all parameters
@@ -102,12 +103,12 @@ public class DietParameterController
     }
 
     private Map<ParameterDefinitionBO, ValidationSumValue> buildSumMap(
-            Map<ParameterDefinitionBO, DietParameterBO> parameters)
+            Map<ParameterDefinitionBO, DietParameterTemplateBO> parametersToValidate)
     {
         Map<ParameterDefinitionBO, ValidationSumValue> map = new HashMap<ParameterDefinitionBO, ValidationSumValue>();
-        for (ParameterDefinitionBO key : parameters)
+        for (ParameterDefinitionBO key : parametersToValidate)
         {
-            DietParameterBO value = parameters.get(key);
+            DietParameterBO value = (DietParameterBO) parametersToValidate.get(key);
             map.put(value.getParameterDefinition(), new ValidationSumValue(
                     value.getParameterDefinitionUnit()));
         }
@@ -116,7 +117,7 @@ public class DietParameterController
 
     // for dietplans
     private void validateDietParameters(
-            Map<ParameterDefinitionBO, DietParameterBO> parametersToValidate,
+            Map<ParameterDefinitionBO, DietParameterTemplateBO> parametersToValidate,
             List<ValidationResult> violations, DietPlanBO plan)
     {
         // store sums of dietplan
@@ -130,7 +131,7 @@ public class DietParameterController
         }
 
         // validate parameters of dietplan
-        for (DietParameterBO parameter : plan.getDietParameters())
+        for (DietParameterTemplateBO parameter : plan.getDietParameters())
         {
             CheckOperatorBO violation = parameter.getCheckOperator().isValid(
                     parameter.getFloatValue(),
@@ -150,7 +151,7 @@ public class DietParameterController
 
     // for timespans
     private void validateDietParameters(
-            Map<ParameterDefinitionBO, DietParameterBO> parametersToValidate,
+            Map<ParameterDefinitionBO, DietParameterTemplateBO> parametersToValidate,
             Map<ParameterDefinitionBO, ValidationSumValue> dietPlanSums,
             List<ValidationResult> violations, TimeSpanBO timeSpan)
     {
@@ -165,7 +166,7 @@ public class DietParameterController
         }
 
         // validate parameters of timespan
-        for (DietParameterBO parameter : timeSpan.getDietParameters())
+        for (DietParameterTemplateBO parameter : timeSpan.getDietParameters())
         {
             CheckOperatorBO violation = parameter.getCheckOperator().isValid(
                     parameter.getFloatValue(),
@@ -185,7 +186,7 @@ public class DietParameterController
 
     // for meals
     private void validateDietParameters(
-            Map<ParameterDefinitionBO, DietParameterBO> parametersToValidate,
+            Map<ParameterDefinitionBO, DietParameterTemplateBO> parametersToValidate,
             Map<ParameterDefinitionBO, ValidationSumValue> dietPlanSums,
             Map<ParameterDefinitionBO, ValidationSumValue> timeSpanSums,
             List<ValidationResult> violations, MealBO meal)
@@ -265,7 +266,7 @@ public class DietParameterController
         }
 
         // validate parameters of meal
-        for (DietParameterBO parameter : meal.getDietParameters())
+        for (DietParameterTemplateBO parameter : meal.getDietParameters())
         {
             CheckOperatorBO violation = parameter.getCheckOperator().isValid(
                     parameter.getFloatValue(),
@@ -283,7 +284,7 @@ public class DietParameterController
     }
 
     private void addDietParametersToList(
-            Map<ParameterDefinitionBO, DietParameterBO> toFill, DietPlanBO plan)
+            Map<ParameterDefinitionBO, DietParameterTemplateBO> toFill, DietPlanBO plan)
     {
         addDietParametersToList(toFill, plan.getDietParameters());
 
@@ -294,7 +295,7 @@ public class DietParameterController
     }
 
     private void addDietParametersToList(
-            Map<ParameterDefinitionBO, DietParameterBO> toFill,
+            Map<ParameterDefinitionBO, DietParameterTemplateBO> toFill,
             TimeSpanBO timeSpan)
     {
         addDietParametersToList(toFill, timeSpan.getDietParameters());
@@ -306,10 +307,10 @@ public class DietParameterController
     }
 
     private void addDietParametersToList(
-            Map<ParameterDefinitionBO, DietParameterBO> toFill,
-            List<DietParameterBO> dietParameters)
+            Map<ParameterDefinitionBO, DietParameterTemplateBO> toFill,
+            List<DietParameterTemplateBO> dietParameters)
     {
-        for (DietParameterBO param : dietParameters)
+        for (DietParameterTemplateBO param : dietParameters)
         {
             if (!toFill.containsKey(param.getParameterDefinition()))
             {
@@ -322,14 +323,14 @@ public class DietParameterController
     {
         private IDietParameterizable _affectedObject;
         private CheckOperatorBO      _errorType;
-        private DietParameterBO      _dietParameter;
+        private DietParameterTemplateBO      _dietParameter;
         private float                _currentValue;
 
         /**
          * Gets the dietParameter which got violated.
          * @return the dietParameter
          */
-        public DietParameterBO getDietParameter()
+        public DietParameterTemplateBO getDietParameter()
         {
             return _dietParameter;
         }
@@ -368,17 +369,17 @@ public class DietParameterController
          * Initializes a new instance of the {@link ValidationResult} class. 
          * @param affectedObject
          * @param errorType
-         * @param dietParameter
+         * @param parameter
          * @param currentValue
          */
         private ValidationResult(IDietParameterizable affectedObject,
-                CheckOperatorBO errorType, DietParameterBO dietParameter,
+                CheckOperatorBO errorType, DietParameterTemplateBO parameter,
                 float currentValue)
         {
             super();
             _affectedObject = affectedObject;
             _errorType = errorType;
-            _dietParameter = dietParameter;
+            _dietParameter = parameter;
             _currentValue = currentValue;
         }
     }

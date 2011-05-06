@@ -11,6 +11,7 @@ import org.apache.pivot.collections.HashMap;
 import org.apache.pivot.collections.List;
 import at.easydiet.businessobjects.CheckOperatorBO;
 import at.easydiet.businessobjects.DietParameterBO;
+import at.easydiet.businessobjects.DietParameterTemplateBO;
 import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.businessobjects.ParameterDefinitionDataTypeBO;
@@ -46,7 +47,8 @@ public class ParameterValidator {
 		List<IDietParameterizable> conflicts = new ArrayList<IDietParameterizable>();
 		for(IDietParameterizable comp : _cache)
 		{
-			if(!_cache.get(comp).isEmpty())
+			// TODO[Joschi]: Check if this containsKey is correct or if we need a validation
+			if(_cache.containsKey(comp) && !_cache.get(comp).isEmpty())
 			{
 				conflicts.add(comp);
 			}
@@ -104,18 +106,18 @@ public class ParameterValidator {
 		}
 		
 
-		List<DietParameterBO> checkSet = parameterizable.getDietParameters();
+		List<DietParameterTemplateBO> checkSet = parameterizable.getDietParameters();
 
 		
 		
 		// fill a new set for better comparison
 		Set<DietParameterBO> compareSet = new HashSet<DietParameterBO>();
-		for (DietParameterBO copyParameter : checkSet) {
-			compareSet.add(copyParameter);
+		for (DietParameterTemplateBO copyParameter : checkSet) {
+			compareSet.add((DietParameterBO) copyParameter);
 		}
 
 		// compare all parameters
-		for (DietParameterBO checkParameter : checkSet) {
+		for (DietParameterTemplateBO checkParameter : checkSet) {
 			ParameterDefinitionBO checkParameterDefinition = checkParameter
 					.getParameterDefinition();
 			CheckOperatorBO checkParameterOperator = checkParameter
@@ -339,21 +341,21 @@ public class ParameterValidator {
 	 * @param compareParameter
 	 */
 	private void addConflicting(IDietParameterizable parameterizable, Set<DietParameterBO> conflictingParameters,
-			DietParameterBO checkParameter, DietParameterBO compareParameter) {
+			DietParameterTemplateBO checkParameter, DietParameterBO compareParameter) {
 
 		// fill two sets, because when you change the set, that's accesible from
 		// the outside, we can not guarantee that the validation for
 		// isValid(DietParameterBO) is correct
 
 		if (!conflictingParameters.contains(checkParameter)) {
-			conflictingParameters.add(checkParameter);
+			conflictingParameters.add((DietParameterBO) checkParameter);
 		}
 		if (!conflictingParameters.contains(compareParameter)) {
 			conflictingParameters.add(compareParameter);
 		}
 
 		if (!_cache.get(parameterizable).contains(checkParameter)) {
-			_cache.get(parameterizable).add(checkParameter);
+			_cache.get(parameterizable).add((DietParameterBO) checkParameter);
 		}
 		if (!_cache.get(parameterizable).contains(compareParameter)) {
 			_cache.get(parameterizable).add(compareParameter);
