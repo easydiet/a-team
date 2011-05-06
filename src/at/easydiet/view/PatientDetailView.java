@@ -75,6 +75,25 @@ public class PatientDetailView extends EasyDietContentView implements Bindable
                 openPatientLikeManagementView();
             }
         });
+        
+        PushButton addDietTreatment = (PushButton) namespace.get("addDietTreatment");
+        addDietTreatment.getButtonPressListeners().add(new ButtonPressListener()
+        {
+            
+            @Override
+            public void buttonPressed(org.apache.pivot.wtk.Button button)
+            {
+                openAddNewDietTreatmentManagementView();
+            }
+
+        });
+        
+        
+    }
+    
+    protected void openAddNewDietTreatmentManagementView()
+    {
+    	ViewController.getInstance().loadContent("CreateDietTreatmentView", this);
     }
 
     protected void openPatientLikeManagementView()

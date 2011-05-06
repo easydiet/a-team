@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.ArrayList;
+import org.apache.pivot.util.CalendarDate;
 
 import at.easydiet.model.ContactJournal;
 import at.easydiet.model.DietParameter;
@@ -92,6 +93,15 @@ public class DietTreatmentBO implements IDietParameterizable
     public void setStart(Date start) 
     {
         _model.setStart(start);
+    }
+    
+    /**
+     * Sets the start of this instance
+     * @param start the new Start of this instance
+     */
+    public void setStart(CalendarDate start)
+    {
+        _model.setStart(start.toCalendar().getTime());
     }
 
     /**       

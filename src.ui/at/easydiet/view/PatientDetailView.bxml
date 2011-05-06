@@ -8,7 +8,7 @@ xmlns="org.apache.pivot.wtk">
 		<easy:PatientNavigationButton />
 	</navigationButtons>
 	<toolbarButtons>
-		<easy:EasyDietContentView.ToolbarButton action="todo" text="Diät anlegen" icon="@diet_add.png" />
+		<easy:EasyDietContentView.ToolbarButton bxml:id="addDietTreatment" text="Diät anlegen" icon="@diet_add.png" />
 		<easy:EasyDietContentView.ToolbarButton action="todo" text="Patientenstatus anlegen" icon="@patientstate_add.png" />
 		<easy:EasyDietContentView.ToolbarButton action="todo" text="Laborbefund anlegen" icon="@report_add.png" />
 		<easy:EasyDietContentView.ToolbarButton bxml:id="editLikes" text="Vorlieben bearbeiten" icon="@likes.png" />
