@@ -9,7 +9,9 @@
         <easy:EasyDietContentView.NavigationButton text="Neue Diätbehandlung anlegen"/>
     </navigationButtons>
     <toolbarButtons>
-        <easy:EasyDietContentView.ToolbarButton bxml:id="save" text="Speichern" icon="@save.png"/>
+        <easy:EasyDietContentView.ToolbarButton bxml:id="save" text="Speichern" icon="@save.png" tooltipText="Die aktuelle Diätbehandlung in der Datenbank speichern."/>
+		<easy:EasyDietContentView.ToolbarButton
+			text="Validieren" icon="@validate.png" bxml:id="validate" tooltipText="Die aktuelle Diätbehandlung auf ihre Korrektheit und Vollständigkeit prüfen." />
     </toolbarButtons>
     
 	<Border styleName="errorBox" bxml:id="errorBorder">

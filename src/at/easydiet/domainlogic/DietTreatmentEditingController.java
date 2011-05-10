@@ -1,24 +1,19 @@
 package at.easydiet.domainlogic;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.List;
-import org.apache.pivot.util.CalendarDate;
 import org.hibernate.HibernateException;
 
-import at.easydiet.EasyDietApplication;
-import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.DietTreatmentBO;
+import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.PatientBO;
 import at.easydiet.dao.DAOFactory;
-import at.easydiet.dao.DietPlanDAO;
 import at.easydiet.dao.DietTreatmentDAO;
 import at.easydiet.dao.HibernateUtil;
-import at.easydiet.dao.MealDAO;
 import at.easydiet.dao.PatientDAO;
-import at.easydiet.util.CollectionUtils;
+import at.easydiet.validation.ParameterTemplateValidator;
 
 public class DietTreatmentEditingController {
 	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
@@ -50,6 +45,7 @@ public class DietTreatmentEditingController {
 	public void createNew(PatientBO patient) {
 		_dietTreatment = new DietTreatmentBO();
 		_dietTreatment.setPatient(patient);
+		setPatient(patient);
 	}
 
 	public void refresh()
@@ -76,12 +72,10 @@ public class DietTreatmentEditingController {
     
     public boolean saveDietTreatment()
     {
+ 
         validateDietTreatment(true);
 
         if (getErrors().getLength() > 0) return false;
-
-        SimpleDateFormat formatter = new SimpleDateFormat(
-                EasyDietApplication.DATETIME_FORMAT);
 
         try
         {
@@ -116,12 +110,71 @@ public class DietTreatmentEditingController {
         }
         
         //TODO: check for everything
+        validateDietTreatmentParameters();
+        validateTime();
 
     }
+    
+    private void validateTime() {
+		List<Object> collisions = validateCollisions();
+		
+		for (Object object : collisions)
+        {
+            if (DietTreatmentBO.class.isAssignableFrom(object.getClass()))
+            {
+                _errors.add(String
+                        .format("Die Diätbehandlung '%s' überschneidet sich mit der Diätbehandlung '%s'",
+                                _dietTreatment.getDisplayText(),
+                                ((DietTreatmentBO) object).getName()));
+            }
+        }
+	}
+
+	public List<Object> validateCollisions()
+    {
+        List<Object> collisions = new ArrayList<Object>();
+        
+        // collision with any other treatments
+        List<DietTreatmentBO> treatments = _dietTreatment.getPatient().getTreatments();
+        for (DietTreatmentBO other : treatments)
+        {
+            if (other.equals(_dietTreatment)) continue;
+            if (isCollision(_dietTreatment.getStart(), _dietTreatment.getEnd(), other.getStart(), other.getEnd()))
+            {
+                collisions.add(other);
+            }
+        }
+        
+        return collisions;
+    }
+    
+    /**
+     * Checks whether two timeranges collide
+     * @param currentStart
+     * @param currentEnd
+     * @param otherStart
+     * @param otherEnd
+     * @return
+     */
+    private boolean isCollision(Date currentStart, Date currentEnd, Date otherStart, Date otherEnd)
+    {
+        return currentStart.compareTo(otherEnd) <= 0 && otherStart.compareTo(currentEnd) <= 0;
+    }
+
+	private void validateDietTreatmentParameters() {
+		List<IDietParameterizable> conflicts = ParameterTemplateValidator.getInstance().getConflictingComponents();
+        for(IDietParameterizable component : conflicts)
+        {
+        	getErrors().add("Parameterkonflikt in: " + component.getDisplayText());
+        }
+	}
 
 	private void validateEmptyElements() {
 		// TODO: Check if something is missing
-		
+		if(_dietTreatment.getName()==null)
+		{
+			getErrors().add("Kein Name angegeben.");
+		}
 	}
 	
 	public void revertChanges()

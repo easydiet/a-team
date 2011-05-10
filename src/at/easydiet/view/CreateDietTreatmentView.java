@@ -18,5 +18,11 @@ public class CreateDietTreatmentView extends DietTreatmentManagementView {
         _parameterTableViewTemplate
                 .setParameterProvider(DietTreatmentEditingController.getInstance()
                         .getDietTreatment());
+        
+//        _startDateButton.setSelectedDate(new CalendarDate());
+//        _endDateButton.setSelectedDate(new CalendarDate());
+        
+        
+        //TODO: set empty state and empty protocoll
 	}
 }

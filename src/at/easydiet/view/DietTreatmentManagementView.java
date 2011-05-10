@@ -35,8 +35,8 @@ public abstract class DietTreatmentManagementView extends EasyDietContentView
 	protected TextInput _name;
 	protected ParameterTableViewTemplate _parameterTableViewTemplate;
 	protected TextArea _shortDescription;
-	private CalendarButton _startDateButton;
-	private CalendarButton _endDateButton;
+	protected CalendarButton _startDateButton;
+	protected CalendarButton _endDateButton;
 	private Label _durationLabel;
 
 	@Override
@@ -80,20 +80,7 @@ public abstract class DietTreatmentManagementView extends EasyDietContentView
 			@Override
 			public void buttonPressed(Button button) {
 				// save data
-				getDietTreatment();
-				//TODO: revert
-//				if (DietTreatmentEditingController.getInstance()
-//						.saveDietTreatment()) {
-//					ViewController.getInstance().loadContent(
-//							"PatientDetailView",
-//							DietTreatmentManagementView.this);
-//					_saved = true;
-//				} else {
-//					EasyAlerts
-//							.error("Fehler beim Speichern der Daten, versuchen Sie es bitte erneut!",
-//									EasyAlerts.OK_ONLY, EasyAlerts.OK,
-//									getWindow(), null);
-//				}
+				DietTreatmentEditingController.getInstance().saveDietTreatment();
 
 			}
 		});
@@ -102,6 +89,16 @@ public abstract class DietTreatmentManagementView extends EasyDietContentView
 		_endDateButton = (CalendarButton) namespace.get("endDate");
 		_durationLabel = (Label) namespace.get("durationLabel");
 
+		Button validateButton = (Button) namespace.get("validate");
+		validateButton.getButtonPressListeners().add(new ButtonPressListener() {
+			
+			@Override
+			public void buttonPressed(Button button) {
+				DietTreatmentEditingController.getInstance().validateDietTreatment();
+				
+			}
+		});
+		
 		CalendarButtonSelectionListener dateChangedListener = new CalendarButtonSelectionListener() {
 			public void selectedDateChanged(CalendarButton calendarButton,
 					CalendarDate previousSelectedDate) {
@@ -172,7 +169,7 @@ public abstract class DietTreatmentManagementView extends EasyDietContentView
         int days = getDietTreatment().getDuration();
         String dayLabel = days > 0 ? "Tage" : "Tag";
         _durationLabel.setText((days + 1) + " " + dayLabel);
-        DietTreatmentEditingController.getInstance().validateDietTreatment();
+        //DietTreatmentEditingController.getInstance().validateDietTreatment();
     }
 	
 	protected DietTreatmentBO getDietTreatment() {

@@ -29,7 +29,7 @@ public class DietTreatmentBO implements IDietParameterizable
 	public DietTreatmentBO()
 	{
 		// TODO: add default values
-		this(new DietTreatment());
+		this(new DietTreatment(new Date(),0,"",null,null));
 	}
 	
     /**
@@ -512,7 +512,7 @@ public class DietTreatmentBO implements IDietParameterizable
 
     public String getDisplayText()
     {
-        return getName();
+        return (getName().length() > 0) ? getName() : "Neue Diätbehandlung";
     }
     
     /**
