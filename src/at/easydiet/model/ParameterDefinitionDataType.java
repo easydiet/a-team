@@ -10,8 +10,10 @@ public class ParameterDefinitionDataType  implements java.io.Serializable
     /**
      * A unique serialization id. 
      */
+	//public enum DataType {Numbers}
     private static final long serialVersionUID = -2304720409188752110L;
     private String _name;
+    //private DataType _dataType;
 
     /**
      * Initializes a new instance of the {@link ParameterDefinitionDataType} class.
@@ -64,4 +66,12 @@ public class ParameterDefinitionDataType  implements java.io.Serializable
       
         return builder.toString();
     }
+    
+//    public void setDataType(DataType dataType){
+//    	_dataType = dataType;
+//    }
+//    
+//    public DataType getDataType(){
+//    	return _dataType;
+//    }
 }

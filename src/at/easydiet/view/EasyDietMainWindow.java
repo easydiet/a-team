@@ -94,7 +94,7 @@ public class EasyDietMainWindow extends Window implements Bindable
                         source.getWindow().getRootOwner());
             }
         });
-
+        
         // other xml views
         Action.getNamedActions().put("createDietPlan", new Action()
         {
@@ -103,6 +103,14 @@ public class EasyDietMainWindow extends Window implements Bindable
             {
                 ViewController.getInstance().loadContent("CreateDietPlanView",
                         source);
+            }
+        });
+        Action.getNamedActions().put("createParameterset", new Action()
+        {
+            @Override
+            public void perform(Component source)
+            {
+                ViewController.getInstance().loadContent("CreateParametersetView", source);
             }
         });
     }
