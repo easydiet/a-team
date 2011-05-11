@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<easy:CreateParametersetView
+	xmlns:bxml="http://pivot.apache.org/bxml"
+	xmlns:easy="at.easydiet.view"
+	xmlns:easycontent="at.easydiet.view.content"
+	xmlns="org.apache.pivot.wtk"
+>
+	
+	<toolbarButtons>
+		<easy:EasyDietContentView.ToolbarButton
+			text="Speichern" icon="@save.png" bxml:id="save"  tooltipText="Den aktuellen Parameterset in der Datenbank speichern." />
+		<easy:EasyDietContentView.ToolbarButton
+			text="Validieren" icon="@validate.png" bxml:id="validate" tooltipText="Den aktuellen Parameterset auf seine Korrektheit und Vollständigkeit prüfen." />
+		<easy:EasyDietContentView.ToolbarButton
+			text="GUI Aktualisieren" icon="@refresh.png" bxml:id="refreshUI"  tooltipText="Die Oberfläche neu aufbauen um evtl. Anzeigefehler zu korrigiern." />
+		<easy:EasyDietContentView.ToolbarButton
+			action="showHelp" text="Hilfe" icon="@help.png"  tooltipText="Öffnet die Hilfe für das Erstellen neuer Parametersets." />
+			
+	</toolbarButtons>
+
+	<Border styleName="errorBox" bxml:id="errorBorder">
+		<ListView bxml:id="errorBox">
+			<itemRenderer>
+				<easycontent:ErrorRenderer />
+			</itemRenderer>
+		</ListView>
+	</Border>
+	<Label text="Neues Parameterset" />
+	<BoxPane Form.label="Name: " styles="{fill:true}" orientation="horizontal">
+		<TextInput textKey="parametersetName" textBindType="both" bxml:id="parametersetName">
+		</TextInput>
+	</BoxPane>
+	<Border styles="{padding: {left: 5}, color:'#d0d0d0'}">
+		<BoxPane styles="{padding: 5}">
+			<Label text="Parameter festlegen" />
+		</BoxPane>
+	<bxml:include bxml:id="parameterTableViewTemplate"
+	src="parameterTableViewTemplate.bxml" />
+	
+	</Border>
+	
+</easy:CreateParametersetView>

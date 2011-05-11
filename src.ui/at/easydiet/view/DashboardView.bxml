@@ -8,6 +8,7 @@ xmlns="org.apache.pivot.wtk">
 	</navigationButtons>
 	<toolbarButtons>
 		<easy:EasyDietContentView.ToolbarButton action="todo" text="Patient anlegen" icon="@user_add.png"/>
+		<easy:EasyDietContentView.ToolbarButton action="createParameterset" text="Parameterset anlegen" icon="@create_parameterset.png"/>
 		<easy:EasyDietContentView.ToolbarButton action="showHelp" text="Help" icon="@help.png"/>
 	</toolbarButtons>
 	<Form styles="{fill:true}">
