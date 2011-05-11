@@ -171,7 +171,7 @@ public class DietTreatmentEditingController {
 
 	private void validateEmptyElements() {
 		// TODO: Check if something is missing
-		if(_dietTreatment.getName()==null)
+		if(_dietTreatment.getName().length() < 1)
 		{
 			getErrors().add("Kein Name angegeben.");
 		}
