@@ -13,30 +13,51 @@ import org.hibernate.Transaction;
 
 import at.easydiet.dao.HibernateUtil;
 
+/**
+ * A simple setup utiltity importing the default schema and system data.
+ */
 public class Setup
 {
-    private static final Logger LOGGER = Logger.getLogger(Setup.class);
+    private static final Logger LOG = Logger.getLogger(Setup.class);
+    
+    /**
+     * A setup runner
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception
     {
         Setup s = new Setup();
         s.doIt();
     }
 
+    /**
+     * Run the setup
+     * @throws Exception
+     */
     private void doIt() throws Exception
     {
         BasicConfigurator.configure();
         createSchema();
-        //importDefaultData();
+        importDefaultData();
     }
 
+    /**
+     * Setup the database schema.
+     * @throws Exception
+     */
     private void createSchema() throws Exception
     {
+        LOG.info("Creating schema");
         HibernateUtil.currentSession();
     }
 
+    /**
+     * Importing the default system data.
+     */
     protected void importDefaultData()
     {
-        LOGGER.info("Importing Data");
+        LOG.info("Importing Data");
         Session session = HibernateUtil.currentSession();
         Transaction tx = session.beginTransaction();
         Session dom4jSession = session.getSession(EntityMode.DOM4J);
@@ -59,7 +80,7 @@ public class Setup
                 Node node = (Node)obj;
                 
                 Class<?> clazz = Class.forName("at.easydiet.model." + node.getName());
-                LOGGER.info("Importing " + clazz.getName());
+                LOG.info("Importing " + clazz.getName());
                 dom4jSession.save(clazz.getName(), node);
             }
             
@@ -72,7 +93,7 @@ public class Setup
             e.printStackTrace();
             tx.rollback();
         }
-        LOGGER.info("Importing ended");
+        LOG.info("Importing ended");
     }
 
 }

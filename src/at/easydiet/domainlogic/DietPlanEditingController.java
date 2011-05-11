@@ -98,6 +98,11 @@ public class DietPlanEditingController
     {
         if (selectedRow == null) return;
         selectedRow.getMeal().removeMealLines(selectedRow);
+        // If alternative, remove from parent too
+        if(selectedRow.isAlternative())
+        {
+            selectedRow.getParent().getAlternatives().remove(selectedRow);
+        }
         validateDietPlan();
     }
 
@@ -143,8 +148,8 @@ public class DietPlanEditingController
             HibernateUtil.currentSession().beginTransaction();
             DietPlanDAO dao = DAOFactory.getInstance().getDietPlanDAO();
             dao.makePersistent(_dietPlan.getModel());
-            _dietPlan = null;
             HibernateUtil.currentSession().getTransaction().commit();
+            _dietPlan = null;
             return true;
         }
         catch (HibernateException e)
@@ -304,7 +309,7 @@ public class DietPlanEditingController
         {
 
             String error = String
-                    .format("Der Zielparameter '%s' des Objektes '%s' wird nicht eingehalten. Der Gesamtwert %f%s ist %s %s%s",
+                    .format("Zielparameter '%s' von '%s' wird nicht eingehalten: %.2f%s ist %s %s%s",
                             validationResult.getDietParameter()
                                     .getParameterDefinition().getName(),
                             validationResult.getAffectedObject()

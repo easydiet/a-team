@@ -44,7 +44,7 @@
 					</heading>
 					<bxml:include
 	bxml:id="parameterTableViewTemplate"
-	src="parameterView.bxml" />
+	src="parameterTableViewTemplate.bxml" />
 				</Rollup>
 			</BoxPane>
 			<!-- END: Parameter of Meal -->
@@ -116,9 +116,9 @@
 				</ScrollPane>
 			</Border>
 			<BoxPane orientation="vertical" styles="{fill:true}">
-				<easy:SimpleButton text="&lt;" bxml:id="addRecipeToMeal" />
-				<easy:SimpleButton text="&lt;~" bxml:id="addRecipeToMealLine" />
-				<easy:SimpleButton text="&gt;" bxml:id="removeRecipeFromMeal" />
+				<easy:SimpleButton icon="@add_mealline.png" bxml:id="addRecipeToMeal" tooltipText="Gewählte Rezept als Mahlzeitenzeile zur Mahlzeit hinzufügen" tooltipDelay="300" />
+				<easy:SimpleButton icon="@add_alternative.png" bxml:id="addRecipeToMealLine" tooltipText="Gewählte Rezepte als Alternative zu allen gewählten Mahlzeitenzeilen hinzufügen" tooltipDelay="300" />
+				<easy:SimpleButton icon="@remove_mealline.png" bxml:id="removeRecipeFromMeal" tooltipText="Gewählte Mahlzeitenzeile aus Mahlzeit entfernen" tooltipDelay="300" />
 			</BoxPane>
 			<Border>
 				<ScrollPane>
