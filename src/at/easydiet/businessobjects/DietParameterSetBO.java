@@ -4,13 +4,14 @@ package at.easydiet.businessobjects;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.ArrayList;
 
+import at.easydiet.model.DietParameter;
 import at.easydiet.model.DietParameterSet;
 import at.easydiet.model.DietParameterTemplate;
 
 /**
  * This class encapsules a DietParameterSet instance.
  */
-public class DietParameterSetBO
+public class DietParameterSetBO implements IDietParameterizable
 {
 	private DietParameterSet _model;
 	
@@ -130,4 +131,32 @@ public class DietParameterSetBO
         getDietParameterTemplates();
     }
 
+    @Override
+    public String getDisplayText()
+    {
+        return "Neues Parameterset anlegen";
+    }
+
+    @Override
+    public List<DietParameterTemplateBO> getDietParameters()
+    {
+        if (_dietParameterTemplates == null) {
+            _dietParameterTemplates = new ArrayList<DietParameterTemplateBO>();
+            for (DietParameterTemplate dietParameterTemplate : _model.getDietParameterTemplates()) { 
+                _dietParameterTemplates.add(new DietParameterTemplateBO(dietParameterTemplate));
+            }
+        }
+        return _dietParameterTemplates;
+    }
+    @Override
+    public void addDietParameters(DietParameterTemplateBO parameter){
+        getDietParameters().add(parameter);
+        _model.getDietParameterTemplates().add(parameter.getModel());        
+    }
+
+    @Override
+    public void removeDietParameters(DietParameterTemplateBO parameter){
+        getDietParameters().remove(parameter);
+        _model.getDietParameterTemplates().remove(parameter.getModel());        
+    }
 }

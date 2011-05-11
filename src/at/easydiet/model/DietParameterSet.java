@@ -99,6 +99,10 @@ public class DietParameterSet  implements java.io.Serializable
         _dietParameterTemplates = dietParameterTemplates;
     }
     
+    public void addParameter(DietParameterTemplate toAdd){
+        _dietParameterTemplates.add(toAdd);
+    }
+    
     /**
      * Returns a string representation of this instance.
      * @return a string

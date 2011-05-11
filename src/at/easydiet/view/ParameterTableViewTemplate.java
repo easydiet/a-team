@@ -9,9 +9,8 @@ import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 
-import at.easydiet.businessobjects.DietParameterBO;
+import at.easydiet.businessobjects.DietParameterTemplateBO;
 import at.easydiet.businessobjects.IDietParameterizable;
-import at.easydiet.businessobjects.TimeSpanBO;
 
 public class ParameterTableViewTemplate extends BoxPane implements Bindable {
 	
@@ -44,7 +43,7 @@ public class ParameterTableViewTemplate extends BoxPane implements Bindable {
 
                     public void buttonPressed(Button arg0)
                     {
-                        removeParameter((DietParameterBO) _table
+                        removeParameter((DietParameterTemplateBO) _table
                                 .getSelectedRow());
                     }
                 });
@@ -84,7 +83,7 @@ public class ParameterTableViewTemplate extends BoxPane implements Bindable {
      * Removes a parameter from the view
      * @param dietParameter parameter to remove
      */
-    private void removeParameter(DietParameterBO dietParameter)
+    private void removeParameter(DietParameterTemplateBO dietParameter)
     {
         _table.remove(dietParameter);
     }
@@ -92,5 +91,4 @@ public class ParameterTableViewTemplate extends BoxPane implements Bindable {
 	public void setParameterProvider(IDietParameterizable provider) {
 		_table.setParameterProvider(provider);
 	}
-
 }

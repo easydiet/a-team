@@ -1,0 +1,57 @@
+<easy:PatientLikeSheet title="Vorliebe"
+xmlns:easy="at.easydiet.view"
+bxml:id="patientLikeSheet"
+xmlns:bxml="http://pivot.apache.org/bxml"
+xmlns:content="org.apache.pivot.wtk.content"
+xmlns:easycontent="at.easydiet.view.content"
+xmlns="org.apache.pivot.wtk">
+	<TablePane preferredWidth="700">
+		<columns>
+			<TablePane.Column width="1*" />
+		</columns>
+		<TablePane.Row height="1*">
+			<Form styles="{fill:true}">
+				<Form.Section heading="Daten bearbeiten">
+					<BoxPane Form.label="BLS Muster" styles="{fill:true}" orientation="horizontal">
+						<TextInput textKey="blsPattern" textBindType="both" bxml:id="blsPattern">
+						</TextInput>
+					</BoxPane>
+					<BoxPane Form.label="Bindungsgrad" styles="{fill:true}" orientation="horizontal">
+						<ListButton selectedItemKey="grade" selectedItemBindType="both" bxml:id="gradeList">
+						</ListButton>
+					</BoxPane>
+					<BoxPane Form.label="Notizen" styles="{fill:true}" orientation="horizontal">
+						<TextInput textKey="notice" textBindType="both" />
+					</BoxPane>
+				</Form.Section>			
+				<Form.Section heading="Betroffene Rezepte">
+					<Border>
+						<ScrollPane horizontalScrollBarPolicy="fill" preferredHeight="200">
+							<TableView bxml:id="recipeList">
+								<columns>
+									<TableView.Column name="blsCode" width="50"
+										headerData="BLS" />
+									<TableView.Column name="name" width="300"
+										headerData="Name" />
+								</columns>
+							</TableView>
+							<columnHeader>
+								<TableViewHeader tableView="$recipeList" />
+							</columnHeader>
+						</ScrollPane>
+					</Border>
+				</Form.Section>			
+			</Form>
+		</TablePane.Row>	
+		<TablePane.Row height="5">
+			<Separator />
+		</TablePane.Row>
+		<TablePane.Row height="30">
+			<BoxPane styles="{horizontalAlignment:'right'}">
+				<easy:SimpleLinkButton text="Speichern" icon="@save_small.png" bxml:id="saveButton" />
+				<easy:SimpleLinkButton text="Abbrechen" icon="@cancel.png" bxml:id="cancelButton"
+					ButtonPressListener.buttonPressed="patientLikeSheet.close()"/>
+			</BoxPane>
+		</TablePane.Row>	
+	</TablePane>
+</easy:PatientLikeSheet>

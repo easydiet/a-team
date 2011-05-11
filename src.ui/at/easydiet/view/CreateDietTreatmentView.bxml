@@ -1,0 +1,85 @@
+<easy:CreateDietTreatmentView xmlns:bxml="http://pivot.apache.org/bxml"
+ xmlns:easy="at.easydiet.view"
+ xmlns:content="org.apache.pivot.wtk.content"
+ xmlns:easycontent="at.easydiet.view.content"
+ xmlns="org.apache.pivot.wtk">
+    <navigationButtons>
+        <easy:EasyDietContentView.NavigationButton text="Dashboard" view="DashboardView"/>
+        <easy:PatientNavigationButton view="PatientDetailView"/>
+        <easy:EasyDietContentView.NavigationButton text="Neue Diätbehandlung anlegen"/>
+    </navigationButtons>
+    <toolbarButtons>
+        <easy:EasyDietContentView.ToolbarButton bxml:id="save" text="Speichern" icon="@save.png" tooltipText="Die aktuelle Diätbehandlung in der Datenbank speichern."/>
+		<easy:EasyDietContentView.ToolbarButton
+			text="Validieren" icon="@validate.png" bxml:id="validate" tooltipText="Die aktuelle Diätbehandlung auf ihre Korrektheit und Vollständigkeit prüfen." />
+    </toolbarButtons>
+    
+	<Border styleName="errorBox" bxml:id="errorBorder">
+		<ListView bxml:id="errorBox">
+			<itemRenderer>
+				<easycontent:ErrorRenderer />
+			</itemRenderer>
+		</ListView>
+	</Border>
+	
+    <Form styles="{fill:true}">
+        <Form.Section heading="Name">
+            <Border styleName="infoBox">
+                <easy:ImageLabel image="@info_small.png" text="Mit diesem Namen wird der Diätplan angezeigt."/>
+            </Border>
+            <TextInput bxml:id="name" textKey="name">
+            </TextInput>
+        </Form.Section>
+        <Form.Section heading="Zeitraum festlegen">
+            <Border styleName="infoBox">
+                <easy:ImageLabel image="@info_small.png" text="Hier legen Sie den Zeitraum der Diätbehandlung fest."/>
+            </Border>
+            <BoxPane orientation="horizontal">
+                <BoxPane>
+                    <Label text="Von:"/>
+                    <CalendarButton
+                     bxml:id="startDate"/>
+                </BoxPane>
+                <BoxPane>
+                    <Label
+                     text="Dauer"/>
+                    <Label
+                     bxml:id="durationLabel"/>
+                    <CalendarButton
+                     bxml:id="endDate"/>
+                </BoxPane>
+            </BoxPane>
+        </Form.Section>
+        <Form.Section heading="Kurzbeschreibung">
+            <Border styleName="infoBox">
+                <easy:ImageLabel image="@info_small.png" text="Hier beschreiben sie kurz diese Behandlung."/>
+            </Border>
+            <Border styles="{color:10}">
+                <ScrollPane horizontalScrollBarPolicy="fill"
+                 verticalScrollBarPolicy="fill_to_capacity"
+                 preferredHeight="100">
+                    <TextArea text="" bxml:id="shortDescription"/>
+                </ScrollPane>
+            </Border>
+        </Form.Section>
+        <Form.Section heading="Zuweisungsdiagnose anhängen">
+            <Border styleName="infoBox">
+                <easy:ImageLabel image="@info_small.png" text="Hier wird die Zuweisungsdiagnose angehängt."/>
+            </Border>
+            <Label text="Nicht umzusetzen"/>
+        </Form.Section>
+        <Form.Section heading="24-Stunden-Protokoll anhängen">
+            <Border styleName="infoBox">
+                <easy:ImageLabel image="@info_small.png" text="Hier wird das 24-Stunden-Protokoll angehängt."/>
+            </Border>
+            <Label text="Nicht umzusetzen"/>
+        </Form.Section>
+        <Form.Section heading="Parameter festlegen">
+            <Border styleName="infoBox">
+                <easy:ImageLabel image="@info_small.png" text="Legen Sie die Parameter der Diätbehandlung fest."/>
+            </Border>
+            <bxml:include bxml:id="parameterTableViewTemplate"
+             src="parameterTableViewTemplate.bxml"/>
+        </Form.Section>
+    </Form>
+</easy:CreateDietTreatmentView>

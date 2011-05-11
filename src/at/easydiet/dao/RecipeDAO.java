@@ -28,4 +28,14 @@ public class RecipeDAO
         
         return super.findByCriteriaSearch("name", Restrictions.or(ex, ex2));
     }
+
+    public List<Recipe> findByBlsCode(String blsPattern)
+    {
+        Recipe template1 = new Recipe();
+        template1.setBlsCode(blsPattern);
+        
+        Example ex = Example.create(template1).enableLike(MatchMode.EXACT).excludeZeroes().ignoreCase();
+
+        return super.findByCriteriaSearch("name", ex);
+    }
 }

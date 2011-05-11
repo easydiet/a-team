@@ -14,10 +14,9 @@ import org.apache.pivot.wtk.VerticalAlignment;
 import org.apache.pivot.wtk.TableView.CellRenderer;
 import org.apache.pivot.wtk.media.Image;
 
-import at.easydiet.businessobjects.DietParameterBO;
+import at.easydiet.businessobjects.DietParameterTemplateBO;
 import at.easydiet.businessobjects.IDietParameterizable;
-import at.easydiet.businessobjects.TimeSpanBO;
-import at.easydiet.validation.ParameterValidator;
+import at.easydiet.validation.ParameterTemplateValidator;
 import at.easydiet.view.EasyDietMainWindow;
 
 /**
@@ -93,7 +92,7 @@ public class ParameterCellRenderer extends BoxPane implements CellRenderer {
 
 		Component.StyleDictionary tableViewStyles = tableView.getStyles();
 		
-		if (!ParameterValidator.getInstance().isValid(_parameterizable,(DietParameterBO) row)) {
+		if (!ParameterTemplateValidator.getInstance().isValid(_parameterizable,(DietParameterTemplateBO) row)) {
 			rebuildUI(true);
 			if(selected)
 			{

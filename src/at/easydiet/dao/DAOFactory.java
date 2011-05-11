@@ -214,6 +214,24 @@ public class DAOFactory
     }
 
     /**
+     * Returns a new DAO for managing {@link PatientLike} Objects.
+     * @return a new {@link PatientLikeDAO} instance.
+     */
+    public PatientLikeDAO getPatientLikeDAO()
+    {
+        return (PatientLikeDAO) instantiateDAO(PatientLikeDAO.class);
+    }
+    
+    /**
+     * Returns a new DAO for managing {@link PatientLikeGrade} Objects.
+     * @return a new {@link PatientLikeGradeDAO} instance.
+     */
+    public PatientLikeGradeDAO getPatientLikeGradeDAO()
+    {
+        return (PatientLikeGradeDAO) instantiateDAO(PatientLikeGradeDAO.class);
+    }
+    
+    /**
      * Returns a new DAO for managing {@link PatientState} Objects.
      * @return a new {@link PatientStateDAO} instance.
      */

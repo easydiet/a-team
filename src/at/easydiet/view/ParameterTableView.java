@@ -10,7 +10,7 @@ import org.apache.pivot.wtk.TableView;
 
 import at.easydiet.businesslogic.ParameterTableViewController;
 import at.easydiet.businessobjects.CheckOperatorBO;
-import at.easydiet.businessobjects.DietParameterBO;
+import at.easydiet.businessobjects.DietParameterTemplateBO;
 import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
@@ -20,268 +20,302 @@ import at.easydiet.view.content.ParameterCellRenderer;
 /**
  * Shows a tableView which handles parameters
  */
-public class ParameterTableView extends TableView {
-	private ParameterTableViewController _controller = new ParameterTableViewController();
+public class ParameterTableView extends TableView
+{
+    private ParameterTableViewController _controller = new ParameterTableViewController();
 
-	private EasyTableViewRowEditor _editor;
-	private ListButton _definitionListButton;
-	private ListButton _checkOperatorListButton;
-	private ListButton _parameterDefinitionUnitListButton;
-	
-	public ParameterTableView(List<?> tableData) {
-		super(tableData);
-	}
+    private EasyTableViewRowEditor       _editor;
+    private ListButton                   _definitionListButton;
+    private ListButton                   _checkOperatorListButton;
+    private ListButton                   _parameterDefinitionUnitListButton;
+    
+    public void setNewInstanceType(
+            Class<? extends DietParameterTemplateBO> newInstanceType)
+    {
+        _controller.setNewInstanceType(newInstanceType);
+    }
 
-	public ParameterTableView() {
-		this(new ArrayList<DietParameterBO>());}
+    public ParameterTableView(List<?> tableData)
+    {
+        super(tableData);
+    }
 
-	/**
-	 * Set a new parameter data provider
-	 * @param provider parameter data provider
-	 */
-	public void setParameterProvider(IDietParameterizable provider)
-	{
-		setTableData(provider.getDietParameters());
-		getController().setParameterProvider(provider);
-		// set the validator into all cell renderers
-		setValidatorToCellRenderers();
-		refreshView();
-	}
-	
-	/**
-	 * returns the controller
-	 * @return
-	 */
-	private ParameterTableViewController getController() {
-		if(_controller != null)
-		{
-			return _controller;
-		}
-		return _controller = new ParameterTableViewController();
-	}
+    public ParameterTableView()
+    {
+        this(new ArrayList<DietParameterTemplateBO>());
+    }
 
-	/**
-	 * initalize this view and set cellrenderers
-	 */
-	public void initialize() {
-		// get editor
-		_editor = (EasyTableViewRowEditor) getRowEditor();
+    /**
+     * Set a new parameter data provider
+     * @param provider parameter data provider
+     */
+    public void setParameterProvider(IDietParameterizable provider)
+    {
+        setTableData(provider.getDietParameters());
+        getController().setParameterProvider(provider);
+        // set the validator into all cell renderers
+        setValidatorToCellRenderers();
+        refreshView();
+    }
 
-		_editor.getRowEditorListeners().add(new RowEditorListener.Adapter() {
-			public void changesSaved(RowEditor rowEditor, TableView tableView,
-					int rowIndex, int columnIndex) {
-				refreshView();
-			}
-		});
+    /**
+     * returns the controller
+     * @return
+     */
+    private ParameterTableViewController getController()
+    {
+        if (_controller != null)
+        {
+            return _controller;
+        }
+        return _controller = new ParameterTableViewController();
+    }
 
-		// add parameternames to the listbutton
-		_editor.getRowEditorListeners().add(
-				new EasyTableViewRowEditor.RowEditorListener.Adapter() {
-					@Override
-					public Vote previewEditRow(RowEditor rowEditor,
-							TableView tableView, int rowIndex, int columnIndex) {
+    /**
+     * initalize this view and set cellrenderers
+     */
+    public void initialize()
+    {
+        // get editor
+        _editor = (EasyTableViewRowEditor) getRowEditor();
 
-						final DietParameterBO row = (DietParameterBO) getTableData()
-								.get(rowIndex);
+        _editor.getRowEditorListeners().add(new RowEditorListener.Adapter()
+        {
+            public void changesSaved(RowEditor rowEditor, TableView tableView,
+                    int rowIndex, int columnIndex)
+            {
+                refreshView();
+            }
+        });
 
-						// define listbutton
-						_definitionListButton = (ListButton) _editor
-								.getCellEditors().get(
-										"parameterDefinition.name");
+        // add parameternames to the listbutton
+        _editor.getRowEditorListeners().add(
+                new EasyTableViewRowEditor.RowEditorListener.Adapter()
+                {
+                    @Override
+                    public Vote previewEditRow(RowEditor rowEditor,
+                            TableView tableView, int rowIndex, int columnIndex)
+                    {
 
-						// get all possible definitions for the listbutton
-						_definitionListButton
-								.setListData(_controller
-										.getAllDefinitions());
+                        final DietParameterTemplateBO row = (DietParameterTemplateBO) getTableData()
+                                .get(rowIndex);
 
-						// set listeners
-						_definitionListButton.getListButtonSelectionListeners()
-								.add(new ListButtonSelectionListener.Adapter() {
-									@Override
-									public void selectedItemChanged(
-											ListButton listbutton, Object obj) {
-										refreshUnitButton((ParameterDefinitionBO) listbutton
-												.getSelectedItem());
-										refreshOperatorButton((ParameterDefinitionBO) listbutton
-												.getSelectedItem());
-									}
-								});
+                        // define listbutton
+                        _definitionListButton = (ListButton) _editor
+                                .getCellEditors().get(
+                                        "parameterDefinition.name");
 
-						for (int i = 0; i < _definitionListButton.getListData()
-								.getLength(); i++) {
-							ParameterDefinitionBO parameterDefinitionBO = (ParameterDefinitionBO) _definitionListButton
-									.getListData().get(i);
-							if (parameterDefinitionBO.getName()
-									.equalsIgnoreCase(
-											row.getParameterDefinition()
-													.getName())) {
-								_definitionListButton.setSelectedIndex(i);
-								layout();
-								break;
-							}
-						}
+                        // get all possible definitions for the listbutton
+                        _definitionListButton.setListData(_controller
+                                .getAllDefinitions());
 
-						return super.previewEditRow(rowEditor, tableView,
-								rowIndex, columnIndex);
-					}
-				});
+                        // set listeners
+                        _definitionListButton.getListButtonSelectionListeners()
+                                .add(new ListButtonSelectionListener.Adapter()
+                                {
+                                    @Override
+                                    public void selectedItemChanged(
+                                            ListButton listbutton, Object obj)
+                                    {
+                                        refreshUnitButton((ParameterDefinitionBO) listbutton
+                                                .getSelectedItem());
+                                        refreshOperatorButton((ParameterDefinitionBO) listbutton
+                                                .getSelectedItem());
+                                    }
+                                });
 
-		// add checkOperators to the ListButton
-		_editor.getRowEditorListeners().add(
-				new EasyTableViewRowEditor.RowEditorListener.Adapter() {
-					@Override
-					public Vote previewEditRow(RowEditor rowEditor,
-							TableView tableView, int rowIndex, int columnIndex) {
-						// update list of units
-						_checkOperatorListButton = (ListButton) _editor
-								.getCellEditors().get("checkOperator.name");
-						DietParameterBO row = (DietParameterBO) getTableData()
-								.get(rowIndex);
+                        for (int i = 0; i < _definitionListButton.getListData()
+                                .getLength(); i++)
+                        {
+                            ParameterDefinitionBO parameterDefinitionBO = (ParameterDefinitionBO) _definitionListButton
+                                    .getListData().get(i);
+                            if (parameterDefinitionBO.getName()
+                                    .equalsIgnoreCase(
+                                            row.getParameterDefinition()
+                                                    .getName()))
+                            {
+                                _definitionListButton.setSelectedIndex(i);
+                                layout();
+                                break;
+                            }
+                        }
 
-						_checkOperatorListButton
-								.setListData((org.apache.pivot.collections.List<?>) CheckOperatorBO
-										.getAllOperators());
+                        return super.previewEditRow(rowEditor, tableView,
+                                rowIndex, columnIndex);
+                    }
+                });
 
-						for (int i = 0; i < _checkOperatorListButton
-								.getListData().getLength(); i++) {
-							CheckOperatorBO checkOperatorBO = (CheckOperatorBO) _checkOperatorListButton
-									.getListData().get(i);
-							if (checkOperatorBO.getName().equalsIgnoreCase(
-									row.getCheckOperator().getName())) {
-								_checkOperatorListButton.setSelectedIndex(i);
-								layout();
-								break;
-							}
-						}
+        // add checkOperators to the ListButton
+        _editor.getRowEditorListeners().add(
+                new EasyTableViewRowEditor.RowEditorListener.Adapter()
+                {
+                    @Override
+                    public Vote previewEditRow(RowEditor rowEditor,
+                            TableView tableView, int rowIndex, int columnIndex)
+                    {
+                        // update list of units
+                        _checkOperatorListButton = (ListButton) _editor
+                                .getCellEditors().get("checkOperator.name");
+                        DietParameterTemplateBO row = (DietParameterTemplateBO) getTableData()
+                                .get(rowIndex);
 
-						return super.previewEditRow(rowEditor, tableView,
-								rowIndex, columnIndex);
-					}
-				});
+                        _checkOperatorListButton
+                                .setListData((org.apache.pivot.collections.List<?>) CheckOperatorBO
+                                        .getAllOperators());
 
-		// add units to the ListButton
-		_editor.getRowEditorListeners().add(
-				new EasyTableViewRowEditor.RowEditorListener.Adapter() {
-					@Override
-					public Vote previewEditRow(RowEditor rowEditor,
-							TableView tableView, int rowIndex, int columnIndex) {
-						// update list of units
-						_parameterDefinitionUnitListButton = (ListButton) _editor
-								.getCellEditors().get(
-										"parameterDefinitionUnit.name");
-						DietParameterBO row = (DietParameterBO) getTableData()
-								.get(rowIndex);
+                        for (int i = 0; i < _checkOperatorListButton
+                                .getListData().getLength(); i++)
+                        {
+                            CheckOperatorBO checkOperatorBO = (CheckOperatorBO) _checkOperatorListButton
+                                    .getListData().get(i);
+                            if (checkOperatorBO.getName().equalsIgnoreCase(
+                                    row.getCheckOperator().getName()))
+                            {
+                                _checkOperatorListButton.setSelectedIndex(i);
+                                layout();
+                                break;
+                            }
+                        }
 
-						_parameterDefinitionUnitListButton.setListData(row
-								.getParameterDefinition().getUnits());
+                        return super.previewEditRow(rowEditor, tableView,
+                                rowIndex, columnIndex);
+                    }
+                });
 
-						for (int i = 0; i < _parameterDefinitionUnitListButton
-								.getListData().getLength(); i++) {
-							ParameterDefinitionUnitBO parameterDefinitionUnitBO = (ParameterDefinitionUnitBO) _parameterDefinitionUnitListButton
-									.getListData().get(i);
-							if (parameterDefinitionUnitBO.getName()
-									.equalsIgnoreCase(
-											row.getParameterDefinitionUnit()
-													.getName())) {
-								_parameterDefinitionUnitListButton
-										.setSelectedIndex(i);
-								layout();
-								break;
-							}
-						}
+        // add units to the ListButton
+        _editor.getRowEditorListeners().add(
+                new EasyTableViewRowEditor.RowEditorListener.Adapter()
+                {
+                    @Override
+                    public Vote previewEditRow(RowEditor rowEditor,
+                            TableView tableView, int rowIndex, int columnIndex)
+                    {
+                        // update list of units
+                        _parameterDefinitionUnitListButton = (ListButton) _editor
+                                .getCellEditors().get(
+                                        "parameterDefinitionUnit.name");
+                        DietParameterTemplateBO row = (DietParameterTemplateBO) getTableData()
+                                .get(rowIndex);
 
-						return super.previewEditRow(rowEditor, tableView,
-								rowIndex, columnIndex);
-					}
-				});
+                        _parameterDefinitionUnitListButton.setListData(row
+                                .getParameterDefinition().getUnits());
 
-		this.setSort(this.getColumns().get(0).getName(), SortDirection.ASCENDING);
-	}
-	
-	/**
-	 * refresh the listbutton to choose operators
-	 * @param parameterDefinitionBO
-	 */
-	public void refreshOperatorButton(
-			ParameterDefinitionBO parameterDefinitionBO) {
-		if (_checkOperatorListButton != null && parameterDefinitionBO != null) {
-			List<CheckOperatorBO> list = CheckOperatorBO.getAllOperators();
+                        for (int i = 0; i < _parameterDefinitionUnitListButton
+                                .getListData().getLength(); i++)
+                        {
+                            ParameterDefinitionUnitBO parameterDefinitionUnitBO = (ParameterDefinitionUnitBO) _parameterDefinitionUnitListButton
+                                    .getListData().get(i);
+                            if (parameterDefinitionUnitBO.getName()
+                                    .equalsIgnoreCase(
+                                            row.getParameterDefinitionUnit()
+                                                    .getName()))
+                            {
+                                _parameterDefinitionUnitListButton
+                                        .setSelectedIndex(i);
+                                layout();
+                                break;
+                            }
+                        }
 
-			_checkOperatorListButton.setListData(list);
-			_checkOperatorListButton.setSelectedIndex(0);
-		}
-	}
+                        return super.previewEditRow(rowEditor, tableView,
+                                rowIndex, columnIndex);
+                    }
+                });
 
-	/**
-	 * refresh the listbutton to choose units
-	 * @param parameterDefinitionBO
-	 */
-	public void refreshUnitButton(ParameterDefinitionBO parameterDefinitionBO) {
-		if (_parameterDefinitionUnitListButton != null
-				&& parameterDefinitionBO != null) {
+        this.setSort(this.getColumns().get(0).getName(),
+                SortDirection.ASCENDING);
+    }
 
-			List<ParameterDefinitionUnitBO> list = parameterDefinitionBO
-					.getUnits();
+    /**
+     * refresh the listbutton to choose operators
+     * @param parameterDefinitionBO
+     */
+    public void refreshOperatorButton(
+            ParameterDefinitionBO parameterDefinitionBO)
+    {
+        if (_checkOperatorListButton != null && parameterDefinitionBO != null)
+        {
+            List<CheckOperatorBO> list = CheckOperatorBO.getAllOperators();
 
-			_parameterDefinitionUnitListButton.setListData(list);
-			_parameterDefinitionUnitListButton.setSelectedIndex(0);
-		}
-	}
+            _checkOperatorListButton.setListData(list);
+            _checkOperatorListButton.setSelectedIndex(0);
+        }
+    }
 
-	/**
-	 * Set the Validator into all cell renderers
-	 */
-	private void setValidatorToCellRenderers() {
-		for (Column col : getColumns()) {
-			((ParameterCellRenderer) col.getCellRenderer())
-					.setParameterizable(_controller.getParameterProvider());
-		}
-	}
+    /**
+     * refresh the listbutton to choose units
+     * @param parameterDefinitionBO
+     */
+    public void refreshUnitButton(ParameterDefinitionBO parameterDefinitionBO)
+    {
+        if (_parameterDefinitionUnitListButton != null
+                && parameterDefinitionBO != null)
+        {
 
-	/**
-	 * Starts a table view row editor
-	 */
-	public void beginEdit() {
-		layout();
-		//TODO: not on it's place
-		//_editor.beginEdit(this, getTableData().getLength() - 1, 0);
+            List<ParameterDefinitionUnitBO> list = parameterDefinitionBO
+                    .getUnits();
 
-	}
+            _parameterDefinitionUnitListButton.setListData(list);
+            _parameterDefinitionUnitListButton.setSelectedIndex(0);
+        }
+    }
 
-	public void refreshView()
-	{
-		validateView();
-		this.invalidate();
-	}
-	
-	/**
-	 * Validates this view
-	 * @return true if no conflicts are found
-	 */
-	public boolean validateView()
-	{
-		return _controller.isValid();
-		//return _validator.isValid((List<DietParameterBO>)getTableData());
-	}
-	
-	/**
-	 * Add a new template parameter to this view
-	 */
-	public void addParameterTemplate()
-	{
-		_controller.addTemplate();
-		refreshView();
-		
-		beginEdit();
-	}
-	
-	/**
-	 * Remove a parameter from the view
-	 * @param dietParameter parameter to remove
-	 */
-	public void remove(DietParameterBO dietParameter)
-	{
-		_controller.remove(dietParameter);
-		refreshView();
-	}
+    /**
+     * Set the Validator into all cell renderers
+     */
+    private void setValidatorToCellRenderers()
+    {
+        for (Column col : getColumns())
+        {
+            ((ParameterCellRenderer) col.getCellRenderer())
+                    .setParameterizable(_controller.getParameterProvider());
+        }
+    }
+
+    /**
+     * Starts a table view row editor
+     */
+    public void beginEdit()
+    {
+        layout();
+        // TODO: not on it's place
+        // _editor.beginEdit(this, getTableData().getLength() - 1, 0);
+
+    }
+
+    public void refreshView()
+    {
+        validateView();
+        this.invalidate();
+    }
+
+    /**
+     * Validates this view
+     * @return true if no conflicts are found
+     */
+    public boolean validateView()
+    {
+        return _controller.isValid();
+    }
+
+    /**
+     * Add a new template parameter to this view
+     */
+    public void addParameterTemplate()
+    {
+        _controller.addTemplate();
+        refreshView();
+
+        beginEdit();
+    }
+
+    /**
+     * Remove a parameter from the view
+     * @param dietParameter parameter to remove
+     */
+    public void remove(DietParameterTemplateBO dietParameter)
+    {
+        _controller.remove(dietParameter);
+        refreshView();
+    }
 }

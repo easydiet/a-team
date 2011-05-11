@@ -11,6 +11,7 @@ import org.apache.pivot.collections.HashMap;
 import org.apache.pivot.collections.List;
 import at.easydiet.businessobjects.CheckOperatorBO;
 import at.easydiet.businessobjects.DietParameterBO;
+import at.easydiet.businessobjects.DietParameterTemplateBO;
 import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.businessobjects.ParameterDefinitionDataTypeBO;
@@ -18,21 +19,21 @@ import at.easydiet.businessobjects.ParameterDefinitionDataTypeBO;
 /**
  * Validates given parameters if they conflict
  */
-public class ParameterValidator {
+public class ParameterTemplateValidator {
 	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-			.getLogger(ParameterValidator.class);
+			.getLogger(ParameterTemplateValidator.class);
 
-	private static ParameterValidator _singleton;
+	private static ParameterTemplateValidator _singleton;
 
-	private HashMap<IDietParameterizable, Set<DietParameterBO>> _cache;
+	private HashMap<IDietParameterizable, Set<DietParameterTemplateBO>> _cache;
 
-	private ParameterValidator() {
-		_cache = new HashMap<IDietParameterizable, Set<DietParameterBO>>();
+	private ParameterTemplateValidator() {
+		_cache = new HashMap<IDietParameterizable, Set<DietParameterTemplateBO>>();
 	}
 
-	public static ParameterValidator getInstance() {
+	public static ParameterTemplateValidator getInstance() {
 		if (_singleton == null) {
-			_singleton = new ParameterValidator();
+			_singleton = new ParameterTemplateValidator();
 		}
 		return _singleton;
 	}
@@ -46,7 +47,8 @@ public class ParameterValidator {
 		List<IDietParameterizable> conflicts = new ArrayList<IDietParameterizable>();
 		for(IDietParameterizable comp : _cache)
 		{
-			if(!_cache.get(comp).isEmpty())
+			// TODO[Joschi]: Check if this containsKey is correct or if we need a validation
+			if(_cache.containsKey(comp) && !_cache.get(comp).isEmpty())
 			{
 				conflicts.add(comp);
 			}
@@ -62,7 +64,7 @@ public class ParameterValidator {
 	 * @return true if it is
 	 */
 	public boolean isValid(IDietParameterizable paramterizable,
-			DietParameterBO dietParameterBO) {
+	        DietParameterTemplateBO dietParameterBO) {
 		if(paramterizable == null)
 		{
 			return true;
@@ -77,7 +79,7 @@ public class ParameterValidator {
 	}
 
 	public boolean isValid(IDietParameterizable parameterizable) {
-		return this.isValid(parameterizable, new HashSet<DietParameterBO>());
+		return this.isValid(parameterizable, new HashSet<DietParameterTemplateBO>());
 	}
 
 	/**
@@ -90,7 +92,7 @@ public class ParameterValidator {
 	 * @return true if no parameters are conflicting
 	 */
 	public boolean isValid(IDietParameterizable parameterizable,
-			Set<DietParameterBO> conflictingParameters) {
+			Set<DietParameterTemplateBO> conflictingParameters) {
 		
 		if(parameterizable == null)
 		{
@@ -100,22 +102,22 @@ public class ParameterValidator {
 		if (_cache.containsKey(parameterizable)) {
 			_cache.get(parameterizable).clear();
 		} else {
-			_cache.put(parameterizable, new HashSet<DietParameterBO>());
+			_cache.put(parameterizable, new HashSet<DietParameterTemplateBO>());
 		}
 		
 
-		List<DietParameterBO> checkSet = parameterizable.getDietParameters();
+		List<DietParameterTemplateBO> checkSet = parameterizable.getDietParameters();
 
 		
 		
 		// fill a new set for better comparison
-		Set<DietParameterBO> compareSet = new HashSet<DietParameterBO>();
-		for (DietParameterBO copyParameter : checkSet) {
-			compareSet.add(copyParameter);
+		Set<DietParameterTemplateBO> compareSet = new HashSet<DietParameterTemplateBO>();
+		for (DietParameterTemplateBO copyParameter : checkSet) {
+			compareSet.add((DietParameterTemplateBO) copyParameter);
 		}
 
 		// compare all parameters
-		for (DietParameterBO checkParameter : checkSet) {
+		for (DietParameterTemplateBO checkParameter : checkSet) {
 			ParameterDefinitionBO checkParameterDefinition = checkParameter
 					.getParameterDefinition();
 			CheckOperatorBO checkParameterOperator = checkParameter
@@ -124,7 +126,7 @@ public class ParameterValidator {
 			// remove this parameter from the comparison set
 			compareSet.remove(checkParameter);
 
-			for (DietParameterBO compareParameter : compareSet) {
+			for (DietParameterTemplateBO compareParameter : compareSet) {
 				ParameterDefinitionBO compareParameterDefinition = compareParameter
 						.getParameterDefinition();
 
@@ -338,22 +340,22 @@ public class ParameterValidator {
 	 * @param checkParameter
 	 * @param compareParameter
 	 */
-	private void addConflicting(IDietParameterizable parameterizable, Set<DietParameterBO> conflictingParameters,
-			DietParameterBO checkParameter, DietParameterBO compareParameter) {
+	private void addConflicting(IDietParameterizable parameterizable, Set<DietParameterTemplateBO> conflictingParameters,
+			DietParameterTemplateBO checkParameter, DietParameterTemplateBO compareParameter) {
 
 		// fill two sets, because when you change the set, that's accesible from
 		// the outside, we can not guarantee that the validation for
 		// isValid(DietParameterBO) is correct
 
 		if (!conflictingParameters.contains(checkParameter)) {
-			conflictingParameters.add(checkParameter);
+			conflictingParameters.add((DietParameterTemplateBO) checkParameter);
 		}
 		if (!conflictingParameters.contains(compareParameter)) {
 			conflictingParameters.add(compareParameter);
 		}
 
 		if (!_cache.get(parameterizable).contains(checkParameter)) {
-			_cache.get(parameterizable).add(checkParameter);
+			_cache.get(parameterizable).add((DietParameterTemplateBO) checkParameter);
 		}
 		if (!_cache.get(parameterizable).contains(compareParameter)) {
 			_cache.get(parameterizable).add(compareParameter);
