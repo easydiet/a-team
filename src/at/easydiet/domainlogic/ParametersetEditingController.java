@@ -1,32 +1,14 @@
 package at.easydiet.domainlogic;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.List;
 import org.hibernate.HibernateException;
 
-import at.easydiet.EasyDietApplication;
 import at.easydiet.businessobjects.DietParameterSetBO;
-import at.easydiet.businessobjects.DietPlanBO;
-import at.easydiet.businessobjects.DietTreatmentBO;
-import at.easydiet.businessobjects.IDietParameterizable;
-import at.easydiet.businessobjects.MealBO;
-import at.easydiet.businessobjects.MealLineBO;
-import at.easydiet.businessobjects.PlanTypeBO;
-import at.easydiet.businessobjects.RecipeBO;
-import at.easydiet.businessobjects.TimeSpanBO;
+import at.easydiet.businessobjects.DietParameterTemplateBO;
 import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.DietParameterSetDAO;
-import at.easydiet.dao.DietParameterTemplateDAO;
-import at.easydiet.dao.DietPlanDAO;
 import at.easydiet.dao.HibernateUtil;
-import at.easydiet.dao.MealDAO;
-import at.easydiet.domainlogic.DietParameterController.ValidationResult;
-import at.easydiet.util.CollectionUtils;
-import at.easydiet.util.StringUtils;
-//import at.easydiet.validation.ParameterValidator;
 
 public class ParametersetEditingController
 {
@@ -50,7 +32,6 @@ public class ParametersetEditingController
     public void setParameterset(DietParameterSetBO parameterset)
     {
         _parameterset = parameterset;
-        //validateDietPlan();
     }
 
     private static ParametersetEditingController _singleton;
@@ -71,13 +52,19 @@ public class ParametersetEditingController
 
     public boolean saveParameterset()
     {
-        //validateDietPlan(true);
-
+        System.out.println(getErrors().getLength());
         if (getErrors().getLength() > 0) return false;
 
         try
         {
+            // assign parameters to set
+            for (DietParameterTemplateBO template : _parameterset.getDietParameters())
+            {
+                template.setDietParameterSet(_parameterset);
+            }
+            
             HibernateUtil.currentSession().beginTransaction();
+            _parameterset.setName("test");
             DietParameterSetDAO dao = DAOFactory.getInstance().getDietParameterSetDAO();
             dao.makePersistent(_parameterset.getModel());
             HibernateUtil.currentSession().getTransaction().commit();
