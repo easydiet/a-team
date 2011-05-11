@@ -6,7 +6,6 @@ import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Map;
 
 import at.easydiet.businessobjects.CheckOperatorBO;
-import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.DietParameterTemplateBO;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.IDietParameterizable;

@@ -296,7 +296,6 @@ public class ParameterTableView extends TableView
     public boolean validateView()
     {
         return _controller.isValid();
-        // return _validator.isValid((List<DietParameterBO>)getTableData());
     }
 
     /**

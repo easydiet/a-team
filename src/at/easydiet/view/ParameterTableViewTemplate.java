@@ -9,10 +9,8 @@ import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 
-import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.DietParameterTemplateBO;
 import at.easydiet.businessobjects.IDietParameterizable;
-import at.easydiet.businessobjects.TimeSpanBO;
 
 public class ParameterTableViewTemplate extends BoxPane implements Bindable {
 	
@@ -93,5 +91,4 @@ public class ParameterTableViewTemplate extends BoxPane implements Bindable {
 	public void setParameterProvider(IDietParameterizable provider) {
 		_table.setParameterProvider(provider);
 	}
-
 }

@@ -117,7 +117,8 @@ public class ParameterTableViewController
     {
         _parameterProvider.addDietParameters(getParameterTemplate());
         isValid();
-        DietPlanEditingController.getInstance().validateDietPlan();
+        //TODO: start validation in corresponding controller
+        //DietPlanEditingController.getInstance().validateDietPlan();
     }
 
     /**
