@@ -473,6 +473,9 @@
 		<many-to-one class="DietParameterType" name="dietParameterType" column="DietParameterType" not-null="true" />  
 		<many-to-one class="ParameterDefinition" name="parameterDefinition" column="ParameterDefinitionId" not-null="true" />
 
+		<!-- Bidirectional assoc to set -->
+		<many-to-one name="dietParameterSet" column="DietParameterSetId" class="DietParameterSet" insert="true" update="true"/>
+
 		<joined-subclass name="DietParameter">
 			<key column="DietParameterTemplateId" not-null="true" />
 			<property name="start" column="Start" type="timestamp" />
@@ -493,7 +496,7 @@
 
 		<property name="name" column="Name" type="string" not-null="true" unique="true" />
 
-		<set name="dietParameterTemplates" lazy="true">
+		<set name="dietParameterTemplates" lazy="true" cascade="all,delete-orphan">
 			<key column="DietParameterSetId" />
 			<one-to-many class="DietParameterTemplate" />
 		</set>

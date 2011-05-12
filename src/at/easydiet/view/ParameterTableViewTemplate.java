@@ -13,12 +13,19 @@ import at.easydiet.businessobjects.DietParameterTemplateBO;
 import at.easydiet.businessobjects.IDietParameterizable;
 
 public class ParameterTableViewTemplate extends BoxPane implements Bindable {
-	
 	private ParameterTableView _table;
 	private Button _addParameters;
 	private Button _removeParameter;
+	
+	
 
-	@Override
+	public void setNewInstanceType(
+            Class<? extends DietParameterTemplateBO> newInstanceType)
+    {
+        _table.setNewInstanceType(newInstanceType);
+    }
+
+    @Override
 	public void initialize(Map<String, Object> namespace, URL location, Resources resources) {
 		_table = (ParameterTableView)namespace.get("parameterTableView");
 		_addParameters = (Button)namespace.get("addTableViewParameters");

@@ -2,6 +2,7 @@ package at.easydiet.view;
 
 import java.net.URL;
 
+import org.apache.log4j.Priority;
 import org.apache.pivot.beans.Bindable;
 import org.apache.pivot.collections.Map;
 import org.apache.pivot.util.Resources;
@@ -9,6 +10,7 @@ import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 
 import at.easydiet.businesslogic.DietTreatmentDetailViewController;
+import at.easydiet.businessobjects.DietParameterTemplateBO;
 import at.easydiet.domainlogic.DietPlanEditingController;
 import at.easydiet.domainlogic.ParametersetEditingController;
 
@@ -26,6 +28,7 @@ public class CreateParametersetView extends EasyDietContentView implements Binda
     	_parameterTableViewTemplate
         .setParameterProvider(ParametersetEditingController.getInstance()
                 .getParameterset());
+    	_parameterTableViewTemplate.setNewInstanceType(DietParameterTemplateBO.class);
     }
 
 
@@ -50,7 +53,7 @@ public class CreateParametersetView extends EasyDietContentView implements Binda
         if(saved)
         {
             ViewController.getInstance().loadContent(
-                    "CreateParametersetView", CreateParametersetView.this);
+                    "DashboardView", CreateParametersetView.this);
         }
         else if(ParametersetEditingController.getInstance().getErrors().getLength() == 0)
         {
