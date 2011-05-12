@@ -18,6 +18,7 @@ public class DietTreatment  implements java.io.Serializable
     private Date _start;
     private int _duration;
     private String _name;
+    private String _shortDescription;
     private Set<NutritionProtocol> _nutritionProtocols = new HashSet<NutritionProtocol>(0);
     private Set<DietPlan> _dietPlans = new HashSet<DietPlan>(0);
     private Set<DietParameter> _dietParameters = new HashSet<DietParameter>(0);
@@ -66,11 +67,12 @@ public class DietTreatment  implements java.io.Serializable
      * @param treatmentState the treatmentState to set for this instance
      * @param patient the patient to set for this instance
      */
-    public DietTreatment(Date start, int duration, String name, Set<NutritionProtocol> nutritionProtocols, Set<DietPlan> dietPlans, Set<DietParameter> dietParameters, Set<PatientState> patientStates, Set<DietTreatmentSystemUser> systemUsers, Set<ContactJournal> contactJournals, TreatmentState treatmentState, Patient patient) 
+    public DietTreatment(Date start, int duration, String name,String shortDescription, Set<NutritionProtocol> nutritionProtocols, Set<DietPlan> dietPlans, Set<DietParameter> dietParameters, Set<PatientState> patientStates, Set<DietTreatmentSystemUser> systemUsers, Set<ContactJournal> contactJournals, TreatmentState treatmentState, Patient patient) 
     {
        _start = start;
        _duration = duration;
        _name = name;
+       _shortDescription = shortDescription;
        _nutritionProtocols = nutritionProtocols;
        _dietPlans = dietPlans;
        _dietParameters = dietParameters;
@@ -151,6 +153,24 @@ public class DietTreatment  implements java.io.Serializable
     public void setName(String name) 
     {
         _name = name;
+    }
+    
+    /**       
+     * Gets the short description of this instance. 
+     * @return the short description currently set for this instance.
+     */
+    public String getShortDescription() 
+    {
+        return _shortDescription;
+    }
+    
+    /**       
+     * Sets the short description of this instance. 
+     * @param shortDescription the new short description of this instance.
+     */    
+    public void setShortDescription(String shortDescription) 
+    {
+        _shortDescription = shortDescription;
     }
     
     /**       

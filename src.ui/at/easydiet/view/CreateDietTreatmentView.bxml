@@ -66,13 +66,17 @@
             <Border styleName="infoBox">
                 <easy:ImageLabel image="@info_small.png" text="Hier wird die Zuweisungsdiagnose angehängt."/>
             </Border>
-            <Label text="Nicht umzusetzen"/>
+            <Border styleName="warningBox">
+				<easy:ImageLabel image="@warning_small.png" text="Dieses Feature ist zurzeit noch nicht verfügbar!" />
+			</Border>
         </Form.Section>
         <Form.Section heading="24-Stunden-Protokoll anhängen">
             <Border styleName="infoBox">
                 <easy:ImageLabel image="@info_small.png" text="Hier wird das 24-Stunden-Protokoll angehängt."/>
             </Border>
-            <Label text="Nicht umzusetzen"/>
+            <Border styleName="warningBox">
+				<easy:ImageLabel image="@warning_small.png" text="Dieses Feature ist zurzeit noch nicht verfügbar!" />
+			</Border>
         </Form.Section>
         <Form.Section heading="Parameter festlegen">
             <Border styleName="infoBox">
