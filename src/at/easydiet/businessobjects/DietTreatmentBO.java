@@ -140,6 +140,23 @@ public class DietTreatmentBO implements IDietParameterizable
         _model.setName(name);
     }
 
+    /**       
+     * Gets the short description of this instance. 
+     * @return the short description currently set for this instance.
+     */
+    public String getShortDescription() 
+    {
+        return _model.getShortDescription();
+    }
+    
+    /**       
+     * Sets the short description of this instance. 
+     * @param shortDescription the new short description of this instance.
+     */    
+    public void setShortDescription(String shortDescription) 
+    {
+        _model.setShortDescription(shortDescription);
+    }
 
 	private List<NutritionProtocolBO> _nutritionProtocols;
 	
