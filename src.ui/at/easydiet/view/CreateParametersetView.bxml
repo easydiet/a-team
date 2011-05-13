@@ -31,11 +31,12 @@
 		</TextInput>
 	</BoxPane>
 	<Border styles="{padding: {left: 5}, color:'#d0d0d0'}">
-		<BoxPane styles="{padding: 5}">
+		<BoxPane orientation="vertical" styles="{padding: 5}">
 			<Label text="Parameter festlegen" />
+			
 		</BoxPane>
-	<bxml:include bxml:id="parameterTableViewTemplate"
-	src="parameterTableViewTemplate.bxml" />
+		<bxml:include bxml:id="parameterTableViewTemplate"
+				src="parameterTableViewTemplate.bxml" />
 	
 	</Border>
 	
