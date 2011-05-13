@@ -9,6 +9,7 @@ import org.hibernate.HibernateException;
 import at.easydiet.businessobjects.DietTreatmentBO;
 import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.PatientBO;
+import at.easydiet.businessobjects.TreatmentStateBO;
 import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.DietTreatmentDAO;
 import at.easydiet.dao.HibernateUtil;
@@ -19,6 +20,8 @@ public class DietTreatmentEditingController {
 	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
 			.getLogger(DietTreatmentEditingController.class);
 
+	//set default state
+	private TreatmentStateBO _defaultState = TreatmentStateBO.PLANNING;
 
 	private PatientBO _patient;
 	private DietTreatmentBO _dietTreatment;
@@ -79,11 +82,12 @@ public class DietTreatmentEditingController {
 
         try
         {
+        	//set default treatment state
+        	_dietTreatment.setTreatmentState(_defaultState);
             HibernateUtil.currentSession().beginTransaction();
             DietTreatmentDAO dao = DAOFactory.getInstance().getDietTreatmentDAO();
             dao.makePersistent(_dietTreatment.getModel());
             HibernateUtil.currentSession().getTransaction().commit();
-            _dietTreatment = null;
             return true;
         }
         catch (HibernateException e)
@@ -170,8 +174,8 @@ public class DietTreatmentEditingController {
 	}
 
 	private void validateEmptyElements() {
-		// TODO: Check if something is missing
-		if(_dietTreatment.getName()==null)
+		// Check if something is missing
+		if(_dietTreatment.getName().length() < 1)
 		{
 			getErrors().add("Kein Name angegeben.");
 		}

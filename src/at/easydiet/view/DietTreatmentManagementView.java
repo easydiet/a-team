@@ -21,7 +21,9 @@ import org.apache.pivot.wtk.TextAreaContentListener;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.TextInputContentListener;
 
+import at.easydiet.businesslogic.DietTreatmentDetailViewController;
 import at.easydiet.businessobjects.DietTreatmentBO;
+import at.easydiet.domainlogic.DietPlanEditingController;
 import at.easydiet.domainlogic.DietTreatmentEditingController;
 
 public abstract class DietTreatmentManagementView extends EasyDietContentView
@@ -80,25 +82,26 @@ public abstract class DietTreatmentManagementView extends EasyDietContentView
 			@Override
 			public void buttonPressed(Button button) {
 				// save data
-				DietTreatmentEditingController.getInstance().saveDietTreatment();
+				save();
 
 			}
 		});
-		
+
 		_startDateButton = (CalendarButton) namespace.get("startDate");
 		_endDateButton = (CalendarButton) namespace.get("endDate");
 		_durationLabel = (Label) namespace.get("durationLabel");
 
 		Button validateButton = (Button) namespace.get("validate");
 		validateButton.getButtonPressListeners().add(new ButtonPressListener() {
-			
+
 			@Override
 			public void buttonPressed(Button button) {
-				DietTreatmentEditingController.getInstance().validateDietTreatment();
-				
+				DietTreatmentEditingController.getInstance()
+						.validateDietTreatment();
+
 			}
 		});
-		
+
 		CalendarButtonSelectionListener dateChangedListener = new CalendarButtonSelectionListener() {
 			public void selectedDateChanged(CalendarButton calendarButton,
 					CalendarDate previousSelectedDate) {
@@ -121,35 +124,30 @@ public abstract class DietTreatmentManagementView extends EasyDietContentView
 				updateDurationLabel();
 			}
 		};
-		
+
 		_startDateButton.getCalendarButtonSelectionListeners().add(
 				dateChangedListener);
 		_endDateButton.getCalendarButtonSelectionListeners().add(
 				dateChangedListener);
-		
-		
+
 		_name = (TextInput) namespace.get("name");
-        _name.getTextInputContentListeners().add(
-                new TextInputContentListener.Adapter()
-                {
-                    @Override
-                    public void textChanged(TextInput textInput)
-                    {
-                        getDietTreatment().setName(textInput.getText());
-                    }
-                });
-        
-        _shortDescription = (TextArea) namespace.get("shortDescription");
-        _shortDescription.getTextAreaContentListeners().add(
-                new TextAreaContentListener.Adapter()
-                {
-                    @Override
-                    public void textChanged(TextArea textInput)
-                    {
-                    	//TODO: short description
-                        //getDietTreatment().setDescription(textInput.getText());
-                    }
-                });
+		_name.getTextInputContentListeners().add(
+				new TextInputContentListener.Adapter() {
+					@Override
+					public void textChanged(TextInput textInput) {
+						getDietTreatment().setName(textInput.getText());
+					}
+				});
+
+		_shortDescription = (TextArea) namespace.get("shortDescription");
+		_shortDescription.getTextAreaContentListeners().add(
+				new TextAreaContentListener.Adapter() {
+					@Override
+					public void textChanged(TextArea textInput) {
+						getDietTreatment().setShortDescription(
+								textInput.getText());
+					}
+				});
 	}
 
 	@Override
@@ -163,16 +161,36 @@ public abstract class DietTreatmentManagementView extends EasyDietContentView
 		}
 		return super.onClose();
 	}
-	
-	protected void updateDurationLabel()
-    {
-        int days = getDietTreatment().getDuration();
-        String dayLabel = days > 0 ? "Tage" : "Tag";
-        _durationLabel.setText((days + 1) + " " + dayLabel);
-        //DietTreatmentEditingController.getInstance().validateDietTreatment();
-    }
-	
+
+	protected void updateDurationLabel() {
+		int days = getDietTreatment().getDuration();
+		String dayLabel = days > 0 ? "Tage" : "Tag";
+		_durationLabel.setText((days + 1) + " " + dayLabel);
+	}
+
 	protected DietTreatmentBO getDietTreatment() {
 		return DietTreatmentEditingController.getInstance().getDietTreatment();
 	}
+
+	private void save() {
+		_saved = DietTreatmentEditingController.getInstance()
+				.saveDietTreatment();
+		if (_saved) {
+			DietTreatmentDetailViewController.getInstance().setDietTreatment(getDietTreatment());
+			ViewController.getInstance().loadContent("DietTreatmentDetailView",
+					DietTreatmentManagementView.this);
+		} else if (DietPlanEditingController.getInstance().getErrors()
+				.getLength() == 0) {
+			EasyAlerts
+					.error("Es ist ein Fehler beim Speichern der Behandlung aufgetreten, bitte versuchen Sie es erneut!",
+							EasyAlerts.OK_ONLY, EasyAlerts.OK, getWindow(),
+							null);
+		} else {
+			EasyAlerts
+					.error("Es sind noch Fehler im Diätplan vorhanden! Bitte korrigieren Sie diese!",
+							EasyAlerts.OK_ONLY, EasyAlerts.OK, getWindow(),
+							null);
+		}
+	}
+
 }

@@ -1,10 +1,7 @@
 package at.easydiet.businessobjects;
 
-
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.ArrayList;
-
-import at.easydiet.model.DietParameter;
 import at.easydiet.model.DietParameterSet;
 import at.easydiet.model.DietParameterTemplate;
 
