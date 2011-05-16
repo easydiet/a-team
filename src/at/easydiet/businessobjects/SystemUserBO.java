@@ -237,5 +237,10 @@ public class SystemUserBO
         _rights = null;
         getRights();
     }
+    
+    public String toString()
+    {
+    	return getName();
+    }
 
 }

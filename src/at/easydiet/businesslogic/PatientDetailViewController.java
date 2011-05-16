@@ -1,5 +1,6 @@
 package at.easydiet.businesslogic;
 
+import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.List;
 import org.hibernate.UnresolvableObjectException;
 
@@ -7,6 +8,7 @@ import at.easydiet.businessobjects.DietTreatmentBO;
 import at.easydiet.businessobjects.LaborReportBO;
 import at.easydiet.businessobjects.PatientBO;
 import at.easydiet.businessobjects.PatientStateBO;
+import at.easydiet.businessobjects.PatientStateTypeBO;
 import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.PatientDAO;
 
@@ -88,4 +90,19 @@ public class PatientDetailViewController
         _patient.updateTreatmentsCache();
         reloadPatientData();
     }
+
+	public List<?> getAllDiagnosis() {
+		
+		List<PatientStateBO> list = new ArrayList<PatientStateBO>();
+		
+		for(PatientStateBO bo : _patientStates)
+		{
+			if(bo.getType() == PatientStateTypeBO.ASSIGNMENT)
+			{
+				list.add(bo);
+			}
+		}
+		
+		return list;
+	}
 }

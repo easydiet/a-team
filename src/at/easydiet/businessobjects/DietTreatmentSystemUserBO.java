@@ -41,7 +41,7 @@ public class DietTreatmentSystemUserBO
      * Gets the dietTreatmentSystemUserId of this instance. 
      * @return the dietTreatmentSystemUserId currently set for this instance.
      */
-    public int getDietTreatmentSystemUserId() 
+    public long getDietTreatmentSystemUserId() 
     {
         return _model.getDietTreatmentSystemUserId();
     }
@@ -50,7 +50,7 @@ public class DietTreatmentSystemUserBO
      * Sets the dietTreatmentSystemUserId of this instance. 
      * @param dietTreatmentSystemUserId the new dietTreatmentSystemUserId of this instance.
      */    
-    public void setDietTreatmentSystemUserId(int dietTreatmentSystemUserId) 
+    public void setDietTreatmentSystemUserId(long dietTreatmentSystemUserId) 
     {
         _model.setDietTreatmentSystemUserId(dietTreatmentSystemUserId);
     }

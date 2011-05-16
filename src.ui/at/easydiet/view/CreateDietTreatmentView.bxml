@@ -10,18 +10,18 @@
     </navigationButtons>
     <toolbarButtons>
         <easy:EasyDietContentView.ToolbarButton bxml:id="save" text="Speichern" icon="@save.png" tooltipText="Die aktuelle Diätbehandlung in der Datenbank speichern."/>
-		<easy:EasyDietContentView.ToolbarButton
-			text="Validieren" icon="@validate.png" bxml:id="validate" tooltipText="Die aktuelle Diätbehandlung auf ihre Korrektheit und Vollständigkeit prüfen." />
+        <easy:EasyDietContentView.ToolbarButton
+         text="Validieren" icon="@validate.png" bxml:id="validate" tooltipText="Die aktuelle Diätbehandlung auf ihre Korrektheit und Vollständigkeit prüfen."/>
     </toolbarButtons>
     
-	<Border styleName="errorBox" bxml:id="errorBorder">
-		<ListView bxml:id="errorBox">
-			<itemRenderer>
-				<easycontent:ErrorRenderer />
-			</itemRenderer>
-		</ListView>
-	</Border>
-	
+    <Border styleName="errorBox" bxml:id="errorBorder">
+        <ListView bxml:id="errorBox">
+            <itemRenderer>
+                <easycontent:ErrorRenderer/>
+            </itemRenderer>
+        </ListView>
+    </Border>
+    
     <Form styles="{fill:true}">
         <Form.Section heading="Name">
             <Border styleName="infoBox">
@@ -62,21 +62,115 @@
                 </ScrollPane>
             </Border>
         </Form.Section>
+        <Form.Section heading="Rolle definieren">
+            <Border styleName="infoBox">
+                <easy:ImageLabel image="@info_small.png" text="Hier werden die Systemuser-Rollen festgelegt"/>
+            </Border>
+            <BoxPane>
+                <Border>
+                    <ScrollPane
+                     preferredHeight="150"
+                     styles="{padding: 5}">
+                        <TableView bxml:id="systemUsers">
+                            <columns>
+                                <TableView.Column
+                                 name="systemUser.name"
+                                 headerData="Name"
+                                 width="150"
+                                />
+                                <TableView.Column
+                                 name="function.name"
+                                 headerData="Rolle"
+                                 width="250"
+                                />
+                            </columns>
+                            <rowEditor>
+                                <easy:EasyTableViewRowEditor
+                                 editEffect="horizontal_slide"
+                                >
+                                    <cellEditors>
+                                        <systemUser.name>
+                                            <ListButton
+                                             selectedItemKey="systemUser"
+                                             selectedItemBindType="store"/>
+                                        </systemUser.name>
+                                        <function.name>
+                                            <ListButton
+                                             selectedItemKey="function"
+                                             selectedItemBindType="store"/>
+                                        </function.name>
+                                    </cellEditors>
+                                </easy:EasyTableViewRowEditor>
+                            </rowEditor>
+                            <tableViewSortListeners>
+                                function sortChanged(tableView) {
+                                var tableData = tableView.getTableData();
+                                tableData.setComparator(new org.apache.pivot.wtk.content.TableViewRowComparator(tableView));
+                                }
+                            </tableViewSortListeners>
+                        </TableView>
+                        <columnHeader>
+                            <TableViewHeader
+                             tableView="$systemUsers"
+                             sortMode="single_column"/>
+                        </columnHeader>
+                    </ScrollPane>
+                </Border>
+            </BoxPane>
+            <BoxPane>
+                <easy:SimpleButton
+                 text="User hinzufügen"
+                 bxml:id="addSystemUser"/>
+                <easy:SimpleButton
+                 text="User entfernen"
+                 bxml:id="removeSystemUser"/>
+            </BoxPane>
+        </Form.Section>
         <Form.Section heading="Zuweisungsdiagnose anhängen">
             <Border styleName="infoBox">
-                <easy:ImageLabel image="@info_small.png" text="Hier wird die Zuweisungsdiagnose angehängt."/>
+                <easy:ImageLabel image="@info_small.png" text="Hier wird die Zuweisungsdiagnose ausgewählt."/>
             </Border>
-            <Border styleName="warningBox">
-				<easy:ImageLabel image="@warning_small.png" text="Dieses Feature ist zurzeit noch nicht verfügbar!" />
-			</Border>
+            <BoxPane>
+                <Border>
+                    <ScrollPane
+                     preferredHeight="150"
+                     styles="{padding: 5}">
+                        <TableView bxml:id="patientState">
+                            <columns>
+                                <TableView.Column
+                                 name="date"
+                                 headerData="Datum"
+                                 width="100"
+                                />
+                                <TableView.Column
+                                 name="anamnesis"
+                                 headerData="Anamnese"
+                                 width="300"
+                                />
+                            </columns>
+                            <tableViewSortListeners>
+                                function sortChanged(tableView) {
+                                var tableData = tableView.getTableData();
+                                tableData.setComparator(new org.apache.pivot.wtk.content.TableViewRowComparator(tableView));
+                                }
+                            </tableViewSortListeners>
+                        </TableView>
+                        <columnHeader>
+                            <TableViewHeader
+                             tableView="$patientState"
+                             sortMode="single_column"/>
+                        </columnHeader>
+                    </ScrollPane>
+                </Border>
+            </BoxPane>
         </Form.Section>
         <Form.Section heading="24-Stunden-Protokoll anhängen">
             <Border styleName="infoBox">
                 <easy:ImageLabel image="@info_small.png" text="Hier wird das 24-Stunden-Protokoll angehängt."/>
             </Border>
             <Border styleName="warningBox">
-				<easy:ImageLabel image="@warning_small.png" text="Dieses Feature ist zurzeit noch nicht verfügbar!" />
-			</Border>
+                <easy:ImageLabel image="@warning_small.png" text="Dieses Feature ist zurzeit noch nicht verfügbar!"/>
+            </Border>
         </Form.Section>
         <Form.Section heading="Parameter festlegen">
             <Border styleName="infoBox">

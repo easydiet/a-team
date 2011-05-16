@@ -2,6 +2,7 @@ package at.easydiet.businessobjects;
 
 
 import java.sql.Clob;
+import java.sql.SQLException;
 import java.util.Date;
 
 import org.apache.pivot.collections.List;
@@ -84,9 +85,17 @@ public class PatientStateBO
      * Gets the anamnesis of this instance. 
      * @return the anamnesis currently set for this instance.
      */
-    public Clob getAnamnesis() 
+    public String getAnamnesis() 
     {
-        return _model.getAnamnesis();
+    	Clob clob = _model.getAnamnesis();
+    	
+        try {
+			return clob.getSubString(1, (int) clob.length());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return e.getMessage();
+		}
     }
     
     /**       
