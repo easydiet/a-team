@@ -5,19 +5,24 @@
 	xmlns:easycontent="at.easydiet.view.content"
 	xmlns="org.apache.pivot.wtk"
 >
-	
+	<navigationButtons>
+		<easy:EasyDietContentView.NavigationButton
+			text="Dashboard"
+			view="DashboardView" />
+		<easy:EasyDietContentView.NavigationButton
+			text="Neues Parameterset" />
+	</navigationButtons>
 	<toolbarButtons>
 		<easy:EasyDietContentView.ToolbarButton
 			text="Speichern" icon="@save.png" bxml:id="save"  tooltipText="Den aktuellen Parameterset in der Datenbank speichern." />
 		<easy:EasyDietContentView.ToolbarButton
 			text="Validieren" icon="@validate.png" bxml:id="validate" tooltipText="Den aktuellen Parameterset auf seine Korrektheit und Vollständigkeit prüfen." />
 		<easy:EasyDietContentView.ToolbarButton
-			text="GUI Aktualisieren" icon="@refresh.png" bxml:id="refreshUI"  tooltipText="Die Oberfläche neu aufbauen um evtl. Anzeigefehler zu korrigiern." />
-		<easy:EasyDietContentView.ToolbarButton
 			action="showHelp" text="Hilfe" icon="@help.png"  tooltipText="Öffnet die Hilfe für das Erstellen neuer Parametersets." />
-			
 	</toolbarButtons>
-
+	
+	<Label text="Neues Parameterset" />
+	
 	<Border styleName="errorBox" bxml:id="errorBorder">
 		<ListView bxml:id="errorBox">
 			<itemRenderer>
@@ -25,19 +30,19 @@
 			</itemRenderer>
 		</ListView>
 	</Border>
-	<Label text="Neues Parameterset" />
-	<BoxPane Form.label="Name: " styles="{fill:true}" orientation="horizontal">
-		<TextInput textKey="parametersetName" textBindType="both" bxml:id="parametersetName">
-		</TextInput>
-	</BoxPane>
-	<Border styles="{padding: {left: 5}, color:'#d0d0d0'}">
-		<BoxPane orientation="vertical" styles="{padding: 5}">
-			<Label text="Parameter festlegen" />
-			
-		</BoxPane>
-		<bxml:include bxml:id="parameterTableViewTemplate"
-				src="parameterTableViewTemplate.bxml" />
 	
-	</Border>
-	
+	<Form>
+		<Form.Section heading="Allgmeine Infos">
+			<BoxPane Form.label="Name" styles="{fill:true}" orientation="horizontal">
+				<TextInput textKey="name" textBindType="both">
+				</TextInput>
+			</BoxPane>
+		</Form.Section>
+		<Form.Section heading="Parameter">
+			<BoxPane orientation="horizontal" styles="{padding: 5}">
+				<bxml:include bxml:id="parameterTableViewTemplate"
+						src="parameterTableViewTemplate.bxml" />
+			</BoxPane>
+		</Form.Section>
+	</Form>
 </easy:CreateParametersetView>

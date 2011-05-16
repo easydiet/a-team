@@ -6,9 +6,12 @@ import org.hibernate.HibernateException;
 
 import at.easydiet.businessobjects.DietParameterSetBO;
 import at.easydiet.businessobjects.DietParameterTemplateBO;
+import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.DietParameterSetDAO;
 import at.easydiet.dao.HibernateUtil;
+import at.easydiet.util.StringUtils;
+import at.easydiet.validation.ParameterTemplateValidator;
 
 public class ParametersetEditingController
 {
@@ -16,19 +19,23 @@ public class ParametersetEditingController
                                                             .getLogger(ParametersetEditingController.class);
 
     private DietParameterSetBO                  _parameterset;
-    private List<String>                        _parameters;
 	private List<String> 						_errors;
 
 
     /**
-     * Gets the dietPlan.
-     * @return the dietPlan
+     * Gets the parameterset.
+     * @return the parameterset
      */
     public DietParameterSetBO getParameterset()
     {
         return _parameterset;
     }
 
+    /**
+     * Sets the parameterset.
+     *
+     * @param parameterset the new parameterset
+     */
     public void setParameterset(DietParameterSetBO parameterset)
     {
         _parameterset = parameterset;
@@ -36,6 +43,11 @@ public class ParametersetEditingController
 
     private static ParametersetEditingController _singleton;
 
+    /**
+     * Gets the single instance of ParametersetEditingController.
+     *
+     * @return single instance of ParametersetEditingController
+     */
     public static ParametersetEditingController getInstance()
     {
         if (_singleton == null)
@@ -45,14 +57,22 @@ public class ParametersetEditingController
         return _singleton;
     }
 
+    /**
+     * Creates a new parameterset.
+     */
     public void createNew()
     {
         _parameterset = new DietParameterSetBO();
     }
 
-    public boolean saveParameterset()
+    /**
+     * Save parameterset.
+     *
+     * @return true, if successful
+     */
+    public boolean save()
     {
-        System.out.println(getErrors().getLength());
+    	if(!validate()) return false;
         if (getErrors().getLength() > 0) return false;
 
         try
@@ -64,7 +84,6 @@ public class ParametersetEditingController
             }
             
             HibernateUtil.currentSession().beginTransaction();
-            _parameterset.setName("test");
             DietParameterSetDAO dao = DAOFactory.getInstance().getDietParameterSetDAO();
             dao.makePersistent(_parameterset.getModel());
             HibernateUtil.currentSession().getTransaction().commit();
@@ -81,19 +100,61 @@ public class ParametersetEditingController
     }
 
 
-    protected ParametersetEditingController()
+    /**
+     * Validate the values.
+     *
+     * @return true, if successful
+     */
+    public boolean validate() {
+    	boolean valid = true;
+    	
+    	getErrors().clear();
+    	
+    	validateDietParameterConflicts();
+    	
+    	if(StringUtils.isNullOrWhitespaceOnly(_parameterset.getName()))
+		{
+    		getErrors().add("Kein Name für das Parameterset angegeben!");
+    		valid = false;
+		}
+    	
+    	if(_parameterset.getDietParameters().getLength() == 0)
+    	{
+    		getErrors().add("Keine Parameter für dieses Parameterset angegeben!");
+    		valid = false;
+    	}
+    	
+		return valid;
+	}
+
+    /**
+     * Validate diet parameter conflicts.
+     */
+    private void validateDietParameterConflicts()
+    {
+        List<IDietParameterizable> conflicts = ParameterTemplateValidator.getInstance().getConflictingComponents();
+        for(IDietParameterizable component : conflicts)
+        {
+        	getErrors().add("Parameterkonflikt in: " + component.getDisplayText());
+        }
+    }
+
+    
+	/**
+	 * Instantiates a new parameterset editing controller.
+	 */
+	protected ParametersetEditingController()
     {
         _errors = new ArrayList<String>();
     }
 
-    public List<String> getParameters()
-    {
-        return _parameters;
-    }
-
+    /**
+     * Gets the errors.
+     *
+     * @return the errors
+     */
     public List<String> getErrors()
     {
         return _errors;
     }
-    
 }
