@@ -15,7 +15,10 @@ import at.easydiet.validation.ParameterTemplateValidator;
 
 public class ParametersetEditingController
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(ParametersetEditingController.class);
 
     private DietParameterSetBO                  _parameterset;
@@ -41,6 +44,9 @@ public class ParametersetEditingController
         _parameterset = parameterset;
     }
 
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
     private static ParametersetEditingController _singleton;
 
     /**
@@ -114,13 +120,13 @@ public class ParametersetEditingController
     	
     	if(StringUtils.isNullOrWhitespaceOnly(_parameterset.getName()))
 		{
-    		getErrors().add("Kein Name für das Parameterset angegeben!");
+    		getErrors().add("Kein Name fï¿½r das Parameterset angegeben!");
     		valid = false;
 		}
     	
     	if(_parameterset.getDietParameters().getLength() == 0)
     	{
-    		getErrors().add("Keine Parameter für dieses Parameterset angegeben!");
+    		getErrors().add("Keine Parameter fï¿½r dieses Parameterset angegeben!");
     		valid = false;
     	}
     	

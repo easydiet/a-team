@@ -15,6 +15,9 @@ public class ViewController
 	public static final String PIVOT_FILE_EXTENSION = ".bxml";
 	
 	
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
     private static ViewController _singleton;
 
     private ViewController()

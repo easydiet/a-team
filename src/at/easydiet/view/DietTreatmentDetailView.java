@@ -20,7 +20,10 @@ import at.easydiet.domainlogic.DietPlanEditingController;
 public class DietTreatmentDetailView extends EasyDietContentView implements
         Bindable
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(DietTreatmentDetailView.class);
     @BXML
     private TableView                           _dietPlanTable;

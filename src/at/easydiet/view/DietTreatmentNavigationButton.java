@@ -5,7 +5,10 @@ import at.easydiet.view.EasyDietContentView.NavigationButton;
 
 public class DietTreatmentNavigationButton extends NavigationButton
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(DietTreatmentNavigationButton.class);
 
     @Override

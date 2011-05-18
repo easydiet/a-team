@@ -10,9 +10,15 @@ import at.easydiet.model.PatientLikeGrade;
 
 public class PatientLikeGradeController
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(PatientLikeGradeController.class);
 
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
     private static PatientLikeGradeController   _singleton;
 
     public static PatientLikeGradeController getInstance()

@@ -27,7 +27,10 @@ import at.easydiet.validation.ParameterTemplateValidator;
 
 public class DietPlanEditingController
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(DietPlanEditingController.class);
 
     private DietPlanBO                          _dietPlan;
@@ -58,6 +61,9 @@ public class DietPlanEditingController
         return t;
     }
 
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
     private static DietPlanEditingController _singleton;
 
     public static DietPlanEditingController getInstance()

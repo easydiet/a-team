@@ -15,6 +15,9 @@ public class ParameterDefinitionUnitController
     public static final org.apache.log4j.Logger      LOG = org.apache.log4j.Logger
                                                                  .getLogger(ParameterDefinitionUnitController.class);
 
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
     private static ParameterDefinitionUnitController _singleton;
 
     public static ParameterDefinitionUnitController getInstance()

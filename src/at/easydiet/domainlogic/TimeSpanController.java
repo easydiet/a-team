@@ -11,9 +11,15 @@ import at.easydiet.businessobjects.TimeSpanBO;
 
 public class TimeSpanController
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(TimeSpanController.class);
 
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
     private static TimeSpanController           _singleton;
 
     public static TimeSpanController getInstance()

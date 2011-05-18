@@ -23,7 +23,6 @@ import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.TextInputContentListener;
 
 import at.easydiet.businesslogic.MealContainerController;
-import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.MealLineBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
@@ -34,7 +33,10 @@ import at.easydiet.domainlogic.RecipeSearchController;
 
 public class MealContainer extends BoxPane
 {
-    public static final org.apache.log4j.Logger LOG         = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG         = org.apache.log4j.Logger
                                                                     .getLogger(MealContainer.class);
 
     private static final SuggestionPopup        SUGGESTIONS = new SuggestionPopup();
@@ -66,8 +68,9 @@ public class MealContainer extends BoxPane
         BXMLSerializer serializer = new BXMLSerializer();
         try
         {
-            Border content = (Border) serializer.readObject(
-                    TimeSpanContainer.class, "MealContainerContent" + ViewController.getInstance().PIVOT_FILE_EXTENSION);
+            ViewController.getInstance();
+			Border content = (Border) serializer.readObject(
+                    TimeSpanContainer.class, "MealContainerContent" + ViewController.PIVOT_FILE_EXTENSION);
             
 			_parameterTableViewTemplate = (ParameterTableViewTemplate) serializer
 					.getNamespace().get("parameterTableViewTemplate");

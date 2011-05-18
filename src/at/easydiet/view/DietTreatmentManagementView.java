@@ -39,7 +39,7 @@ import at.easydiet.domainlogic.SystemUserController;
 public abstract class DietTreatmentManagementView extends EasyDietContentView
 		implements Bindable {
 
-	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
 			.getLogger(DietTreatmentManagementView.class);
 
 	protected boolean _saved;

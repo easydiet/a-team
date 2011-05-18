@@ -100,6 +100,9 @@ public class DietParameterUnitController
         kJ.put("kJ", 1f);
     }
     
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
     private static DietParameterUnitController _singleton;
     
     public static DietParameterUnitController getInstance()

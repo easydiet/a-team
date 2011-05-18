@@ -10,9 +10,15 @@ import at.easydiet.model.SystemUser;
 
 public class SystemUserController
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(SystemUserController.class);
     
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
     private static SystemUserController _singleton;
     
     public static SystemUserController getInstance()

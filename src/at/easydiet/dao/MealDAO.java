@@ -14,6 +14,11 @@ import at.easydiet.model.Meal;
 public class MealDAO extends GenericHibernateDAO<Meal, Long>
 {
 
+    /**
+     * Find all meal codes
+     * 
+     * @return Collection of meal codes as Strings
+     */
     @SuppressWarnings("unchecked")
     public Collection<String> findCodes()
     {
@@ -23,6 +28,11 @@ public class MealDAO extends GenericHibernateDAO<Meal, Long>
         return crit.list();
     }
 
+    /**
+     * Find all meal names
+     * 
+     * @return Collection of all meal names as Strings
+     */
     @SuppressWarnings("unchecked")
     public Collection<String> findNames()
     {

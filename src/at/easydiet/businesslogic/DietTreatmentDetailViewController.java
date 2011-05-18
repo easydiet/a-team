@@ -11,16 +11,27 @@ import at.easydiet.view.DietTreatmentDetailView;
  */
 public class DietTreatmentDetailViewController
 {
+    /**
+     * Logger for debugging
+     */
     private static final org.apache.log4j.Logger     LOG = org.apache.log4j.Logger
                                                                  .getLogger(DietTreatmentDetailViewController.class);
 
+    /**
+     * The current opened diet treatment
+     */
     private DietTreatmentBO                          _dietTreatment;
 
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
     private static DietTreatmentDetailViewController _singleton;
 
     /**
-     * Returns a globally unique instance of this class. 
-     * @return a globally unique instance which gets initiated on the first call.
+     * Returns a globally unique instance of this class.
+     * 
+     * @return a globally unique instance which gets initiated on the first
+     *         call.
      */
     public static DietTreatmentDetailViewController getInstance()
     {
@@ -32,7 +43,8 @@ public class DietTreatmentDetailViewController
     }
 
     /**
-     * Initializes a new instance of the {@link DietTreatmentDetailViewController} class.
+     * Initializes a new instance of the
+     * {@link DietTreatmentDetailViewController} class.
      */
     private DietTreatmentDetailViewController()
     {
@@ -40,7 +52,9 @@ public class DietTreatmentDetailViewController
     }
 
     /**
-     * Gets the currently selected {@link DietTreatmentBO} within this application.
+     * Gets the currently selected {@link DietTreatmentBO} within this
+     * application.
+     * 
      * @return the currently selected {@link DietTreatmentBO}
      * @see PatientDetailViewController#getPatient()
      */
@@ -51,6 +65,7 @@ public class DietTreatmentDetailViewController
 
     /**
      * Sets the selected {@link DietTreatmentBO} within this application.
+     * 
      * @param dietTreatment
      */
     public void setDietTreatment(DietTreatmentBO dietTreatment)

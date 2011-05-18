@@ -20,7 +20,7 @@ import at.easydiet.dao.PatientDAO;
 import at.easydiet.validation.ParameterTemplateValidator;
 
 public class DietTreatmentEditingController {
-	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
 			.getLogger(DietTreatmentEditingController.class);
 
 	// set default state
