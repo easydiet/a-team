@@ -10,8 +10,14 @@ import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.ParameterDefinitionUnitDAO;
 import at.easydiet.model.ParameterDefinitionUnit;
 
+/**
+ * Provides data and methods for compatibility with recipes,...
+ */
 public class ParameterDefinitionUnitController
 {
+    /**
+     * Logger for debugging purposes
+     */
     public static final org.apache.log4j.Logger      LOG = org.apache.log4j.Logger
                                                                  .getLogger(ParameterDefinitionUnitController.class);
 
@@ -20,6 +26,11 @@ public class ParameterDefinitionUnitController
      */
     private static ParameterDefinitionUnitController _singleton;
 
+    /**
+     * Get a Instance of this {@link ParameterDefinitionUnitController}
+     * 
+     * @return The instance of this {@link ParameterDefinitionUnitController}
+     */
     public static ParameterDefinitionUnitController getInstance()
     {
         if (_singleton == null)
@@ -29,6 +40,14 @@ public class ParameterDefinitionUnitController
         return _singleton;
     }
 
+    /**
+     * Get a list of {@link ParameterDefinitionUnitBO}s that are compatible with
+     * a {@link RecipeBO}
+     * 
+     * @param recipe
+     *            The {@link RecipeBO}
+     * @return List of compatible {@link ParameterDefinitionUnitBO}s
+     */
     public ArrayList<ParameterDefinitionUnitBO> getUnitsCompatibleWithRecipe(
             RecipeBO recipe)
     {
@@ -44,7 +63,10 @@ public class ParameterDefinitionUnitController
         return bos;
     }
 
+    /**
+     * Initializes a new instance of the
+     * {@link ParameterDefinitionUnitController} class.
+     */
     private ParameterDefinitionUnitController()
-    {
-    }
+    {}
 }

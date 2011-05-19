@@ -269,8 +269,8 @@ public abstract class DietTreatmentManagementView extends EasyDietContentView
 				new TableViewSelectionListener.Adapter() {
 
 					@Override
-					public void selectedRowChanged(TableView table, Object row) {
-						changeAssignment((PatientStateBO) row);
+					public void selectedRowChanged(TableView table, Object previousRow) {
+						changeAssignment((PatientStateBO) table.getSelectedRow());
 					}
 				});
 

@@ -18,275 +18,377 @@ import at.easydiet.dao.DietTreatmentDAO;
 import at.easydiet.dao.HibernateUtil;
 import at.easydiet.dao.PatientDAO;
 import at.easydiet.validation.ParameterTemplateValidator;
+import at.easydiet.view.DietTreatmentManagementView;
 
-public class DietTreatmentEditingController {
-	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-			.getLogger(DietTreatmentEditingController.class);
+/**
+ * Provides data and methods for the {@link DietTreatmentManagementView}
+ */
+public class DietTreatmentEditingController
+{
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger  LOG           = org.apache.log4j.Logger
+                                                                        .getLogger(DietTreatmentEditingController.class);
 
-	// set default state
-	private TreatmentStateBO _defaultState = TreatmentStateBO.PLANNING;
+    /**
+     * set default state
+     */
+    private TreatmentStateBO                      _defaultState = TreatmentStateBO.PLANNING;
 
-	private PatientBO _patient;
-	private DietTreatmentBO _dietTreatment;
-	private List<String> _errors;
+    /**
+     * The current {@link PatientBO}
+     */
+    private PatientBO                             _patient;
 
-	private static DietTreatmentEditingController _singleton;
+    /**
+     * The current {@link DietTreatmentBO}
+     */
+    private DietTreatmentBO                       _dietTreatment;
+    /**
+     * Stores all error messages
+     */
+    private List<String>                          _errors;
 
-	public static DietTreatmentEditingController getInstance() {
-		if (_singleton == null) {
-			_singleton = new DietTreatmentEditingController();
-		}
-		return _singleton;
-	}
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
+    private static DietTreatmentEditingController _singleton;
 
-	/**
-	 * Initializes a new instance of the {@link DietTreatmentEditingController}
-	 * class.
-	 */
-	private DietTreatmentEditingController() {
-		_errors = new ArrayList<String>();
-	}
+    /**
+     * Get a Instance of this {@link DietTreatmentEditingController}
+     * 
+     * @return The instance of this {@link DietTreatmentEditingController}
+     */
+    public static DietTreatmentEditingController getInstance()
+    {
+        if (_singleton == null)
+        {
+            _singleton = new DietTreatmentEditingController();
+        }
+        return _singleton;
+    }
 
-	/**
-	 * Create a new dietTreatment
-	 * 
-	 * @param patient
-	 *            for this patient
-	 */
-	public void createNew(PatientBO patient) {
-		_dietTreatment = new DietTreatmentBO();
-		_dietTreatment.setPatient(patient);
-		setPatient(patient);
-	}
+    /**
+     * Initializes a new instance of the {@link DietTreatmentEditingController}
+     * class.
+     */
+    private DietTreatmentEditingController()
+    {
+        _errors = new ArrayList<String>();
+    }
 
-	public void refresh() {
-		refresh(true);
-	}
+    /**
+     * Create a new dietTreatment
+     * 
+     * @param patient
+     *            for this patient
+     */
+    public void createNew(PatientBO patient)
+    {
+        _dietTreatment = new DietTreatmentBO();
+        _dietTreatment.setPatient(patient);
+        setPatient(patient);
+    }
 
-	public void refresh(boolean refreshDietTreatment) {
-		if (refreshDietTreatment && _dietTreatment != null
-				&& _dietTreatment.getDietTreatmentId() > 0) {
-			DietTreatmentDAO dao = DAOFactory.getInstance()
-					.getDietTreatmentDAO();
-			dao.refresh(_dietTreatment.getModel());
-		}
+    /**
+     * Reload caches
+     */
+    public void refresh()
+    {
+        refresh(true);
+    }
 
-		// TODO: is all refreshed?
-	}
+    /**
+     * Reload caches
+     * 
+     * @param refreshDietTreatment
+     *            If true, reolad {@link DietTreatmentBO} from database
+     */
+    public void refresh(boolean refreshDietTreatment)
+    {
+        if (refreshDietTreatment && _dietTreatment != null
+                && _dietTreatment.getDietTreatmentId() > 0)
+        {
+            DietTreatmentDAO dao = DAOFactory.getInstance()
+                    .getDietTreatmentDAO();
+            dao.refresh(_dietTreatment.getModel());
+        }
 
-	/**
-	 * List of all occured errors
-	 * 
-	 * @return list of strings
-	 */
-	public List<String> getErrors() {
-		return _errors;
-	}
+        _errors.clear();
+        _patient = _dietTreatment.getPatient();
 
-	/**
-	 * Validate and save the treatment
-	 * 
-	 * @return true if save was possible
-	 */
-	public boolean saveDietTreatment() {
-		//check for empty elements
-		validateDietTreatment(true);
+        // TODO: is all refreshed?
+    }
 
-		if (getErrors().getLength() > 0)
-			return false;
+    /**
+     * List of all occured errors
+     * 
+     * @return list of strings
+     */
+    public List<String> getErrors()
+    {
+        return _errors;
+    }
 
-		try {
-			// set default treatment state
-			_dietTreatment.setTreatmentState(_defaultState);
+    /**
+     * Validate and save the treatment
+     * 
+     * @return true if save was possible
+     */
+    public boolean saveDietTreatment()
+    {
+        // check for empty elements
+        validateDietTreatment(true);
 
-			HibernateUtil.currentSession().beginTransaction();
-			DietTreatmentDAO dao = DAOFactory.getInstance()
-					.getDietTreatmentDAO();
-			dao.makePersistent(_dietTreatment.getModel());
-			HibernateUtil.currentSession().getTransaction().commit();
-			return true;
-		} catch (HibernateException e) {
-			LOG.error("Could not save diettreatment", e);
-			HibernateUtil.currentSession().getTransaction().rollback();
-			return false;
-		}
-	}
+        if (getErrors().getLength() > 0) return false;
 
-	/**
-	 * Validate this treatment
-	 */
-	public void validateDietTreatment() {
-		validateDietTreatment(false);
-	}
+        try
+        {
+            // set default treatment state
+            _dietTreatment.setTreatmentState(_defaultState);
 
-	/**
-	 * Validate this treatment
-	 * @param checkForEmpty also check for empty elements
-	 */
-	public void validateDietTreatment(boolean checkForEmpty) {
-		_errors.clear();
+            HibernateUtil.currentSession().beginTransaction();
+            DietTreatmentDAO dao = DAOFactory.getInstance()
+                    .getDietTreatmentDAO();
+            dao.makePersistent(_dietTreatment.getModel());
+            HibernateUtil.currentSession().getTransaction().commit();
+            return true;
+        }
+        catch (HibernateException e)
+        {
+            LOG.error("Could not save diettreatment", e);
+            HibernateUtil.currentSession().getTransaction().rollback();
+            return false;
+        }
+    }
 
-		// validate empty elements
-		if (checkForEmpty) {
-			validateEmptyElements();
-		}
+    /**
+     * Validate this treatment
+     */
+    public void validateDietTreatment()
+    {
+        validateDietTreatment(false);
+    }
 
-		// TODO: check for everything
-		validateDietTreatmentParameters();
-		validateTime();
+    /**
+     * Validate this treatment
+     * 
+     * @param checkForEmpty
+     *            also check for empty elements
+     */
+    public void validateDietTreatment(boolean checkForEmpty)
+    {
+        _errors.clear();
 
-	}
+        // validate empty elements
+        if (checkForEmpty)
+        {
+            validateEmptyElements();
+        }
 
-	/**
-	 * Checks whether there is a collision with another diet treatment or not and writes them into the error list and box
-	 */
-	private void validateTime() {
-		List<Object> collisions = validateCollisions();
+        validateDietTreatmentParameters();
+        validateTime();
 
-		for (Object object : collisions) {
-			if (DietTreatmentBO.class.isAssignableFrom(object.getClass())) {
-				_errors.add(String
-						.format("Die Diätbehandlung '%s' überschneidet sich mit der Diätbehandlung '%s'",
-								_dietTreatment.getDisplayText(),
-								((DietTreatmentBO) object).getName()));
-			}
-		}
-	}
+    }
 
-	/**
-	 * Checks whether there is a collision with another diet treatment
-	 * @return A list of colliding elements
-	 */
-	public List<Object> validateCollisions() {
-		List<Object> collisions = new ArrayList<Object>();
+    /**
+     * Checks whether there is a collision with another diet treatment or not
+     * and writes them into the error list and box
+     */
+    private void validateTime()
+    {
+        List<Object> collisions = validateCollisions();
 
-		// collision with any other treatments
-		List<DietTreatmentBO> treatments = _dietTreatment.getPatient()
-				.getTreatments();
-		for (DietTreatmentBO other : treatments) {
-			if (other.equals(_dietTreatment))
-				continue;
-			if (isCollision(_dietTreatment.getStart(), _dietTreatment.getEnd(),
-					other.getStart(), other.getEnd())) {
-				collisions.add(other);
-			}
-		}
+        for (Object object : collisions)
+        {
+            if (DietTreatmentBO.class.isAssignableFrom(object.getClass()))
+            {
+                _errors.add(String
+                        .format("Die Diätbehandlung '%s' überschneidet sich mit der Diätbehandlung '%s'",
+                                _dietTreatment.getDisplayText(),
+                                ((DietTreatmentBO) object).getName()));
+            }
+        }
+    }
 
-		return collisions;
-	}
+    /**
+     * Checks whether there is a collision with another diet treatment
+     * 
+     * @return A list of colliding elements
+     */
+    public List<Object> validateCollisions()
+    {
+        List<Object> collisions = new ArrayList<Object>();
 
-	/**
-	 * Checks whether two time spans collide
-	 * 
-	 * @param currentStart
-	 * @param currentEnd
-	 * @param otherStart
-	 * @param otherEnd
-	 * @return
-	 */
-	private boolean isCollision(Date currentStart, Date currentEnd,
-			Date otherStart, Date otherEnd) {
-		return currentStart.compareTo(otherEnd) <= 0
-				&& otherStart.compareTo(currentEnd) <= 0;
-	}
+        // collision with any other treatments
+        List<DietTreatmentBO> treatments = _dietTreatment.getPatient()
+                .getTreatments();
+        for (DietTreatmentBO other : treatments)
+        {
+            if (other.equals(_dietTreatment)) continue;
+            if (isCollision(_dietTreatment.getStart(), _dietTreatment.getEnd(),
+                    other.getStart(), other.getEnd()))
+            {
+                collisions.add(other);
+            }
+        }
 
-	/**
-	 * Validates parameters and writes them to the error box
-	 */
-	private void validateDietTreatmentParameters() {
-		List<IDietParameterizable> conflicts = ParameterTemplateValidator
-				.getInstance().getConflictingComponents();
-		for (IDietParameterizable component : conflicts) {
-			getErrors().add(
-					"Parameterkonflikt in: " + component.getDisplayText());
-		}
-	}
+        return collisions;
+    }
 
-	/**
-	 * Checks for empty elements
-	 */
-	private void validateEmptyElements() {
-		// Check if something is missing
-		if (_dietTreatment.getName().length() < 1) {
-			getErrors().add("Kein Name angegeben.");
-		}
+    /**
+     * Checks whether two time spans collide
+     * 
+     * @param currentStart
+     *            Startdate of time span 1
+     * @param currentEnd
+     *            Enddate of time span 1
+     * @param otherStart
+     *            Startdate of time span 2
+     * @param otherEnd
+     *            Enddate of time span 2
+     * @return True if the time spans overlap
+     */
+    private boolean isCollision(Date currentStart, Date currentEnd,
+            Date otherStart, Date otherEnd)
+    {
+        return currentStart.compareTo(otherEnd) <= 0
+                && otherStart.compareTo(currentEnd) <= 0;
+    }
 
-		// TODO: check that at least one user is TREATING!
-		if (_dietTreatment.getSystemUsers().isEmpty()) {
-			getErrors().add("Kein verantwortlicher User angegeben.");
-		}
+    /**
+     * Validates parameters and writes them to the error box
+     */
+    private void validateDietTreatmentParameters()
+    {
+        List<IDietParameterizable> conflicts = ParameterTemplateValidator
+                .getInstance().getConflictingComponents();
+        for (IDietParameterizable component : conflicts)
+        {
+            getErrors().add(
+                    "Parameterkonflikt in: " + component.getDisplayText());
+        }
+    }
 
-		if (_dietTreatment.getPatientStates().isEmpty()) {
-			getErrors().add("Keine Zuweisungsdiagnose angegeben.");
-		}
-	}
+    /**
+     * Checks for empty elements
+     */
+    private void validateEmptyElements()
+    {
+        // Check if something is missing
+        if (_dietTreatment.getName().length() < 1)
+        {
+            getErrors().add("Kein Name angegeben.");
+        }
 
-	/**
-	 * Set the element back to it's old state
-	 */
-	public void revertChanges() {
-		// TODO: Find a good way to revert changes
-		// reload patient
-		HibernateUtil.currentSession().evict(_dietTreatment.getModel());
-		PatientDAO dao = DAOFactory.getInstance().getPatientDAO();
-		_patient.setModel(dao.findById(_patient.getPatientId(), false));
-	}
+        // TODO: check that at least one user is TREATING!
+        if (_dietTreatment.getSystemUsers().isEmpty())
+        {
+            getErrors().add("Kein verantwortlicher User angegeben.");
+        }
 
-	public void setPatient(PatientBO patient) {
-		_patient = patient;
-	}
+        if (_dietTreatment.getPatientStates().isEmpty())
+        {
+            getErrors().add("Keine Zuweisungsdiagnose angegeben.");
+        }
+    }
 
-	public PatientBO getPatient() {
-		return _patient;
-	}
+    /**
+     * Set the element back to it's old state
+     */
+    public void revertChanges()
+    {
+        // TODO: Find a good way to revert changes
+        // reload patient
+        HibernateUtil.currentSession().evict(_dietTreatment.getModel());
+        PatientDAO dao = DAOFactory.getInstance().getPatientDAO();
+        _patient.setModel(dao.findById(_patient.getPatientId(), false));
+    }
 
-	public DietTreatmentBO getDietTreatment() {
-		return _dietTreatment;
-	}
+    /**
+     * Sets the {@link PatientBO}
+     * 
+     * @param patient
+     *            The {@link PatientBO} to set
+     */
+    public void setPatient(PatientBO patient)
+    {
+        _patient = patient;
+    }
 
-	/**
-	 * Gets a list of all patientstates
-	 * @return list of patientstates
-	 */
-	public List<?> getAllPatientState() {
-		return _patient.getPatientStates();
-	}
+    /**
+     * Gets the {@link PatientBO}
+     * 
+     * @return The {@link PatientBO}
+     */
+    public PatientBO getPatient()
+    {
+        return _patient;
+    }
 
-	/**
-	 * remove a systemuser from the diettreatment
-	 * @param systemUser the user to remove
-	 */
-	public void removeSystemUser(DietTreatmentSystemUserBO systemUser) {
-		_dietTreatment.removeSystemUsers(systemUser);
+    /**
+     * Gets the current {@link DietTreatmentBO}
+     * 
+     * @return The {@link DietTreatmentBO}
+     */
+    public DietTreatmentBO getDietTreatment()
+    {
+        return _dietTreatment;
+    }
 
-	}
+    /**
+     * Gets a list of all patientstates
+     * 
+     * @return list of patientstates
+     */
+    public List<?> getAllPatientState()
+    {
+        return _patient.getPatientStates();
+    }
 
-	/**
-	 * Add a new systemuser template to the diettreatment
-	 */
-	public void addNewSystemUser() {
+    /**
+     * remove a systemuser from the diettreatment
+     * 
+     * @param systemUser
+     *            the user to remove
+     */
+    public void removeSystemUser(DietTreatmentSystemUserBO systemUser)
+    {
+        _dietTreatment.removeSystemUsers(systemUser);
 
-		DietTreatmentSystemUserBO newUser = new DietTreatmentSystemUserBO();
-		// default user
-		newUser.setSystemUser(SystemUserController.getInstance()
-				.getCurrentUser());
-		// default function
-		newUser.setFunction(SystemUserFunctionBO.TREATING_ASSISTANT);
+    }
 
-		_dietTreatment.addSystemUsers(newUser);
-	}
+    /**
+     * Add a new systemuser template to the diettreatment
+     */
+    public void addNewSystemUser()
+    {
 
-	/**
-	 * change the selected assignment diagnosis
-	 * @param patientState
-	 */
-	public void changeAssignment(PatientStateBO patientState) {
-		// TODO: make it clear what a patientstate is
+        DietTreatmentSystemUserBO newUser = new DietTreatmentSystemUserBO();
+        // default user
+        newUser.setSystemUser(SystemUserController.getInstance()
+                .getCurrentUser());
+        // default function
+        newUser.setFunction(SystemUserFunctionBO.TREATING_ASSISTANT);
 
-		// remove old selection
-		for (PatientStateBO bo : _dietTreatment.getPatientStates()) {
-			_dietTreatment.removePatientStates(bo);
-		}
-		_dietTreatment.addPatientStates(patientState);
-	}
+        _dietTreatment.addSystemUsers(newUser);
+    }
+
+    /**
+     * change the selected assignment diagnosis
+     * 
+     * @param patientState
+     */
+    public void changeAssignment(PatientStateBO patientState)
+    {
+        // TODO: make it clear what a patientstate is
+
+        // remove old selection
+        for (PatientStateBO bo : _dietTreatment.getPatientStates())
+        {
+            _dietTreatment.removePatientStates(bo);
+        }
+        _dietTreatment.addPatientStates(patientState);
+    }
 }
