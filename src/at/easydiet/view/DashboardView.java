@@ -18,39 +18,63 @@ import at.easydiet.businesslogic.DashboardViewController;
 import at.easydiet.businesslogic.PatientDetailViewController;
 import at.easydiet.businessobjects.PatientBO;
 
+/**
+ * This is the background class for the DashBoardView.bxml It provides data and
+ * methods for the GUI
+ * 
+ */
 public class DashboardView extends EasyDietContentView implements Bindable
 {
     /**
      * Logger for debugging purposes
      */
+    @SuppressWarnings("unused")
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(DashboardView.class);
+                                                             .getLogger(DashboardView.class);
 
+    /**
+     * Stores the patient search table view from the gui
+     */
     @BXML
-    private TableView                           _patientSearchTable;
-    @BXML
-    private TextInput                           _searchBox;
+    private TableView                            _patientSearchTable;
 
+    /**
+     * Stores the patient search box from the gui
+     */
+    @BXML
+    private TextInput                            _searchBox;
+
+    /**
+     * Searches for a patient
+     * 
+     * @param searchString
+     *            The pattern to search for
+     */
     public void searchPatient(String searchString)
     {
         // perform search and update UI
         DashboardViewController.getInstance().setPatientFilter(searchString);
         DashboardViewController.getInstance().refreshPatients();
-        _patientSearchTable.setTableData(DashboardViewController.getInstance().getPatients());
+        _patientSearchTable.setTableData(DashboardViewController.getInstance()
+                .getPatients());
     }
-    
+
+    /**
+     * @see at.easydiet.view.EasyDietContentView#onLoad()
+     */
     @Override
     public void onLoad()
     {
         DashboardViewController.getInstance().refreshPatients();
-        _searchBox.setText(DashboardViewController.getInstance().getPatientFilter());
+        _searchBox.setText(DashboardViewController.getInstance()
+                .getPatientFilter());
         _searchBox.requestFocus();
     }
 
-    public DashboardView()
-    {
-    }
-
+    /**
+     * @see org.apache.pivot.beans.Bindable#initialize(org.apache.pivot.collections.Map,
+     *      java.net.URL, org.apache.pivot.util.Resources)
+     */
     public void initialize(Map<String, Object> namespace, URL url,
             Resources resources)
     {
@@ -66,7 +90,8 @@ public class DashboardView extends EasyDietContentView implements Bindable
                     }
                 });
 
-        _patientSearchTable.setTableData(DashboardViewController.getInstance().getPatients());
+        _patientSearchTable.setTableData(DashboardViewController.getInstance()
+                .getPatients());
         _patientSearchTable.getComponentMouseButtonListeners().add(
                 new ComponentMouseButtonListener.Adapter()
                 {
@@ -86,6 +111,12 @@ public class DashboardView extends EasyDietContentView implements Bindable
                 });
     }
 
+    /**
+     * Opens the {@link PatientDetailView}
+     * 
+     * @param patient
+     *            The {@link PatientBO} to open
+     */
     protected void openPatientDetailView(PatientBO patient)
     {
         PatientDetailViewController.getInstance().setPatient(patient);

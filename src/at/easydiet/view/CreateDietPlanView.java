@@ -5,15 +5,23 @@ import org.apache.pivot.beans.Bindable;
 import at.easydiet.businesslogic.DietTreatmentDetailViewController;
 import at.easydiet.domainlogic.DietPlanEditingController;
 
-public class CreateDietPlanView extends DietPlanManagementView implements Bindable
+/**
+ * Background class for the CreateDietPlanView.bxml Provides data and methods
+ * for the GUI.
+ */
+public class CreateDietPlanView extends DietPlanManagementView implements
+        Bindable
 {
     /**
      * Logger for debugging purposes
      */
+    @SuppressWarnings("unused")
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(CreateDietPlanView.class);
+                                                             .getLogger(CreateDietPlanView.class);
 
-
+    /**
+     * @see at.easydiet.view.EasyDietContentView#onLoad()
+     */
     @Override
     public void onLoad()
     {
@@ -26,6 +34,5 @@ public class CreateDietPlanView extends DietPlanManagementView implements Bindab
                 .setParameterProvider(DietPlanEditingController.getInstance()
                         .getDietPlan());
     }
-
 
 }

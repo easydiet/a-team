@@ -7,22 +7,57 @@ import org.apache.pivot.wtk.DialogCloseListener;
 import org.apache.pivot.wtk.MessageType;
 import org.apache.pivot.wtk.Window;
 
+/**
+ * Defines look and feel of the alerts showing up in EasyDiet
+ */
 public class EasyAlerts
 {
     /**
      * Logger for debugging purposes
      */
+    @SuppressWarnings("unused")
     private static final org.apache.log4j.Logger LOG     = org.apache.log4j.Logger
-                                                                .getLogger(EasyAlerts.class);
+                                                                 .getLogger(EasyAlerts.class);
 
-    public static final String                  OK      = "OK";
-    public static final String                  YES     = "Ja";
-    public static final String                  NO      = "No";
-    public static final Sequence<String>        YES_NO  = new ArrayList<String>(
-                                                                YES, NO);
-    public static final Sequence<String>        OK_ONLY = new ArrayList<String>(
-                                                                OK);
+    /**
+     * OK-Button
+     */
+    public static final String                   OK      = "OK";
+    /**
+     * Yes-Button
+     */
+    public static final String                   YES     = "Ja";
 
+    /**
+     * No-Button
+     */
+    public static final String                   NO      = "Nein";
+
+    /**
+     * Yes- and No-Button
+     */
+    public static final Sequence<String>         YES_NO  = new ArrayList<String>(
+                                                                 YES, NO);
+    /**
+     * Only a OK-Button
+     */
+    public static final Sequence<String>         OK_ONLY = new ArrayList<String>(
+                                                                 OK);
+
+    /**
+     * Shows a new warning message
+     * 
+     * @param message
+     *            The message to show
+     * @param options
+     *            The available buttons
+     * @param defaultOption
+     *            The default chosen option
+     * @param owner
+     *            The owner window of this alert
+     * @param listener
+     *            The DialogCloseListener of this alert
+     */
     public static void warning(String message, Sequence<?> options,
             Object defaultOption, Window owner, DialogCloseListener listener)
     {
@@ -30,6 +65,22 @@ public class EasyAlerts
                 listener);
     }
 
+    /**
+     * Shows a new alert
+     * 
+     * @param msg
+     *            {@link MessageType} of this alert
+     * @param message
+     *            The message to show
+     * @param options
+     *            The available buttons
+     * @param defaultOption
+     *            The default chosen option
+     * @param owner
+     *            The owner window of this alert
+     * @param listener
+     *            The DialogCloseListener of this alert
+     */
     private static void show(MessageType msg, String message,
             Sequence<?> options, Object defaultOption, Window owner,
             DialogCloseListener listener)
@@ -43,6 +94,20 @@ public class EasyAlerts
             alert.open(owner.getDisplay(), owner, listener);
     }
 
+    /**
+     * Shows a new error message
+     * 
+     * @param message
+     *            The message to show
+     * @param options
+     *            The available buttons
+     * @param defaultOption
+     *            The default chosen option
+     * @param owner
+     *            The owner window of this alert
+     * @param listener
+     *            The DialogCloseListener of this alert
+     */
     public static void error(String message, Sequence<?> options,
             Object defaultOption, Window owner, DialogCloseListener listener)
     {

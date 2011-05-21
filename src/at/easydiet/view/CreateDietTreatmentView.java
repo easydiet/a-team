@@ -5,7 +5,14 @@ import org.apache.pivot.util.CalendarDate;
 import at.easydiet.businesslogic.PatientDetailViewController;
 import at.easydiet.domainlogic.DietTreatmentEditingController;
 
+/**
+ * Background class for the CreateDietTreatmentView.bxml
+ * Provides data and methods for the GUI.
+ */
 public class CreateDietTreatmentView extends DietTreatmentManagementView {
+    /**
+     * @see at.easydiet.view.EasyDietContentView#onLoad()
+     */
 	@Override
 	public void onLoad() {
 		_saved = false;
