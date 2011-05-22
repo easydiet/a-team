@@ -1,6 +1,9 @@
 package at.easydiet.businessobjects;
 
 
+import org.apache.pivot.collections.ArrayList;
+import org.apache.pivot.collections.List;
+
 import at.easydiet.model.SystemUserFunction;
 
 /**
@@ -9,7 +12,10 @@ import at.easydiet.model.SystemUserFunction;
 public enum SystemUserFunctionBO
 {
 	// TODO: Add correct values here
-	DEFAULT("")
+	TREATING_DOCTOR("Zugeteilter Arzt"),
+	TREATING_ASSISTANT("Zugeteilter Diätassistent"),
+	REPRESENTING_DOCTOR("Vertrender Arzt"),
+	REPRESENTING_ASSISTANT("Vertetender Diätassistent")
 	;
 
 	private SystemUserFunction _model;
@@ -54,6 +60,21 @@ public enum SystemUserFunctionBO
 				return bo;
 			}
 		}
-		return DEFAULT;
+		//Default
+		return TREATING_ASSISTANT;
+	}
+
+	public static List<?> getAllValues() {
+		List<SystemUserFunctionBO> list = new ArrayList<SystemUserFunctionBO>();
+		for(SystemUserFunctionBO bo : values())
+		{
+			list.add(bo);
+		}
+		return list;
+	}
+	
+	public String toString()
+	{
+		return getName();
 	}
 }

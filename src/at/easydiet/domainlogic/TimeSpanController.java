@@ -9,13 +9,28 @@ import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.DietTreatmentBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 
+/**
+ * Provides data and methods for handling {@link TimeSpanBO}s
+ */
 public class TimeSpanController
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    @SuppressWarnings("unused")
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(TimeSpanController.class);
 
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
     private static TimeSpanController           _singleton;
 
+    /**
+     * Get a Instance of this {@link TimeSpanController}
+     * 
+     * @return The instance of this {@link TimeSpanController}
+     */
     public static TimeSpanController getInstance()
     {
         if (_singleton == null)
@@ -25,14 +40,17 @@ public class TimeSpanController
         return _singleton;
     }
 
+    /**
+     * Initializes a new instance of the {@link TimeSpanController} class.
+     */
     private TimeSpanController()
     {}
 
     /**
      * Checks if the specified timespan collides with any other elements within
      * the patient context and returns a list of all collisions.
-     * @param timespan the
-     * @return
+     * @param timespan the timespan to validate
+     * @return List of collisions
      */
     public List<Object> validateCollisions(TimeSpanBO timespan)
     {
@@ -76,12 +94,12 @@ public class TimeSpanController
     }
 
     /**
-     * Checks whether two timeranges collide
+     * Checks whether two timespans collide
      * @param currentStart
      * @param currentEnd
      * @param otherStart
      * @param otherEnd
-     * @return
+     * @return True if there is a collision
      */
     private boolean isCollision(Date currentStart, Date currentEnd, Date otherStart, Date otherEnd)
     {

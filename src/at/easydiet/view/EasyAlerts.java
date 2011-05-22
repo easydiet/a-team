@@ -9,7 +9,10 @@ import org.apache.pivot.wtk.Window;
 
 public class EasyAlerts
 {
-    public static final org.apache.log4j.Logger LOG     = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG     = org.apache.log4j.Logger
                                                                 .getLogger(EasyAlerts.class);
 
     public static final String                  OK      = "OK";

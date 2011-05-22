@@ -17,12 +17,21 @@ import at.easydiet.util.StringUtils;
 /**
  * The base DAO implementation for using with hibernate objects.
  * 
- * @param <T> The type of the entity.
- * @param <ID> The type of the primary key property.
+ * @param <T>
+ *            The type of the entity.
+ * @param <ID>
+ *            The type of the primary key property.
  */
 public abstract class GenericHibernateDAO<T, ID extends Serializable>
 {
+    /**
+     * Defines the class of the object
+     */
     private Class<T> _persistentClass;
+
+    /**
+     * Current hibernate session
+     */
     private Session  _session;
 
     /**
@@ -37,7 +46,9 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
 
     /**
      * Sets the current session of the DAO to the given one.
-     * @param s the session to use.
+     * 
+     * @param s
+     *            the session to use.
      */
     public void setSession(Session s)
     {
@@ -46,6 +57,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
 
     /**
      * Gets session currently used by this DAO.
+     * 
      * @return the session currently used.
      */
     protected Session getSession()
@@ -58,7 +70,8 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
 
     /**
      * Gets the class type which this DAO handles.
-     * @return
+     * 
+     * @return class type which this DAO handles
      */
     public Class<T> getPersistentClass()
     {
@@ -67,8 +80,11 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
 
     /**
      * Loads the item with the specified id.
-     * @param id the id of the item to load.
-     * @param lock true if the entry should be locked within the database,
+     * 
+     * @param id
+     *            the id of the item to load.
+     * @param lock
+     *            true if the entry should be locked within the database,
      *            otherwise flase.
      * @return the loaded item.
      */
@@ -86,6 +102,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
 
     /**
      * Loads all items within the database.
+     * 
      * @return a list containing all items.
      */
     public List<T> findAll()
@@ -95,8 +112,11 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
 
     /**
      * Loads a list of items, matching the properties set in the given instance.
-     * @param exampleInstance The instance which conains the set properties.
-     * @param excludeProperty The properties to ignore on compare
+     * 
+     * @param exampleInstance
+     *            The instance which conains the set properties.
+     * @param excludeProperty
+     *            The properties to ignore on compare
      * @return A list of all items matching the set properties of the given
      *         instance.
      */
@@ -119,7 +139,8 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
      * unsaved-value checking). This operation cascades to associated instances
      * if the association is mapped with cascade="save-update".
      * 
-     * @param entity a transient or detached instance containing new or updated
+     * @param entity
+     *            a transient or detached instance containing new or updated
      *            state.
      * @return the stored item.
      */
@@ -141,7 +162,8 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
      * <li>after inserting a Blob or Clob</li>
      * </ul>
      * 
-     * @param entity a persistent or detached instance
+     * @param entity
+     *            a persistent or detached instance
      */
     public void refresh(T entity)
     {
@@ -154,7 +176,9 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
      * with an identifier associated with existing persistent state. This
      * operation cascades to associated instances if the association is mapped
      * with cascade="delete".
-     * @param entity the instance to be removed
+     * 
+     * @param entity
+     *            the instance to be removed
      */
     public void makeTransient(T entity)
     {
@@ -172,7 +196,7 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
     {
         getSession().flush();
     }
-    
+
     /**
      * Completely clear the session. Evict all loaded instances and cancel all
      * pending saves, updates and deletions. Do not close open iterators or
@@ -186,6 +210,10 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
     /**
      * Use this inside subclasses as a convenience method. This method allows to
      * find entities matching the given criteria.
+     * 
+     * @param criterion
+     *            Criteria to match
+     * @return List of all entities matching the criteria
      */
     @SuppressWarnings("unchecked")
     protected List<T> findByCriteria(Criterion... criterion)
@@ -201,6 +229,12 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable>
     /**
      * Use this inside subclasses as a convenience method. This method allows to
      * find entities matching the given criteria returning only 200 entries.
+     * 
+     * @param sort
+     *            Sort direction
+     * @param criterion
+     *            Criteria to match
+     * @return List of 200 entities matching the criteria
      */
     @SuppressWarnings("unchecked")
     public List<Recipe> findByCriteriaSearch(String sort,

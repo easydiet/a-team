@@ -6,7 +6,10 @@ import org.apache.pivot.collections.ArrayList;
 
 public class CollectionUtils
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(CollectionUtils.class);
 
     @SuppressWarnings("unchecked")

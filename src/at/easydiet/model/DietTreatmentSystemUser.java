@@ -4,14 +4,14 @@ package at.easydiet.model;
 /**
  * Represents a DietTreatmentSystemUser
  */
-public class DietTreatmentSystemUser  implements java.io.Serializable
+public class DietTreatmentSystemUser implements java.io.Serializable
 {
 
     /**
      * A unique serialization id. 
      */
     private static final long serialVersionUID = -7605548321600043837L;
-    private int _dietTreatmentSystemUserId;
+    private long _dietTreatmentSystemUserId;
     private SystemUser _systemUser;
     private SystemUserFunction _function;
 
@@ -39,7 +39,7 @@ public class DietTreatmentSystemUser  implements java.io.Serializable
      * Gets the dietTreatmentSystemUserId of this instance. 
      * @return the dietTreatmentSystemUserId currently set for this instance.
      */
-    public int getDietTreatmentSystemUserId() 
+    public long getDietTreatmentSystemUserId() 
     {
         return _dietTreatmentSystemUserId;
     }
@@ -48,7 +48,7 @@ public class DietTreatmentSystemUser  implements java.io.Serializable
      * Sets the dietTreatmentSystemUserId of this instance. 
      * @param dietTreatmentSystemUserId the new dietTreatmentSystemUserId of this instance.
      */    
-    public void setDietTreatmentSystemUserId(int dietTreatmentSystemUserId) 
+    public void setDietTreatmentSystemUserId(long dietTreatmentSystemUserId) 
     {
         _dietTreatmentSystemUserId = dietTreatmentSystemUserId;
     }

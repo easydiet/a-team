@@ -8,6 +8,7 @@ import org.apache.pivot.collections.List;
 import org.hibernate.HibernateException;
 
 import at.easydiet.EasyDietApplication;
+import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.DietTreatmentBO;
 import at.easydiet.businessobjects.IDietParameterizable;
@@ -24,19 +25,40 @@ import at.easydiet.domainlogic.DietParameterController.ValidationResult;
 import at.easydiet.util.CollectionUtils;
 import at.easydiet.util.StringUtils;
 import at.easydiet.validation.ParameterTemplateValidator;
+import at.easydiet.view.DietPlanManagementView;
 
+/**
+ * Provides data and methods for the {@link DietPlanManagementView}
+ */
 public class DietPlanEditingController
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(DietPlanEditingController.class);
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+                                                             .getLogger(DietPlanEditingController.class);
 
-    private DietPlanBO                          _dietPlan;
-    private List<String>                        _mealCodes;
-    private List<String>                        _mealNames;
-    private List<String>                        _errors;
+    /**
+     * The current opened {@link DietPlanBO}
+     */
+    private DietPlanBO                           _dietPlan;
+    /**
+     * Stores existing meal codes
+     */
+    private List<String>                         _mealCodes;
+    /**
+     * Stores existing meal names
+     */
+    private List<String>                         _mealNames;
+
+    /**
+     * Stores errors showed in the ErrorBox
+     */
+    private List<String>                         _errors;
 
     /**
      * Gets the dietPlan.
+     * 
      * @return the dietPlan
      */
     public DietPlanBO getDietPlan()
@@ -44,12 +66,23 @@ public class DietPlanEditingController
         return _dietPlan;
     }
 
+    /**
+     * Sets the current active {@link DietPlanBO}
+     * 
+     * @param dietPlan
+     *            The {@link DietPlanBO} to set
+     */
     public void setDietPlan(DietPlanBO dietPlan)
     {
         _dietPlan = dietPlan;
         validateDietPlan();
     }
 
+    /**
+     * Create a new {@link TimeSpanBO} and add it to dhe {@link DietPlanBO}
+     * 
+     * @return The new {@link TimeSpanBO}
+     */
     public TimeSpanBO createTimeSpan()
     {
         TimeSpanBO t = new TimeSpanBO();
@@ -58,8 +91,16 @@ public class DietPlanEditingController
         return t;
     }
 
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
     private static DietPlanEditingController _singleton;
 
+    /**
+     * Get a Instance of this {@link DietPlanEditingController}
+     * 
+     * @return The instance of this {@link DietPlanEditingController}
+     */
     public static DietPlanEditingController getInstance()
     {
         if (_singleton == null)
@@ -69,12 +110,26 @@ public class DietPlanEditingController
         return _singleton;
     }
 
+    /**
+     * Create a new {@link DietPlanBO} in a {@link DietTreatmentBO}
+     * 
+     * @param dietTreatment
+     *            The {@link DietTreatmentBO} which contains the new
+     *            {@link DietPlanBO}
+     */
     public void createNew(DietTreatmentBO dietTreatment)
     {
         _dietPlan = new DietPlanBO();
         _dietPlan.setDietTreatment(dietTreatment);
     }
 
+    /**
+     * Create a new {@link MealBO} in a {@link TimeSpanBO}
+     * 
+     * @param timeSpan
+     *            The {@link TimeSpanBO} which contains the new {@link MealBO}
+     * @return The new {@link MealBO}
+     */
     public MealBO createMeal(TimeSpanBO timeSpan)
     {
         MealBO meal = new MealBO();
@@ -83,6 +138,15 @@ public class DietPlanEditingController
         return meal;
     }
 
+    /**
+     * Add a {@link RecipeBO} to a {@link MealBO}
+     * 
+     * @param meal
+     *            {@link MealBO} to add the {@link RecipeBO}
+     * @param recipe
+     *            {@link RecipeBO} to add to the {@link MealBO}
+     * @return A {@link MealLineBO}.
+     */
     public MealLineBO addRecipeToMeal(MealBO meal, RecipeBO recipe)
     {
         MealLineBO line = new MealLineBO();
@@ -94,18 +158,33 @@ public class DietPlanEditingController
         return line;
     }
 
-    public void removeMealLine(MealLineBO selectedRow)
+    /**
+     * Remove a {@link MealLineBO}
+     * 
+     * @param mealLine
+     *            The {@link MealLineBO} to remove
+     */
+    public void removeMealLine(MealLineBO mealLine)
     {
-        if (selectedRow == null) return;
-        selectedRow.getMeal().removeMealLines(selectedRow);
+        if (mealLine == null) return;
+        mealLine.getMeal().removeMealLines(mealLine);
         // If alternative, remove from parent too
-        if(selectedRow.isAlternative())
+        if (mealLine.isAlternative())
         {
-            selectedRow.getParent().getAlternatives().remove(selectedRow);
+            mealLine.getParent().getAlternatives().remove(mealLine);
         }
         validateDietPlan();
     }
 
+    /**
+     * Add a {@link RecipeBO} as an alternative meal to a {@link MealLineBO}
+     * 
+     * @param mealLine
+     *            The {@link MealLineBO} to add the alternative
+     * @param recipe
+     *            The {@link RecipeBO} to add
+     * @return The alternative {@link MealLineBO}
+     */
     public MealLineBO addRecipeAsAlternative(MealLineBO mealLine,
             RecipeBO recipe)
     {
@@ -122,6 +201,11 @@ public class DietPlanEditingController
         return alternative;
     }
 
+    /**
+     * Save the current opened {@link DietPlanBO}
+     * 
+     * @return True if saving was possible
+     */
     public boolean saveDietPlan()
     {
         validateDietPlan(true);
@@ -160,11 +244,20 @@ public class DietPlanEditingController
         }
     }
 
+    /**
+     * Validate the {@link DietPlanBO} if something is wrong
+     */
     public void validateDietPlan()
     {
         validateDietPlan(false);
     }
 
+    /**
+     * Validate the {@link DietPlanBO} if someting is wrong or missing
+     * 
+     * @param checkForEmpty
+     *            If true: check for empty elements too
+     */
     public void validateDietPlan(boolean checkForEmpty)
     {
         _errors.clear();
@@ -186,12 +279,23 @@ public class DietPlanEditingController
 
     }
 
+    /**
+     * If the {@link PlanTypeBO} is {@link PlanTypeBO#NUTRITION_RECOMMENDATION},
+     * the {@link DietPlanBO} is only for {@link DietParameterBO} and it's not
+     * possible to add {@link MealLineBO}s
+     * 
+     * @return True if {@link DietPlanBO} is of type
+     *         {@link PlanTypeBO#NUTRITION_RECOMMENDATION}
+     */
     public boolean isDietParameterOnlyPlan()
     {
         return _dietPlan.getPlanType().equals(
                 PlanTypeBO.NUTRITION_RECOMMENDATION);
     }
 
+    /**
+     * Validate for empty elements
+     */
     private void validateEmptyElements()
     {
         int planParameterCount = 0;
@@ -283,6 +387,9 @@ public class DietPlanEditingController
         }
     }
 
+    /**
+     * Validate all timespans
+     */
     private void validateTimeSpans()
     {
         for (TimeSpanBO timeSpan : _dietPlan.getTimeSpans())
@@ -291,15 +398,24 @@ public class DietPlanEditingController
         }
     }
 
+    /**
+     * Validate if {@link DietParameterBO}s are conflicting
+     */
     private void validateDietParameterConflicts()
     {
-        List<IDietParameterizable> conflicts = ParameterTemplateValidator.getInstance().getConflictingComponents();
-        for(IDietParameterizable component : conflicts)
+        List<IDietParameterizable> conflicts = ParameterTemplateValidator
+                .getInstance().getConflictingComponents();
+        for (IDietParameterizable component : conflicts)
         {
-        	getErrors().add("Parameterkonflikt in: " + component.getDisplayText());
+            getErrors().add(
+                    "Parameterkonflikt in: " + component.getDisplayText());
         }
     }
 
+    /**
+     * Validate if the {@link DietPlanBO} corresponds to it's
+     * {@link DietParameterBO}s
+     */
     private void validateDietPlanParameters()
     {
         List<ValidationResult> violations = DietParameterController
@@ -326,6 +442,13 @@ public class DietPlanEditingController
         }
     }
 
+    /**
+     * Validate if the {@link TimeSpanBO} collides with another
+     * {@link TimeSpanBO}, {@link DietPlanBO} or {@link DietTreatmentBO}
+     * 
+     * @param t
+     *            {@link TimeSpanBO} to validate
+     */
     private void validateTimeSpan(TimeSpanBO t)
     {
         // check for timespan collisions
@@ -359,16 +482,30 @@ public class DietPlanEditingController
         }
     }
 
-    protected DietPlanEditingController()
+    /**
+     * Initializes a new instance of the {@link DietPlanEditingController}
+     * class.
+     */
+    private DietPlanEditingController()
     {
         _errors = new ArrayList<String>();
     }
 
+    /**
+     * Reload the {@link DietPlanBO} caches
+     */
     public void refresh()
     {
         refresh(true);
     }
 
+    /**
+     * Reload the {@link DietPlanBO} caches
+     * 
+     * @param refreshDietPlan
+     *            Set to true if you want to reload the {@link DietPlanBO} from
+     *            the database
+     */
     public void refresh(boolean refreshDietPlan)
     {
         if (refreshDietPlan && _dietPlan != null
@@ -383,27 +520,54 @@ public class DietPlanEditingController
         _mealNames = CollectionUtils.toPivotList(mealDao.findNames());
     }
 
+    /**
+     * Get all meal codes
+     * 
+     * @return List of all meal codes
+     */
     public List<String> getMealCodes()
     {
         return _mealCodes;
     }
 
+    /**
+     * Get all meal names
+     * 
+     * @return List of all meal names
+     */
     public List<String> getMealNames()
     {
         return _mealNames;
     }
 
+    /**
+     * Get all error messages
+     * 
+     * @return List of all error messages
+     */
     public List<String> getErrors()
     {
         return _errors;
     }
 
+    /**
+     * Delete a {@link TimeSpanBO} from the {@link DietPlanBO}
+     * 
+     * @param timeSpan
+     *            {@link TimeSpanBO} to remove
+     */
     public void deleteTimeSpan(TimeSpanBO timeSpan)
     {
         timeSpan.getDietPlan().removeTimeSpans(timeSpan);
         validateDietPlan();
     }
 
+    /**
+     * Delete a {@link MealBO} from a {@link TimeSpanBO}
+     * 
+     * @param meal
+     *            The {@link MealBO} to remove
+     */
     public void deleteMeal(MealBO meal)
     {
         meal.getTimeSpan().removeMeals(meal);

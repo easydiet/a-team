@@ -11,4 +11,6 @@ public interface IDietParameterizable
     public void addDietParameters(DietParameterTemplateBO parameter);
 
     public void removeDietParameters(DietParameterTemplateBO parameter);
+    
+    //public List<DietParameterTemplateBO> getPossibleParameters();
 }

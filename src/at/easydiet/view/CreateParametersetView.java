@@ -17,7 +17,10 @@ import at.easydiet.domainlogic.ParametersetEditingController;
 public class CreateParametersetView extends EasyDietContentView implements
         Bindable
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(CreateParametersetView.class);
 
     protected ParameterTableViewTemplate        _parameterTableViewTemplate;

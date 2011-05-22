@@ -9,37 +9,60 @@ import org.apache.pivot.collections.Map;
 import org.apache.pivot.collections.Sequence;
 import org.apache.pivot.util.CalendarDate;
 import org.apache.pivot.util.Resources;
+import org.apache.pivot.util.Vote;
 import org.apache.pivot.wtk.Border;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.CalendarButton;
 import org.apache.pivot.wtk.CalendarButtonSelectionListener;
 import org.apache.pivot.wtk.Label;
+import org.apache.pivot.wtk.ListButton;
 import org.apache.pivot.wtk.ListView;
+import org.apache.pivot.wtk.TableView;
+import org.apache.pivot.wtk.TableViewSelectionListener;
 import org.apache.pivot.wtk.TextArea;
 import org.apache.pivot.wtk.TextAreaContentListener;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.TextInputContentListener;
-
+import org.apache.pivot.wtk.TableView.RowEditor;
 import at.easydiet.businesslogic.DietTreatmentDetailViewController;
+import at.easydiet.businesslogic.PatientDetailViewController;
 import at.easydiet.businessobjects.DietTreatmentBO;
+import at.easydiet.businessobjects.DietTreatmentSystemUserBO;
+import at.easydiet.businessobjects.PatientStateBO;
+import at.easydiet.businessobjects.SystemUserBO;
+import at.easydiet.businessobjects.SystemUserFunctionBO;
 import at.easydiet.domainlogic.DietPlanEditingController;
 import at.easydiet.domainlogic.DietTreatmentEditingController;
+import at.easydiet.domainlogic.SystemUserController;
 
 public abstract class DietTreatmentManagementView extends EasyDietContentView
 		implements Bindable {
 
-	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
 			.getLogger(DietTreatmentManagementView.class);
 
 	protected boolean _saved;
 
 	protected TextInput _name;
 	protected ParameterTableViewTemplate _parameterTableViewTemplate;
+	protected TableView _patientState;
 	protected TextArea _shortDescription;
 	protected CalendarButton _startDateButton;
 	protected CalendarButton _endDateButton;
 	private Label _durationLabel;
+
+	private Button _addSystemUser;
+
+	private Button _removeSystemUser;
+
+	protected TableView _systemUserTable;
+
+	private EasyTableViewRowEditor _editor;
+
+	protected ListButton _systemUserListButton;
+
+	protected ListButton _systemUserFunctionListButton;
 
 	@Override
 	public void initialize(Map<String, Object> namespace, URL location,
@@ -129,7 +152,7 @@ public abstract class DietTreatmentManagementView extends EasyDietContentView
 				dateChangedListener);
 		_endDateButton.getCalendarButtonSelectionListeners().add(
 				dateChangedListener);
-
+		
 		_name = (TextInput) namespace.get("name");
 		_name.getTextInputContentListeners().add(
 				new TextInputContentListener.Adapter() {
@@ -148,6 +171,135 @@ public abstract class DietTreatmentManagementView extends EasyDietContentView
 								textInput.getText());
 					}
 				});
+
+		_systemUserTable = (TableView) namespace.get("systemUsers");
+
+		_addSystemUser = (Button) namespace.get("addSystemUser");
+
+		_addSystemUser.getButtonPressListeners().add(new ButtonPressListener() {
+
+			public void buttonPressed(Button arg0) {
+				addNewSystemUser();
+			}
+		});
+
+		_removeSystemUser = (Button) namespace.get("removeSystemUser");
+		_removeSystemUser.getButtonPressListeners().add(
+				new ButtonPressListener() {
+					public void buttonPressed(Button arg0) {
+						removeSystemUser((DietTreatmentSystemUserBO) _systemUserTable
+								.getSelectedRow());
+					}
+				});
+
+		_editor = (EasyTableViewRowEditor) _systemUserTable.getRowEditor();
+
+		// add systemusers to the ListButton
+		_editor.getRowEditorListeners().add(
+				new EasyTableViewRowEditor.RowEditorListener.Adapter() {
+					@Override
+					public Vote previewEditRow(RowEditor rowEditor,
+							TableView tableView, int rowIndex, int columnIndex) {
+						// update list of units
+						_systemUserListButton = (ListButton) _editor
+								.getCellEditors().get("systemUser.name");
+						DietTreatmentSystemUserBO row = (DietTreatmentSystemUserBO) _systemUserTable
+								.getTableData().get(rowIndex);
+
+						_systemUserListButton
+								.setListData((org.apache.pivot.collections.List<?>) SystemUserController
+										.getInstance().getAllUsers());
+
+						for (int i = 0; i < _systemUserListButton.getListData()
+								.getLength(); i++) {
+							SystemUserBO systemUser = (SystemUserBO) _systemUserListButton
+									.getListData().get(i);
+							if (systemUser.getName().equalsIgnoreCase(
+									row.getSystemUser().getName())) {
+								_systemUserListButton.setSelectedIndex(i);
+								layout();
+								break;
+							}
+						}
+
+						return super.previewEditRow(rowEditor, tableView,
+								rowIndex, columnIndex);
+					}
+				});
+
+		_editor.getRowEditorListeners().add(
+				new EasyTableViewRowEditor.RowEditorListener.Adapter() {
+					@Override
+					public Vote previewEditRow(RowEditor rowEditor,
+							TableView tableView, int rowIndex, int columnIndex) {
+						// update list of units
+						_systemUserFunctionListButton = (ListButton) _editor
+								.getCellEditors().get("function.name");
+						DietTreatmentSystemUserBO row = (DietTreatmentSystemUserBO) _systemUserTable
+								.getTableData().get(rowIndex);
+
+						_systemUserFunctionListButton
+								.setListData(SystemUserFunctionBO
+										.getAllValues());
+
+						for (int i = 0; i < _systemUserFunctionListButton
+								.getListData().getLength(); i++) {
+							SystemUserFunctionBO systemUserFunction = (SystemUserFunctionBO) _systemUserFunctionListButton
+									.getListData().get(i);
+							if (systemUserFunction == row.getFunction()) {
+								_systemUserFunctionListButton
+										.setSelectedIndex(i);
+								layout();
+								break;
+							}
+						}
+
+						return super.previewEditRow(rowEditor, tableView,
+								rowIndex, columnIndex);
+					}
+				});
+
+		//assignment
+		_patientState = (TableView) namespace.get("patientState");
+
+		_patientState.setTableData(PatientDetailViewController.getInstance()
+				.getAllDiagnosis());
+
+		_patientState.getTableViewSelectionListeners().add(
+				new TableViewSelectionListener.Adapter() {
+
+					@Override
+					public void selectedRowChanged(TableView table, Object previousRow) {
+						changeAssignment((PatientStateBO) table.getSelectedRow());
+					}
+				});
+
+	}
+
+	/**
+	 * Change the chosen assignment diagnosis
+	 * @param patientState the state to use as diagnosis
+	 */
+	protected void changeAssignment(PatientStateBO patientState) {
+		DietTreatmentEditingController.getInstance().changeAssignment(patientState);
+
+	}
+
+	/**
+	 * Remove the selected system user from the list
+	 * @param systemUser the user to remove
+	 */
+	protected void removeSystemUser(DietTreatmentSystemUserBO systemUser) {
+		DietTreatmentEditingController.getInstance().removeSystemUser(
+				systemUser);
+
+	}
+
+	/**
+	 * Add a new system user to the list
+	 */
+	protected void addNewSystemUser() {
+		DietTreatmentEditingController.getInstance().addNewSystemUser();
 	}
 
 	@Override
@@ -159,6 +311,10 @@ public abstract class DietTreatmentManagementView extends EasyDietContentView
 		if (!_saved) {
 			DietTreatmentEditingController.getInstance().revertChanges();
 		}
+		
+		//clear all errors
+		DietTreatmentEditingController.getInstance().getErrors().clear();
+		
 		return super.onClose();
 	}
 
@@ -176,7 +332,8 @@ public abstract class DietTreatmentManagementView extends EasyDietContentView
 		_saved = DietTreatmentEditingController.getInstance()
 				.saveDietTreatment();
 		if (_saved) {
-			DietTreatmentDetailViewController.getInstance().setDietTreatment(getDietTreatment());
+			DietTreatmentDetailViewController.getInstance().setDietTreatment(
+					getDietTreatment());
 			ViewController.getInstance().loadContent("DietTreatmentDetailView",
 					DietTreatmentManagementView.this);
 		} else if (DietPlanEditingController.getInstance().getErrors()

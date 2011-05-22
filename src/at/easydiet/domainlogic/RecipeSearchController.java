@@ -10,27 +10,49 @@ import at.easydiet.dao.RecipeDAO;
 import at.easydiet.model.Recipe;
 import at.easydiet.util.StringUtils;
 
+/**
+ * Provides data and methods for the recipe search
+ */
 public class RecipeSearchController
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(RecipeSearchController.class);
-    
-    private String _queryString;
-    private ArrayList<RecipeBO> _recipes;
-    
+    /**
+     * Logger for debugging purposes
+     */
+    @SuppressWarnings("unused")
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+                                                             .getLogger(RecipeSearchController.class);
+
+    /**
+     * The search query
+     */
+    private String                               _queryString;
+
+    /**
+     * List of {@link RecipeBO}s
+     */
+    private ArrayList<RecipeBO>                  _recipes;
+
+    /**
+     * Initializes a new instance of the {@link RecipeSearchController} class.
+     */
     public RecipeSearchController()
     {
         _recipes = new ArrayList<RecipeBO>();
     }
 
-    
+    /**
+     * Gets all {@link RecipeBO}s matching the query
+     * 
+     * @return List of filtered {@link RecipeBO}s
+     */
     public ArrayList<RecipeBO> getRecipes()
     {
         return _recipes;
     }
-    
+
     /**
      * Gets the queryString.
+     * 
      * @return the queryString
      */
     public String getQueryString()
@@ -40,22 +62,27 @@ public class RecipeSearchController
 
     /**
      * Sets the queryString.
-     * @param queryString the queryString to set
+     * 
+     * @param queryString
+     *            the queryString to set
      */
     public void setQueryString(String queryString)
     {
         _queryString = queryString;
     }
-    
+
+    /**
+     * Start the search
+     */
     public void doSearch()
     {
         _recipes.clear();
-        if(StringUtils.isNullOrWhitespaceOnly(_queryString))
+        if (StringUtils.isNullOrWhitespaceOnly(_queryString))
         {
             return;
         }
         RecipeDAO dao = DAOFactory.getInstance().getRecipeDAO();
-        
+
         List<Recipe> recipes = dao.findByQuery(_queryString);
         for (Recipe recipe : recipes)
         {

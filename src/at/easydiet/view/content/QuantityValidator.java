@@ -6,7 +6,10 @@ import org.apache.pivot.wtk.validation.Validator;
 
 public class QuantityValidator implements Validator
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(QuantityValidator.class);
 
     public boolean isValid(String text)

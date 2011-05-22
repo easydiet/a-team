@@ -4,7 +4,10 @@ import org.apache.pivot.collections.Sequence;
 
 public abstract class CollectionCache<T>
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(CollectionCache.class);
     
     protected abstract Sequence<T> getOriginal();

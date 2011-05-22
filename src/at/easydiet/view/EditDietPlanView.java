@@ -7,7 +7,7 @@ import at.easydiet.domainlogic.DietPlanEditingController;
 public class EditDietPlanView extends DietPlanManagementView implements
 		Bindable {
 
-	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
 			.getLogger(EditDietPlanView.class);
 
 	@Override
