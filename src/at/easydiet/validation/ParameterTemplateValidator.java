@@ -19,7 +19,7 @@ import at.easydiet.businessobjects.ParameterDefinitionDataTypeBO;
  * Validates given parameters if they conflict
  */
 public class ParameterTemplateValidator {
-	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
 			.getLogger(ParameterTemplateValidator.class);
 
 	private static ParameterTemplateValidator _singleton;

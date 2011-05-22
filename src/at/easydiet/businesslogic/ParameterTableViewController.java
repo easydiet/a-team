@@ -11,26 +11,47 @@ import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.dao.DAOFactory;
 import at.easydiet.model.ParameterDefinition;
 import at.easydiet.validation.ParameterTemplateValidator;
+import at.easydiet.view.ParameterTableView;
 
 /**
- * Controlls the Parameter Table View
+ * Provides data and actions for the {@link ParameterTableView}.
  */
 public class ParameterTableViewController
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(MealContainerController.class);
+    /**
+     * Logger for debugging purposes
+     */
+    @SuppressWarnings("unused")
+    private static final org.apache.log4j.Logger     LOG = org.apache.log4j.Logger
+                                                                 .getLogger(MealContainerController.class);
 
-    private IDietParameterizable                _parameterProvider;
-    private ArrayList<ParameterDefinitionBO>    _definitions;
+    /**
+     * This object provides access to it's parameters
+     */
+    private IDietParameterizable                     _parameterProvider;
+
+    /**
+     * Contains all possible parameter definitions
+     */
+    private ArrayList<ParameterDefinitionBO>         _definitions;
+
+    /**
+     * Defines if the parameter table uses templates or parameters
+     */
     private Class<? extends DietParameterTemplateBO> _newInstanceType;
-    
+
+    /**
+     * Initializes a new instance of the {@link ParameterTableViewController}
+     * class.
+     */
     public ParameterTableViewController()
     {
         _newInstanceType = DietParameterBO.class;
     }
-    
+
     /**
      * Gets the newInstanceType.
+     * 
      * @return the newInstanceType
      */
     public Class<? extends DietParameterTemplateBO> getNewInstanceType()
@@ -40,15 +61,15 @@ public class ParameterTableViewController
 
     /**
      * Sets the newInstanceType.
-     * @param newInstanceType the newInstanceType to set
+     * 
+     * @param newInstanceType
+     *            the newInstanceType to set
      */
     public void setNewInstanceType(
             Class<? extends DietParameterTemplateBO> newInstanceType)
     {
         _newInstanceType = newInstanceType;
     }
-
-
 
     /**
      * Gets all possible parameterdefinitions out of the database. Loads once
@@ -73,6 +94,13 @@ public class ParameterTableViewController
         return _definitions;
     }
 
+    /**
+     * Creates a new instance from type T
+     * 
+     * @param <T>
+     *            Type of the new entry
+     * @return new Instance of T
+     */
     @SuppressWarnings("unchecked")
     private <T extends DietParameterTemplateBO> T createNewEntry()
     {
@@ -116,14 +144,15 @@ public class ParameterTableViewController
     {
         _parameterProvider.addDietParameters(getParameterTemplate());
         isValid();
-        //TODO: start validation in corresponding controller
-        //DietPlanEditingController.getInstance().validateDietPlan();
+        // TODO: start validation in corresponding controller
+        // DietPlanEditingController.getInstance().validateDietPlan();
     }
 
     /**
      * Removes a dietParameter from the _parametProvider and the tableView
      * 
-     * @param dietParameter dietParameter to remove
+     * @param dietParameter
+     *            dietParameter to remove
      */
     public void remove(DietParameterTemplateBO dietParameter)
     {
@@ -142,16 +171,31 @@ public class ParameterTableViewController
         _parameterProvider = provider;
     }
 
+    /**
+     * Gets the parameterizable object of this table view
+     * 
+     * @return Parameterizable object
+     */
     public IDietParameterizable getParameterProvider()
     {
         return _parameterProvider;
     }
 
+    /**
+     * Check if the current selection of parameters is valid
+     * 
+     * @return true if no conflicts are found
+     */
     public boolean isValid()
     {
         return getValidator().isValid(_parameterProvider);
     }
 
+    /**
+     * Returns the parameterValidator
+     * 
+     * @return ParameterTemplateValidator instance
+     */
     public ParameterTemplateValidator getValidator()
     {
         return ParameterTemplateValidator.getInstance();

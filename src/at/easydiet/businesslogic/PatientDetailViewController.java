@@ -11,19 +11,49 @@ import at.easydiet.businessobjects.PatientStateBO;
 import at.easydiet.businessobjects.PatientStateTypeBO;
 import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.PatientDAO;
+import at.easydiet.view.PatientDetailView;
 
+/**
+ * Provides data and actions for the {@link PatientDetailView}.
+ */
 public class PatientDetailViewController
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(PatientDetailViewController.class);
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+                                                             .getLogger(PatientDetailViewController.class);
 
-    private PatientBO                           _patient;
-    private List<DietTreatmentBO>               _dietTreatments;
-    private List<PatientStateBO>                _patientStates;
-    private List<LaborReportBO>                 _laborReports;
+    /**
+     * Stores the current selected patient
+     */
+    private PatientBO                            _patient;
 
-    private static PatientDetailViewController  _singleton;
+    /**
+     * Stores all the diet treatments provided by the patient
+     */
+    private List<DietTreatmentBO>                _dietTreatments;
 
+    /**
+     * Stores all the patient states provided by the patient
+     */
+    private List<PatientStateBO>                 _patientStates;
+
+    /**
+     * Stores all the labor reports provided by the patient
+     */
+    private List<LaborReportBO>                  _laborReports;
+
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
+    private static PatientDetailViewController   _singleton;
+
+    /**
+     * Returns the instance of the {@link PatientDetailViewController}
+     * 
+     * @return Instance of {@link PatientDetailViewController}
+     */
     public static PatientDetailViewController getInstance()
     {
         if (_singleton == null)
@@ -33,37 +63,70 @@ public class PatientDetailViewController
         return _singleton;
     }
 
+    /**
+     * Initializes a new instance of the {@link PatientDetailViewController}
+     * class.
+     */
     private PatientDetailViewController()
     {
 
     }
 
+    /**
+     * Get the current opened patient
+     * 
+     * @return The current opened patient
+     */
     public PatientBO getPatient()
     {
         return _patient;
     }
 
+    /**
+     * Set the current opened patient
+     * 
+     * @param patient
+     *            The new patient
+     */
     public void setPatient(PatientBO patient)
     {
         _patient = patient;
         reloadPatientData();
     }
 
+    /**
+     * Get all diet treatments of the current patient
+     * 
+     * @return List of {@link DietTreatmentBO}s
+     */
     public List<DietTreatmentBO> getDietTreatments()
     {
         return _dietTreatments;
     }
 
+    /**
+     * Get all patient states of the current patient
+     * 
+     * @return List of {@link PatientStateBO}s
+     */
     public List<PatientStateBO> getPatientStates()
     {
         return _patientStates;
     }
 
+    /**
+     * Get all labor reports of the current patient
+     * 
+     * @return List of {@link LaborReportBO}s
+     */
     public List<LaborReportBO> getLaborReports()
     {
         return _laborReports;
     }
 
+    /**
+     * Reload the data of the {@link PatientBO} into the properties
+     */
     public void reloadPatientData()
     {
         if (_patient == null) return;
@@ -72,6 +135,9 @@ public class PatientDetailViewController
         _laborReports = _patient.getLaborReports();
     }
 
+    /**
+     * Reload the {@link PatientBO} from the database
+     */
     public void refresh()
     {
         try
@@ -91,18 +157,23 @@ public class PatientDetailViewController
         reloadPatientData();
     }
 
-	public List<?> getAllDiagnosis() {
-		
-		List<PatientStateBO> list = new ArrayList<PatientStateBO>();
-		
-		for(PatientStateBO bo : _patientStates)
-		{
-			if(bo.getType() == PatientStateTypeBO.ASSIGNMENT)
-			{
-				list.add(bo);
-			}
-		}
-		
-		return list;
-	}
+    /**
+     * Get all {@link PatientStateBO}s with {@link PatientStateTypeBO#ASSIGNMENT}
+     * @return List of {@link PatientStateBO}s with {@link PatientStateTypeBO#ASSIGNMENT}
+     */
+    public List<?> getAllDiagnosis()
+    {
+
+        List<PatientStateBO> list = new ArrayList<PatientStateBO>();
+
+        for (PatientStateBO bo : _patientStates)
+        {
+            if (bo.getType() == PatientStateTypeBO.ASSIGNMENT)
+            {
+                list.add(bo);
+            }
+        }
+
+        return list;
+    }
 }

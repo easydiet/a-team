@@ -33,7 +33,10 @@ import at.easydiet.domainlogic.RecipeSearchController;
 
 public class MealContainer extends BoxPane
 {
-    public static final org.apache.log4j.Logger LOG         = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG         = org.apache.log4j.Logger
                                                                     .getLogger(MealContainer.class);
 
     private static final SuggestionPopup        SUGGESTIONS = new SuggestionPopup();

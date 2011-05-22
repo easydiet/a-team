@@ -40,7 +40,7 @@ import at.easydiet.domainlogic.SystemUserController;
 public abstract class DietTreatmentManagementView extends EasyDietContentView
 		implements Bindable {
 
-	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
 			.getLogger(DietTreatmentManagementView.class);
 
 	protected boolean _saved;
@@ -270,8 +270,8 @@ public abstract class DietTreatmentManagementView extends EasyDietContentView
 				new TableViewSelectionListener.Adapter() {
 
 					@Override
-					public void selectedRowChanged(TableView table, Object row) {
-						changeAssignment((PatientStateBO) row);
+					public void selectedRowChanged(TableView table, Object previousRow) {
+						changeAssignment((PatientStateBO) table.getSelectedRow());
 					}
 				});
 

@@ -12,18 +12,31 @@ import at.easydiet.dao.DietParameterSetDAO;
 import at.easydiet.dao.HibernateUtil;
 import at.easydiet.util.StringUtils;
 import at.easydiet.validation.ParameterTemplateValidator;
+import at.easydiet.view.CreateParametersetView;
 
+/**
+ * Provides data and methods for {@link CreateParametersetView}
+ */
 public class ParametersetEditingController
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(ParametersetEditingController.class);
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+                                                             .getLogger(ParametersetEditingController.class);
 
-    private DietParameterSetBO                  _parameterset;
-	private List<String> 						_errors;
-
+    /**
+     * The current opened {@link DietParameterSetBO}
+     */
+    private DietParameterSetBO                   _parameterset;
+    /**
+     * List of error messages
+     */
+    private List<String>                         _errors;
 
     /**
      * Gets the parameterset.
+     * 
      * @return the parameterset
      */
     public DietParameterSetBO getParameterset()
@@ -33,19 +46,23 @@ public class ParametersetEditingController
 
     /**
      * Sets the parameterset.
-     *
-     * @param parameterset the new parameterset
+     * 
+     * @param parameterset
+     *            the new parameterset
      */
     public void setParameterset(DietParameterSetBO parameterset)
     {
         _parameterset = parameterset;
     }
 
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
     private static ParametersetEditingController _singleton;
 
     /**
      * Gets the single instance of ParametersetEditingController.
-     *
+     * 
      * @return single instance of ParametersetEditingController
      */
     public static ParametersetEditingController getInstance()
@@ -67,24 +84,26 @@ public class ParametersetEditingController
 
     /**
      * Save parameterset.
-     *
+     * 
      * @return true, if successful
      */
     public boolean save()
     {
-    	if(!validate()) return false;
+        if (!validate()) return false;
         if (getErrors().getLength() > 0) return false;
 
         try
         {
             // assign parameters to set
-            for (DietParameterTemplateBO template : _parameterset.getDietParameters())
+            for (DietParameterTemplateBO template : _parameterset
+                    .getDietParameters())
             {
                 template.setDietParameterSet(_parameterset);
             }
-            
+
             HibernateUtil.currentSession().beginTransaction();
-            DietParameterSetDAO dao = DAOFactory.getInstance().getDietParameterSetDAO();
+            DietParameterSetDAO dao = DAOFactory.getInstance()
+                    .getDietParameterSetDAO();
             dao.makePersistent(_parameterset.getModel());
             HibernateUtil.currentSession().getTransaction().commit();
             _parameterset = null;
@@ -99,58 +118,60 @@ public class ParametersetEditingController
 
     }
 
-
     /**
      * Validate the values.
-     *
+     * 
      * @return true, if successful
      */
-    public boolean validate() {
-    	boolean valid = true;
-    	
-    	getErrors().clear();
-    	
-    	validateDietParameterConflicts();
-    	
-    	if(StringUtils.isNullOrWhitespaceOnly(_parameterset.getName()))
-		{
-    		getErrors().add("Kein Name f�r das Parameterset angegeben!");
-    		valid = false;
-		}
-    	
-    	if(_parameterset.getDietParameters().getLength() == 0)
-    	{
-    		getErrors().add("Keine Parameter f�r dieses Parameterset angegeben!");
-    		valid = false;
-    	}
-    	
-		return valid;
-	}
+    public boolean validate()
+    {
+        boolean valid = true;
+
+        getErrors().clear();
+
+        validateDietParameterConflicts();
+
+        if (StringUtils.isNullOrWhitespaceOnly(_parameterset.getName()))
+        {
+            getErrors().add("Kein Name für das Parameterset angegeben!");
+            valid = false;
+        }
+
+        if (_parameterset.getDietParameters().getLength() == 0)
+        {
+            getErrors().add(
+                    "Keine Parameter für dieses Parameterset angegeben!");
+            valid = false;
+        }
+
+        return valid;
+    }
 
     /**
      * Validate diet parameter conflicts.
      */
     private void validateDietParameterConflicts()
     {
-        List<IDietParameterizable> conflicts = ParameterTemplateValidator.getInstance().getConflictingComponents();
-        for(IDietParameterizable component : conflicts)
+        List<IDietParameterizable> conflicts = ParameterTemplateValidator
+                .getInstance().getConflictingComponents();
+        for (IDietParameterizable component : conflicts)
         {
-        	getErrors().add("Parameterkonflikt in: " + component.getDisplayText());
+            getErrors().add(
+                    "Parameterkonflikt in: " + component.getDisplayText());
         }
     }
 
-    
-	/**
-	 * Instantiates a new parameterset editing controller.
-	 */
-	protected ParametersetEditingController()
+    /**
+     * Instantiates a new parameterset editing controller.
+     */
+    protected ParametersetEditingController()
     {
         _errors = new ArrayList<String>();
     }
 
     /**
      * Gets the errors.
-     *
+     * 
      * @return the errors
      */
     public List<String> getErrors()

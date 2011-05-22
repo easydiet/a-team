@@ -30,7 +30,10 @@ import at.easydiet.businessobjects.TimeSpanBO;
 @DefaultProperty("mealContainers")
 public class TimeSpanContainer extends BoxPane
 {
-    public static final org.apache.log4j.Logger LOG                         = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG                         = org.apache.log4j.Logger
                                                                                     .getLogger(TimeSpanContainer.class);
 
     private CalendarButton                      _startDateButton;

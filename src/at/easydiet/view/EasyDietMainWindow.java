@@ -15,7 +15,10 @@ import org.apache.pivot.wtk.Window;
 
 public class EasyDietMainWindow extends Window implements Bindable
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(EasyDietMainWindow.class);
 
     @SuppressWarnings("unused")

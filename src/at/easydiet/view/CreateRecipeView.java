@@ -113,7 +113,7 @@ public class CreateRecipeView extends EasyDietContentView implements Bindable
             public void buttonPressed(Button button)
             {
                 CreateRecipeView.this.store(CreateRecipeController.getInstance().getRecipe());
-                CreateRecipeController.getInstance().validate();
+                CreateRecipeController.getInstance().checkRecipe();
             }
         });
         

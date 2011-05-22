@@ -21,7 +21,7 @@ import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.validation.ParameterTemplateValidator;
 
 public abstract class DietPlanManagementView extends EasyDietContentView implements Bindable {
-	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
     .getLogger(DietPlanManagementView.class);
 
 	protected BoxPane                             _timeSpanContainer;

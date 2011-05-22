@@ -23,7 +23,7 @@ import at.easydiet.view.EasyDietMainWindow;
  * Renderer for our ParameterTableView
  */
 public class ParameterCellRenderer extends BoxPane implements CellRenderer {
-	public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
 			.getLogger(MealLineCellRenderer.class);
 
 	private static final Image ERROR_IMAGE;

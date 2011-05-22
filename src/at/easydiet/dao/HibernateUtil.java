@@ -13,17 +13,39 @@ public class HibernateUtil
 {
 
     /** ThreadLocal Session Map */
-    public static final ThreadLocal<Session> MAP                      = new ThreadLocal<Session>();
+    public static final ThreadLocal<Session> MAP                        = new ThreadLocal<Session>();
 
-    private static final Logger              LOGGER                   = Logger.getLogger(HibernateUtil.class);
+    /**
+     * Logger for debugging purposes
+     */
+    private static final Logger              LOGGER                     = Logger.getLogger(HibernateUtil.class);
 
+    /**
+     * Stores the {@link SessionFactory}
+     */
     private static final SessionFactory      SESSION_FACTORY;
 
-    private static final String              KEY_EASYHIBERNATE_DRIVER = "easydiet.database.driver_class";
-    private static final String              KEY_EASYHIBERNATE_URL = "easydiet.database.url";
+    /**
+     * Key of the hibernate database driver in the properties file
+     */
+    private static final String              KEY_EASYHIBERNATE_DRIVER   = "easydiet.database.driver_class";
+    /**
+     * Key of the hibernate database url in the properties file
+     */
+    private static final String              KEY_EASYHIBERNATE_URL      = "easydiet.database.url";
+
+    /**
+     * Key of the hibernate database username in the properties file
+     */
     private static final String              KEY_EASYHIBERNATE_USERNAME = "easydiet.database.username";
+    /**
+     * Key of the hibernate database password in the properties file
+     */
     private static final String              KEY_EASYHIBERNATE_PASSWORD = "easydiet.database.password";
-    private static final String              KEY_EASYHIBERNATE_DIALECT = "easydiet.database.dialect";
+    /**
+     * Key of the hibernate database dialect in the properties file
+     */
+    private static final String              KEY_EASYHIBERNATE_DIALECT  = "easydiet.database.dialect";
 
     /** Make default construct private */
     private HibernateUtil()
@@ -38,7 +60,7 @@ public class HibernateUtil
 
             Configuration cfg = new Configuration();
             cfg.configure();
-            
+
             // load external set properties if available
             setProperties(cfg);
 
@@ -52,20 +74,38 @@ public class HibernateUtil
         }
     }
 
-
+    /**
+     * Set the properties from the given {@link Configuration}
+     * 
+     * @param cfg
+     *            The loaded configuration
+     */
     private static void setProperties(Configuration cfg)
     {
-        setProperty(cfg, "hibernate.connection.driver_class", KEY_EASYHIBERNATE_DRIVER);
+        setProperty(cfg, "hibernate.connection.driver_class",
+                KEY_EASYHIBERNATE_DRIVER);
         setProperty(cfg, "hibernate.connection.url", KEY_EASYHIBERNATE_URL);
-        setProperty(cfg, "hibernate.connection.username", KEY_EASYHIBERNATE_USERNAME);
-        setProperty(cfg, "hibernate.connection.password", KEY_EASYHIBERNATE_PASSWORD);
+        setProperty(cfg, "hibernate.connection.username",
+                KEY_EASYHIBERNATE_USERNAME);
+        setProperty(cfg, "hibernate.connection.password",
+                KEY_EASYHIBERNATE_PASSWORD);
         setProperty(cfg, "hibernate.dialect", KEY_EASYHIBERNATE_DIALECT);
     }
 
+    /**
+     * Set the property from the given {@link Configuration}
+     * 
+     * @param cfg
+     *            The loaded configuration
+     * @param hibernateKey
+     *            The Hibernate property key
+     * @param easyKey
+     *            The easy diet key
+     */
     private static void setProperty(Configuration cfg, String hibernateKey,
             String easyKey)
     {
-        if(System.getProperties().containsKey(easyKey))
+        if (System.getProperties().containsKey(easyKey))
         {
             cfg.setProperty(hibernateKey, System.getProperty(easyKey));
         }
@@ -74,8 +114,10 @@ public class HibernateUtil
     /**
      * Gets Hibernate Session for current thread. When finished, users must
      * return session using {@link #closeSession() closeSession()} method.
+     * 
      * @return Hibernate Session for current thread.
-     * @throws HibernateException if there is an error opening a new session.
+     * @throws HibernateException
+     *             if there is an error opening a new session.
      */
     public static Session currentSession() throws HibernateException
     {
@@ -92,7 +134,9 @@ public class HibernateUtil
     /**
      * Closes the Hibernate Session. Users must call this method after calling
      * {@link #currentSession() currentSession()}.
-     * @throws HibernateException if session has problem closing.
+     * 
+     * @throws HibernateException
+     *             if session has problem closing.
      */
     public static void closeSession() throws HibernateException
     {

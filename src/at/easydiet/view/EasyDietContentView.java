@@ -23,7 +23,10 @@ import org.apache.pivot.wtk.media.Image;
 
 public class EasyDietContentView extends BoxPane
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(EasyDietContentView.class);
 
     /**

@@ -22,6 +22,9 @@ import at.easydiet.view.ViewController;
  */
 public class EasyDietApplication implements Application
 {
+    /**
+     * Logger for debugging purposes
+     */
     private static final org.apache.log4j.Logger LOG               = org.apache.log4j.Logger
                                                                           .getLogger(EasyDietApplication.class);
 

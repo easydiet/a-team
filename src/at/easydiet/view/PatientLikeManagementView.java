@@ -20,7 +20,10 @@ import at.easydiet.businessobjects.PatientLikeBO;
 public class PatientLikeManagementView extends EasyDietContentView implements
         Bindable
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(PatientLikeManagementView.class);
 
     private TableView                           _likeTable;

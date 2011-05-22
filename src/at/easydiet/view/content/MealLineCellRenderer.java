@@ -21,7 +21,10 @@ import at.easydiet.view.EasyDietMainWindow;
 public class MealLineCellRenderer extends BoxPane implements CellRenderer
 {
 
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(MealLineCellRenderer.class);
 
     private static final Image                  ARROW_IMAGE;

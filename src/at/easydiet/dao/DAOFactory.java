@@ -45,14 +45,19 @@ import at.easydiet.model.UserRight;
 
 /**
  * A Factory which provides instances for all DAOs.
+ * 
  * @author Daniel
  */
 public class DAOFactory
 {
+    /**
+     * This is a unique instance.
+     */
     private static DAOFactory _instance;
 
     /**
      * Returns the globally useable {@link DAOFactory}.
+     * 
      * @return the instance.
      */
     public static DAOFactory getInstance()
@@ -66,6 +71,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link CheckOperator} Objects.
+     * 
      * @return a new {@link CheckOperatorDAO} instance.
      */
     public CheckOperatorDAO getCheckOperatorDAO()
@@ -75,6 +81,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link ContactJournal} Objects.
+     * 
      * @return a new {@link ContactJournalDAO} instance.
      */
     public ContactJournalDAO getContactJournalDAO()
@@ -84,6 +91,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link ContactType} Objects.
+     * 
      * @return a new {@link ContactTypeDAO} instance.
      */
     public ContactTypeDAO getContactTypeDAO()
@@ -93,6 +101,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link DietParameter} Objects.
+     * 
      * @return a new {@link DietParameterDAO} instance.
      */
     public DietParameterDAO getDietParameterDAO()
@@ -102,6 +111,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link DietParameterSet} Objects.
+     * 
      * @return a new {@link DietParameterSetDAO} instance.
      */
     public DietParameterSetDAO getDietParameterSetDAO()
@@ -111,6 +121,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link DietParameterTemplate} Objects.
+     * 
      * @return a new {@link DietParameterTemplateDAO} instance.
      */
     public DietParameterTemplateDAO getDietParameterTemplateDAO()
@@ -120,6 +131,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link DietParameterType} Objects.
+     * 
      * @return a new {@link DietParameterTypeDAO} instance.
      */
     public DietParameterTypeDAO getDietParameterTypeDAO()
@@ -129,6 +141,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link DietPlan} Objects.
+     * 
      * @return a new {@link DietPlanDAO} instance.
      */
     public DietPlanDAO getDietPlanDAO()
@@ -138,6 +151,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link DietTreatment} Objects.
+     * 
      * @return a new {@link DietTreatmentDAO} instance.
      */
     public DietTreatmentDAO getDietTreatmentDAO()
@@ -147,6 +161,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link DietTreatmentSystemUser} Objects.
+     * 
      * @return a new {@link DietTreatmentSystemUserDAO} instance.
      */
     public DietTreatmentSystemUserDAO getDietTreatmentSystemUserDAO()
@@ -156,6 +171,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link FamilyAnamnesis} Objects.
+     * 
      * @return a new {@link FamilyAnamnesisDAO} instance.
      */
     public FamilyAnamnesisDAO getFamilyAnamnesisDAO()
@@ -174,6 +190,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link Gender} Objects.
+     * 
      * @return a new {@link GenderDAO} instance.
      */
     public GenderDAO getGenderDAO()
@@ -201,6 +218,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link LaborReport} Objects.
+     * 
      * @return a new {@link LaborReportDAO} instance.
      */
     public LaborReportDAO getLaborReportDAO()
@@ -219,6 +237,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link Meal} Objects.
+     * 
      * @return a new {@link MealDAO} instance.
      */
     public MealDAO getMealDAO()
@@ -228,6 +247,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link MealLine} Objects.
+     * 
      * @return a new {@link MealLineDAO} instance.
      */
     public MealLineDAO getMealLineDAO()
@@ -237,6 +257,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link NutrimentParameter} Objects.
+     * 
      * @return a new {@link NutrimentParameterDAO} instance.
      */
     public NutrimentParameterDAO getNutrimentParameterDAO()
@@ -246,6 +267,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link NutritionProtocol} Objects.
+     * 
      * @return a new {@link NutritionProtocolDAO} instance.
      */
     public NutritionProtocolDAO getNutritionProtocolDAO()
@@ -255,6 +277,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link ParameterDefinition} Objects.
+     * 
      * @return a new {@link ParameterDefinitionDAO} instance.
      */
     public ParameterDefinitionDAO getParameterDefinitionDAO()
@@ -265,6 +288,7 @@ public class DAOFactory
     /**
      * Returns a new DAO for managing {@link ParameterDefinitionDataType}
      * Objects.
+     * 
      * @return a new {@link ParameterDefinitionDataTypeDAO} instance.
      */
     public ParameterDefinitionDataTypeDAO getParameterDefinitionDataTypeDAO()
@@ -274,6 +298,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link ParameterDefinitionUnit} Objects.
+     * 
      * @return a new {@link ParameterDefinitionUnitDAO} instance.
      */
     public ParameterDefinitionUnitDAO getParameterDefinitionUnitDAO()
@@ -283,6 +308,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link Patient} Objects.
+     * 
      * @return a new {@link PatientDAO} instance.
      */
     public PatientDAO getPatientDAO()
@@ -292,6 +318,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link PatientLike} Objects.
+     * 
      * @return a new {@link PatientLikeDAO} instance.
      */
     public PatientLikeDAO getPatientLikeDAO()
@@ -301,6 +328,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link PatientLikeGrade} Objects.
+     * 
      * @return a new {@link PatientLikeGradeDAO} instance.
      */
     public PatientLikeGradeDAO getPatientLikeGradeDAO()
@@ -310,6 +338,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link PatientState} Objects.
+     * 
      * @return a new {@link PatientStateDAO} instance.
      */
     public PatientStateDAO getPatientStateDAO()
@@ -319,6 +348,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link PatientStateType} Objects.
+     * 
      * @return a new {@link PatientStateTypeDAO} instance.
      */
     public PatientStateTypeDAO getPatientStateTypeDAO()
@@ -328,6 +358,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link PlanType} Objects.
+     * 
      * @return a new {@link PlanTypeDAO} instance.
      */
     public PlanTypeDAO getPlanTypeDAO()
@@ -337,6 +368,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link Recipe} Objects.
+     * 
      * @return a new {@link RecipeDAO} instance.
      */
     public RecipeDAO getRecipeDAO()
@@ -346,6 +378,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link RecipeIngredient} Objects.
+     * 
      * @return a new {@link RecipeIngredientDAO} instance.
      */
     public RecipeIngredientDAO getRecipeIngredientDAO()
@@ -355,6 +388,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link SystemUser} Objects.
+     * 
      * @return a new {@link SystemUserDAO} instance.
      */
     public SystemUserDAO getSystemUserDAO()
@@ -364,6 +398,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link SystemUserFunction} Objects.
+     * 
      * @return a new {@link SystemUserFunctionDAO} instance.
      */
     public SystemUserFunctionDAO getSystemUserFunctionDAO()
@@ -373,6 +408,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link TimeSpan} Objects.
+     * 
      * @return a new {@link TimeSpanDAO} instance.
      */
     public TimeSpanDAO getTimeSpanDAO()
@@ -382,6 +418,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link TreatmentState} Objects.
+     * 
      * @return a new {@link TreatmentStateDAO} instance.
      */
     public TreatmentStateDAO getTreatmentStateDAO()
@@ -391,6 +428,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link UserRight} Objects.
+     * 
      * @return a new {@link UserRightDAO} instance.
      */
     public UserRightDAO getUserRightDAO()
@@ -400,7 +438,9 @@ public class DAOFactory
 
     /**
      * Creates a new DAO for the specified class.
-     * @param daoClass the type of the dao to be created
+     * 
+     * @param daoClass
+     *            the type of the dao to be created
      * @return the created an initialized dao.
      */
     private GenericHibernateDAO<?, ?> instantiateDAO(Class<?> daoClass)
@@ -421,6 +461,7 @@ public class DAOFactory
 
     /**
      * Returns the current session to be assigned to all DAOs
+     * 
      * @return the current session.
      */
     // You could override this if you don't want HibernateUtil for lookup

@@ -9,7 +9,10 @@ import at.easydiet.util.StringUtils;
 
 public class NameCellRenderer extends TableViewCellRenderer
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(NameCellRenderer.class);
 
     private String                              _propertyName;

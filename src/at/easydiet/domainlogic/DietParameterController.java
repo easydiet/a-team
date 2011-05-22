@@ -6,6 +6,7 @@ import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.Map;
 
 import at.easydiet.businessobjects.CheckOperatorBO;
+import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.DietParameterTemplateBO;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.IDietParameterizable;
@@ -17,13 +18,27 @@ import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
 import at.easydiet.businessobjects.RecipeBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 
+/**
+ * Provides data and actions for validating Parameters.
+ */
 public class DietParameterController
 {
-    public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(DietParameterController.class);
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+                                                             .getLogger(DietParameterController.class);
 
-    private static DietParameterController      _singleton;
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
+    private static DietParameterController       _singleton;
 
+    /**
+     * Get a instance of this controller
+     * 
+     * @return Instance of {@link DietParameterController}
+     */
     public static DietParameterController getInstance()
     {
         if (_singleton == null)
@@ -33,14 +48,19 @@ public class DietParameterController
         return _singleton;
     }
 
+    /**
+     * Initializes a new instance of the {@link DietParameterController} class.
+     */
     private DietParameterController()
     {}
 
     /**
      * Validate the given dietplan if it matches the DietParameters defined
      * within the full hierarchy
-     * @param plan the plan to validate
-     * @return a list of violations agains the available dietparameters
+     * 
+     * @param plan
+     *            the plan to validate
+     * @return a list of violations against the available dietparameters
      */
     public List<ValidationResult> validateDietPlanDietParameters(DietPlanBO plan)
     {
@@ -56,7 +76,6 @@ public class DietParameterController
 
         return violations;
     }
-    
 
     public List<ValidationResult> validateRecipeDietParameters(
             RecipeBO currentRecipe)
@@ -83,14 +102,23 @@ public class DietParameterController
         return violations;
     }
     
-
+    /**
+     * Describes the sum of different parameters (units)
+     */
     private static class ValidationSumValue
     {
+        /**
+         * Stores the sum
+         */
         private float                     _sum;
+        /**
+         * Stores the unit of this sum
+         */
         private ParameterDefinitionUnitBO _unit;
 
         /**
          * Gets the sum.
+         * 
          * @return the sum
          */
         public float getSum()
@@ -100,7 +128,9 @@ public class DietParameterController
 
         /**
          * Sets the sum.
-         * @param sum the sum to set
+         * 
+         * @param sum
+         *            the sum to set
          */
         public void setSum(float sum)
         {
@@ -109,6 +139,7 @@ public class DietParameterController
 
         /**
          * Gets the unit.
+         * 
          * @return the unit
          */
         @SuppressWarnings("unused")
@@ -119,7 +150,7 @@ public class DietParameterController
 
         /**
          * Initializes a new instance of the {@link ValidationSumValue} class.
-         * @param sum
+         * 
          * @param unit
          */
         private ValidationSumValue(ParameterDefinitionUnitBO unit)
@@ -130,20 +161,39 @@ public class DietParameterController
         }
     }
 
+    /**
+     * Sums up all the {@link ParameterDefinitionBO}s
+     * {@link IncompatibleClassChangeError}
+     * 
+     * @param parametersToValidate
+     *            List of {@link ParameterDefinitionBO}s to validate and sum up
+     * @return Map of {@link ParameterDefinitionBO}s and
+     *         {@link ValidationSumValue}s
+     */
     private Map<ParameterDefinitionBO, ValidationSumValue> buildSumMap(
             Map<ParameterDefinitionBO, DietParameterTemplateBO> parametersToValidate)
     {
         Map<ParameterDefinitionBO, ValidationSumValue> map = new HashMap<ParameterDefinitionBO, ValidationSumValue>();
         for (ParameterDefinitionBO key : parametersToValidate)
         {
-            DietParameterTemplateBO value = (DietParameterTemplateBO) parametersToValidate.get(key);
+            DietParameterTemplateBO value = (DietParameterTemplateBO) parametersToValidate
+                    .get(key);
             map.put(value.getParameterDefinition(), new ValidationSumValue(
                     value.getParameterDefinitionUnit()));
         }
         return map;
     }
 
-    // for dietplans
+    /**
+     * Validate the {@link DietParameterBO}s for the {@link DietPlanBO}
+     * 
+     * @param parametersToValidate
+     *            Map of parameters to validate
+     * @param violations
+     *            List of violations against the parameters
+     * @param plan
+     *            The current plan to validate
+     */
     private void validateDietParameters(
             Map<ParameterDefinitionBO, DietParameterTemplateBO> parametersToValidate,
             List<ValidationResult> violations, DietPlanBO plan)
@@ -171,13 +221,25 @@ public class DietParameterController
             if (violation != null)
             {
                 // if not add a violation
-                violations
-                        .add(new ValidationResult(plan, violation, parameter, dietPlanSums.get(parameter.getParameterDefinition()).getSum()));
+                violations.add(new ValidationResult(plan, violation, parameter,
+                        dietPlanSums.get(parameter.getParameterDefinition())
+                                .getSum()));
             }
         }
     }
 
-    // for timespans
+    /**
+     * Validate the {@link DietParameterBO}s for the {@link TimeSpanBO}
+     * 
+     * @param parametersToValidate
+     *            Map of parameters to validate
+     * @param dietPlanSums
+     *            Sums of the parameters in the dietplan
+     * @param violations
+     *            Violations against the parameters
+     * @param timeSpan
+     *            {@link TimeSpanBO} to validate
+     */
     private void validateDietParameters(
             Map<ParameterDefinitionBO, DietParameterTemplateBO> parametersToValidate,
             Map<ParameterDefinitionBO, ValidationSumValue> dietPlanSums,
@@ -207,12 +269,26 @@ public class DietParameterController
             {
                 // if not add a violation
                 violations.add(new ValidationResult(timeSpan, violation,
-                        parameter, timeSpanSums.get(parameter.getParameterDefinition()).getSum()));
+                        parameter, timeSpanSums.get(
+                                parameter.getParameterDefinition()).getSum()));
             }
         }
     }
 
-    // for meals
+    /**
+     * Validate the {@link DietParameterBO}s for the {@link MealBO}
+     * 
+     * @param parametersToValidate
+     *            Map of parameters to validate
+     * @param dietPlanSums
+     *            Sums of the parameters in the dietplan
+     * @param timeSpanSums
+     *            Sums of the parameters in the time span
+     * @param violations
+     *            Violations against the parameters
+     * @param meal
+     *            {@link MealBO} to validate
+     */
     private void validateDietParameters(
             Map<ParameterDefinitionBO, DietParameterTemplateBO> parametersToValidate,
             Map<ParameterDefinitionBO, ValidationSumValue> dietPlanSums,
@@ -305,14 +381,24 @@ public class DietParameterController
             if (violation != null)
             {
                 // if not add a violation
-                violations
-                        .add(new ValidationResult(meal, violation, parameter, mealSums.get(parameter.getParameterDefinition()).getSum()));
+                violations.add(new ValidationResult(meal, violation, parameter,
+                        mealSums.get(parameter.getParameterDefinition())
+                                .getSum()));
             }
         }
     }
 
+    /**
+     * Add all {@link DietParameterBO}s of a {@link DietPlanBO} to one list
+     * 
+     * @param toFill
+     *            The list to fill
+     * @param plan
+     *            The plan which provides the {@link DietParameterBO}s
+     */
     private void addDietParametersToList(
-            Map<ParameterDefinitionBO, DietParameterTemplateBO> toFill, DietPlanBO plan)
+            Map<ParameterDefinitionBO, DietParameterTemplateBO> toFill,
+            DietPlanBO plan)
     {
         addDietParametersToList(toFill, plan.getDietParameters());
 
@@ -322,6 +408,14 @@ public class DietParameterController
         }
     }
 
+    /**
+     * Add all {@link DietParameterBO}s of a {@link TimeSpanBO} to one list
+     * 
+     * @param toFill
+     *            The list to fill
+     * @param timeSpan
+     *            The timespan which provides the {@link DietParameterBO}s
+     */
     private void addDietParametersToList(
             Map<ParameterDefinitionBO, DietParameterTemplateBO> toFill,
             TimeSpanBO timeSpan)
@@ -334,6 +428,14 @@ public class DietParameterController
         }
     }
 
+    /**
+     * Add all {@link DietParameterBO}s of a list to one list
+     * 
+     * @param toFill
+     *            The list to fill
+     * @param dietParameters
+     *            List of {@link DietParameterBO}s
+     */
     private void addDietParametersToList(
             Map<ParameterDefinitionBO, DietParameterTemplateBO> toFill,
             List<? extends DietParameterTemplateBO> dietParameters)
@@ -347,15 +449,31 @@ public class DietParameterController
         }
     }
 
+    /**
+     * Defines a validation result
+     */
     public static class ValidationResult
     {
-        private IDietParameterizable _affectedObject;
-        private CheckOperatorBO      _errorType;
-        private DietParameterTemplateBO      _dietParameter;
-        private float                _currentValue;
+        /**
+         * The object whichs parameters got violated
+         */
+        private IDietParameterizable    _affectedObject;
+        /**
+         * The type of error (bigger, smaller,...)
+         */
+        private CheckOperatorBO         _errorType;
+        /**
+         * This diet parameter is violated
+         */
+        private DietParameterTemplateBO _dietParameter;
+        /**
+         * The current value of the parameterviolation
+         */
+        private float                   _currentValue;
 
         /**
          * Gets the dietParameter which got violated.
+         * 
          * @return the dietParameter
          */
         public DietParameterTemplateBO getDietParameter()
@@ -365,6 +483,7 @@ public class DietParameterController
 
         /**
          * Gets the object which contained the dietparameter which got violated.
+         * 
          * @return the object
          */
         public IDietParameterizable getAffectedObject()
@@ -374,6 +493,7 @@ public class DietParameterController
 
         /**
          * Gets the type of violation.
+         * 
          * @return the errorType
          */
         public CheckOperatorBO getErrorType()
@@ -384,17 +504,17 @@ public class DietParameterController
         /**
          * Gets the sum value which the DietParameter had at the time of
          * violation
-         * @return
+         * 
+         * @return Value the DietParameter had at the time of violation
          */
         public float getCurrentValue()
         {
             return _currentValue;
         }
 
-        
-        
-        /** 
-         * Initializes a new instance of the {@link ValidationResult} class. 
+        /**
+         * Initializes a new instance of the {@link ValidationResult} class.
+         * 
          * @param affectedObject
          * @param errorType
          * @param parameter
