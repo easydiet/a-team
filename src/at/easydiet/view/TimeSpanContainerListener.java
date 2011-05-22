@@ -2,12 +2,16 @@ package at.easydiet.view;
 
 import org.apache.pivot.collections.Sequence;
 
-
-public interface TimeSpanContainerListener {
+/**
+ * This is the {@link TimeSpanContainer} listener
+ */
+public interface TimeSpanContainerListener
+{
     /**
      * Table pane listener adapter.
      */
-    public static class Adapter implements TimeSpanContainerListener {
+    public static class Adapter implements TimeSpanContainerListener
+    {
 
         public void mealContainerInserted(TimeSpanContainer container, int index)
         {}
@@ -18,14 +22,18 @@ public interface TimeSpanContainerListener {
     }
 
     /**
-     * Called when a {@link MealContainer} has been inserted into a {@link TimeSpanContainer}.
+     * Called when a {@link MealContainer} has been inserted into a
+     * {@link TimeSpanContainer}.
+     * 
      * @param container
      * @param index
      */
     public void mealContainerInserted(TimeSpanContainer container, int index);
 
     /**
-     * Called when a {@link MealContainer} has been removed a {@link TimeSpanContainer}.
+     * Called when a {@link MealContainer} has been removed a
+     * {@link TimeSpanContainer}.
+     * 
      * @param container
      * @param index
      * @param mealContainers

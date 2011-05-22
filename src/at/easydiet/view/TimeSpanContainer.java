@@ -22,11 +22,16 @@ import org.apache.pivot.wtk.Dialog;
 import org.apache.pivot.wtk.DialogCloseListener;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.Orientation;
+import org.apache.pivot.wtk.TableView;
 
+import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 import at.easydiet.domainlogic.DietPlanEditingController;
 
+/**
+ * This is the background class for the TimeSpanContainer.bxml
+ */
 @DefaultProperty("mealContainers")
 public class TimeSpanContainer extends BoxPane
 {
@@ -34,25 +39,61 @@ public class TimeSpanContainer extends BoxPane
      * Logger for debugging purposes
      */
     private static final org.apache.log4j.Logger LOG                         = org.apache.log4j.Logger
-                                                                                    .getLogger(TimeSpanContainer.class);
+                                                                                     .getLogger(TimeSpanContainer.class);
 
-    private CalendarButton                      _startDateButton;
-    private CalendarButton                      _endDateButton;
-    private Label                               _durationLabel;
-    private BoxPane                             _mealBox;
-    private Button                              _deleteButton;
-    private TimeSpanBO                          _timeSpan;
+    /**
+     * Stores the {@link CalendarButton} to set the start date
+     */
+    private CalendarButton                       _startDateButton;
+    /**
+     * Stores the {@link CalendarButton} to set the end date
+     */
+    private CalendarButton                       _endDateButton;
+    /**
+     * Stores the {@link Label} to show the duration of the {@link TimeSpanBO}
+     */
+    private Label                                _durationLabel;
+    /**
+     * Stores the {@link BoxPane} containing the meals of this
+     * {@link TimeSpanBO}
+     */
+    private BoxPane                              _mealBox;
+    /**
+     * Stores the {@link Button} to delete this
+     */
+    private Button                               _deleteButton;
+    /**
+     * Stores the current opened {@link TimeSpanBO}
+     */
+    private TimeSpanBO                           _timeSpan;
 
-    private ArrayList<MealContainer>            _mealContainers;
-    private MealContainerSequence               _mealContainerSequence      = new MealContainerSequence();
-    private TimeSpanContainerListenerList       _timeSpanContainerListeners = new TimeSpanContainerListenerList();
+    /**
+     * Stores all the {@link MealContainer}s
+     */
+    private ArrayList<MealContainer>             _mealContainers;
 
-    private ParameterTableViewTemplate 			_parameterTableViewTemplate;
+    /**
+     * Stores the {@link MealContainerSequence}
+     */
+    private MealContainerSequence                _mealContainerSequence      = new MealContainerSequence();
+    /**
+     * Stores the {@link TimeSpanContainerListener}s
+     */
+    private TimeSpanContainerListenerList        _timeSpanContainerListeners = new TimeSpanContainerListenerList();
 
-    private boolean                             _guiLoading;
+    /**
+     * Stores the {@link TableView} to manage the {@link DietParameterBO}
+     */
+    private ParameterTableViewTemplate           _parameterTableViewTemplate;
+
+    /**
+     * Stores whether the GUI is currently loading or not
+     */
+    private boolean                              _guiLoading;
 
     /**
      * Gets the timeSpan.
+     * 
      * @return the timeSpan
      */
     public TimeSpanBO getTimeSpan()
@@ -62,7 +103,9 @@ public class TimeSpanContainer extends BoxPane
 
     /**
      * Sets the timeSpan.
-     * @param timeSpan the timeSpan to set
+     * 
+     * @param timeSpan
+     *            the timeSpan to set
      */
     public void setTimeSpan(TimeSpanBO timeSpan)
     {
@@ -72,6 +115,9 @@ public class TimeSpanContainer extends BoxPane
         refreshUI();
     }
 
+    /**
+     * Re-set the GUI elements to the current values
+     */
     private void refreshUI()
     {
         _guiLoading = true;
@@ -86,10 +132,17 @@ public class TimeSpanContainer extends BoxPane
         updateDurationLabel();
     }
 
+    /**
+     * This is the sequence of the {@link MealContainer}s
+     */
     public final class MealContainerSequence implements
             Sequence<MealContainer>, Iterable<MealContainer>
     {
 
+        /**
+         * Initializes a new instance of the {@link MealContainerSequence}
+         * class.
+         */
         private MealContainerSequence()
         {}
 
@@ -174,9 +227,21 @@ public class TimeSpanContainer extends BoxPane
         }
     }
 
+    /**
+     * This is the list of all {@link TimeSpanContainerListener}s
+     */
     public final class TimeSpanContainerListenerList extends
             ListenerList<TimeSpanContainerListener>
     {
+        /**
+         * Notify all listeners when a {@link MealContainer} is inserted into a
+         * {@link TimeSpanContainer}
+         * 
+         * @param container
+         *            The {@link TimeSpanContainer}
+         * @param index
+         *            The index of the new {@link MealContainer}
+         */
         public void mealContainerInserted(TimeSpanContainer container, int index)
         {
             for (TimeSpanContainerListener listener : this)
@@ -185,6 +250,17 @@ public class TimeSpanContainer extends BoxPane
             }
         }
 
+        /**
+         * Notify all listeners when a {@link MealContainer} is removed from a
+         * {@link TimeSpanContainer}
+         * 
+         * @param container
+         *            The {@link TimeSpanContainer}
+         * @param index
+         *            The index of the removed {@link MealContainer}
+         * @param mealContainer
+         *            The removed {@link MealContainer}
+         */
         public void mealContainerRemoved(TimeSpanContainer container,
                 int index, Sequence<MealContainer> mealContainer)
         {
@@ -195,21 +271,40 @@ public class TimeSpanContainer extends BoxPane
         }
     }
 
+    /**
+     * Initializes a new instance of the {@link TimeSpanContainer} class.
+     */
     public TimeSpanContainer()
     {
         this(new ArrayList<MealContainer>());
     }
 
+    /**
+     * Gets the {@link MealContainerSequence} of this instance
+     * 
+     * @return The {@link MealContainerSequence} of this instance
+     */
     public MealContainerSequence getMealContainers()
     {
         return _mealContainerSequence;
     }
 
+    /**
+     * Gets the {@link TimeSpanContainerListenerList} of this instance
+     * 
+     * @return The {@link TimeSpanContainerListenerList} of this instance
+     */
     public TimeSpanContainerListenerList getTimeSpanContainerListeners()
     {
         return _timeSpanContainerListeners;
     }
 
+    /**
+     * Initializes a new instance of the {@link TimeSpanContainer} class.
+     * 
+     * @param mealContainers
+     *            Sequence of {@link MealContainer}s
+     */
     public TimeSpanContainer(Sequence<MealContainer> mealContainers)
     {
         if (mealContainers == null)
@@ -227,8 +322,9 @@ public class TimeSpanContainer extends BoxPane
         try
         {
             ViewController.getInstance();
-			Border content = (Border) serializer.readObject(
-                    TimeSpanContainer.class, "TimeSpanContainerContent" + ViewController.PIVOT_FILE_EXTENSION);
+            Border content = (Border) serializer.readObject(
+                    TimeSpanContainer.class, "TimeSpanContainerContent"
+                            + ViewController.PIVOT_FILE_EXTENSION);
             add(content);
             _startDateButton = (CalendarButton) serializer.getNamespace().get(
                     "startDate");
@@ -239,8 +335,9 @@ public class TimeSpanContainer extends BoxPane
             _deleteButton = (Button) serializer.getNamespace().get(
                     "deleteButton");
 
-            _parameterTableViewTemplate = (ParameterTableViewTemplate) serializer.getNamespace().get("parameterTableViewTemplate");
-            
+            _parameterTableViewTemplate = (ParameterTableViewTemplate) serializer
+                    .getNamespace().get("parameterTableViewTemplate");
+
             _mealBox = (BoxPane) serializer.getNamespace().get("mealBox");
 
             // listeners
@@ -317,6 +414,9 @@ public class TimeSpanContainer extends BoxPane
         }
     }
 
+    /**
+     * Update the duration label
+     */
     protected void updateDurationLabel()
     {
         int days = _timeSpan.getDuration();
@@ -325,6 +425,12 @@ public class TimeSpanContainer extends BoxPane
         DietPlanEditingController.getInstance().validateDietPlan();
     }
 
+    /**
+     * Add a {@link MealBO} to the {@link TimeSpanBO}
+     * 
+     * @param meal
+     *            The {@link MealBO} to add
+     */
     protected void addMeal(MealBO meal)
     {
         MealContainer mealContainer = new MealContainer();
@@ -332,10 +438,14 @@ public class TimeSpanContainer extends BoxPane
         _mealBox.add(mealContainer);
     }
 
+    /**
+     * Delete the current {@link TimeSpanBO}
+     */
     private void deleteTimeSpan()
     {
         EasyAlerts.warning("Wollen Sie diesen Zeitraum wirklich löschen?",
-                EasyAlerts.YES_NO, EasyAlerts.NO, getWindow(), new DialogCloseListener()
+                EasyAlerts.YES_NO, EasyAlerts.NO, getWindow(),
+                new DialogCloseListener()
                 {
 
                     public void dialogClosed(Dialog dialog, boolean modal)

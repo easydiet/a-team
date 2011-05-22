@@ -11,24 +11,28 @@ import org.apache.pivot.wtk.media.Image;
 
 /**
  * Renders an image and a lable aligned horizontally
- * @author Daniel
- * 
  */
 public class ImageLabel extends TablePane
 {
     /**
      * Logger for debugging purposes
      */
+    @SuppressWarnings("unused")
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(ImageLabel.class);
+                                                             .getLogger(ImageLabel.class);
 
-    private ImageView                           _imageView;
-    private Label                               _textLabel;
-    
-    
+    /**
+     * Stores the {@link ImageView}
+     */
+    private ImageView                            _imageView;
+    /**
+     * Stores the {@link Label}
+     */
+    private Label                                _textLabel;
 
     /**
      * Gets the imageView.
+     * 
      * @return the imageView
      */
     protected ImageView getImageView()
@@ -38,6 +42,7 @@ public class ImageLabel extends TablePane
 
     /**
      * Gets the textLabel.
+     * 
      * @return the textLabel
      */
     protected Label getTextLabel()
@@ -46,7 +51,7 @@ public class ImageLabel extends TablePane
     }
 
     /**
-     * @return
+     * @return The Image of this instance
      * @see org.apache.pivot.wtk.ImageView#getImage()
      */
     public Image getImage()
@@ -83,7 +88,9 @@ public class ImageLabel extends TablePane
 
     /**
      * * Gets the image displayed within this label .
-     * @param infoImage the infoImage to set
+     * 
+     * @param infoImage
+     *            the infoImage to set
      */
     public void setInfoImage(ImageView infoImage)
     {
@@ -91,7 +98,7 @@ public class ImageLabel extends TablePane
     }
 
     /**
-     * @return
+     * @return The text of this Instance
      * @see org.apache.pivot.wtk.Label#getText()
      */
     public String getText()
@@ -115,14 +122,14 @@ public class ImageLabel extends TablePane
     {
         getColumns().add(new Column(-1));
         getColumns().add(new Column(1, true));
-        
+
         Row row = new Row();
 
         row.add(_imageView = new ImageView());
         row.add(_textLabel = new Label());
 
         getRows().add(row);
-        
+
         _imageView.getStyles().put("verticalAlignment", VerticalAlignment.TOP);
         _imageView.getStyles().put("preserveAspectRatio", true);
         _textLabel.getStyles().put("verticalAlignment",

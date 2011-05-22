@@ -22,24 +22,56 @@ import at.easydiet.view.content.ParameterCellRenderer;
  */
 public class ParameterTableView extends TableView
 {
+    /**
+     * Stores the {@link ParameterTableViewController}
+     */
     private ParameterTableViewController _controller = new ParameterTableViewController();
 
+    /**
+     * Stores the {@link EasyTableViewRowEditor} used for this {@link TableView}
+     */
     private EasyTableViewRowEditor       _editor;
+
+    /**
+     * Stores the {@link ListButton} to select {@link ParameterDefinitionBO}s
+     */
     private ListButton                   _definitionListButton;
+    /**
+     * Stores the {@link ListButton} to select {@link CheckOperatorBO}s
+     */
     private ListButton                   _checkOperatorListButton;
+    /**
+     * Stores the {@link ListButton} to select {@link ParameterDefinitionUnitBO}
+     * s
+     */
     private ListButton                   _parameterDefinitionUnitListButton;
-    
+
+    /**
+     * Set the handled type of this {@link ParameterTableView}
+     * 
+     * @param newInstanceType
+     *            The type to handle
+     */
     public void setNewInstanceType(
             Class<? extends DietParameterTemplateBO> newInstanceType)
     {
         _controller.setNewInstanceType(newInstanceType);
     }
 
+    /**
+     * Initializes a new instance of the {@link ParameterTableView} class.
+     * 
+     * @param tableData
+     *            The data which the table shows
+     */
     public ParameterTableView(List<?> tableData)
     {
         super(tableData);
     }
 
+    /**
+     * Initializes a new instance of the {@link ParameterTableView} class.
+     */
     public ParameterTableView()
     {
         this(new ArrayList<DietParameterTemplateBO>());
@@ -47,7 +79,9 @@ public class ParameterTableView extends TableView
 
     /**
      * Set a new parameter data provider
-     * @param provider parameter data provider
+     * 
+     * @param provider
+     *            parameter data provider
      */
     public void setParameterProvider(IDietParameterizable provider)
     {
@@ -59,8 +93,9 @@ public class ParameterTableView extends TableView
     }
 
     /**
-     * returns the controller
-     * @return
+     * Returns the controller of this instance
+     * 
+     * @return The {@link ParameterTableViewController}
      */
     private ParameterTableViewController getController()
     {
@@ -72,7 +107,7 @@ public class ParameterTableView extends TableView
     }
 
     /**
-     * initalize this view and set cellrenderers
+     * Initializes the {@link ParameterTableView}
      */
     public void initialize()
     {
@@ -228,6 +263,7 @@ public class ParameterTableView extends TableView
 
     /**
      * refresh the listbutton to choose operators
+     * 
      * @param parameterDefinitionBO
      */
     public void refreshOperatorButton(
@@ -244,6 +280,7 @@ public class ParameterTableView extends TableView
 
     /**
      * refresh the listbutton to choose units
+     * 
      * @param parameterDefinitionBO
      */
     public void refreshUnitButton(ParameterDefinitionBO parameterDefinitionBO)
@@ -283,6 +320,9 @@ public class ParameterTableView extends TableView
 
     }
 
+    /**
+     * Reload the view
+     */
     public void refreshView()
     {
         validateView();
@@ -291,6 +331,7 @@ public class ParameterTableView extends TableView
 
     /**
      * Validates this view
+     * 
      * @return true if no conflicts are found
      */
     public boolean validateView()
@@ -311,7 +352,9 @@ public class ParameterTableView extends TableView
 
     /**
      * Remove a parameter from the view
-     * @param dietParameter parameter to remove
+     * 
+     * @param dietParameter
+     *            parameter to remove
      */
     public void remove(DietParameterTemplateBO dietParameter)
     {

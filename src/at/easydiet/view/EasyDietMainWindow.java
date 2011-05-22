@@ -13,22 +13,44 @@ import org.apache.pivot.wtk.MenuBar;
 import org.apache.pivot.wtk.Prompt;
 import org.apache.pivot.wtk.Window;
 
+/**
+ * This is the background class for the startup window. It defines how the
+ * Application looks like and how the parts are arranged (navigation, toolbar,
+ * content)
+ */
 public class EasyDietMainWindow extends Window implements Bindable
 {
     /**
      * Logger for debugging purposes
      */
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(EasyDietMainWindow.class);
-
     @SuppressWarnings("unused")
-	private MenuBar                             _menu;
-    private FlowPane                            _navigation;
-    private BoxPane                             _content;
-    private BoxPane                             _toolbar;
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+                                                             .getLogger(EasyDietMainWindow.class);
+
+    /**
+     * Stores the menu bar from the GUI
+     */
+    @SuppressWarnings("unused")
+    private MenuBar                              _menu;
+
+    /**
+     * Stores the navigation bar from the GUI
+     */
+    private FlowPane                             _navigation;
+
+    /**
+     * Stores the content view from the GUI
+     */
+    private BoxPane                              _content;
+
+    /**
+     * Stores the toolbar from the GUI
+     */
+    private BoxPane                              _toolbar;
 
     /**
      * Gets the navigation.
+     * 
      * @return the navigation
      */
     public FlowPane getNavigationPane()
@@ -38,6 +60,7 @@ public class EasyDietMainWindow extends Window implements Bindable
 
     /**
      * Gets the content.
+     * 
      * @return the content
      */
     public BoxPane getContentPane()
@@ -47,6 +70,7 @@ public class EasyDietMainWindow extends Window implements Bindable
 
     /**
      * Gets the toolbar.
+     * 
      * @return the toolbar
      */
     public BoxPane getToolbarPane()
@@ -74,8 +98,9 @@ public class EasyDietMainWindow extends Window implements Bindable
             @Override
             public void perform(Component source)
             {
-                Prompt.prompt("Die Hilfe ist zurzeit leider noch nicht verfügbar.", source
-                        .getWindow().getRootOwner());
+                Prompt.prompt(
+                        "Die Hilfe ist zurzeit leider noch nicht verfügbar.",
+                        source.getWindow().getRootOwner());
             }
         });
 
@@ -84,8 +109,8 @@ public class EasyDietMainWindow extends Window implements Bindable
             @Override
             public void perform(Component source)
             {
-                Prompt.prompt("EasyDiet v0.1 (dev)", source
-                        .getWindow().getRootOwner());
+                Prompt.prompt("EasyDiet v0.1 (dev)", source.getWindow()
+                        .getRootOwner());
             }
         });
         Action.getNamedActions().put("todo", new Action()
@@ -97,7 +122,7 @@ public class EasyDietMainWindow extends Window implements Bindable
                         source.getWindow().getRootOwner());
             }
         });
-        
+
         // other xml views
         Action.getNamedActions().put("createDietPlan", new Action()
         {
@@ -113,7 +138,8 @@ public class EasyDietMainWindow extends Window implements Bindable
             @Override
             public void perform(Component source)
             {
-                ViewController.getInstance().loadContent("CreateParametersetView", source);
+                ViewController.getInstance().loadContent(
+                        "CreateParametersetView", source);
             }
         });
     }

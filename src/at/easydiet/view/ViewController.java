@@ -10,21 +10,34 @@ import at.easydiet.EasyDietApplication;
 import at.easydiet.view.EasyDietContentView.NavigationButton;
 import at.easydiet.view.EasyDietContentView.ToolbarButton;
 
+/**
+ * This controller loads the different views
+ */
 public class ViewController
 {
-	public static final String PIVOT_FILE_EXTENSION = ".bxml";
-	
-	
+    /**
+     * This is the file extension of pivot files
+     */
+    public static final String    PIVOT_FILE_EXTENSION = ".bxml";
+
     /**
      * This is a unique instance, it is stored as this singleton
      */
     private static ViewController _singleton;
 
+    /**
+     * Initializes a new instance of the {@link ViewController} class.
+     */
     private ViewController()
     {
 
     }
 
+    /**
+     * Gets the instance of the {@link ViewController}
+     * 
+     * @return The instance of the {@link ViewController}
+     */
     public static ViewController getInstance()
     {
         if (_singleton == null)
@@ -36,17 +49,25 @@ public class ViewController
 
     /**
      * Which content to load into the Content pane
-     * @param file BXML file
+     * 
+     * @param file
+     *            BXML file
+     * @param component
+     *            The calling component
      */
     public void loadContent(String file, Component component)
     {
         EasyDietMainWindow wnd = (EasyDietMainWindow) component.getWindow();
         loadContent(file, wnd);
     }
-    
+
     /**
      * Which content to load into the Content pane
-     * @param file BXML file
+     * 
+     * @param file
+     *            BXML file
+     * @param component
+     *            The calling component
      */
     public void loadContent(String file, EasyDietContentView component)
     {
@@ -56,11 +77,15 @@ public class ViewController
 
     /**
      * Which content to load into the Content pane
-     * @param file BXML file
+     * 
+     * @param file
+     *            BXML file
+     * @param mainWindow
+     *            The main window of our application
      */
     public void loadContent(String file, EasyDietMainWindow mainWindow)
     {
-        
+
         EasyDietContentView oldView = mainWindow.getContentPane().getLength() == 0 ? null
                 : (EasyDietContentView) mainWindow.getContentPane().get(0);
 
@@ -71,7 +96,8 @@ public class ViewController
             try
             {
                 EasyDietContentView newView = (EasyDietContentView) new BXMLSerializer()
-                        .readObject(ViewController.class, file + PIVOT_FILE_EXTENSION);
+                        .readObject(ViewController.class, file
+                                + PIVOT_FILE_EXTENSION);
 
                 // do onLoad method
                 newView.onLoad();
@@ -98,9 +124,11 @@ public class ViewController
 
     /**
      * Replace all buttons in the toolbar and the navigation bar
+     * 
      * @param view
-     * @param toolbar
-     * @param navigation
+     *            The current view
+     * @param mainWindow
+     *            The main window of our application
      */
     public void replaceButtons(EasyDietContentView view,
             EasyDietMainWindow mainWindow)
@@ -111,6 +139,7 @@ public class ViewController
 
     /**
      * Replace all buttons in the toolbar
+     * 
      * @param view
      * @param toolbar
      */
@@ -125,6 +154,7 @@ public class ViewController
 
     /**
      * Replace all buttons in the navigation bar
+     * 
      * @param view
      * @param navigation
      */

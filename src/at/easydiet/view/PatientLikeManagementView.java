@@ -17,6 +17,9 @@ import at.easydiet.businesslogic.PatientLikeManagementController;
 import at.easydiet.businessobjects.PatientBO;
 import at.easydiet.businessobjects.PatientLikeBO;
 
+/**
+ * This is the background class to the PatientLikeManagementView.bxml
+ */
 public class PatientLikeManagementView extends EasyDietContentView implements
         Bindable
 {
@@ -24,11 +27,20 @@ public class PatientLikeManagementView extends EasyDietContentView implements
      * Logger for debugging purposes
      */
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(PatientLikeManagementView.class);
+                                                             .getLogger(PatientLikeManagementView.class);
 
-    private TableView                           _likeTable;
-    private boolean                             _saved;
+    /**
+     * Stores the {@link TableView} that shows the {@link PatientLikeBO}s
+     */
+    private TableView                            _likeTable;
+    /**
+     * Stores whether the likes are saved or not
+     */
+    private boolean                              _saved;
 
+    /**
+     * @see at.easydiet.view.EasyDietContentView#onLoad()
+     */
     @Override
     public void onLoad()
     {
@@ -37,6 +49,9 @@ public class PatientLikeManagementView extends EasyDietContentView implements
         setPatient(PatientDetailViewController.getInstance().getPatient());
     }
 
+    /**
+     * @see at.easydiet.view.EasyDietContentView#onClose()
+     */
     @Override
     public boolean onClose()
     {
@@ -48,6 +63,12 @@ public class PatientLikeManagementView extends EasyDietContentView implements
         return super.onClose();
     }
 
+    /**
+     * Sets the patient
+     * 
+     * @param patient
+     *            The new {@link PatientBO}
+     */
     public void setPatient(PatientBO patient)
     {
         PatientLikeManagementController.getInstance().setPatient(patient);
@@ -55,6 +76,10 @@ public class PatientLikeManagementView extends EasyDietContentView implements
                 .getLikes());
     }
 
+    /**
+     * @see org.apache.pivot.beans.Bindable#initialize(org.apache.pivot.collections.Map,
+     *      java.net.URL, org.apache.pivot.util.Resources)
+     */
     public void initialize(Map<String, Object> namespace, URL location,
             Resources resources)
     {
@@ -118,6 +143,9 @@ public class PatientLikeManagementView extends EasyDietContentView implements
         });
     }
 
+    /**
+     * Remove the selected like
+     */
     protected void removeLike()
     {
         if (_likeTable.getSelectedRow() == null) return;
@@ -125,6 +153,9 @@ public class PatientLikeManagementView extends EasyDietContentView implements
                 (PatientLikeBO) _likeTable.getSelectedRow());
     }
 
+    /**
+     * Show the view to edit a {@link PatientLikeBO}
+     */
     protected void showEditLikeSheet()
     {
         if (_likeTable.getSelectedRow() == null) return;
@@ -151,6 +182,9 @@ public class PatientLikeManagementView extends EasyDietContentView implements
         editSheet.open(getWindow());
     }
 
+    /**
+     * Show the view to add a {@link PatientLikeBO}
+     */
     protected void showCreateLikeSheet()
     {
         final PatientLikeSheet editSheet = loadEditSheet();
@@ -180,6 +214,13 @@ public class PatientLikeManagementView extends EasyDietContentView implements
         editSheet.open(getWindow());
     }
 
+    /**
+     * Validate the edit- or create {@link PatientLikeBO} view
+     * 
+     * @param editSheet
+     *            The {@link PatientLikeSheet} to validate
+     * @return True if everything is valid
+     */
     protected boolean validateSheet(PatientLikeSheet editSheet)
     {
         if (editSheet.getRecipeList().getTableData().getLength() <= 0)
@@ -194,17 +235,20 @@ public class PatientLikeManagementView extends EasyDietContentView implements
 
         if (editSheet.getGradeList().getSelectedItem() == null)
         {
-            EasyAlerts
-            .error("Sie müssen ein Bindungsgrad wählen",
-                    EasyAlerts.OK_ONLY, EasyAlerts.OK, getWindow(),
-                    null);
+            EasyAlerts.error("Sie müssen ein Bindungsgrad wählen",
+                    EasyAlerts.OK_ONLY, EasyAlerts.OK, getWindow(), null);
             editSheet.getGradeList().requestFocus();
             return false;
         }
-        
+
         return true;
     }
 
+    /**
+     * Load the EditSheet from the .bxml file
+     * 
+     * @return A new {@link PatientLikeSheet}
+     */
     private PatientLikeSheet loadEditSheet()
     {
         BXMLSerializer serializer = new BXMLSerializer();
