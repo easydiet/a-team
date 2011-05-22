@@ -22,152 +22,256 @@ import at.easydiet.view.EasyDietMainWindow;
 /**
  * Renderer for our ParameterTableView
  */
-public class ParameterCellRenderer extends BoxPane implements CellRenderer {
-	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-			.getLogger(MealLineCellRenderer.class);
+public class ParameterCellRenderer extends BoxPane implements CellRenderer
+{
+    /**
+     * Logger for debugging purposes
+     */
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+                                                             .getLogger(MealLineCellRenderer.class);
 
-	private static final Image ERROR_IMAGE;
+    /**
+     * The image to show if an error occurs
+     */
+    private static final Image                   ERROR_IMAGE;
 
-	static {
-		Image img = null;
-		try {
-			img = Image.load(EasyDietMainWindow.class
-					.getResource("error_small.png"));
-		} catch (TaskExecutionException e) {
-			LOG.debug(e);
-		}
-		ERROR_IMAGE = img;
+    static
+    {
+        Image img = null;
+        try
+        {
+            img = Image.load(EasyDietMainWindow.class
+                    .getResource("error_small.png"));
+        }
+        catch (TaskExecutionException e)
+        {
+            LOG.debug(e);
+        }
+        ERROR_IMAGE = img;
 
-	}
+    }
 
-	private ImageView _errorImage;
-	private Label _textLabel;
+    /**
+     * Stores the {@link ImageView}
+     */
+    private ImageView                            _errorImage;
+    /**
+     * Stores the {@link Label}
+     */
+    private Label                                _textLabel;
 
-	private IDietParameterizable _parameterizable;
+    /**
+     * Stores the parameter provider
+     */
+    private IDietParameterizable                 _parameterizable;
 
-	public ParameterCellRenderer() {
-		_textLabel = new Label();
-		getStyles().put("fill", true);
-		getStyles().put("spacing", 3);
-		getStyles().put("verticalAlignment", VerticalAlignment.CENTER);
-		_textLabel.getStyles().put("verticalAlignment",
-				VerticalAlignment.CENTER);
-		getStyles().put("padding", new Insets(2));
-		rebuildUI();
-		setPreferredHeight(24);
-		_textLabel.setPreferredHeight(getPreferredHeight());
-	}
+    /**
+     * Initializes a new instance of the {@link ParameterCellRenderer} class.
+     */
+    public ParameterCellRenderer()
+    {
+        _textLabel = new Label();
+        getStyles().put("fill", true);
+        getStyles().put("spacing", 3);
+        getStyles().put("verticalAlignment", VerticalAlignment.CENTER);
+        _textLabel.getStyles().put("verticalAlignment",
+                VerticalAlignment.CENTER);
+        getStyles().put("padding", new Insets(2));
+        rebuildUI();
+        setPreferredHeight(24);
+        _textLabel.setPreferredHeight(getPreferredHeight());
+    }
 
-	private void rebuildUI() {
-		this.rebuildUI(false);
-	}
+    /**
+     * Reload the User Interface
+     */
+    private void rebuildUI()
+    {
+        this.rebuildUI(false);
+    }
 
-	private void rebuildUI(boolean isError) {
-		removeAll();
-		if (isErrorImageVisible() && isError) {
-			add(_errorImage);
-			add(new Label("Konflikte mit anderen Parametern!"));
-		} else {
-			add(_textLabel);
-		}
-	}
+    /**
+     * Reload the User interface
+     * 
+     * @param isError
+     *            whether there is an error or not
+     */
+    private void rebuildUI(boolean isError)
+    {
+        removeAll();
+        if (isErrorImageVisible() && isError)
+        {
+            add(_errorImage);
+            add(new Label("Konflikte mit anderen Parametern!"));
+        }
+        else
+        {
+            add(_textLabel);
+        }
+    }
 
-	@Override
-	public void setSize(int width, int height) {
-		super.setSize(width, height);
-		validate();
-	}
+    /**
+     * @see org.apache.pivot.wtk.Component#setSize(int, int)
+     */
+    @Override
+    public void setSize(int width, int height)
+    {
+        super.setSize(width, height);
+        validate();
+    }
 
-	public void render(Object row, int rowIndex, int columnIndex,
-			TableView tableView, String columnName, boolean selected,
-			boolean highlighted, boolean disabled) {
+    /**
+     * @see org.apache.pivot.wtk.TableView.CellRenderer#render(java.lang.Object,
+     *      int, int, org.apache.pivot.wtk.TableView, java.lang.String, boolean,
+     *      boolean, boolean)
+     */
+    public void render(Object row, int rowIndex, int columnIndex,
+            TableView tableView, String columnName, boolean selected,
+            boolean highlighted, boolean disabled)
+    {
 
-		String text = null;
+        String text = null;
 
-		if (row != null && columnName != null) {
-			text = toString(row, columnName);
-		}
+        if (row != null && columnName != null)
+        {
+            text = toString(row, columnName);
+        }
 
-		_textLabel.setText(text);
+        _textLabel.setText(text);
 
-		Component.StyleDictionary tableViewStyles = tableView.getStyles();
-		
-		if (!ParameterTemplateValidator.getInstance().isValid(_parameterizable,(DietParameterTemplateBO) row)) {
-			rebuildUI(true);
-			if(selected)
-			{
-				getStyles().put("backgroundColor", new Color(0xFF6666));
-			}
-			else
-			{
-				getStyles().put("backgroundColor", new Color(0xFFAAAA));
-			}
-		} else if(selected)
-		{
-			rebuildUI(false);
-			getStyles().put("backgroundColor", tableViewStyles.get("selectionBackgroundColor"));
-		}else
-			{
-			rebuildUI(false);
-			getStyles().put("backgroundColor", tableViewStyles.get("getInactiveSelectionBackgroundColor"));
-		}
+        Component.StyleDictionary tableViewStyles = tableView.getStyles();
 
-		renderStyles(tableView, selected, disabled);
-	}
+        if (!ParameterTemplateValidator.getInstance().isValid(_parameterizable,
+                (DietParameterTemplateBO) row))
+        {
+            rebuildUI(true);
+            if (selected)
+            {
+                getStyles().put("backgroundColor", new Color(0xFF6666));
+            }
+            else
+            {
+                getStyles().put("backgroundColor", new Color(0xFFAAAA));
+            }
+        }
+        else if (selected)
+        {
+            rebuildUI(false);
+            getStyles().put("backgroundColor",
+                    tableViewStyles.get("selectionBackgroundColor"));
+        }
+        else
+        {
+            rebuildUI(false);
+            getStyles().put("backgroundColor",
+                    tableViewStyles.get("getInactiveSelectionBackgroundColor"));
+        }
 
-	protected void renderStyles(TableView tableView, boolean rowSelected,
-			boolean rowDisabled) {
-		Component.StyleDictionary tableViewStyles = tableView.getStyles();
-		Component.StyleDictionary labelStyles = _textLabel.getStyles();
+        renderStyles(tableView, selected, disabled);
+    }
 
-		Font font = (Font) tableViewStyles.get("font");
-		labelStyles.put("font", font);
+    /**
+     * Set the styles for a row
+     * 
+     * @param tableView
+     *            The {@link TableView}
+     * @param rowSelected
+     *            Is the row selected
+     * @param rowDisabled
+     *            Is the row disabled
+     */
+    protected void renderStyles(TableView tableView, boolean rowSelected,
+            boolean rowDisabled)
+    {
+        Component.StyleDictionary tableViewStyles = tableView.getStyles();
+        Component.StyleDictionary labelStyles = _textLabel.getStyles();
 
-		Color color;
-		if (tableView.isEnabled() && !rowDisabled) {
-			if (rowSelected) {
-				if (tableView.isFocused()) {
-					color = (Color) tableViewStyles.get("selectionColor");
-				} else {
-					color = (Color) tableViewStyles
-							.get("inactiveSelectionColor");
-				}
-			} else {
-				color = (Color) tableViewStyles.get("color");
-			}
-		} else {
-			color = (Color) tableViewStyles.get("disabledColor");
-		}
+        Font font = (Font) tableViewStyles.get("font");
+        labelStyles.put("font", font);
 
-		labelStyles.put("color", color);
-	}
+        Color color;
+        if (tableView.isEnabled() && !rowDisabled)
+        {
+            if (rowSelected)
+            {
+                if (tableView.isFocused())
+                {
+                    color = (Color) tableViewStyles.get("selectionColor");
+                }
+                else
+                {
+                    color = (Color) tableViewStyles
+                            .get("inactiveSelectionColor");
+                }
+            }
+            else
+            {
+                color = (Color) tableViewStyles.get("color");
+            }
+        }
+        else
+        {
+            color = (Color) tableViewStyles.get("disabledColor");
+        }
 
-	public String toString(Object row, String columnName) {
-		if (!isErrorImageVisible()) {
-			Object cellData = JSON.get(row, columnName);
-			String cellString = (cellData == null) ? "{null}" : cellData
-					.toString();
+        labelStyles.put("color", color);
+    }
 
-			return cellString;
-		}
-		return "";
-	}
+    /**
+     * @see org.apache.pivot.wtk.TableView.CellRenderer#toString(java.lang.Object,
+     *      java.lang.String)
+     */
+    public String toString(Object row, String columnName)
+    {
+        if (!isErrorImageVisible())
+        {
+            Object cellData = JSON.get(row, columnName);
+            String cellString = (cellData == null) ? "{null}" : cellData
+                    .toString();
 
-	public void setParameterizable(IDietParameterizable parameterizable) {
-		_parameterizable = parameterizable;
-	}
+            return cellString;
+        }
+        return "";
+    }
 
-	public boolean isErrorImageVisible() {
-		return _errorImage != null;
-	}
+    /**
+     * Sets the parameter provider
+     * 
+     * @param parameterizable
+     *            Instance of an {@link IDietParameterizable} object
+     */
+    public void setParameterizable(IDietParameterizable parameterizable)
+    {
+        _parameterizable = parameterizable;
+    }
 
-	public void setErrorImageVisible(boolean visible) {
-		if (visible) {
-			_errorImage = new ImageView(ERROR_IMAGE);
-			_errorImage.setPreferredHeight(getPreferredHeight());
-		} else {
-			_errorImage = null;
-		}
-		rebuildUI();
-	}
+    /**
+     * Checks if the error image is visible or not
+     * 
+     * @return True if it is visible
+     */
+    public boolean isErrorImageVisible()
+    {
+        return _errorImage != null;
+    }
+
+    /**
+     * Sets the visibility of the error image
+     * 
+     * @param visible
+     *            Visibility
+     */
+    public void setErrorImageVisible(boolean visible)
+    {
+        if (visible)
+        {
+            _errorImage = new ImageView(ERROR_IMAGE);
+            _errorImage.setPreferredHeight(getPreferredHeight());
+        }
+        else
+        {
+            _errorImage = null;
+        }
+        rebuildUI();
+    }
 }
