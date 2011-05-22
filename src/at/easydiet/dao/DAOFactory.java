@@ -1,6 +1,47 @@
 package at.easydiet.dao;
 
+import java.sql.Clob;
+import java.sql.SQLException;
+
 import org.hibernate.Session;
+
+import at.easydiet.model.CheckOperator;
+import at.easydiet.model.ContactJournal;
+import at.easydiet.model.ContactType;
+import at.easydiet.model.DietParameter;
+import at.easydiet.model.DietParameterSet;
+import at.easydiet.model.DietParameterTemplate;
+import at.easydiet.model.DietParameterType;
+import at.easydiet.model.DietPlan;
+import at.easydiet.model.DietTreatment;
+import at.easydiet.model.DietTreatmentSystemUser;
+import at.easydiet.model.FamilyAnamnesis;
+import at.easydiet.model.FamilyStatus;
+import at.easydiet.model.Gender;
+import at.easydiet.model.Illness;
+import at.easydiet.model.LaborParameter;
+import at.easydiet.model.LaborReport;
+import at.easydiet.model.LaborReportType;
+import at.easydiet.model.Meal;
+import at.easydiet.model.MealLine;
+import at.easydiet.model.NutrimentParameter;
+import at.easydiet.model.NutritionProtocol;
+import at.easydiet.model.ParameterDefinition;
+import at.easydiet.model.ParameterDefinitionDataType;
+import at.easydiet.model.ParameterDefinitionUnit;
+import at.easydiet.model.Patient;
+import at.easydiet.model.PatientLike;
+import at.easydiet.model.PatientLikeGrade;
+import at.easydiet.model.PatientState;
+import at.easydiet.model.PatientStateType;
+import at.easydiet.model.PlanType;
+import at.easydiet.model.Recipe;
+import at.easydiet.model.RecipeIngredient;
+import at.easydiet.model.SystemUser;
+import at.easydiet.model.SystemUserFunction;
+import at.easydiet.model.TimeSpan;
+import at.easydiet.model.TreatmentState;
+import at.easydiet.model.UserRight;
 
 /**
  * A Factory which provides instances for all DAOs.
@@ -123,6 +164,15 @@ public class DAOFactory
     }
 
     /**
+     * Returns a new DAO for managing {@link FamilyStatus} Objects.
+     * @return a new {@link FamilyStatusDAO} instance.
+     */
+    public FamilyStatusDAO getFamilyStatusDAO()
+    {
+        return (FamilyStatusDAO) instantiateDAO(FamilyStatusDAO.class);
+    }
+
+    /**
      * Returns a new DAO for managing {@link Gender} Objects.
      * @return a new {@link GenderDAO} instance.
      */
@@ -132,12 +182,39 @@ public class DAOFactory
     }
 
     /**
+     * Returns a new DAO for managing {@link Illness} Objects.
+     * @return a new {@link IllnessDAO} instance.
+     */
+    public IllnessDAO getIllnessDAO()
+    {
+        return (IllnessDAO) instantiateDAO(IllnessDAO.class);
+    }
+
+    /**
+     * Returns a new DAO for managing {@link LaborParameter} Objects.
+     * @return a new {@link LaborParameterDAO} instance.
+     */
+    public LaborParameterDAO getLaborParameterDAO()
+    {
+        return (LaborParameterDAO) instantiateDAO(LaborParameterDAO.class);
+    }
+
+    /**
      * Returns a new DAO for managing {@link LaborReport} Objects.
      * @return a new {@link LaborReportDAO} instance.
      */
     public LaborReportDAO getLaborReportDAO()
     {
         return (LaborReportDAO) instantiateDAO(LaborReportDAO.class);
+    }
+
+    /**
+     * Returns a new DAO for managing {@link LaborReportType} Objects.
+     * @return a new {@link LaborReportTypeDAO} instance.
+     */
+    public LaborReportTypeDAO getLaborReportTypeDAO()
+    {
+        return (LaborReportTypeDAO) instantiateDAO(LaborReportTypeDAO.class);
     }
 
     /**
@@ -221,7 +298,7 @@ public class DAOFactory
     {
         return (PatientLikeDAO) instantiateDAO(PatientLikeDAO.class);
     }
-    
+
     /**
      * Returns a new DAO for managing {@link PatientLikeGrade} Objects.
      * @return a new {@link PatientLikeGradeDAO} instance.
@@ -230,7 +307,7 @@ public class DAOFactory
     {
         return (PatientLikeGradeDAO) instantiateDAO(PatientLikeGradeDAO.class);
     }
-    
+
     /**
      * Returns a new DAO for managing {@link PatientState} Objects.
      * @return a new {@link PatientStateDAO} instance.
@@ -350,5 +427,23 @@ public class DAOFactory
     protected Session getCurrentSession()
     {
         return HibernateUtil.currentSession();
+    }
+    
+    public Clob createClob(String data)
+    {
+        return getCurrentSession().getLobHelper().createClob(data);
+    }
+
+    public String clobToString(Clob data)
+    {
+        if(data == null) return "";
+        try
+        {
+            return data.getSubString(0, (int)data.length());
+        }
+        catch (SQLException e)
+        {
+            return "";
+        }
     }
 }

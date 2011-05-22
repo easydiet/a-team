@@ -3,7 +3,6 @@ package at.easydiet.dao;
 import java.util.List;
 
 import org.hibernate.criterion.Example;
-import org.hibernate.criterion.Restrictions;
 
 import at.easydiet.model.Patient;
 import at.easydiet.model.PatientLike;

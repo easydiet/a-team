@@ -9,7 +9,6 @@ import at.easydiet.businessobjects.DietParameterTypeBO;
 import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.dao.DAOFactory;
-import at.easydiet.domainlogic.DietPlanEditingController;
 import at.easydiet.model.ParameterDefinition;
 import at.easydiet.validation.ParameterTemplateValidator;
 

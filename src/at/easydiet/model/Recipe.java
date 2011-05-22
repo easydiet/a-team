@@ -42,6 +42,30 @@ public class Recipe  implements java.io.Serializable
     {
         _difficulty = difficulty;
     }
+    
+    /**
+     * Initializes a new instance of the {@link Recipe} class.
+     * @param name the name to set for this instance
+     * @param blsCode the blsCode to set for this instance
+     * @param difficulty the difficulty to set for this instance
+     * @param description the description to set for this instance
+     * @param benefits the benefits to set for this instance
+     * @param cookInstructions the cookInstructions to set for this instance
+     * @param amount the amount to set for this instance
+     * @param unit the unit to set for this instance
+     */
+    public Recipe(String name, String blsCode, int difficulty, Clob description, Clob benefits, Clob cookInstructions, float amount, ParameterDefinitionUnit unit) 
+    {
+        _name = name;
+        _blsCode = blsCode;
+        _difficulty = difficulty;
+        _description = description;
+        _benefits = benefits;
+        _cookInstructions = cookInstructions;
+        _amount = amount;
+        _unit = unit;
+    }
+    
 
     /**
      * Initializes a new instance of the {@link Recipe} class.

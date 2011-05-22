@@ -1,4 +1,4 @@
-package at.easydiet.domainlogic;
+package at.easydiet.businesslogic;
 
 import java.util.Date;
 
@@ -17,6 +17,7 @@ import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.DietTreatmentDAO;
 import at.easydiet.dao.HibernateUtil;
 import at.easydiet.dao.PatientDAO;
+import at.easydiet.domainlogic.SystemUserController;
 import at.easydiet.validation.ParameterTemplateValidator;
 
 public class DietTreatmentEditingController {

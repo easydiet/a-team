@@ -8,7 +8,7 @@ public class PatientLikeGrade  implements java.io.Serializable
 {
 
     /**
-     * 
+     * A unique serialization id. 
      */
     private static final long serialVersionUID = 4976665902101126051L;
     private long _patientLikeGradeId;

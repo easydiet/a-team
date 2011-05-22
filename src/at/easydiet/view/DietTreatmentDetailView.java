@@ -12,10 +12,10 @@ import org.apache.pivot.wtk.SortDirection;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.Mouse.Button;
 
+import at.easydiet.businesslogic.DietPlanEditingController;
 import at.easydiet.businesslogic.DietTreatmentDetailViewController;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.DietTreatmentBO;
-import at.easydiet.domainlogic.DietPlanEditingController;
 
 public class DietTreatmentDetailView extends EasyDietContentView implements
         Bindable

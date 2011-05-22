@@ -1,6 +1,5 @@
 package at.easydiet.businessobjects;
 
-
 import java.sql.Clob;
 import java.util.Date;
 
@@ -13,11 +12,11 @@ public class NutritionProtocolBO extends DietPlanBO
 {
 	private NutritionProtocol _model;
 	
-    /**
-     * Initializes a new instance of the {@link NutritionProtocolBO} class.
+    /**     * Initializes a new instance of the {@link NutritionProtocolBO} class.
      */
 	public NutritionProtocolBO()
 	{
+
 		// TODO: add default values
 		this(new NutritionProtocol());
 	}
@@ -28,7 +27,7 @@ public class NutritionProtocolBO extends DietPlanBO
      */
 	public NutritionProtocolBO(NutritionProtocol model)
 	{
-	    super(model);
+		super(model);
 		_model = model;
 	}
 	

@@ -1,6 +1,5 @@
 package at.easydiet.businessobjects;
 
-
 import java.sql.Clob;
 import java.util.Date;
 
@@ -9,7 +8,7 @@ import at.easydiet.model.ContactJournal;
 /**
  * This class encapsules a ContactJournal instance.
  */
-public class ContactJournalBO
+public class ContactJournalBO 
 {
 	private ContactJournal _model;
 	

@@ -10,7 +10,6 @@ import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.HashMap;
 import org.apache.pivot.collections.List;
 import at.easydiet.businessobjects.CheckOperatorBO;
-import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.DietParameterTemplateBO;
 import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
@@ -106,7 +105,7 @@ public class ParameterTemplateValidator {
 		}
 		
 
-		List<DietParameterTemplateBO> checkSet = parameterizable.getDietParameters();
+		List<? extends DietParameterTemplateBO> checkSet = parameterizable.getDietParameters();
 
 		
 		

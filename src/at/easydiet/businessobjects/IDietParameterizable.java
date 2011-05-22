@@ -6,7 +6,7 @@ public interface IDietParameterizable
 {
     public String getDisplayText();
 
-    public List<DietParameterTemplateBO> getDietParameters();
+    public List<? extends DietParameterTemplateBO> getDietParameters();
 
     public void addDietParameters(DietParameterTemplateBO parameter);
 

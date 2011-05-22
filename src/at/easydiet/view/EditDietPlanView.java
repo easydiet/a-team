@@ -2,7 +2,7 @@ package at.easydiet.view;
 
 import org.apache.pivot.beans.Bindable;
 
-import at.easydiet.domainlogic.DietPlanEditingController;
+import at.easydiet.businesslogic.DietPlanEditingController;
 
 public class EditDietPlanView extends DietPlanManagementView implements
 		Bindable {

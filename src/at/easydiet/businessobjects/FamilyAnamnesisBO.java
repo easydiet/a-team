@@ -1,14 +1,16 @@
 package at.easydiet.businessobjects;
 
 
-import java.util.Set;
+import org.apache.pivot.collections.List;
+import org.apache.pivot.collections.ArrayList;
 
 import at.easydiet.model.FamilyAnamnesis;
+import at.easydiet.model.Illness;
 
 /**
  * This class encapsules a FamilyAnamnesis instance.
  */
-public class FamilyAnamnesisBO
+public class FamilyAnamnesisBO 
 {
 	private FamilyAnamnesis _model;
 	
@@ -75,22 +77,57 @@ public class FamilyAnamnesisBO
         _model.setPerson(person);
     }
 
-    /**       
-     * Gets the illnesses of this instance. 
-     * @return the illnesses currently set for this instance.
+
+	private List<IllnessBO> _illnesses;
+	
+    /**
+     * Gets a list of referenced Illnesses of this instance.
+     * This list is cached, use {@link FamilyAnamnesis#updateIllnessesCache()) to update this cache.
+     * @return a cached list of referenced Illnesses wrapped into the correct businessobject. 
      */
-    public Set<String> getIllnesses() 
+    public List<IllnessBO> getIllnesses()
     {
-        return _model.getIllnesses();
+        if(_illnesses == null) 
+        {
+            _illnesses = new ArrayList<IllnessBO>();
+            for(Illness illnesses : _model.getIllnesses())
+            {
+                _illnesses.add(new IllnessBO(illnesses));
+            }
+        }
+        return _illnesses;
+    }
+	
+    /**
+     * Adds a new Illness to the list of referenced illnesses.
+     * The cache will updated
+     * @param illnesses the Illness to add. 
+     */
+    public void addIllnesses(IllnessBO illnesses)
+    {
+        getIllnesses().add(illnesses);
+        _model.getIllnesses().add(illnesses.getModel());
     }
     
-    /**       
-     * Sets the illnesses of this instance. 
-     * @param illnesses the new illnesses of this instance.
-     */    
-    public void setIllnesses(Set<String> illnesses) 
+        
+    /**
+     * Removes the given Illness from the list of referenced illnesses.
+     * The cache will updated
+     * @param illnesses the timespan to add. 
+     */
+    public void removeIllnesses(IllnessBO illnesses)
     {
-        _model.setIllnesses(illnesses);
+        getIllnesses().remove(illnesses);
+        _model.getIllnesses().remove(illnesses.getModel());
+    }
+	
+    /**
+     * Rebuilds the cache for referenced illnesses.
+     */
+    public void updateIllnessesCache()
+    {
+        _illnesses = null;
+        getIllnesses();
     }
 
 }

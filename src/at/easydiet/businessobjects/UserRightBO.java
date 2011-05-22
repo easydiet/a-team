@@ -1,12 +1,11 @@
 package at.easydiet.businessobjects;
 
-
 import at.easydiet.model.UserRight;
 
 /**
  * This class encapsules a UserRight instance.
  */
-public class UserRightBO
+public class UserRightBO 
 {
 	private UserRight _model;
 	

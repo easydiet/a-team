@@ -1,7 +1,7 @@
 package at.easydiet.businessobjects;
 
-import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.List;
+import org.apache.pivot.collections.ArrayList;
 
 import at.easydiet.model.CheckOperator;
 
@@ -10,8 +10,12 @@ import at.easydiet.model.CheckOperator;
  */
 public enum CheckOperatorBO
 {
-    BIGGER(">"), SMALLER("<"), EQUALORBIGGER(">="), EQUALORSMALLER("<="), EQUAL(
-            "="), NOTEQUAL("!=");
+    BIGGER(">"),
+    SMALLER("<"),
+    EQUALORBIGGER(">="),
+    EQUALORSMALLER("<="),
+    EQUAL("="),
+    NOTEQUAL("!=");
 
     private CheckOperator _model;
 

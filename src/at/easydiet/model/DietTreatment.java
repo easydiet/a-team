@@ -13,7 +13,7 @@ public class DietTreatment  implements java.io.Serializable
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = 3879975384365335112L;
+    private static final long serialVersionUID = -3443749060591605997L;
     private long _dietTreatmentId;
     private Date _start;
     private int _duration;
@@ -58,6 +58,7 @@ public class DietTreatment  implements java.io.Serializable
      * @param start the start to set for this instance
      * @param duration the duration to set for this instance
      * @param name the name to set for this instance
+     * @param shortDescription the shortDescription to set for this instance
      * @param nutritionProtocols the nutritionProtocols to set for this instance
      * @param dietPlans the dietPlans to set for this instance
      * @param dietParameters the dietParameters to set for this instance
@@ -67,7 +68,7 @@ public class DietTreatment  implements java.io.Serializable
      * @param treatmentState the treatmentState to set for this instance
      * @param patient the patient to set for this instance
      */
-    public DietTreatment(Date start, int duration, String name,String shortDescription, Set<NutritionProtocol> nutritionProtocols, Set<DietPlan> dietPlans, Set<DietParameter> dietParameters, Set<PatientState> patientStates, Set<DietTreatmentSystemUser> systemUsers, Set<ContactJournal> contactJournals, TreatmentState treatmentState, Patient patient) 
+    public DietTreatment(Date start, int duration, String name, String shortDescription, Set<NutritionProtocol> nutritionProtocols, Set<DietPlan> dietPlans, Set<DietParameter> dietParameters, Set<PatientState> patientStates, Set<DietTreatmentSystemUser> systemUsers, Set<ContactJournal> contactJournals, TreatmentState treatmentState, Patient patient) 
     {
        _start = start;
        _duration = duration;
@@ -156,8 +157,8 @@ public class DietTreatment  implements java.io.Serializable
     }
     
     /**       
-     * Gets the short description of this instance. 
-     * @return the short description currently set for this instance.
+     * Gets the shortDescription of this instance. 
+     * @return the shortDescription currently set for this instance.
      */
     public String getShortDescription() 
     {
@@ -165,8 +166,8 @@ public class DietTreatment  implements java.io.Serializable
     }
     
     /**       
-     * Sets the short description of this instance. 
-     * @param shortDescription the new short description of this instance.
+     * Sets the shortDescription of this instance. 
+     * @param shortDescription the new shortDescription of this instance.
      */    
     public void setShortDescription(String shortDescription) 
     {

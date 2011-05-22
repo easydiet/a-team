@@ -1,6 +1,5 @@
 package at.easydiet.businessobjects;
 
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -28,8 +27,7 @@ public class DietTreatmentBO implements IDietParameterizable
      */
 	public DietTreatmentBO()
 	{
-		// TODO: add default values
-		this(new DietTreatment(new Date(),0,"",null,null));
+        this(new DietTreatment(new Date(),0,"",null,null));
 	}
 	
     /**
@@ -49,16 +47,7 @@ public class DietTreatmentBO implements IDietParameterizable
 	{
 		return _model;
 	}
- 	
- 	/**
- 	 * Overrides the model stored in the backstore. 
- 	 * @param model
- 	 */
- 	void setModel(DietTreatment model)
-    {
-        _model = model;
-    }
- 	
+	
     /**       
      * Gets the dietTreatmentId of this instance. 
      * @return the dietTreatmentId currently set for this instance.
@@ -141,8 +130,8 @@ public class DietTreatmentBO implements IDietParameterizable
     }
 
     /**       
-     * Gets the short description of this instance. 
-     * @return the short description currently set for this instance.
+     * Gets the shortDescription of this instance. 
+     * @return the shortDescription currently set for this instance.
      */
     public String getShortDescription() 
     {
@@ -150,13 +139,14 @@ public class DietTreatmentBO implements IDietParameterizable
     }
     
     /**       
-     * Sets the short description of this instance. 
-     * @param shortDescription the new short description of this instance.
+     * Sets the shortDescription of this instance. 
+     * @param shortDescription the new shortDescription of this instance.
      */    
     public void setShortDescription(String shortDescription) 
     {
         _model.setShortDescription(shortDescription);
     }
+
 
 	private List<NutritionProtocolBO> _nutritionProtocols;
 	
@@ -238,7 +228,6 @@ public class DietTreatmentBO implements IDietParameterizable
      */
     public void addDietPlans(DietPlanBO dietPlans)
     {
-        dietPlans.setDietTreatment(this);
         getDietPlans().add(dietPlans);
         _model.getDietPlans().add(dietPlans.getModel());
     }
@@ -265,18 +254,18 @@ public class DietTreatmentBO implements IDietParameterizable
     }
 
 
-	private List<DietParameterTemplateBO> _dietParameters;
+	private List<DietParameterBO> _dietParameters;
 	
     /**
      * Gets a list of referenced DietParameters of this instance.
      * This list is cached, use {@link DietTreatment#updateDietParametersCache()) to update this cache.
      * @return a cached list of referenced DietParameters wrapped into the correct businessobject. 
      */
-    public List<DietParameterTemplateBO> getDietParameters()
+    public List<DietParameterBO> getDietParameters()
     {
         if(_dietParameters == null) 
         {
-            _dietParameters = new ArrayList<DietParameterTemplateBO>();
+            _dietParameters = new ArrayList<DietParameterBO>();
             for(DietParameter dietParameters : _model.getDietParameters())
             {
                 _dietParameters.add(new DietParameterBO(dietParameters));
@@ -290,10 +279,10 @@ public class DietTreatmentBO implements IDietParameterizable
      * The cache will updated
      * @param dietParameters the DietParameter to add. 
      */
-    public void addDietParameters(DietParameterTemplateBO dietParameters)
+    public void addDietParameters(DietParameterBO dietParameters)
     {
         getDietParameters().add(dietParameters);
-        _model.getDietParameters().add((DietParameter) dietParameters.getModel());
+        _model.getDietParameters().add(dietParameters.getModel());
     }
     
         
@@ -302,7 +291,7 @@ public class DietTreatmentBO implements IDietParameterizable
      * The cache will updated
      * @param dietParameters the timespan to add. 
      */
-    public void removeDietParameters(DietParameterTemplateBO dietParameters)
+    public void removeDietParameters(DietParameterBO dietParameters)
     {
         getDietParameters().remove(dietParameters);
         _model.getDietParameters().remove(dietParameters.getModel());
@@ -526,10 +515,25 @@ public class DietTreatmentBO implements IDietParameterizable
         _patient = patient;
         _model.setPatient(patient.getModel());
     }
-
+    
     public String getDisplayText()
     {
         return (getName().length() > 0) ? getName() : "Neue Diätbehandlung";
+    }
+
+
+    @Override
+    public void addDietParameters(DietParameterTemplateBO parameter)
+    {
+        if(!(parameter instanceof DietParameterBO)) return;
+        addDietParameters((DietParameterBO) parameter);
+    }
+
+    @Override
+    public void removeDietParameters(DietParameterTemplateBO parameter)
+    {
+        if(!(parameter instanceof DietParameterBO)) return;
+        removeDietParameters((DietParameterBO) parameter);
     }
     
     /**
@@ -569,5 +573,4 @@ public class DietTreatmentBO implements IDietParameterizable
         if (_model.getDietTreatmentId() != other._model.getDietTreatmentId()) return false;
         return true;
     }
-
 }

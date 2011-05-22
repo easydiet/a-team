@@ -9,46 +9,65 @@
 			<meta attribute="use-in-tostring">true</meta>
 		</id>
 	</class>
+	
+	<class name="FamilyStatus">
+		<meta attribute="is-enum">true</meta>
+		<id name="status" column="Status" type="string">
+			<meta attribute="use-in-tostring">true</meta>
+		</id>
+	</class>
+	
+	<class name="Illness">
+		<id name="illnessId" column="IllnessId" type="long">
+			<generator class="native" />
+		</id>
+		
+		<property name="Name" type="string" not-null="true" />
+	</class>
 
 	<class name="Patient">
 		<id name="patientId" column="PatientId" type="long">
 			<generator class="native" />
 		</id>
 
-		<property name="insuranceNumber" column="InsuranceNumber" type="string" unique="true" not-null="true" />
+		<property name="insuranceNumber" column="InsuranceNumber" type="string" unique="false" not-null="false" />
 		<property name="forename" column="Forename" type="string" not-null="true" />
 		<property name="lastname" column="Lastname" type="string" not-null="true" />
-		<property name="title" column="Title" type="string" not-null="true" />
-		<property name="street" column="Street" type="string" not-null="true" />
-		<property name="zip" column="Zip" type="string" not-null="true" />
-		<property name="place" column="Place" type="string" not-null="true" />
+		<property name="title" column="Title" type="string" not-null="false" />
+		<property name="street" column="Street" type="string" not-null="false" />
+		<property name="zip" column="Zip" type="string" not-null="false" />
+		<property name="place" column="Place" type="string" not-null="false" />
 		<!-- ISO 3166 ALPHA-3 -->
-		<property name="country" column="Country" type="string" not-null="true" />
-		<property name="birthday" column="Birthday" type="timestamp" not-null="true" />
+		<property name="country" column="Country" type="string" not-null="false" />
+		<property name="birthday" column="Birthday" type="timestamp" not-null="false" />
 		<property name="job" column="Job" type="string" />
 		<property name="religion" column="Religion" type="string" />
-		<property name="regime" column="Regime" type="string" />
+		<property name="regime" column="Regime" type="clob" />
 		<property name="notice" column="Notice" type="clob" />
 
 		<many-to-one class="Gender" name="gender" column="Gender"
 			not-null="true" />
+			
+		<!-- Standard: ledig -->
+		<many-to-one class="FamilyStatus" name="familyStatus" column="FamilyStatus"
+			not-null="false" />
 
-		<set name="illnesses" table="PatientIllnesses">
-			<key column="PatientId" />
-			<element column="Illness" type="string" />
+		<set name="illnesses" table="PatientIllness">
+			<key column="PatientId" not-null="true" />
+			<many-to-many class="Illness" column="IllnessId" />
 		</set>
 		
-		<set name="familyanamnesis" lazy="true">
+		<set name="familyanamnesis" lazy="true" cascade="all,delete-orphan">
 			<key column="PatientId" not-null="true" />
 			<one-to-many class="FamilyAnamnesis" />
 		</set>
 
-		<set name="patientStates" lazy="true" inverse="true">
+		<set name="patientStates" lazy="true" inverse="true" cascade="all,delete-orphan">
 			<key column="PatientId" not-null="true" />
 			<one-to-many class="PatientState" />
 		</set>
 
-		<set name="laborReports" lazy="true" inverse="true">
+		<set name="laborReports" lazy="true" inverse="true" cascade="all,delete-orphan">
 			<key column="PatientId" not-null="true" />
 			<one-to-many class="LaborReport" />
 		</set>
@@ -91,9 +110,9 @@
 		</id>
 		<property name="person" column="Person" type="string" not-null="true" />
 		
-		<set name="illnesses" table="FamilyAnamnesisIllnesses">
-			<key column="FamilyAnamnesisId" />
-			<element column="Illness" type="string" />
+		<set name="illnesses" table="FamilyAnamnesisIllness" cascade="all,delete-orphan">
+			<key column="FamilyAnamnesisId" not-null="true" />
+			<many-to-many class="Illness" column="IllnessId" />
 		</set>
 	</class>
 
@@ -150,7 +169,7 @@
 		<property name="checkPattern" column="CheckPattern" type="string" />	
         
         <!-- No lazy loading, we will need units always -->
-        <set name="units" table="ParameterDefinitionUnits">
+        <set name="units" table="ParameterDefinitionUnits" lazy="true">
 			<key column="ParameterDefinitionId" not-null="true" />
 			<many-to-many class="ParameterDefinitionUnit" column="ParameterDefinitionUnitId" />
 		</set>        
@@ -195,10 +214,10 @@
 		</set>		
 		<set name="patientStates" table="DietTreatmentPatientState" lazy="true">
 			<key column="DietTreatmentId" not-null="true" />
-			<many-to-many class="PatientState" column="DietParameterId" unique="true" />
+			<many-to-many class="PatientState" column="PatientStateId"/>
 		</set>
 		
-		<set name="systemUsers" lazy="true" cascade="all,delete-orphan">
+		<set name="systemUsers" lazy="true">
 			<key column="DietTreatmentId" not-null="true" />
 			<one-to-many class="DietTreatmentSystemUser" />
 		</set>
@@ -366,12 +385,12 @@
 		<property name="amount" column="Amount" type="float" />
 		<many-to-one name="unit" column="ParameterDefinitionUnitId" class="ParameterDefinitionUnit" />
 
-		<set name="ingredients" inverse="true">
+		<set name="ingredients" inverse="true" lazy="true" cascade="all,delete-orphan" >
 			<key column="RecipeId" not-null="true" />
 			<one-to-many class="RecipeIngredient" />
 		</set>
 
-		<set name="nutrimentParameters">
+		<set name="nutrimentParameters" lazy="true" cascade="all,delete-orphan" >
 			<key column="RecipeId" not-null="true" />
 			<one-to-many class="NutrimentParameter" />
 		</set>
@@ -399,7 +418,7 @@
 		<property name="value" column="Value" type="string" not-null="true" />
 
 		<many-to-one name="parameterDefinition" column="ParameterDefinitionId" class="ParameterDefinition" not-null="true"/>
-		<many-to-one name="unit" column="ParameterDefinitionUnitId" class="ParameterDefinitionUnit" not-null="true"/>
+		<many-to-one name="unit" column="ParameterDefinitionUnitId" class="ParameterDefinitionUnit" />
 	</class>
 
 	<class name="PatientStateType">
@@ -435,6 +454,11 @@
 			<many-to-many class="LaborReport" column="LaborReportId" /> 
 		</set>
 		
+		<set name="dietTreatments" table="DietTreatmentPatientState" lazy="true">
+			<key column="PatientStateId" not-null="false" />
+			<many-to-many class="DietTreatment" column="DietTreatmentId" />
+		</set>
+		
 		<!-- Bidirectional assoc to patient -->
 		<many-to-one name="patient" column="PatientId" class="Patient" not-null="true" insert="true" update="true"/>
 
@@ -450,14 +474,50 @@
 
 		<many-to-one class="SystemUser" name="creator" column="Creator" not-null="true" />
 
-		<set name="dietParameters" table="LaborReportDietParameter" lazy="true" cascade="all" >
-			<key column="LaborReportId" not-null="true" />
-			<many-to-many class="DietParameter" column="DietParameterId" unique="true" />
-		</set>
 		
+		<set name="laborParameters" inverse="true" cascade="all,delete-orphan">
+			<key column="LaborReportId" not-null="true" />
+
+			<one-to-many class="LaborParameter" />
+		</set>
+	
+		<many-to-one class="LaborReportType" name="laborReportType" column="LaborReportTypeId" />
+		
+		
+	
 		<!-- Bidirectional assoc to patient -->
 		<many-to-one name="patient" column="PatientId" class="Patient" not-null="true" insert="true" update="true"/>
 
+	</class>
+	
+	<class name="LaborParameter">
+		<id name="laborParameterId" column="LaborParameterId" type="long">
+			<generator class="native" />
+		</id>
+		
+		<property name="Value" type="string" not-null="true" />
+		
+		<many-to-one class="ParameterDefinitionUnit" name="parameterDefinitionUnit" column="ParameterDefinitionUnitId" not-null="true" />
+		<many-to-one class="CheckOperator" name="checkOperator" column="CheckOperatorId" not-null="true" />  
+		<many-to-one class="ParameterDefinition" name="parameterDefinition" column="ParameterDefinitionId" not-null="true" />
+		
+		<many-to-one class="LaborReport" name="laborReport" column="LaborReportId" />
+		
+		
+	</class>
+	
+	<class name="LaborReportType">
+		<id name="laborReportTypeId" column="LaborReportTypeId" type="long">
+			<generator class="native" />
+		</id>
+		
+		<property name="Name" type="string" not-null="true" />
+		
+		<set name="parameterDefinitions" table="LaborReportTypeParameterDefinition" lazy="true" >
+			<key column="LaborReportTypeId" not-null="true" />
+			<many-to-many class="ParameterDefinition" column="ParameterDefinitionId"  unique="true" />
+		</set>	
+		
 	</class>
 
 	<class name="DietParameterTemplate">

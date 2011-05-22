@@ -2,19 +2,19 @@ package at.easydiet.businessobjects;
 
 
 import java.sql.Clob;
-import java.sql.SQLException;
 import java.util.Date;
 
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.ArrayList;
 
+import at.easydiet.model.DietTreatment;
 import at.easydiet.model.LaborReport;
 import at.easydiet.model.PatientState;
 
 /**
  * This class encapsules a PatientState instance.
  */
-public class PatientStateBO
+public class PatientStateBO 
 {
 	private PatientState _model;
 	
@@ -85,17 +85,9 @@ public class PatientStateBO
      * Gets the anamnesis of this instance. 
      * @return the anamnesis currently set for this instance.
      */
-    public String getAnamnesis() 
+    public Clob getAnamnesis() 
     {
-    	Clob clob = _model.getAnamnesis();
-    	
-        try {
-			return clob.getSubString(1, (int) clob.length());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return e.getMessage();
-		}
+        return _model.getAnamnesis();
     }
     
     /**       
@@ -316,6 +308,59 @@ public class PatientStateBO
     {
         _laborReports = null;
         getLaborReports();
+    }
+
+
+	private List<DietTreatmentBO> _dietTreatments;
+	
+    /**
+     * Gets a list of referenced DietTreatments of this instance.
+     * This list is cached, use {@link PatientState#updateDietTreatmentsCache()) to update this cache.
+     * @return a cached list of referenced DietTreatments wrapped into the correct businessobject. 
+     */
+    public List<DietTreatmentBO> getDietTreatments()
+    {
+        if(_dietTreatments == null) 
+        {
+            _dietTreatments = new ArrayList<DietTreatmentBO>();
+            for(DietTreatment dietTreatments : _model.getDietTreatments())
+            {
+                _dietTreatments.add(new DietTreatmentBO(dietTreatments));
+            }
+        }
+        return _dietTreatments;
+    }
+	
+    /**
+     * Adds a new DietTreatment to the list of referenced dietTreatments.
+     * The cache will updated
+     * @param dietTreatments the DietTreatment to add. 
+     */
+    public void addDietTreatments(DietTreatmentBO dietTreatments)
+    {
+        getDietTreatments().add(dietTreatments);
+        _model.getDietTreatments().add(dietTreatments.getModel());
+    }
+    
+        
+    /**
+     * Removes the given DietTreatment from the list of referenced dietTreatments.
+     * The cache will updated
+     * @param dietTreatments the timespan to add. 
+     */
+    public void removeDietTreatments(DietTreatmentBO dietTreatments)
+    {
+        getDietTreatments().remove(dietTreatments);
+        _model.getDietTreatments().remove(dietTreatments.getModel());
+    }
+	
+    /**
+     * Rebuilds the cache for referenced dietTreatments.
+     */
+    public void updateDietTreatmentsCache()
+    {
+        _dietTreatments = null;
+        getDietTreatments();
     }
 
 	

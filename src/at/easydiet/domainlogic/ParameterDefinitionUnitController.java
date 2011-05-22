@@ -44,4 +44,10 @@ public class ParameterDefinitionUnitController
     private ParameterDefinitionUnitController()
     {
     }
+
+    public ParameterDefinitionUnitBO getDefault()
+    {
+        ParameterDefinitionUnitDAO dao = DAOFactory.getInstance().getParameterDefinitionUnitDAO();
+        return new ParameterDefinitionUnitBO(dao.findByName("g"));
+    }
 }

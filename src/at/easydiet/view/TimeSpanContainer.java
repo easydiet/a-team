@@ -17,17 +17,15 @@ import org.apache.pivot.wtk.BoxPane;
 import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.CalendarButton;
-import org.apache.pivot.wtk.CalendarButtonListener;
 import org.apache.pivot.wtk.CalendarButtonSelectionListener;
 import org.apache.pivot.wtk.Dialog;
 import org.apache.pivot.wtk.DialogCloseListener;
 import org.apache.pivot.wtk.Label;
 import org.apache.pivot.wtk.Orientation;
 
-import at.easydiet.businessobjects.DietParameterBO;
+import at.easydiet.businesslogic.DietPlanEditingController;
 import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.TimeSpanBO;
-import at.easydiet.domainlogic.DietPlanEditingController;
 
 @DefaultProperty("mealContainers")
 public class TimeSpanContainer extends BoxPane
@@ -225,8 +223,9 @@ public class TimeSpanContainer extends BoxPane
         BXMLSerializer serializer = new BXMLSerializer();
         try
         {
+            ViewController.getInstance();
             Border content = (Border) serializer.readObject(
-                    TimeSpanContainer.class, "TimeSpanContainerContent" + ViewController.getInstance().PIVOT_FILE_EXTENSION);
+                    TimeSpanContainer.class, "TimeSpanContainerContent" + ViewController.PIVOT_FILE_EXTENSION);
             add(content);
             _startDateButton = (CalendarButton) serializer.getNamespace().get(
                     "startDate");

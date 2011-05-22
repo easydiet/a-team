@@ -1,19 +1,18 @@
 package at.easydiet.businessobjects;
 
-
 import java.sql.Clob;
 import java.util.Date;
 
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.ArrayList;
 
-import at.easydiet.model.DietParameter;
+import at.easydiet.model.LaborParameter;
 import at.easydiet.model.LaborReport;
 
 /**
  * This class encapsules a LaborReport instance.
  */
-public class LaborReportBO
+public class LaborReportBO 
 {
 	private LaborReport _model;
 	
@@ -124,58 +123,83 @@ public class LaborReportBO
         _model.setCreator(creator.getModel());
     }
 
-	private List<DietParameterBO> _dietParameters;
+	private List<LaborParameterBO> _laborParameters;
 	
     /**
-     * Gets a list of referenced DietParameters of this instance.
-     * This list is cached, use {@link LaborReport#updateDietParametersCache()) to update this cache.
-     * @return a cached list of referenced DietParameters wrapped into the correct businessobject. 
+     * Gets a list of referenced LaborParameters of this instance.
+     * This list is cached, use {@link LaborReport#updateLaborParametersCache()) to update this cache.
+     * @return a cached list of referenced LaborParameters wrapped into the correct businessobject. 
      */
-    public List<DietParameterBO> getDietParameters()
+    public List<LaborParameterBO> getLaborParameters()
     {
-        if(_dietParameters == null) 
+        if(_laborParameters == null) 
         {
-            _dietParameters = new ArrayList<DietParameterBO>();
-            for(DietParameter dietParameters : _model.getDietParameters())
+            _laborParameters = new ArrayList<LaborParameterBO>();
+            for(LaborParameter laborParameters : _model.getLaborParameters())
             {
-                _dietParameters.add(new DietParameterBO(dietParameters));
+                _laborParameters.add(new LaborParameterBO(laborParameters));
             }
         }
-        return _dietParameters;
+        return _laborParameters;
     }
 	
     /**
-     * Adds a new DietParameter to the list of referenced dietParameters.
+     * Adds a new LaborParameter to the list of referenced laborParameters.
      * The cache will updated
-     * @param dietParameters the DietParameter to add. 
+     * @param laborParameters the LaborParameter to add. 
      */
-    public void addDietParameters(DietParameterBO dietParameters)
+    public void addLaborParameters(LaborParameterBO laborParameters)
     {
-        getDietParameters().add(dietParameters);
-        _model.getDietParameters().add(dietParameters.getModel());
+        getLaborParameters().add(laborParameters);
+        _model.getLaborParameters().add(laborParameters.getModel());
     }
     
         
     /**
-     * Removes the given DietParameter from the list of referenced dietParameters.
+     * Removes the given LaborParameter from the list of referenced laborParameters.
      * The cache will updated
-     * @param dietParameters the timespan to add. 
+     * @param laborParameters the timespan to add. 
      */
-    public void removeDietParameters(DietParameterBO dietParameters)
+    public void removeLaborParameters(LaborParameterBO laborParameters)
     {
-        getDietParameters().remove(dietParameters);
-        _model.getDietParameters().remove(dietParameters.getModel());
+        getLaborParameters().remove(laborParameters);
+        _model.getLaborParameters().remove(laborParameters.getModel());
     }
 	
     /**
-     * Rebuilds the cache for referenced dietParameters.
+     * Rebuilds the cache for referenced laborParameters.
      */
-    public void updateDietParametersCache()
+    public void updateLaborParametersCache()
     {
-        _dietParameters = null;
-        getDietParameters();
+        _laborParameters = null;
+        getLaborParameters();
     }
 
+	
+    private LaborReportTypeBO _laborReportType;
+    
+    /**
+     * Gets the currently referenced LaborReportType of this instance.
+     * @return the LaborReportType currently referenced in this LaborReport. 
+     */
+    public LaborReportTypeBO getLaborReportType()
+    {
+        if(_laborReportType == null)
+        {
+            _laborReportType = new LaborReportTypeBO(_model.getLaborReportType());
+        }
+        return _laborReportType;
+    }
+    
+    /**
+     * Sets the LaborReportType to be referenced in this instance
+     * @param laborReportType the LaborReportType to reference in this LaborReport. 
+     */
+    public void setLaborReportType(LaborReportTypeBO laborReportType)
+    {
+        _laborReportType = laborReportType;
+        _model.setLaborReportType(laborReportType.getModel());
+    }
 	
     private PatientBO _patient;
     

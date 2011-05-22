@@ -10,9 +10,9 @@ import org.apache.pivot.wtk.Button;
 import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.ListView;
 
+import at.easydiet.businesslogic.ParametersetEditingController;
 import at.easydiet.businessobjects.DietParameterSetBO;
 import at.easydiet.businessobjects.DietParameterTemplateBO;
-import at.easydiet.domainlogic.ParametersetEditingController;
 
 public class CreateParametersetView extends EasyDietContentView implements
         Bindable

@@ -2,8 +2,8 @@ package at.easydiet.view;
 
 import org.apache.pivot.util.CalendarDate;
 
+import at.easydiet.businesslogic.DietTreatmentEditingController;
 import at.easydiet.businesslogic.PatientDetailViewController;
-import at.easydiet.domainlogic.DietTreatmentEditingController;
 
 public class CreateDietTreatmentView extends DietTreatmentManagementView {
 	@Override

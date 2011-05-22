@@ -1,6 +1,5 @@
 package at.easydiet.businessobjects;
 
-
 import at.easydiet.model.DietParameterType;
 
 /**
@@ -31,15 +30,15 @@ public enum DietParameterTypeBO
 		return _model;
 	}
 	
-    /**
-     * Gets the name of this enum value.
-     * @return the name of this enum value
-     */
-    public String getName()
-    {
-        return _model.getName();
-    }
-    
+	/**
+	 * Gets the name of this enum value.
+	 * @return the name of this enum value
+	 */
+	public String getName()
+	{
+		return _model.getName();
+	}
+	
 	/**
 	 * Returns the BusinessObject matching to the specified model object.
 	 * @returns the enum value matching to the given model or the default value. 

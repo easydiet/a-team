@@ -16,7 +16,6 @@ import at.easydiet.businesslogic.PatientDetailViewController;
 import at.easydiet.businesslogic.PatientLikeManagementController;
 import at.easydiet.businessobjects.PatientBO;
 import at.easydiet.businessobjects.PatientLikeBO;
-import at.easydiet.model.PatientLike;
 
 public class PatientLikeManagementView extends EasyDietContentView implements
         Bindable

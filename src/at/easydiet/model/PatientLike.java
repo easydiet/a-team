@@ -1,5 +1,6 @@
 package at.easydiet.model;
 
+
 /**
  * Represents a PatientLike
  */
@@ -9,7 +10,7 @@ public class PatientLike  implements java.io.Serializable
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = -5658630105110533222L;
+    private static final long serialVersionUID = 5256207249128153092L;
     private long _patientLikeId;
     private Patient _patient;
     private String _blsPattern;
@@ -151,7 +152,7 @@ public class PatientLike  implements java.io.Serializable
     {
         StringBuilder builder = new StringBuilder();
         builder.append(getClass().getName()).append("@").append(Integer.toHexString(hashCode())).append(" [");
-        // interesting values
+		// interesting values
         builder.append("]");
       
         return builder.toString();

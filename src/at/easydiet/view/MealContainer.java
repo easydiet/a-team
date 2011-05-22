@@ -22,13 +22,12 @@ import org.apache.pivot.wtk.TableView.RowEditor;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.TextInputContentListener;
 
+import at.easydiet.businesslogic.DietPlanEditingController;
 import at.easydiet.businesslogic.MealContainerController;
-import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.MealLineBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
 import at.easydiet.businessobjects.RecipeBO;
-import at.easydiet.domainlogic.DietPlanEditingController;
 import at.easydiet.domainlogic.ParameterDefinitionUnitController;
 import at.easydiet.domainlogic.RecipeSearchController;
 
@@ -66,8 +65,9 @@ public class MealContainer extends BoxPane
         BXMLSerializer serializer = new BXMLSerializer();
         try
         {
+            ViewController.getInstance();
             Border content = (Border) serializer.readObject(
-                    TimeSpanContainer.class, "MealContainerContent" + ViewController.getInstance().PIVOT_FILE_EXTENSION);
+                    TimeSpanContainer.class, "MealContainerContent" + ViewController.PIVOT_FILE_EXTENSION);
             
 			_parameterTableViewTemplate = (ParameterTableViewTemplate) serializer
 					.getNamespace().get("parameterTableViewTemplate");

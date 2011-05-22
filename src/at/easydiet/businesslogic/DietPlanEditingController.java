@@ -1,4 +1,4 @@
-package at.easydiet.domainlogic;
+package at.easydiet.businesslogic;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,6 +20,9 @@ import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.DietPlanDAO;
 import at.easydiet.dao.HibernateUtil;
 import at.easydiet.dao.MealDAO;
+import at.easydiet.domainlogic.DietParameterController;
+import at.easydiet.domainlogic.SystemUserController;
+import at.easydiet.domainlogic.TimeSpanController;
 import at.easydiet.domainlogic.DietParameterController.ValidationResult;
 import at.easydiet.util.CollectionUtils;
 import at.easydiet.util.StringUtils;

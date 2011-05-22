@@ -25,15 +25,16 @@ import org.apache.pivot.wtk.TextAreaContentListener;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.TextInputContentListener;
 import org.apache.pivot.wtk.TableView.RowEditor;
+
+import at.easydiet.businesslogic.DietPlanEditingController;
 import at.easydiet.businesslogic.DietTreatmentDetailViewController;
+import at.easydiet.businesslogic.DietTreatmentEditingController;
 import at.easydiet.businesslogic.PatientDetailViewController;
 import at.easydiet.businessobjects.DietTreatmentBO;
 import at.easydiet.businessobjects.DietTreatmentSystemUserBO;
 import at.easydiet.businessobjects.PatientStateBO;
 import at.easydiet.businessobjects.SystemUserBO;
 import at.easydiet.businessobjects.SystemUserFunctionBO;
-import at.easydiet.domainlogic.DietPlanEditingController;
-import at.easydiet.domainlogic.DietTreatmentEditingController;
 import at.easydiet.domainlogic.SystemUserController;
 
 public abstract class DietTreatmentManagementView extends EasyDietContentView

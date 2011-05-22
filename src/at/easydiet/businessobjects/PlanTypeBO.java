@@ -1,6 +1,5 @@
 package at.easydiet.businessobjects;
 
-
 import at.easydiet.model.PlanType;
 
 /**
@@ -32,6 +31,15 @@ public enum PlanTypeBO
  	public PlanType getModel()
 	{
 		return _model;
+	}
+	
+	/**
+	 * Gets the name of this enum value.
+	 * @return the name of this enum value
+	 */
+	public String getName()
+	{
+		return _model.getName();
 	}
 	
 	/**

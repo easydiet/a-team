@@ -136,10 +136,10 @@ public class ParameterDefinitionUnitBO
         if (obj == null) return false;
         if (!(obj instanceof ParameterDefinitionUnitBO)) return false;
         ParameterDefinitionUnitBO other = (ParameterDefinitionUnitBO) obj;
-        if(_model == null && other._model != null) return false;
-        if(_model == null || other._model == null) return false;
-        if (_model.getParameterDefinitionUnitId() != other._model.getParameterDefinitionUnitId()) return false;
+        if (_model == null && other._model != null) return false;
+        if (_model == null || other._model == null) return false;
+        if (_model.getParameterDefinitionUnitId() != other._model
+                .getParameterDefinitionUnitId()) return false;
         return true;
     }
-
 }

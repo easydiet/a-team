@@ -13,7 +13,7 @@ public class MealLine  implements java.io.Serializable
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = -2308968084611486091L;
+    private static final long serialVersionUID = -3882346675463850701L;
     private long _mealLineId;
     private float _quantity;
     private Clob _info;
@@ -36,15 +36,13 @@ public class MealLine  implements java.io.Serializable
      * @param quantity the quantity to set for this instance
      * @param recipe the recipe to set for this instance
      * @param unit the unit to set for this instance
-     * @param parent the parent to set for this instance
      * @param meal the meal to set for this instance
      */
-    public MealLine(float quantity, Recipe recipe, ParameterDefinitionUnit unit, MealLine parent, Meal meal) 
+    public MealLine(float quantity, Recipe recipe, ParameterDefinitionUnit unit, Meal meal) 
     {
         _quantity = quantity;
         _recipe = recipe;
         _unit = unit;
-        _parent = parent;
         _meal = meal;
     }
 
@@ -68,7 +66,7 @@ public class MealLine  implements java.io.Serializable
        _parent = parent;
        _meal = meal;
     }
-    
+   
     /**       
      * Gets the mealLineId of this instance. 
      * @return the mealLineId currently set for this instance.

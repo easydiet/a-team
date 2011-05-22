@@ -20,7 +20,7 @@ public class MealBO implements IDietParameterizable
      */
 	public MealBO()
 	{
-		this(new Meal("", "", null));
+        this(new Meal("", "", null));
 	}
 	
     /**
@@ -121,18 +121,18 @@ public class MealBO implements IDietParameterizable
         _model.setTimeSpan(timeSpan.getModel());
     }
 
-	private List<DietParameterTemplateBO> _dietParameters;
+	private List<DietParameterBO> _dietParameters;
 	
     /**
      * Gets a list of referenced DietParameters of this instance.
      * This list is cached, use {@link Meal#updateDietParametersCache()) to update this cache.
      * @return a cached list of referenced DietParameters wrapped into the correct businessobject. 
      */
-    public List<DietParameterTemplateBO> getDietParameters()
+    public List<DietParameterBO> getDietParameters()
     {
         if(_dietParameters == null) 
         {
-            _dietParameters = new ArrayList<DietParameterTemplateBO>();
+            _dietParameters = new ArrayList<DietParameterBO>();
             for(DietParameter dietParameters : _model.getDietParameters())
             {
                 _dietParameters.add(new DietParameterBO(dietParameters));
@@ -146,10 +146,10 @@ public class MealBO implements IDietParameterizable
      * The cache will updated
      * @param dietParameters the DietParameter to add. 
      */
-    public void addDietParameters(DietParameterTemplateBO dietParameters)
+    public void addDietParameters(DietParameterBO dietParameters)
     {
         getDietParameters().add(dietParameters);
-        _model.getDietParameters().add((DietParameter) dietParameters.getModel());
+        _model.getDietParameters().add(dietParameters.getModel());
     }
     
         
@@ -158,7 +158,7 @@ public class MealBO implements IDietParameterizable
      * The cache will updated
      * @param dietParameters the timespan to add. 
      */
-    public void removeDietParameters(DietParameterTemplateBO dietParameters)
+    public void removeDietParameters(DietParameterBO dietParameters)
     {
         getDietParameters().remove(dietParameters);
         _model.getDietParameters().remove(dietParameters.getModel());
@@ -205,7 +205,6 @@ public class MealBO implements IDietParameterizable
         _model.getMealLines().add(mealLines.getModel());
     }
     
-
     /**
      * Adds a new MealLine to the list of referenced mealLines at the specified index.
      * The cache will updated
@@ -215,8 +214,7 @@ public class MealBO implements IDietParameterizable
     {
         getMealLines().insert(alternative, index);
         _model.getMealLines().add(index, alternative.getModel());
-    }
-    
+    }    
         
     /**
      * Removes the given MealLine from the list of referenced mealLines.
@@ -238,11 +236,27 @@ public class MealBO implements IDietParameterizable
         getMealLines();
     }
 
+    @Override
     public String getDisplayText()
     {
         return String.format("%s - %s", getCode(), getName());
     }
     
+
+    @Override
+    public void addDietParameters(DietParameterTemplateBO parameter)
+    {
+        if(!(parameter instanceof DietParameterBO)) return;
+        addDietParameters((DietParameterBO) parameter);
+    }
+
+    @Override
+    public void removeDietParameters(DietParameterTemplateBO parameter)
+    {
+        if(!(parameter instanceof DietParameterBO)) return;
+        removeDietParameters((DietParameterBO) parameter);
+    }
+
     /**
      * @see java.lang.Object#hashCode()
      */

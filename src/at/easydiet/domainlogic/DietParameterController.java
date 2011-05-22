@@ -14,6 +14,7 @@ import at.easydiet.businessobjects.MealLineBO;
 import at.easydiet.businessobjects.NutrimentParameterBO;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
+import at.easydiet.businessobjects.RecipeBO;
 import at.easydiet.businessobjects.TimeSpanBO;
 
 public class DietParameterController
@@ -57,6 +58,32 @@ public class DietParameterController
     }
     
 
+    public List<ValidationResult> validateRecipeDietParameters(
+            RecipeBO currentRecipe)
+    {
+        List<ValidationResult> violations = new ArrayList<ValidationResult>();
+
+        for (DietParameterTemplateBO dietParameter : currentRecipe.getDietParameters())
+        {
+            // get actual recipe value for this check parameter
+            NutrimentParameterBO nutrimentParameter = currentRecipe.getNutrimentParameter(dietParameter.getParameterDefinition());
+            
+            if(nutrimentParameter == null) continue;
+            // check if the summed value violates the dietParameter
+            CheckOperatorBO violation = dietParameter.getCheckOperator().isValid(dietParameter.getFloatValue(), nutrimentParameter.getFloatValue()); 
+            
+            // if so -> add violation
+            if(violation != null)
+            {
+                // if not add a violation
+                violations.add(new ValidationResult(currentRecipe, violation, dietParameter, nutrimentParameter.getFloatValue()));
+            }
+        }
+        
+        return violations;
+    }
+    
+
     private static class ValidationSumValue
     {
         private float                     _sum;
@@ -84,6 +111,7 @@ public class DietParameterController
          * Gets the unit.
          * @return the unit
          */
+        @SuppressWarnings("unused")
         public ParameterDefinitionUnitBO getUnit()
         {
             return _unit;
@@ -308,7 +336,7 @@ public class DietParameterController
 
     private void addDietParametersToList(
             Map<ParameterDefinitionBO, DietParameterTemplateBO> toFill,
-            List<DietParameterTemplateBO> dietParameters)
+            List<? extends DietParameterTemplateBO> dietParameters)
     {
         for (DietParameterTemplateBO param : dietParameters)
         {
@@ -383,4 +411,5 @@ public class DietParameterController
             _currentValue = currentValue;
         }
     }
+
 }
