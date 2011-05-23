@@ -6,13 +6,17 @@ import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.TableView.RowEditor;
 import org.apache.pivot.wtk.content.TableViewRowEditor;
 
+/**
+ * This editor is used to edit tableviews. Mainly used for the adapter
+ */
 public class EasyTableViewRowEditor extends TableViewRowEditor
 {
     /**
      * Logger for debugging purposes
      */
+    @SuppressWarnings("unused")
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(EasyTableViewRowEditor.class);
+                                                             .getLogger(EasyTableViewRowEditor.class);
 
     /**
      * Row editor listener list.
@@ -96,7 +100,6 @@ public class EasyTableViewRowEditor extends TableViewRowEditor
                     int rowIndex, int columnIndex)
             {}
 
-         
             public void changesSaved(RowEditor rowEditor, TableView tableView,
                     int rowIndex, int columnIndex)
             {}
@@ -109,13 +112,17 @@ public class EasyTableViewRowEditor extends TableViewRowEditor
         /**
          * Called to preview a row edit.
          * 
-         * @param rowEditor The row editor
+         * @param rowEditor
+         *            The row editor
          * 
-         * @param tableView The table view containing the row to be edited.
+         * @param tableView
+         *            The table view containing the row to be edited.
          * 
-         * @param rowIndex The index of the row to edit.
+         * @param rowIndex
+         *            The index of the row to edit.
          * 
-         * @param columnIndex The index of the column to edit.
+         * @param columnIndex
+         *            The index of the column to edit.
          * 
          * @return A vote on whether editing should be allowed to begin.
          */
@@ -125,22 +132,28 @@ public class EasyTableViewRowEditor extends TableViewRowEditor
         /**
          * Called when a row edit was vetoed by a listener in the preview event.
          * 
-         * @param rowEditor The row editor
+         * @param rowEditor
+         *            The row editor
          * 
-         * @param reason The reason for the veto
+         * @param reason
+         *            The reason for the veto
          */
         public void editRowVetoed(RowEditor rowEditor, Vote reason);
 
         /**
          * Called when editing has begun.
          * 
-         * @param rowEditor The row editor
+         * @param rowEditor
+         *            The row editor
          * 
-         * @param tableView The table view containing the row being edited.
+         * @param tableView
+         *            The table view containing the row being edited.
          * 
-         * @param rowIndex The index of the row being edited.
+         * @param rowIndex
+         *            The index of the row being edited.
          * 
-         * @param columnIndex The index of the column being edited.
+         * @param columnIndex
+         *            The index of the column being edited.
          */
         public void rowEditing(RowEditor rowEditor, TableView tableView,
                 int rowIndex, int columnIndex);
@@ -148,13 +161,17 @@ public class EasyTableViewRowEditor extends TableViewRowEditor
         /**
          * Called when changes have been saved.
          * 
-         * @param rowEditor The row editor
+         * @param rowEditor
+         *            The row editor
          * 
-         * @param tableView The table view containing the row that was edited.
+         * @param tableView
+         *            The table view containing the row that was edited.
          * 
-         * @param rowIndex The index of the row that was edited.
+         * @param rowIndex
+         *            The index of the row that was edited.
          * 
-         * @param columnIndex The index of the column that was edited.
+         * @param columnIndex
+         *            The index of the column that was edited.
          */
         public void changesSaved(RowEditor rowEditor, TableView tableView,
                 int rowIndex, int columnIndex);
@@ -162,26 +179,41 @@ public class EasyTableViewRowEditor extends TableViewRowEditor
         /**
          * Called when an edit has been cancelled.
          * 
-         * @param rowEditor The row editor
+         * @param rowEditor
+         *            The row editor
          * 
-         * @param tableView The table view containing the row that was being
-         *            edited.
+         * @param tableView
+         *            The table view containing the row that was being edited.
          * 
-         * @param rowIndex The index of the row that was being edited.
+         * @param rowIndex
+         *            The index of the row that was being edited.
          * 
-         * @param columnIndex The index of the column that was being edited.
+         * @param columnIndex
+         *            The index of the column that was being edited.
          */
         public void editCancelled(RowEditor rowEditor, TableView tableView,
                 int rowIndex, int columnIndex);
     }
 
+    /**
+     * Stores al the {@link RowEditorListener}s
+     */
     private RowEditorListenerList _rowEditorListeners = new RowEditorListenerList();
 
+    /**
+     * Gets the list of all {@link RowEditorListener}s
+     * 
+     * @return List of all {@link RowEditorListener}s of this Instance
+     */
     public RowEditorListenerList getRowEditorListeners()
     {
         return _rowEditorListeners;
     }
 
+    /**
+     * @see org.apache.pivot.wtk.content.TableViewRowEditor#beginEdit(org.apache.pivot.wtk.TableView,
+     *      int, int)
+     */
     @Override
     public void beginEdit(TableView tableView, int rowIndex, int columnIndex)
     {
@@ -189,7 +221,8 @@ public class EasyTableViewRowEditor extends TableViewRowEditor
                 rowIndex, columnIndex);
         if (vote == Vote.APPROVE)
         {
-            _rowEditorListeners.rowEditing(this, tableView, rowIndex, columnIndex);
+            _rowEditorListeners.rowEditing(this, tableView, rowIndex,
+                    columnIndex);
             super.beginEdit(tableView, rowIndex, columnIndex);
         }
         else
@@ -197,19 +230,24 @@ public class EasyTableViewRowEditor extends TableViewRowEditor
             _rowEditorListeners.editRowVetoed(this, vote);
         }
     }
-    
+
+    /**
+     * @see org.apache.pivot.wtk.content.TableViewRowEditor#endEdit(boolean)
+     */
     @Override
     public void endEdit(boolean result)
     {
         super.endEdit(result);
 
-        if(result)
+        if (result)
         {
-            _rowEditorListeners.changesSaved(this, getTableView(), getRowIndex(), 0);
+            _rowEditorListeners.changesSaved(this, getTableView(),
+                    getRowIndex(), 0);
         }
         else
         {
-            _rowEditorListeners.editCancelled(this, getTableView(), getRowIndex(), 0);
+            _rowEditorListeners.editCancelled(this, getTableView(),
+                    getRowIndex(), 0);
         }
     }
 

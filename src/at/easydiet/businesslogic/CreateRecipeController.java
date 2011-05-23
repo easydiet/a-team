@@ -4,6 +4,7 @@ import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.List;
 import org.hibernate.HibernateException;
 
+import at.easydiet.businessobjects.NutrimentParameterBO;
 import at.easydiet.businessobjects.RecipeBO;
 import at.easydiet.businessobjects.RecipeIngredientBO;
 import at.easydiet.dao.DAOFactory;
@@ -14,13 +15,28 @@ import at.easydiet.domainlogic.ParameterDefinitionUnitController;
 import at.easydiet.domainlogic.DietParameterController.ValidationResult;
 import at.easydiet.util.StringUtils;
 
+/**
+ * Provides data and actions for the {@link CreateRecipeController}.
+ */
 public class CreateRecipeController
 {
+    /**
+     * Logger for debugging purposes
+     */
     public static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
                                                             .getLogger(CreateRecipeController.class);
 
+    /**
+     * This is a unique instance, it is stored as this singleton
+     */
     private static CreateRecipeController       _singleton;
 
+    /**
+     * Returns a globally unique instance of this class.
+     * 
+     * @return a globally unique instance which gets initiated on the first
+     *         call.
+     */
     public static CreateRecipeController getInstance()
     {
         if (_singleton == null)
@@ -31,28 +47,46 @@ public class CreateRecipeController
     }
 
     /**
-     * Constructor
+     * Initializes a new instance of the {@link CreateRecipeController} class.
      */
     private CreateRecipeController()
     {
         _errors = new ArrayList<String>();
     }
 
-    // the recipe, which will be created and edited by this instance of the
-    // controller
+    /**
+     * Stores the current opened {@link RecipeBO}
+     */
     private RecipeBO     _currentRecipe;
+    /**
+     * Stores a list of error messages
+     */
     private List<String> _errors;
 
+    /**
+     * Gets the {@link RecipeBO}
+     * 
+     * @return The current opened {@link RecipeBO}
+     */
     public RecipeBO getRecipe()
     {
         return _currentRecipe;
     }
 
+    /**
+     * Sets the {@link RecipeBO}
+     * 
+     * @param recipe
+     *            The new {@link RecipeBO}
+     */
     public void setRecipe(RecipeBO recipe)
     {
         _currentRecipe = recipe;
     }
 
+    /**
+     * Create a new {@link RecipeBO}
+     */
     public void createNew()
     {
         _currentRecipe = new RecipeBO();
@@ -60,6 +94,13 @@ public class CreateRecipeController
                 .getDefault());
     }
 
+    /**
+     * Add an ingredient to a {@link RecipeBO}
+     * 
+     * @param ingredient
+     *            The recipe to add
+     * @return The {@link RecipeIngredientBO}
+     */
     public RecipeIngredientBO addRecipeIngredient(RecipeBO ingredient)
     {
         RecipeIngredientBO bo = new RecipeIngredientBO();
@@ -70,16 +111,25 @@ public class CreateRecipeController
         return bo;
     }
 
+    /**
+     * Remoce a {@link RecipeIngredientBO} from the {@link RecipeBO}
+     * 
+     * @param recipeIngredientBO
+     *            The {@link RecipeIngredientBO} to remove
+     */
     public void removeRecipeIngredient(RecipeIngredientBO recipeIngredientBO)
     {
         _currentRecipe.removeIngredients(recipeIngredientBO);
     }
 
+    /**
+     * Checks if the {@link RecipeBO} data is correct
+     */
     public void checkRecipe()
     {
         _errors.clear();
 
-        CreateRecipeController.getInstance().recalculateNutrimentParameters();
+        recalculateNutrimentParameters();
 
         if (StringUtils.isNullOrWhitespaceOnly(_currentRecipe.getName()))
         {
@@ -94,6 +144,9 @@ public class CreateRecipeController
         validateNutrimentParameters();
     }
 
+    /**
+     * Validate the {@link NutrimentParameterBO}s of the {@link RecipeBO}
+     */
     private void validateNutrimentParameters()
     {
         List<ValidationResult> violations = DietParameterController
@@ -120,11 +173,21 @@ public class CreateRecipeController
         }
     }
 
+    /**
+     * Gets the list of error messages
+     * 
+     * @return List of error messages
+     */
     public List<String> getErrors()
     {
         return _errors;
     }
 
+    /**
+     * Save the {@link RecipeBO}
+     * 
+     * @return True if save was successful
+     */
     public boolean saveRecipe()
     {
         checkRecipe();
@@ -136,7 +199,7 @@ public class CreateRecipeController
                 "%s%nZubereitungszeit: %s Stunden",
                 _currentRecipe.getCookInstructions(),
                 _currentRecipe.getCookingTime()));
-        _currentRecipe.setBlsCode("Z100000");        
+        _currentRecipe.setBlsCode("Z100000");
 
         try
         {
@@ -155,6 +218,9 @@ public class CreateRecipeController
         }
     }
 
+    /**
+     * Recalculate the {@link NutrimentParameterBO}s
+     */
     public void recalculateNutrimentParameters()
     {
         _currentRecipe.calcParameters();

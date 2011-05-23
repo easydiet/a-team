@@ -14,18 +14,34 @@ import at.easydiet.businesslogic.ParametersetEditingController;
 import at.easydiet.businessobjects.DietParameterSetBO;
 import at.easydiet.businessobjects.DietParameterTemplateBO;
 
+/**
+ * Background class for the CreateParametersetView.bxml Provides data and
+ * methods for the GUI.
+ */
 public class CreateParametersetView extends EasyDietContentView implements
         Bindable
 {
     /**
      * Logger for debugging purposes
      */
+    @SuppressWarnings("unused")
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(CreateParametersetView.class);
+                                                             .getLogger(CreateParametersetView.class);
 
-    protected ParameterTableViewTemplate        _parameterTableViewTemplate;
-    private ListView                            _errorBox;
-    private Border                              _errorBorder;
+    /**
+     * Stores the parameter table view from the GUI
+     */
+    protected ParameterTableViewTemplate         _parameterTableViewTemplate;
+
+    /**
+     * Stores the error view from the GUI
+     */
+    private ListView                             _errorBox;
+
+    /**
+     * This is the border of the error box
+     */
+    private Border                               _errorBorder;
 
     /**
      * @see at.easydiet.view.EasyDietContentView#onLoad()
@@ -42,8 +58,9 @@ public class CreateParametersetView extends EasyDietContentView implements
 
     /**
      * Sets the parameterset for all ui elements.
-     *
-     * @param parameterset the new parameterset
+     * 
+     * @param parameterset
+     *            the new parameterset
      */
     private void setParameterSet(DietParameterSetBO parameterset)
     {

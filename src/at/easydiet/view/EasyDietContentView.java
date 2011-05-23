@@ -21,26 +21,40 @@ import org.apache.pivot.wtk.content.ButtonData;
 import org.apache.pivot.wtk.content.ButtonDataRenderer;
 import org.apache.pivot.wtk.media.Image;
 
+/**
+ * Defines the look and feel of the EasyDiet application window content
+ */
 public class EasyDietContentView extends BoxPane
 {
     /**
      * Logger for debugging purposes
      */
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(EasyDietContentView.class);
+                                                             .getLogger(EasyDietContentView.class);
 
     /**
-     * defines the button in the navigation bar
-     * @author Mathias
-     * 
+     * Defines the button in the navigation bar
      */
     public static class NavigationButton extends StackPane
     {
+        /**
+         * Stores the content view of the GUI
+         */
         private EasyDietContentView easyDietContentView;
+
+        /**
+         * Stores the text to which view this button leads
+         */
         private String              view;
 
+        /**
+         * Stores the button of the GUI
+         */
         private SimpleButton        _button;
 
+        /**
+         * Initializes a new instance of the {@link NavigationButton} class.
+         */
         public NavigationButton()
         {
             // Background image
@@ -83,46 +97,94 @@ public class EasyDietContentView extends BoxPane
             add(_button);
         }
 
+        /**
+         * 
+         */
         public void refresh()
         {
 
         }
 
+        /**
+         * Gets the text of this button
+         * 
+         * @return The text of this button
+         */
         public String getText()
         {
             return ((ButtonData) _button.getButtonData()).getText();
         }
 
+        /**
+         * Sets the text of this button
+         * 
+         * @param text
+         *            The new text
+         */
         public void setText(String text)
         {
             ((ButtonData) _button.getButtonData()).setText(text);
         }
 
+        /**
+         * Gets the icon of this button
+         * 
+         * @return The icon of this button
+         */
         public Image getIcon()
         {
             return ((ButtonData) _button.getButtonData()).getIcon();
         }
 
+        /**
+         * Sets the icon of this button
+         * 
+         * @param icon
+         *            The new icon
+         */
         public void setIcon(Image icon)
         {
             ((ButtonData) _button.getButtonData()).setIcon(icon);
         }
 
+        /**
+         * Sets the icon of this button
+         * 
+         * @param icon
+         *            The path to the new icon
+         */
         public void setIcon(String icon)
         {
             ((ButtonData) _button.getButtonData()).setIcon(icon);
         }
 
+        /**
+         * Sets the icon of this button
+         * 
+         * @param icon
+         *            The {@link URL} to the new icon
+         */
         public void setIcon(URL icon)
         {
             ((ButtonData) _button.getButtonData()).setIcon(icon);
         }
 
+        /**
+         * Sets the view of this button
+         * 
+         * @param value
+         *            The name of the view
+         */
         public void setView(String value)
         {
             this.view = value;
         }
 
+        /**
+         * Gets the view of this button
+         * 
+         * @return The name of the view
+         */
         public String getView()
         {
             return this.view;
@@ -130,14 +192,18 @@ public class EasyDietContentView extends BoxPane
     }
 
     /**
-     * deifnes the button in the toolbar
-     * @author Mathias
-     * 
+     * Defines the button in the toolbar
      */
     public static class ToolbarButton extends SimpleButton
     {
+        /**
+         * Stores the content view of the GUI
+         */
         private EasyDietContentView easyDietContentView;
 
+        /**
+         * Initializes a new instance of the {@link ToolbarButton} class.
+         */
         public ToolbarButton()
         {
             // buttonrenderer to render the button vertically
@@ -166,20 +232,44 @@ public class EasyDietContentView extends BoxPane
         }
     }
 
+    /**
+     * Stores the {@link NavigationButton}s
+     */
     private ArrayList<NavigationButton>     navigationButtons;
+    /**
+     * Stores the {@link ToolbarButton}s
+     */
     private ArrayList<ToolbarButton>        toolbarButtons;
+    /**
+     * Stores the {@link NavigationButtonSequence}
+     */
     private NavigationButtonSequence        navigationButtonSequence     = new NavigationButtonSequence();
+    /**
+     * Stores the {@link ToolbarButtonSequence}
+     */
     private ToolbarButtonSequence           toolbarButtonSequence        = new ToolbarButtonSequence();
 
+    /**
+     * Stores the {@link EasyDietContentViewListener}s
+     */
     private EasyDietContentViewListenerList easyDietContentViewListeners = new EasyDietContentViewListenerList();
 
+    /**
+     * Stores all {@link NavigationButton}s
+     */
     public final class NavigationButtonSequence implements
             Sequence<NavigationButton>, Iterable<NavigationButton>
     {
-
+        /**
+         * Initializes a new instance of the {@link NavigationButtonSequence}
+         * class.
+         */
         private NavigationButtonSequence()
         {}
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#add(java.lang.Object)
+         */
         public int add(NavigationButton navigationButton)
         {
             int index = getLength();
@@ -188,6 +278,10 @@ public class EasyDietContentView extends BoxPane
             return index;
         }
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#insert(java.lang.Object,
+         *      int)
+         */
         public void insert(NavigationButton navigationButton, int index)
         {
             if (navigationButton == null)
@@ -209,12 +303,19 @@ public class EasyDietContentView extends BoxPane
                     EasyDietContentView.this, index);
         }
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#update(int,
+         *      java.lang.Object)
+         */
         public NavigationButton update(int index,
                 NavigationButton navigationButton)
         {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#remove(java.lang.Object)
+         */
         public int remove(NavigationButton navigationButton)
         {
             int index = indexOf(navigationButton);
@@ -226,6 +327,9 @@ public class EasyDietContentView extends BoxPane
             return index;
         }
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#remove(int, int)
+         */
         public Sequence<NavigationButton> remove(int index, int count)
         {
             Sequence<NavigationButton> removed = navigationButtons.remove(
@@ -246,21 +350,33 @@ public class EasyDietContentView extends BoxPane
             return removed;
         }
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#get(int)
+         */
         public NavigationButton get(int index)
         {
             return navigationButtons.get(index);
         }
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#indexOf(java.lang.Object)
+         */
         public int indexOf(NavigationButton navigationButton)
         {
             return navigationButtons.indexOf(navigationButton);
         }
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#getLength()
+         */
         public int getLength()
         {
             return navigationButtons.getLength();
         }
 
+        /**
+         * @see java.lang.Iterable#iterator()
+         */
         public Iterator<NavigationButton> iterator()
         {
             return new ImmutableIterator<NavigationButton>(
@@ -268,13 +384,23 @@ public class EasyDietContentView extends BoxPane
         }
     }
 
+    /**
+     * Stores all {@link ToolbarButton}s
+     */
     public final class ToolbarButtonSequence implements
             Sequence<ToolbarButton>, Iterable<ToolbarButton>
     {
 
+        /**
+         * Initializes a new instance of the {@link ToolbarButtonSequence}
+         * class.
+         */
         private ToolbarButtonSequence()
         {}
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#add(java.lang.Object)
+         */
         public int add(ToolbarButton toolbarButton)
         {
             int index = getLength();
@@ -283,6 +409,10 @@ public class EasyDietContentView extends BoxPane
             return index;
         }
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#insert(java.lang.Object,
+         *      int)
+         */
         public void insert(ToolbarButton toolbarButton, int index)
         {
             if (toolbarButton == null)
@@ -304,11 +434,18 @@ public class EasyDietContentView extends BoxPane
                     EasyDietContentView.this, index);
         }
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#update(int,
+         *      java.lang.Object)
+         */
         public ToolbarButton update(int index, ToolbarButton toolbarButton)
         {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#remove(java.lang.Object)
+         */
         public int remove(ToolbarButton toolbarButton)
         {
             int index = indexOf(toolbarButton);
@@ -320,6 +457,9 @@ public class EasyDietContentView extends BoxPane
             return index;
         }
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#remove(int, int)
+         */
         public Sequence<ToolbarButton> remove(int index, int count)
         {
             Sequence<ToolbarButton> removed = toolbarButtons.remove(index,
@@ -340,21 +480,33 @@ public class EasyDietContentView extends BoxPane
             return removed;
         }
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#get(int)
+         */
         public ToolbarButton get(int index)
         {
             return toolbarButtons.get(index);
         }
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#indexOf(java.lang.Object)
+         */
         public int indexOf(ToolbarButton toolbarButton)
         {
             return toolbarButtons.indexOf(toolbarButton);
         }
 
+        /**
+         * @see org.apache.pivot.collections.Sequence#getLength()
+         */
         public int getLength()
         {
             return toolbarButtons.getLength();
         }
 
+        /**
+         * @see java.lang.Iterable#iterator()
+         */
         public Iterator<ToolbarButton> iterator()
         {
             return new ImmutableIterator<ToolbarButton>(
@@ -362,9 +514,20 @@ public class EasyDietContentView extends BoxPane
         }
     }
 
+    /**
+     * Stores all {@link EasyDietContentViewListener}s
+     */
     private final class EasyDietContentViewListenerList extends
             ListenerList<EasyDietContentViewListener>
     {
+        /**
+         * If a new {@link NavigationButton} is inserted, notify all listeners
+         * 
+         * @param contentView
+         *            The {@link EasyDietContentView}
+         * @param index
+         *            The index of the new {@link NavigationButton}
+         */
         public void navigationButtonInserted(EasyDietContentView contentView,
                 int index)
         {
@@ -374,6 +537,16 @@ public class EasyDietContentView extends BoxPane
             }
         }
 
+        /**
+         * If a {@link NavigationButton} is removed, notify all listeners
+         * 
+         * @param contentView
+         *            The view
+         * @param index
+         *            The index of the deleted {@link NavigationButton}
+         * @param navigationButtons
+         *            Sequence of {@link NavigationButton}s
+         */
         public void navigationButtonsRemoved(EasyDietContentView contentView,
                 int index, Sequence<NavigationButton> navigationButtons)
         {
@@ -384,6 +557,14 @@ public class EasyDietContentView extends BoxPane
             }
         }
 
+        /**
+         * If a new {@link ToolbarButton} is inserted, notify all listeners
+         * 
+         * @param contentView
+         *            The {@link EasyDietContentView}
+         * @param index
+         *            The index of the new {@link ToolbarButton}
+         */
         public void toolbarButtonInserted(EasyDietContentView contentView,
                 int index)
         {
@@ -393,6 +574,16 @@ public class EasyDietContentView extends BoxPane
             }
         }
 
+        /**
+         * If a {@link ToolbarButton} is removed, notify all listeners
+         * 
+         * @param contentView
+         *            The view
+         * @param index
+         *            The index of the deleted {@link ToolbarButton}
+         * @param toolbarButtons
+         *            Sequence of {@link ToolbarButton}s
+         */
         public void toolbarButtonsRemoved(EasyDietContentView contentView,
                 int index, Sequence<ToolbarButton> toolbarButtons)
         {
@@ -404,11 +595,22 @@ public class EasyDietContentView extends BoxPane
         }
     }
 
+    /**
+     * Initializes a new instance of the {@link EasyDietContentView} class.
+     */
     public EasyDietContentView()
     {
         this(new ArrayList<NavigationButton>(), new ArrayList<ToolbarButton>());
     }
 
+    /**
+     * Initializes a new instance of the {@link EasyDietContentView} class.
+     * 
+     * @param navigationButtons
+     *            Sequence of {@link NavigationButton}s
+     * @param toolbarButtons
+     *            Sequence of {@link ToolbarButton}s
+     */
     public EasyDietContentView(Sequence<NavigationButton> navigationButtons,
             Sequence<ToolbarButton> toolbarButtons)
     {
@@ -429,12 +631,22 @@ public class EasyDietContentView extends BoxPane
         this.getStyles().put("padding", 10);
     }
 
+    /**
+     * Gets the {@link NavigationButtonSequence}
+     * 
+     * @return The {@link NavigationButtonSequence}
+     */
     public NavigationButtonSequence getNavigationButtons()
     {
         return navigationButtonSequence;
 
     }
 
+    /**
+     * Gets the {@link ToolbarButtonSequence}
+     * 
+     * @return The {@link ToolbarButtonSequence}
+     */
     public ToolbarButtonSequence getToolbarButtons()
     {
         return toolbarButtonSequence;
@@ -450,6 +662,7 @@ public class EasyDietContentView extends BoxPane
 
     /**
      * What to do when the view is closing
+     * 
      * @return true if it's allowed to close
      */
     public boolean onClose()

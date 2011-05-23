@@ -4,21 +4,33 @@ import org.apache.pivot.beans.Bindable;
 
 import at.easydiet.businesslogic.DietPlanEditingController;
 
+/**
+ * This is the background class for the EditDietPlanView.bxml
+ */
 public class EditDietPlanView extends DietPlanManagementView implements
-		Bindable {
+        Bindable
+{
 
-	private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-			.getLogger(EditDietPlanView.class);
+    /**
+     * Logger for debugging purposes
+     */
+    @SuppressWarnings("unused")
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+                                                             .getLogger(EditDietPlanView.class);
 
-	@Override
-	public void onLoad() {
-		DietPlanEditingController.getInstance().refresh();
+    /**
+     * @see at.easydiet.view.DietPlanManagementView#onLoad()
+     */
+    @Override
+    public void onLoad()
+    {
+        DietPlanEditingController.getInstance().refresh();
 
-		rebuildUI();
+        rebuildUI();
 
-		_parameterTableViewTemplate
-				.setParameterProvider(DietPlanEditingController.getInstance()
-						.getDietPlan());
-	}
+        _parameterTableViewTemplate
+                .setParameterProvider(DietPlanEditingController.getInstance()
+                        .getDietPlan());
+    }
 
 }

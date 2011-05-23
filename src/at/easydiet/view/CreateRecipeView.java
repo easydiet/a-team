@@ -22,17 +22,39 @@ import at.easydiet.businessobjects.RecipeBO;
 import at.easydiet.businessobjects.RecipeIngredientBO;
 import at.easydiet.domainlogic.RecipeSearchController;
 
+/**
+ * This is the background class for the CreateRecipeView.bxml
+ */
 public class CreateRecipeView extends EasyDietContentView implements Bindable
 {
+    /**
+     * Logger for debugging purposes
+     */
     public static final org.apache.log4j.Logger LOG       = org.apache.log4j.Logger
                                                                   .getLogger(CreateRecipeView.class);
 
+    /**
+     * Stores the {@link RecipeSearchController}
+     */
     private RecipeSearchController              _searcher = new RecipeSearchController();
 
+    /**
+     * Stores the {@link TableView} that shows the parameters of the recipe
+     */
     private ParameterTableViewTemplate          _parameterTableView;
+
+    /**
+     * Stores the {@link TableView} that shows the recipe search results
+     */
     private TableView                           _recipeSearchResult;
+    /**
+     * Stores the {@link TableView} that shows the chosen recipes
+     */
     private TableView                           _chosenRecipeTableView;
 
+    /**
+     * @see at.easydiet.view.EasyDietContentView#onLoad()
+     */
     @Override
     public void onLoad()
     {
@@ -40,6 +62,12 @@ public class CreateRecipeView extends EasyDietContentView implements Bindable
         setRecipe(CreateRecipeController.getInstance().getRecipe());
     }
 
+    /**
+     * Sets the {@link RecipeBO} of this instance
+     * 
+     * @param recipe
+     *            The new {@link RecipeBO} to set
+     */
     private void setRecipe(RecipeBO recipe)
     {
         // fill gui with data
@@ -48,6 +76,10 @@ public class CreateRecipeView extends EasyDietContentView implements Bindable
         _chosenRecipeTableView.setTableData(recipe.getIngredients());
     }
 
+    /**
+     * @see org.apache.pivot.beans.Bindable#initialize(org.apache.pivot.collections.Map,
+     *      java.net.URL, org.apache.pivot.util.Resources)
+     */
     @Override
     public void initialize(Map<String, Object> map, URL location,
             Resources resources)
@@ -57,27 +89,28 @@ public class CreateRecipeView extends EasyDietContentView implements Bindable
         final ListView errorBox = (ListView) map.get("errorBox");
         errorBox.setListData(CreateRecipeController.getInstance().getErrors());
         CreateRecipeController.getInstance().getErrors().getListListeners()
-        .add(new ListListener.Adapter<String>() {
+                .add(new ListListener.Adapter<String>()
+                {
 
-            @Override
-            public void itemInserted(List<String> list, int arg1) {
-                errorBorder.setVisible(list
-                        .getLength() > 0);
-            }
+                    @Override
+                    public void itemInserted(List<String> list, int arg1)
+                    {
+                        errorBorder.setVisible(list.getLength() > 0);
+                    }
 
-            @Override
-            public void itemsRemoved(List<String> list, int arg1,
-                    Sequence<String> arg2) {
-                errorBorder.setVisible(list
-                        .getLength() > 0);
-            }
-            
-            @Override
-            public void listCleared(List<String> list)
-            {
-                errorBorder.setVisible(list.getLength() >0);
-            }
-        });
+                    @Override
+                    public void itemsRemoved(List<String> list, int arg1,
+                            Sequence<String> arg2)
+                    {
+                        errorBorder.setVisible(list.getLength() > 0);
+                    }
+
+                    @Override
+                    public void listCleared(List<String> list)
+                    {
+                        errorBorder.setVisible(list.getLength() > 0);
+                    }
+                });
         errorBorder.setVisible(false);
 
         // initialize tableview for managing dietparameters
@@ -106,19 +139,20 @@ public class CreateRecipeView extends EasyDietContentView implements Bindable
                 });
 
         // run validation on validate button
-        Button validate = (Button)map.get("validate");
+        Button validate = (Button) map.get("validate");
         validate.getButtonPressListeners().add(new ButtonPressListener()
         {
             @Override
             public void buttonPressed(Button button)
             {
-                CreateRecipeView.this.store(CreateRecipeController.getInstance().getRecipe());
+                CreateRecipeView.this.store(CreateRecipeController
+                        .getInstance().getRecipe());
                 CreateRecipeController.getInstance().checkRecipe();
             }
         });
-        
+
         // start save
-        Button save = (Button)map.get("save");
+        Button save = (Button) map.get("save");
         save.getButtonPressListeners().add(new ButtonPressListener()
         {
             @Override
@@ -127,30 +161,43 @@ public class CreateRecipeView extends EasyDietContentView implements Bindable
                 save();
             }
         });
-        
+
         addRecipeButtonListeners(map);
     }
-    
+
+    /**
+     * Save the new {@link RecipeBO}
+     */
     private void save()
     {
         store(CreateRecipeController.getInstance().getRecipe());
         boolean saved = CreateRecipeController.getInstance().saveRecipe();
-        if(saved)
+        if (saved)
         {
-            ViewController.getInstance().loadContent(
-                    "DashboardView", this);
+            ViewController.getInstance().loadContent("DashboardView", this);
         }
-        else if(CreateRecipeController.getInstance().getErrors().getLength() == 0)
+        else if (CreateRecipeController.getInstance().getErrors().getLength() == 0)
         {
-            EasyAlerts.error("Es ist ein Fehler beim Speichern des Rezeptes aufgetreten, bitte versuchen Sie es erneut!", EasyAlerts.OK_ONLY, EasyAlerts.OK, getWindow(), null);
+            EasyAlerts
+                    .error("Es ist ein Fehler beim Speichern des Rezeptes aufgetreten, bitte versuchen Sie es erneut!",
+                            EasyAlerts.OK_ONLY, EasyAlerts.OK, getWindow(),
+                            null);
         }
         else
         {
-            EasyAlerts.error("Es sind noch Fehler im Rezept vorhanden! Bitte korrigieren Sie diese!", EasyAlerts.OK_ONLY, EasyAlerts.OK, getWindow(), null);
+            EasyAlerts
+                    .error("Es sind noch Fehler im Rezept vorhanden! Bitte korrigieren Sie diese!",
+                            EasyAlerts.OK_ONLY, EasyAlerts.OK, getWindow(),
+                            null);
         }
     }
 
-
+    /**
+     * Add all button listeners
+     * 
+     * @param map
+     *            The pivot namespace
+     */
     private void addRecipeButtonListeners(Map<String, Object> map)
     {
         // add selected ingredients to recipe
@@ -178,19 +225,35 @@ public class CreateRecipeView extends EasyDietContentView implements Bindable
         });
     }
 
-    protected void addIngredientsToRecipe(Sequence<RecipeBO> selectedRows)
+    /**
+     * Add a sequence of {@link RecipeBO}s to the open {@link RecipeBO}
+     * 
+     * @param ingredients
+     *            The sequence of {@link RecipeBO}s to add
+     */
+    protected void addIngredientsToRecipe(Sequence<RecipeBO> ingredients)
     {
-        for (int i = 0; i < selectedRows.getLength(); i++)
+        for (int i = 0; i < ingredients.getLength(); i++)
         {
-            CreateRecipeController.getInstance().addRecipeIngredient(selectedRows.get(i));
+            CreateRecipeController.getInstance().addRecipeIngredient(
+                    ingredients.get(i));
         }
         CreateRecipeController.getInstance().checkRecipe();
     }
-    protected void removeIngredientsFromRecipe(Sequence<RecipeIngredientBO> selectedRows)
+
+    /**
+     * Remove a sequence of {@link RecipeBO}s from the open {@link RecipeBO}
+     * 
+     * @param ingredients
+     *            The sequence of {@link RecipeBO}s to remove
+     */
+    protected void removeIngredientsFromRecipe(
+            Sequence<RecipeIngredientBO> ingredients)
     {
-        for (int i = 0; i < selectedRows.getLength(); i++)
+        for (int i = 0; i < ingredients.getLength(); i++)
         {
-            CreateRecipeController.getInstance().removeRecipeIngredient(selectedRows.get(i));
+            CreateRecipeController.getInstance().removeRecipeIngredient(
+                    ingredients.get(i));
         }
         CreateRecipeController.getInstance().checkRecipe();
     }

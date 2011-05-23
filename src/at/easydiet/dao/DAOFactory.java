@@ -45,8 +45,6 @@ import at.easydiet.model.UserRight;
 
 /**
  * A Factory which provides instances for all DAOs.
- * 
- * @author Daniel
  */
 public class DAOFactory
 {
@@ -181,6 +179,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link FamilyStatus} Objects.
+     * 
      * @return a new {@link FamilyStatusDAO} instance.
      */
     public FamilyStatusDAO getFamilyStatusDAO()
@@ -200,6 +199,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link Illness} Objects.
+     * 
      * @return a new {@link IllnessDAO} instance.
      */
     public IllnessDAO getIllnessDAO()
@@ -209,6 +209,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link LaborParameter} Objects.
+     * 
      * @return a new {@link LaborParameterDAO} instance.
      */
     public LaborParameterDAO getLaborParameterDAO()
@@ -228,6 +229,7 @@ public class DAOFactory
 
     /**
      * Returns a new DAO for managing {@link LaborReportType} Objects.
+     * 
      * @return a new {@link LaborReportTypeDAO} instance.
      */
     public LaborReportTypeDAO getLaborReportTypeDAO()
@@ -469,18 +471,32 @@ public class DAOFactory
     {
         return HibernateUtil.currentSession();
     }
-    
+
+    /**
+     * Creates a new clob from the given data
+     * 
+     * @param data
+     *            The text value
+     * @return A new instance of class clob
+     */
     public Clob createClob(String data)
     {
         return getCurrentSession().getLobHelper().createClob(data);
     }
 
+    /**
+     * Converts a clob to a String
+     * 
+     * @param data
+     *            The clob to convert
+     * @return String value of the clob
+     */
     public String clobToString(Clob data)
     {
-        if(data == null) return "";
+        if (data == null) return "";
         try
         {
-            return data.getSubString(0, (int)data.length());
+            return data.getSubString(1, (int) data.length());
         }
         catch (SQLException e)
         {
