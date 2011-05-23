@@ -129,7 +129,7 @@ public class CreateRecipeController
     {
         _errors.clear();
 
-        CreateRecipeController.getInstance().recalculateNutrimentParameters();
+        recalculateNutrimentParameters();
 
         if (StringUtils.isNullOrWhitespaceOnly(_currentRecipe.getName()))
         {
