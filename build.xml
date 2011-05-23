@@ -20,7 +20,7 @@
                             from the Hibernate mapping files">
 		<easyhibernate hmb="src.resources/hibernate.cfg.xml" pojo="srcgen/pojo" bo="srcgen/bo" dao="srcgen/dao" ddl="db/schema.sql" />
 	</target>
- 
+
 	<!-- EasyDiet Main Build -->
 	<target name="easy-ui" depends="global-init">
 		<antcall target="rebuild-src" />
@@ -34,7 +34,13 @@
 	<target name="rebuild-src" depends="global-init">
 		<!-- Compile Sources -->
 		<echo message="compiling EasyDiet" />
-		<javac srcdir="${sources}" destdir="${binaries}" classpath="C:/Program Files/Java/jre6/lib/plugin.jar;${libraries}" />
+		<javac srcdir="${sources}" destdir="${binaries}">
+			<classpath>
+				<fileset dir="${libraries}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
 	</target>
 
 	<!-- Package an executable Jar -->
