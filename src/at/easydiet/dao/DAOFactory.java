@@ -496,7 +496,7 @@ public class DAOFactory
         if (data == null) return "";
         try
         {
-            return data.getSubString(0, (int) data.length());
+            return data.getSubString(1, (int) data.length());
         }
         catch (SQLException e)
         {
