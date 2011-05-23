@@ -18,6 +18,9 @@ import org.apache.pivot.wtk.media.Image;
 import at.easydiet.businessobjects.MealLineBO;
 import at.easydiet.view.EasyDietMainWindow;
 
+/**
+ * This is the renderer for meal lines
+ */
 public class MealLineCellRenderer extends BoxPane implements CellRenderer
 {
 
@@ -25,16 +28,20 @@ public class MealLineCellRenderer extends BoxPane implements CellRenderer
      * Logger for debugging purposes
      */
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(MealLineCellRenderer.class);
+                                                             .getLogger(MealLineCellRenderer.class);
 
-    private static final Image                  ARROW_IMAGE;
+    /**
+     * The image to show for a alternative
+     */
+    private static final Image                   ARROW_IMAGE;
 
     static
     {
         Image img = null;
         try
         {
-            img = Image.load(EasyDietMainWindow.class.getResource("alternative_arrow.png"));
+            img = Image.load(EasyDietMainWindow.class
+                    .getResource("alternative_arrow.png"));
         }
         catch (TaskExecutionException e)
         {
@@ -44,14 +51,31 @@ public class MealLineCellRenderer extends BoxPane implements CellRenderer
 
     }
 
-    private ImageView                           _arrowImage;
-    private Label                               _textLabel;
+    /**
+     * Stores the {@link ImageView} for the alternative picture
+     */
+    private ImageView                            _arrowImage;
+    /**
+     * Stores the {@link Label}
+     */
+    private Label                                _textLabel;
 
+    /**
+     * Is the arrow visible
+     * 
+     * @return True if it is
+     */
     public boolean isArrowVisible()
     {
         return _arrowImage != null;
     }
 
+    /**
+     * Sets the visibility of the alternative image
+     * 
+     * @param visible
+     *            The visibility
+     */
     public void setArrowVisible(boolean visible)
     {
         if (visible)
@@ -66,6 +90,9 @@ public class MealLineCellRenderer extends BoxPane implements CellRenderer
         rebuildUI();
     }
 
+    /**
+     * Reload the User Interface
+     */
     private void rebuildUI()
     {
         removeAll();
@@ -76,19 +103,26 @@ public class MealLineCellRenderer extends BoxPane implements CellRenderer
         add(_textLabel);
     }
 
+    /**
+     * Initializes a new instance of the {@link MealLineCellRenderer} class.
+     */
     public MealLineCellRenderer()
     {
         _textLabel = new Label();
         getStyles().put("fill", true);
         getStyles().put("spacing", 3);
         getStyles().put("verticalAlignment", VerticalAlignment.CENTER);
-        _textLabel.getStyles().put("verticalAlignment", VerticalAlignment.CENTER);
+        _textLabel.getStyles().put("verticalAlignment",
+                VerticalAlignment.CENTER);
         getStyles().put("padding", new Insets(2));
         rebuildUI();
         setPreferredHeight(24);
         _textLabel.setPreferredHeight(getPreferredHeight());
     }
 
+    /**
+     * @see org.apache.pivot.wtk.Component#setSize(int, int)
+     */
     @Override
     public void setSize(int width, int height)
     {
@@ -96,19 +130,24 @@ public class MealLineCellRenderer extends BoxPane implements CellRenderer
         validate();
     }
 
+    /**
+     * @see org.apache.pivot.wtk.TableView.CellRenderer#render(java.lang.Object,
+     *      int, int, org.apache.pivot.wtk.TableView, java.lang.String, boolean,
+     *      boolean, boolean)
+     */
     public void render(Object row, int rowIndex, int columnIndex,
             TableView tableView, String columnName, boolean selected,
             boolean highlighted, boolean disabled)
     {
 
         renderStyles(tableView, selected, disabled);
-        
-        MealLineBO line = (MealLineBO)row;
-        if(line != null && isArrowVisible())
+
+        MealLineBO line = (MealLineBO) row;
+        if (line != null && isArrowVisible())
         {
             _arrowImage.setVisible(line.isAlternative());
         }
-        
+
         String text = null;
         if (row != null && columnName != null)
         {
@@ -118,6 +157,16 @@ public class MealLineCellRenderer extends BoxPane implements CellRenderer
         _textLabel.setText(text);
     }
 
+    /**
+     * Set the styles
+     * 
+     * @param tableView
+     *            The {@link TableView}
+     * @param rowSelected
+     *            Is the row selected
+     * @param rowDisabled
+     *            Is the row disabled
+     */
     protected void renderStyles(TableView tableView, boolean rowSelected,
             boolean rowDisabled)
     {
@@ -154,19 +203,23 @@ public class MealLineCellRenderer extends BoxPane implements CellRenderer
 
         labelStyles.put("color", color);
     }
-    
-    public String toString(Object row, String columnName) {
+
+    /**
+     * @see org.apache.pivot.wtk.TableView.CellRenderer#toString(java.lang.Object,
+     *      java.lang.String)
+     */
+    public String toString(Object row, String columnName)
+    {
         Object cellData = JSON.get(row, columnName);
         String cellString = (cellData == null) ? "{null}" : cellData.toString();
-        MealLineBO line = (MealLineBO)row;
-        
-        if(line.isAlternative() && !isArrowVisible())
+        MealLineBO line = (MealLineBO) row;
+
+        if (line.isAlternative() && !isArrowVisible())
         {
             cellString = "    " + cellString;
         }
-        
+
         return cellString;
     }
-
 
 }

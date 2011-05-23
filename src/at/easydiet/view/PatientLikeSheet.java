@@ -11,22 +11,47 @@ import org.apache.pivot.wtk.Sheet;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.TextInput;
 
+import at.easydiet.businessobjects.PatientLikeBO;
+import at.easydiet.businessobjects.PatientLikeGradeBO;
+import at.easydiet.businessobjects.RecipeBO;
+
+/**
+ * This is the background class to the PatientLikeSheet.bxml. This is the view
+ * to add or edit a {@link PatientLikeSheet}
+ */
 public class PatientLikeSheet extends Sheet implements Bindable
 {
     /**
      * Logger for debugging purposes
      */
+    @SuppressWarnings("unused")
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
-                                                            .getLogger(PatientLikeSheet.class);
+                                                             .getLogger(PatientLikeSheet.class);
 
-    private ListButton                          _gradeList;
-    private TableView                           _recipeList;
-    private TextInput                           _blsPattern;
-    private Button                              _cancelButton;
-    private Button                              _saveButton;
+    /**
+     * Stores the {@link ListButton} to select a {@link PatientLikeGradeBO}
+     */
+    private ListButton                           _gradeList;
+    /**
+     * Stores the {@link TableView} which shows the {@link RecipeBO}s
+     */
+    private TableView                            _recipeList;
+    /**
+     * Stores the input field for the BLS-pattern
+     */
+    private TextInput                            _blsPattern;
+    /**
+     * Stores the {@link Button} to cancel the current operation
+     */
+    private Button                               _cancelButton;
+    /**
+     * Stores the {@link Button} to save the current {@link PatientLikeBO}
+     */
+    private Button                               _saveButton;
 
     /**
      * Gets the gradeList.
+     * 
      * @return the gradeList
      */
     public ListButton getGradeList()
@@ -36,6 +61,7 @@ public class PatientLikeSheet extends Sheet implements Bindable
 
     /**
      * Gets the recipeList.
+     * 
      * @return the recipeList
      */
     public TableView getRecipeList()
@@ -45,6 +71,7 @@ public class PatientLikeSheet extends Sheet implements Bindable
 
     /**
      * Gets the blsPattern.
+     * 
      * @return the blsPattern
      */
     public TextInput getBlsPattern()
@@ -54,6 +81,7 @@ public class PatientLikeSheet extends Sheet implements Bindable
 
     /**
      * Gets the cancelButton.
+     * 
      * @return the cancelButton
      */
     public Button getCancelButton()
@@ -63,6 +91,7 @@ public class PatientLikeSheet extends Sheet implements Bindable
 
     /**
      * Gets the saveButton.
+     * 
      * @return the saveButton
      */
     public Button getSaveButton()

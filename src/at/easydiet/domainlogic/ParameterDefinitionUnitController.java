@@ -68,12 +68,17 @@ public class ParameterDefinitionUnitController
      * {@link ParameterDefinitionUnitController} class.
      */
     private ParameterDefinitionUnitController()
-    {
-    }
+    {}
 
+    /**
+     * Gets the default {@link ParameterDefinitionUnitBO}
+     * 
+     * @return Instance of the default {@link ParameterDefinitionUnitBO}
+     */
     public ParameterDefinitionUnitBO getDefault()
     {
-        ParameterDefinitionUnitDAO dao = DAOFactory.getInstance().getParameterDefinitionUnitDAO();
+        ParameterDefinitionUnitDAO dao = DAOFactory.getInstance()
+                .getParameterDefinitionUnitDAO();
         return new ParameterDefinitionUnitBO(dao.findByName("g"));
     }
 }

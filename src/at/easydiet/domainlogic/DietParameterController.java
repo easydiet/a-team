@@ -77,31 +77,44 @@ public class DietParameterController
         return violations;
     }
 
+    /**
+     * Validate the recipe parameters
+     * 
+     * @param currentRecipe
+     *            The {@link RecipeBO} to validate
+     * @return List of violations as {@link ValidationResult}s
+     */
     public List<ValidationResult> validateRecipeDietParameters(
             RecipeBO currentRecipe)
     {
         List<ValidationResult> violations = new ArrayList<ValidationResult>();
 
-        for (DietParameterTemplateBO dietParameter : currentRecipe.getDietParameters())
+        for (DietParameterTemplateBO dietParameter : currentRecipe
+                .getDietParameters())
         {
             // get actual recipe value for this check parameter
-            NutrimentParameterBO nutrimentParameter = currentRecipe.getNutrimentParameter(dietParameter.getParameterDefinition());
-            
-            if(nutrimentParameter == null) continue;
+            NutrimentParameterBO nutrimentParameter = currentRecipe
+                    .getNutrimentParameter(dietParameter
+                            .getParameterDefinition());
+
+            if (nutrimentParameter == null) continue;
             // check if the summed value violates the dietParameter
-            CheckOperatorBO violation = dietParameter.getCheckOperator().isValid(dietParameter.getFloatValue(), nutrimentParameter.getFloatValue()); 
-            
+            CheckOperatorBO violation = dietParameter.getCheckOperator()
+                    .isValid(dietParameter.getFloatValue(),
+                            nutrimentParameter.getFloatValue());
+
             // if so -> add violation
-            if(violation != null)
+            if (violation != null)
             {
                 // if not add a violation
-                violations.add(new ValidationResult(currentRecipe, violation, dietParameter, nutrimentParameter.getFloatValue()));
+                violations.add(new ValidationResult(currentRecipe, violation,
+                        dietParameter, nutrimentParameter.getFloatValue()));
             }
         }
-        
+
         return violations;
     }
-    
+
     /**
      * Describes the sum of different parameters (units)
      */

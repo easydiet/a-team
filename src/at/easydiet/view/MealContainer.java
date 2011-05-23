@@ -24,6 +24,8 @@ import org.apache.pivot.wtk.TextInputContentListener;
 
 import at.easydiet.businesslogic.DietPlanEditingController;
 import at.easydiet.businesslogic.MealContainerController;
+import at.easydiet.businessobjects.DietParameterBO;
+import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.MealLineBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
@@ -31,35 +33,65 @@ import at.easydiet.businessobjects.RecipeBO;
 import at.easydiet.domainlogic.ParameterDefinitionUnitController;
 import at.easydiet.domainlogic.RecipeSearchController;
 
+/**
+ * This is the Component to store and handle {@link MealBO}s
+ */
 public class MealContainer extends BoxPane
 {
     /**
      * Logger for debugging purposes
      */
     private static final org.apache.log4j.Logger LOG         = org.apache.log4j.Logger
-                                                                    .getLogger(MealContainer.class);
+                                                                     .getLogger(MealContainer.class);
 
-    private static final SuggestionPopup        SUGGESTIONS = new SuggestionPopup();
+    /**
+     * Stores the suggestion popup
+     */
+    private static final SuggestionPopup         SUGGESTIONS = new SuggestionPopup();
 
-    private RecipeSearchController              _searcher   = new RecipeSearchController();
-    private MealContainerController             _controller = new MealContainerController();
+    /**
+     * Stores the {@link RecipeSearchController}
+     */
+    private RecipeSearchController               _searcher   = new RecipeSearchController();
 
-    private TextInput                           _mealName;
-    private TextInput                           _mealCode;
+    /**
+     * Stores the {@link MealContainerController}
+     */
+    private MealContainerController              _controller = new MealContainerController();
 
-    private TableView                           _mealLineBox;
-    
-    private ParameterTableViewTemplate					_parameterTableViewTemplate;
+    /**
+     * Stores the input field for the meal name from the GUI
+     */
+    private TextInput                            _mealName;
+    /**
+     * Stores the input field for the meal code from the GUI
+     */
+    private TextInput                            _mealCode;
+
+    /**
+     * Stores the table view for all {@link MealLineBO}s in the current
+     * {@link MealBO}
+     */
+    private TableView                            _mealLineBox;
+
+    /**
+     * Stores the table view for {@link DietParameterBO}s in the current
+     * {@link MealBO}
+     */
+    private ParameterTableViewTemplate           _parameterTableViewTemplate;
 
     static
     {
-        
+
         DietPlanEditingController.getInstance().refresh(false);
         SUGGESTIONS.setSuggestionData(DietPlanEditingController.getInstance()
                 .getMealCodes());
         SUGGESTIONS.setListSize(5);
     }
 
+    /**
+     * Initializes a new instance of the {@link MealContainer} class.
+     */
     public MealContainer()
     {
         setOrientation(Orientation.VERTICAL);
@@ -70,11 +102,11 @@ public class MealContainer extends BoxPane
         {
             ViewController.getInstance();
             Border content = (Border) serializer.readObject(
-                    TimeSpanContainer.class, "MealContainerContent" + ViewController.PIVOT_FILE_EXTENSION);
-            
-			_parameterTableViewTemplate = (ParameterTableViewTemplate) serializer
-					.getNamespace().get("parameterTableViewTemplate");
-			
+                    TimeSpanContainer.class, "MealContainerContent"
+                            + ViewController.PIVOT_FILE_EXTENSION);
+
+            _parameterTableViewTemplate = (ParameterTableViewTemplate) serializer
+                    .getNamespace().get("parameterTableViewTemplate");
 
             final TableView recipeSearchResult = (TableView) serializer
                     .getNamespace().get("recipeSearchResult");
@@ -218,7 +250,8 @@ public class MealContainer extends BoxPane
                             EasyAlerts
                                     .warning(
                                             "Wollen Sie diese Mahlzeit wirklich löschen?",
-                                            EasyAlerts.YES_NO, EasyAlerts.NO, getWindow(),
+                                            EasyAlerts.YES_NO, EasyAlerts.NO,
+                                            getWindow(),
                                             new DialogCloseListener()
                                             {
 
@@ -293,6 +326,15 @@ public class MealContainer extends BoxPane
         }
     }
 
+    /**
+     * Adds a sequence of {@link RecipeBO}s to the sequence of
+     * {@link MealLineBO}s
+     * 
+     * @param mealLines
+     *            The sequence of {@link MealLineBO}s
+     * @param recipes
+     *            The sequence of {@link RecipeBO}
+     */
     protected void addRecipeToMealLines(Sequence<MealLineBO> mealLines,
             Sequence<RecipeBO> recipes)
     {
@@ -312,17 +354,28 @@ public class MealContainer extends BoxPane
         updateUI();
     }
 
-    protected void removeMealLines(Sequence<MealLineBO> selectedRows)
+    /**
+     * Remove a sequence of {@link MealLineBO}s
+     * 
+     * @param mealLines
+     */
+    protected void removeMealLines(Sequence<MealLineBO> mealLines)
     {
-        for (int i = 0; i < selectedRows.getLength(); i++)
+        for (int i = 0; i < mealLines.getLength(); i++)
         {
             DietPlanEditingController.getInstance().removeMealLine(
-                    selectedRows.get(i));
+                    mealLines.get(i));
             _controller.getMeal().updateMealLinesCache();
         }
         updateUI();
     }
 
+    /**
+     * Add a sequence of {@link RecipeBO}s to the current {@link MealBO}
+     * 
+     * @param recipes
+     *            The sequence of {@link RecipeBO}s
+     */
     private void addRecipes(Sequence<RecipeBO> recipes)
     {
         if (recipes == null) return;
@@ -335,6 +388,9 @@ public class MealContainer extends BoxPane
         updateUI();
     }
 
+    /**
+     * Delete this {@link MealBO} from the {@link DietPlanBO}
+     */
     private void deleteMeal()
     {
         getParent().remove(this);
@@ -343,6 +399,7 @@ public class MealContainer extends BoxPane
 
     /**
      * Gets the meal.
+     * 
      * @return the meal
      */
     public MealBO getMeal()
@@ -352,18 +409,23 @@ public class MealContainer extends BoxPane
 
     /**
      * Sets the meal.
-     * @param meal the meal to set
+     * 
+     * @param meal
+     *            the meal to set
      */
     public void setMeal(MealBO meal)
     {
         _controller.setMeal(meal);
-        
-        //parameterTableView
+
+        // parameterTableView
         _parameterTableViewTemplate.setParameterProvider(getMeal());
-		
+
         updateUI();
     }
 
+    /**
+     * Update the input/output fields from the GUI
+     */
     private void updateUI()
     {
         _mealName.setText(getMeal().getName());

@@ -16,23 +16,41 @@ import org.apache.pivot.wtk.Mouse.Button;
 import at.easydiet.businesslogic.DietTreatmentDetailViewController;
 import at.easydiet.businesslogic.PatientDetailViewController;
 import at.easydiet.businessobjects.DietTreatmentBO;
+import at.easydiet.businessobjects.LaborReportBO;
 import at.easydiet.businessobjects.PatientBO;
+import at.easydiet.businessobjects.PatientStateBO;
 
+/**
+ * This is the background class for the PatientDetailView.bxml
+ */
 public class PatientDetailView extends EasyDietContentView implements Bindable
 {
     /**
      * Logger for debugging purposes
      */
-    private static final org.apache.log4j.Logger LOG         = org.apache.log4j.Logger
-                                                                    .getLogger(PatientDetailView.class);
+    @SuppressWarnings("unused")
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+                                                             .getLogger(PatientDetailView.class);
 
-    @BXML 
-    private TableView                           _dietTreatmentsTable;
+    /**
+     * Stores the {@link TableView} for {@link DietTreatmentBO}s from the GUI
+     */
     @BXML
-    private TableView                           _patientStatesTable;
+    private TableView                            _dietTreatmentsTable;
+    /**
+     * Stores the {@link TableView} for {@link PatientStateBO}s from the GUI
+     */
     @BXML
-    private TableView                           _laborReportsTable;
-    
+    private TableView                            _patientStatesTable;
+    /**
+     * Stores the {@link TableView} for {@link LaborReportBO}s from the GUI
+     */
+    @BXML
+    private TableView                            _laborReportsTable;
+
+    /**
+     * @see at.easydiet.view.EasyDietContentView#onLoad()
+     */
     @Override
     public void onLoad()
     {
@@ -40,13 +58,26 @@ public class PatientDetailView extends EasyDietContentView implements Bindable
         setPatient(PatientDetailViewController.getInstance().getPatient());
     }
 
+    /**
+     * Sets the patient
+     * 
+     * @param patient
+     *            The new {@link PatientBO}
+     */
     public void setPatient(PatientBO patient)
     {
-        _dietTreatmentsTable.setTableData(PatientDetailViewController.getInstance().getDietTreatments());
-        _patientStatesTable.setTableData(PatientDetailViewController.getInstance().getPatientStates());
-        _laborReportsTable.setTableData(PatientDetailViewController.getInstance().getLaborReports());
+        _dietTreatmentsTable.setTableData(PatientDetailViewController
+                .getInstance().getDietTreatments());
+        _patientStatesTable.setTableData(PatientDetailViewController
+                .getInstance().getPatientStates());
+        _laborReportsTable.setTableData(PatientDetailViewController
+                .getInstance().getLaborReports());
     }
 
+    /**
+     * @see org.apache.pivot.beans.Bindable#initialize(org.apache.pivot.collections.Map,
+     *      java.net.URL, org.apache.pivot.util.Resources)
+     */
     public void initialize(Map<String, Object> namespace, URL location,
             Resources resources)
     {
@@ -67,46 +98,62 @@ public class PatientDetailView extends EasyDietContentView implements Bindable
                         return false;
                     }
                 });
-        
+
         PushButton editLikes = (PushButton) namespace.get("editLikes");
         editLikes.getButtonPressListeners().add(new ButtonPressListener()
         {
-            
+
             @Override
             public void buttonPressed(org.apache.pivot.wtk.Button button)
             {
                 openPatientLikeManagementView();
             }
         });
-        
-        PushButton addDietTreatment = (PushButton) namespace.get("addDietTreatment");
-        addDietTreatment.getButtonPressListeners().add(new ButtonPressListener()
-        {
-            
-            @Override
-            public void buttonPressed(org.apache.pivot.wtk.Button button)
-            {
-                openAddNewDietTreatmentManagementView();
-            }
 
-        });
-        
-        
+        PushButton addDietTreatment = (PushButton) namespace
+                .get("addDietTreatment");
+        addDietTreatment.getButtonPressListeners().add(
+                new ButtonPressListener()
+                {
+
+                    @Override
+                    public void buttonPressed(org.apache.pivot.wtk.Button button)
+                    {
+                        openAddNewDietTreatmentManagementView();
+                    }
+
+                });
+
     }
-    
+
+    /**
+     * Opens the view to add a new {@link DietTreatmentBO}
+     */
     protected void openAddNewDietTreatmentManagementView()
     {
-    	ViewController.getInstance().loadContent("CreateDietTreatmentView", this);
+        ViewController.getInstance().loadContent("CreateDietTreatmentView",
+                this);
     }
 
+    /**
+     * Opens the view to manage the patient likes and dislikes
+     */
     protected void openPatientLikeManagementView()
     {
-        ViewController.getInstance().loadContent("PatientLikeManagementView", this);
+        ViewController.getInstance().loadContent("PatientLikeManagementView",
+                this);
     }
 
+    /**
+     * Opens the view to edit a {@link DietTreatmentBO}
+     * 
+     * @param dietTreatment
+     *            The {@link DietTreatmentBO} to edit
+     */
     protected void openDietTreatmentDetailView(DietTreatmentBO dietTreatment)
     {
-        DietTreatmentDetailViewController.getInstance().setDietTreatment(dietTreatment);
+        DietTreatmentDetailViewController.getInstance().setDietTreatment(
+                dietTreatment);
         ViewController.getInstance().loadContent("DietTreatmentDetailView",
                 this);
     }
