@@ -15,9 +15,9 @@ import org.apache.pivot.wtk.ButtonPressListener;
 import org.apache.pivot.wtk.ListView;
 import org.apache.pivot.wtk.PushButton;
 
+import at.easydiet.businesslogic.DietPlanEditingController;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.TimeSpanBO;
-import at.easydiet.domainlogic.DietPlanEditingController;
 import at.easydiet.validation.ParameterTemplateValidator;
 
 /**

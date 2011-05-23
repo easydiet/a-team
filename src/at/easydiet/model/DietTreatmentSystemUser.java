@@ -4,13 +4,13 @@ package at.easydiet.model;
 /**
  * Represents a DietTreatmentSystemUser
  */
-public class DietTreatmentSystemUser implements java.io.Serializable
+public class DietTreatmentSystemUser  implements java.io.Serializable
 {
 
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = -7605548321600043837L;
+    private static final long serialVersionUID = -8412868472198205735L;
     private long _dietTreatmentSystemUserId;
     private SystemUser _systemUser;
     private SystemUserFunction _function;

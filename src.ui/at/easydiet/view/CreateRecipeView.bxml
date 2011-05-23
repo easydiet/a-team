@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Original by Team C, redesigned by Team A -->
+<easy:CreateRecipeView xmlns:bxml="http://pivot.apache.org/bxml"
+xmlns:content="org.apache.pivot.wtk.content"
+xmlns:easy="at.easydiet.view" xmlns:easycontent="at.easydiet.view.content"
+xmlns:easyC="at.easydiet.teamc.view"
+xmlns:easyUtilC="at.easydiet.teamc.view.util"
+xmlns="org.apache.pivot.wtk">
+
+	<navigationButtons>
+		<easy:EasyDietContentView.NavigationButton
+		text="Dashboard" view="DashboardView" />
+		<easy:EasyDietContentView.NavigationButton
+		text="Rezept anlegen" />
+	</navigationButtons>
+	<toolbarButtons>
+		<easy:EasyDietContentView.ToolbarButton
+		text="Speichern" icon="@save.png" bxml:id="save" />
+		<easy:EasyDietContentView.ToolbarButton
+		text="Validieren" icon="@validate.png" bxml:id="validate" />
+		<easy:EasyDietContentView.ToolbarButton
+		action="showHelp" text="Hilfe" icon="@help.png" />
+	</toolbarButtons>
+	<!-- Error Box for validation messages -->
+	<Border styleName="errorBox" bxml:id="errorBorder">
+		<ListView bxml:id="errorBox">
+			<itemRenderer>
+				<easycontent:ErrorRenderer />
+			</itemRenderer>
+		</ListView>
+	</Border>
+	<Form styles="{fill: true}">
+		<Form.Section heading="Generelle Informationen">
+			<BoxPane Form.Label="Rezeptname" orientation="horizontal" styles="{fill:true}">
+				<TextInput prompt="Mein neues Rezept" textKey="name">
+					<validator>
+						<easyUtilC:RecipeNameValidator />
+					</validator>
+				</TextInput>
+			</BoxPane>
+		</Form.Section>
+		<Form.Section heading="Parameter">
+			<BoxPane Form.Label="Prüfparameter" orientation="horizontal" styles="{fill:true}">
+				<bxml:include bxml:id="parameterTableView" src="parameterTableViewTemplate.bxml" />
+			</BoxPane>
+		</Form.Section>
+		<Form.Section heading="Rezepte">
+			<TablePane styles="{verticalSpacing:1, showHorizontalGridLines:false, horizontalSpacing:1, showVerticalGridLines:false}">
+				<columns>
+					<TablePane.Column width="-1" />
+					<TablePane.Column width="-1" />
+					<TablePane.Column width="-1" />
+				</columns>
+				<!-- Recipe chooser -->
+				<TablePane.Row height="-1">
+
+					<!-- Recipe search box -->
+					<Border title="Vorhandene Rezepte" styles="{padding:2}"	preferredHeight="450">
+						<TablePane styles="{verticalSpacing: 5}">
+							<columns>
+								<TablePane.Column width="1*" />
+							</columns>
+							<TablePane.Row height="20">
+								<TextInput prompt="Rezepte suchen" bxml:id="recipeSearchBox" />
+							</TablePane.Row>
+							<TablePane.Row height="1*">
+								<ScrollPane>
+									<TableView bxml:id="recipeSearchResult" selectMode="multi">
+										<columns>
+											<TableView.Column name="blsCode" width="50"
+											headerData="BLS" />
+											<TableView.Column name="name" width="190"
+											headerData="Name" />
+										</columns>
+									</TableView>
+									<columnHeader>
+										<TableViewHeader tableView="$recipeSearchResult" />
+									</columnHeader>
+								</ScrollPane>
+							</TablePane.Row>
+						</TablePane>
+					</Border>
+					<!-- add and remove buttons -->
+					<BoxPane styles="{horizontalAlignment:'center', verticalAlignment:'center'}" orientation="vertical">
+						<PushButton bxml:id="addRecipeButton" styles="{toolbar:true}">
+							<content:ButtonData icon="@navigation.png" />
+						</PushButton>
+						<PushButton bxml:id="removeRecipeButton" styles="{toolbar:true}">
+							<content:ButtonData icon="@navigation-180.png" />
+						</PushButton>
+					</BoxPane>
+					<!-- Added recipes -->
+					<Border title="Hinzugefügte Rezepte" styles="{padding:2}" preferredHeight="330">
+						<ScrollPane horizontalScrollBarPolicy="auto" verticalScrollBarPolicy="auto">
+							<TableView bxml:id="chosenRecipeTableView" styles="{backgroundColor:'#EBEDEF'}"
+							minimumWidth="270" maximumWidth="270">
+								<columns>
+									<TableView.Column name="ingredient.name" headerData="Rezept"
+									width="160" />
+									<TableView.Column name="amount" headerData="Menge"
+									width="50" />
+									<TableView.Column name="ingredient.unit.name" headerData="Einheit"
+									width="50" />
+								</columns>
+								<rowEditor>
+									<content:TableViewRowEditor editEffect="crossfade">
+										<cellEditors>
+											<recipe.name>
+												<Label textKey="recipe.name" styles="{verticalAlignment: 'center'}" textBindType="load" />
+											</recipe.name>
+											<amount>
+												<TextInput textKey="amount">
+													<validator>
+														<easycontent:QuantityValidator />
+													</validator>
+													<textBindMapping>
+														<easycontent:QuantityBindMapping />
+													</textBindMapping>
+												</TextInput>
+											</amount>
+											<recipe.unit.name>
+												<Label textKey="recipe.unit.name" styles="{verticalAlignment: 'center'}" textBindType="load" />
+											</recipe.unit.name>
+										</cellEditors>
+									</content:TableViewRowEditor>
+								</rowEditor>
+							</TableView>
+							<columnHeader>
+								<TableViewHeader tableView="$chosenRecipeTableView"
+								sortMode="single_column" />
+							</columnHeader>
+						</ScrollPane>
+					</Border>
+					<!-- END Added recipes -->
+
+				</TablePane.Row>
+				<!-- END Recipe chooser -->
+			</TablePane>
+		</Form.Section>
+		<Form.Section heading="Weitere Details">
+			<Border Form.label="Zubereitung">
+				<ScrollPane horizontalScrollBarPolicy="fill" verticalScrollBarPolicy="fill_to_capacity" preferredHeight="80">
+					<TextArea maximumWidth="300" textKey="cookInstructions" />
+				</ScrollPane>
+			</Border>
+			<Border Form.label="Kurzbeschreibung" >
+				<ScrollPane horizontalScrollBarPolicy="fill" verticalScrollBarPolicy="fill_to_capacity" preferredHeight="80">
+					<TextArea maximumWidth="300" textKey="description" />
+				</ScrollPane>
+			</Border>
+			<Border Form.label="Nutzen" >
+				<ScrollPane horizontalScrollBarPolicy="fill" verticalScrollBarPolicy="fill_to_capacity" preferredHeight="80">
+					<TextArea maximumWidth="300" textKey="benefits" />
+				</ScrollPane>
+			</Border>
+			<BoxPane Form.label="Zubereitungszeit" orientation="horizontal">
+				<TextInput textSize="3"	textKey="cookingTime" text="1">
+					<validator>
+						<easyUtilC:DoubleValidator />
+					</validator>
+				</TextInput>
+				<Label text="h" />
+			</BoxPane>
+			<BoxPane Form.label="Schwierigkeitsgrad" orientation="horizontal">
+				<ListButton listData="[1, 2, 3, 4, 5]" selectedItemKey="difficulty"
+				selectedIndex="2" />
+				<Label text="(1=leicht, 5=schwer)" />
+			</BoxPane>
+		</Form.Section>
+	</Form>
+</easy:CreateRecipeView>

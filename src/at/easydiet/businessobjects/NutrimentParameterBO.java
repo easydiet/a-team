@@ -1,12 +1,11 @@
 package at.easydiet.businessobjects;
 
-
 import at.easydiet.model.NutrimentParameter;
 
 /**
  * This class encapsules a NutrimentParameter instance.
  */
-public class NutrimentParameterBO
+public class NutrimentParameterBO 
 {
 	private NutrimentParameter _model;
 	
@@ -15,8 +14,7 @@ public class NutrimentParameterBO
      */
 	public NutrimentParameterBO()
 	{
-		// TODO: add default values
-		this(new NutrimentParameter());
+		this(new NutrimentParameter("0", null, null));
 	}
 	
     /**
@@ -122,5 +120,16 @@ public class NutrimentParameterBO
     {
         _unit = unit;
         _model.setUnit(unit.getModel());
+    }
+    
+    public float getFloatValue()
+    {
+        // TODO: do some caching
+        return Float.parseFloat(getValue());
+    }
+    
+    public void setValue(float value)
+    {
+        setValue(new Float(value).toString());
     }
 }

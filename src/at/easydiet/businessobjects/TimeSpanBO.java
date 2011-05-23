@@ -1,7 +1,6 @@
 package at.easydiet.businessobjects;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -35,9 +34,7 @@ public class TimeSpanBO implements IDietParameterizable
      */
     public TimeSpanBO(TimeSpan model)
     {
-        // remove time from start date. 
         _model = model;
-        setStart(_model.getStart());
     }
 
     /**
@@ -83,14 +80,7 @@ public class TimeSpanBO implements IDietParameterizable
      */
     public void setStart(Date start)
     {
-        // remove time part
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(start);
-        cal.set(Calendar.HOUR_OF_DAY, 0);  
-        cal.set(Calendar.MINUTE, 0);  
-        cal.set(Calendar.SECOND, 0);  
-        cal.set(Calendar.MILLISECOND, 0);
-        _model.setStart(cal.getTime());
+        _model.setStart(start);
     }
 
     /**
@@ -136,18 +126,18 @@ public class TimeSpanBO implements IDietParameterizable
         _model.setDietPlan(dietPlan.getModel());
     }
 
-    private List<DietParameterTemplateBO> _dietParameters;
+    private List<DietParameterBO> _dietParameters;
 
 /**
      * Gets a list of referenced DietParameters of this instance.
      * This list is cached, use {@link TimeSpan#updateDietParametersCache()) to update this cache.
      * @return a cached list of referenced DietParameters wrapped into the correct businessobject. 
      */
-    public List<DietParameterTemplateBO> getDietParameters()
+    public List<DietParameterBO> getDietParameters()
     {
         if (_dietParameters == null)
         {
-            _dietParameters = new ArrayList<DietParameterTemplateBO>();
+            _dietParameters = new ArrayList<DietParameterBO>();
             for (DietParameter dietParameters : _model.getDietParameters())
             {
                 _dietParameters.add(new DietParameterBO(dietParameters));
@@ -161,10 +151,10 @@ public class TimeSpanBO implements IDietParameterizable
      * cache will updated
      * @param dietParameters the DietParameter to add.
      */
-    public void addDietParameters(DietParameterTemplateBO dietParameters)
+    public void addDietParameters(DietParameterBO dietParameters)
     {
         getDietParameters().add(dietParameters);
-        _model.getDietParameters().add((DietParameter) dietParameters.getModel());
+        _model.getDietParameters().add(dietParameters.getModel());
     }
 
     /**
@@ -172,7 +162,7 @@ public class TimeSpanBO implements IDietParameterizable
      * dietParameters. The cache will updated
      * @param dietParameters the timespan to add.
      */
-    public void removeDietParameters(DietParameterTemplateBO dietParameters)
+    public void removeDietParameters(DietParameterBO dietParameters)
     {
         getDietParameters().remove(dietParameters);
         _model.getDietParameters().remove(dietParameters.getModel());
@@ -213,7 +203,6 @@ public class TimeSpanBO implements IDietParameterizable
      */
     public void addMeals(MealBO meals)
     {
-        meals.setTimeSpan(this);
         getMeals().add(meals);
         _model.getMeals().add(meals.getModel());
     }
@@ -256,7 +245,7 @@ public class TimeSpanBO implements IDietParameterizable
         end = end.add(getDuration());
         return end;
     }
-    
+
     public Date getEnd()
     {
         return getEndDate().toCalendar().getTime();
@@ -299,4 +288,21 @@ public class TimeSpanBO implements IDietParameterizable
         return String.format("%s bis %s", formatter.format(getStart()),
                 formatter.format(getEnd()));
     }
+    
+
+
+    @Override
+    public void addDietParameters(DietParameterTemplateBO parameter)
+    {
+        if(!(parameter instanceof DietParameterBO)) return;
+        addDietParameters((DietParameterBO) parameter);
+    }
+
+    @Override
+    public void removeDietParameters(DietParameterTemplateBO parameter)
+    {
+        if(!(parameter instanceof DietParameterBO)) return;
+        removeDietParameters((DietParameterBO) parameter);
+    }
+
 }

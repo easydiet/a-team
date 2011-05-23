@@ -10,7 +10,7 @@ import at.easydiet.model.UserRight;
 /**
  * This class encapsules a SystemUser instance.
  */
-public class SystemUserBO
+public class SystemUserBO 
 {
 	private SystemUser _model;
 	
@@ -238,9 +238,11 @@ public class SystemUserBO
         getRights();
     }
     
+    
     public String toString()
     {
-    	return getName();
+        return getName();
     }
+
 
 }

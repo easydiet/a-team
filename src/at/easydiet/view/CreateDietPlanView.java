@@ -2,8 +2,8 @@ package at.easydiet.view;
 
 import org.apache.pivot.beans.Bindable;
 
+import at.easydiet.businesslogic.DietPlanEditingController;
 import at.easydiet.businesslogic.DietTreatmentDetailViewController;
-import at.easydiet.domainlogic.DietPlanEditingController;
 
 /**
  * Background class for the CreateDietPlanView.bxml Provides data and methods

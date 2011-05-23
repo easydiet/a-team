@@ -142,6 +142,14 @@ public class EasyDietMainWindow extends Window implements Bindable
                         "CreateParametersetView", source);
             }
         });
+        Action.getNamedActions().put("createRecipe", new Action()
+        {
+            @Override
+            public void perform(Component source)
+            {
+                ViewController.getInstance().loadContent("CreateRecipeView", source);
+            }
+        });
     }
 
     public void initialize(Map<String, Object> ns, URL loc, Resources es)

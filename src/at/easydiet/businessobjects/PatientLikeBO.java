@@ -15,7 +15,7 @@ public class PatientLikeBO
      */
 	public PatientLikeBO()
 	{
-		this(new PatientLike(null, "", new PatientLikeGrade(), ""));
+        this(new PatientLike(null, "", new PatientLikeGrade(), ""));
 	}
 	
     /**
@@ -53,7 +53,8 @@ public class PatientLikeBO
     {
         _model.setPatientLikeId(patientLikeId);
     }
-    
+
+	
     private PatientBO _patient;
     
     /**
@@ -78,7 +79,6 @@ public class PatientLikeBO
         _patient = patient;
         _model.setPatient(patient.getModel());
     }
-
     /**       
      * Gets the blsPattern of this instance. 
      * @return the blsPattern currently set for this instance.

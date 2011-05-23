@@ -151,7 +151,7 @@ public class ParameterTemplateValidator
             _cache.put(parameterizable, new HashSet<DietParameterTemplateBO>());
         }
 
-        List<DietParameterTemplateBO> checkSet = parameterizable
+        List<? extends DietParameterTemplateBO> checkSet = parameterizable
                 .getDietParameters();
 
         // fill a new set for better comparison

@@ -1,12 +1,11 @@
 package at.easydiet.businessobjects;
 
-
 import at.easydiet.model.RecipeIngredient;
 
 /**
  * This class encapsules a RecipeIngredient instance.
  */
-public class RecipeIngredientBO
+public class RecipeIngredientBO 
 {
 	private RecipeIngredient _model;
 	

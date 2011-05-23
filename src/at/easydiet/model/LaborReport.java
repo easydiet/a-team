@@ -14,12 +14,13 @@ public class LaborReport  implements java.io.Serializable
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = -8465422691917107515L;
+    private static final long serialVersionUID = 5175617997757707421L;
     private long _laborReportId;
     private Date _date;
     private Clob _notice;
     private SystemUser _creator;
-    private Set<DietParameter> _dietParameters = new HashSet<DietParameter>(0);
+    private Set<LaborParameter> _laborParameters = new HashSet<LaborParameter>(0);
+    private LaborReportType _laborReportType;
     private Patient _patient;
 
     /**
@@ -48,15 +49,17 @@ public class LaborReport  implements java.io.Serializable
      * @param date the date to set for this instance
      * @param notice the notice to set for this instance
      * @param creator the creator to set for this instance
-     * @param dietParameters the dietParameters to set for this instance
+     * @param laborParameters the laborParameters to set for this instance
+     * @param laborReportType the laborReportType to set for this instance
      * @param patient the patient to set for this instance
      */
-    public LaborReport(Date date, Clob notice, SystemUser creator, Set<DietParameter> dietParameters, Patient patient) 
+    public LaborReport(Date date, Clob notice, SystemUser creator, Set<LaborParameter> laborParameters, LaborReportType laborReportType, Patient patient) 
     {
        _date = date;
        _notice = notice;
        _creator = creator;
-       _dietParameters = dietParameters;
+       _laborParameters = laborParameters;
+       _laborReportType = laborReportType;
        _patient = patient;
     }
    
@@ -133,21 +136,39 @@ public class LaborReport  implements java.io.Serializable
     }
     
     /**       
-     * Gets the dietParameters of this instance. 
-     * @return the dietParameters currently set for this instance.
+     * Gets the laborParameters of this instance. 
+     * @return the laborParameters currently set for this instance.
      */
-    public Set<DietParameter> getDietParameters() 
+    public Set<LaborParameter> getLaborParameters() 
     {
-        return _dietParameters;
+        return _laborParameters;
     }
     
     /**       
-     * Sets the dietParameters of this instance. 
-     * @param dietParameters the new dietParameters of this instance.
+     * Sets the laborParameters of this instance. 
+     * @param laborParameters the new laborParameters of this instance.
      */    
-    public void setDietParameters(Set<DietParameter> dietParameters) 
+    public void setLaborParameters(Set<LaborParameter> laborParameters) 
     {
-        _dietParameters = dietParameters;
+        _laborParameters = laborParameters;
+    }
+    
+    /**       
+     * Gets the laborReportType of this instance. 
+     * @return the laborReportType currently set for this instance.
+     */
+    public LaborReportType getLaborReportType() 
+    {
+        return _laborReportType;
+    }
+    
+    /**       
+     * Sets the laborReportType of this instance. 
+     * @param laborReportType the new laborReportType of this instance.
+     */    
+    public void setLaborReportType(LaborReportType laborReportType) 
+    {
+        _laborReportType = laborReportType;
     }
     
     /**       

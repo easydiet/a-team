@@ -1,12 +1,13 @@
 package at.easydiet.businessobjects;
 
-import java.sql.Clob;
-import java.sql.SQLException;
 import java.util.Date;
 
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.ArrayList;
 
+import antlr.StringUtils;
+import at.easydiet.dao.DAOFactory;
+import at.easydiet.model.DietTreatment;
 import at.easydiet.model.LaborReport;
 import at.easydiet.model.PatientState;
 
@@ -97,24 +98,7 @@ public class PatientStateBO
      */
     public String getAnamnesis()
     {
-        String text = "";
-        Clob clob = _model.getAnamnesis();
-
-        if (clob != null)
-        {
-            try
-            {
-                text =  clob.getSubString(1, (int) clob.length());
-            }
-            catch (SQLException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                text = e.getMessage();
-            }
-        }
-        
-        return text;
+        return DAOFactory.getInstance().clobToString(_model.getAnamnesis());
     }
 
     /**
@@ -123,9 +107,16 @@ public class PatientStateBO
      * @param anamnesis
      *            the new anamnesis of this instance.
      */
-    public void setAnamnesis(Clob anamnesis)
+    public void setAnamnesis(String anamnesis)
     {
-        _model.setAnamnesis(anamnesis);
+        if (at.easydiet.util.StringUtils.isNullOrWhitespaceOnly(anamnesis))
+        {
+            _model.setAnamnesis(null);
+        }
+        else
+        {
+            _model.setAnamnesis(DAOFactory.getInstance().createClob(anamnesis));
+        }
     }
 
     /**
@@ -363,6 +354,61 @@ public class PatientStateBO
     {
         _laborReports = null;
         getLaborReports();
+    }
+
+    private List<DietTreatmentBO> _dietTreatments;
+
+/**
+     * Gets a list of referenced DietTreatments of this instance.
+     * This list is cached, use {@link PatientState#updateDietTreatmentsCache()) to update this cache.
+     * @return a cached list of referenced DietTreatments wrapped into the correct businessobject. 
+     */
+    public List<DietTreatmentBO> getDietTreatments()
+    {
+        if (_dietTreatments == null)
+        {
+            _dietTreatments = new ArrayList<DietTreatmentBO>();
+            for (DietTreatment dietTreatments : _model.getDietTreatments())
+            {
+                _dietTreatments.add(new DietTreatmentBO(dietTreatments));
+            }
+        }
+        return _dietTreatments;
+    }
+
+    /**
+     * Adds a new DietTreatment to the list of referenced dietTreatments. The
+     * cache will updated
+     * 
+     * @param dietTreatments
+     *            the DietTreatment to add.
+     */
+    public void addDietTreatments(DietTreatmentBO dietTreatments)
+    {
+        getDietTreatments().add(dietTreatments);
+        _model.getDietTreatments().add(dietTreatments.getModel());
+    }
+
+    /**
+     * Removes the given DietTreatment from the list of referenced
+     * dietTreatments. The cache will updated
+     * 
+     * @param dietTreatments
+     *            the timespan to add.
+     */
+    public void removeDietTreatments(DietTreatmentBO dietTreatments)
+    {
+        getDietTreatments().remove(dietTreatments);
+        _model.getDietTreatments().remove(dietTreatments.getModel());
+    }
+
+    /**
+     * Rebuilds the cache for referenced dietTreatments.
+     */
+    public void updateDietTreatmentsCache()
+    {
+        _dietTreatments = null;
+        getDietTreatments();
     }
 
     private PatientBO _patient;

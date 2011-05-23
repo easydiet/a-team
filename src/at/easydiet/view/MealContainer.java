@@ -22,6 +22,7 @@ import org.apache.pivot.wtk.TableView.RowEditor;
 import org.apache.pivot.wtk.TextInput;
 import org.apache.pivot.wtk.TextInputContentListener;
 
+import at.easydiet.businesslogic.DietPlanEditingController;
 import at.easydiet.businesslogic.MealContainerController;
 import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.DietPlanBO;
@@ -29,7 +30,6 @@ import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.MealLineBO;
 import at.easydiet.businessobjects.ParameterDefinitionUnitBO;
 import at.easydiet.businessobjects.RecipeBO;
-import at.easydiet.domainlogic.DietPlanEditingController;
 import at.easydiet.domainlogic.ParameterDefinitionUnitController;
 import at.easydiet.domainlogic.RecipeSearchController;
 

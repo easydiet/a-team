@@ -1,12 +1,11 @@
 package at.easydiet.businessobjects;
 
-
 import at.easydiet.model.DietTreatmentSystemUser;
 
 /**
  * This class encapsules a DietTreatmentSystemUser instance.
  */
-public class DietTreatmentSystemUserBO
+public class DietTreatmentSystemUserBO 
 {
 	private DietTreatmentSystemUser _model;
 	

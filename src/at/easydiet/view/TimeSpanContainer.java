@@ -25,9 +25,9 @@ import org.apache.pivot.wtk.Orientation;
 import org.apache.pivot.wtk.TableView;
 
 import at.easydiet.businessobjects.DietParameterBO;
+import at.easydiet.businesslogic.DietPlanEditingController;
 import at.easydiet.businessobjects.MealBO;
 import at.easydiet.businessobjects.TimeSpanBO;
-import at.easydiet.domainlogic.DietPlanEditingController;
 
 /**
  * This is the background class for the TimeSpanContainer.bxml

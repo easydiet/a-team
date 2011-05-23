@@ -1,5 +1,8 @@
 package at.easydiet.dao;
 
+import java.sql.Clob;
+import java.sql.SQLException;
+
 import org.hibernate.Session;
 
 import at.easydiet.model.CheckOperator;
@@ -13,8 +16,12 @@ import at.easydiet.model.DietPlan;
 import at.easydiet.model.DietTreatment;
 import at.easydiet.model.DietTreatmentSystemUser;
 import at.easydiet.model.FamilyAnamnesis;
+import at.easydiet.model.FamilyStatus;
 import at.easydiet.model.Gender;
+import at.easydiet.model.Illness;
+import at.easydiet.model.LaborParameter;
 import at.easydiet.model.LaborReport;
+import at.easydiet.model.LaborReportType;
 import at.easydiet.model.Meal;
 import at.easydiet.model.MealLine;
 import at.easydiet.model.NutrimentParameter;
@@ -38,8 +45,6 @@ import at.easydiet.model.UserRight;
 
 /**
  * A Factory which provides instances for all DAOs.
- * 
- * @author Daniel
  */
 public class DAOFactory
 {
@@ -173,6 +178,16 @@ public class DAOFactory
     }
 
     /**
+     * Returns a new DAO for managing {@link FamilyStatus} Objects.
+     * 
+     * @return a new {@link FamilyStatusDAO} instance.
+     */
+    public FamilyStatusDAO getFamilyStatusDAO()
+    {
+        return (FamilyStatusDAO) instantiateDAO(FamilyStatusDAO.class);
+    }
+
+    /**
      * Returns a new DAO for managing {@link Gender} Objects.
      * 
      * @return a new {@link GenderDAO} instance.
@@ -183,6 +198,26 @@ public class DAOFactory
     }
 
     /**
+     * Returns a new DAO for managing {@link Illness} Objects.
+     * 
+     * @return a new {@link IllnessDAO} instance.
+     */
+    public IllnessDAO getIllnessDAO()
+    {
+        return (IllnessDAO) instantiateDAO(IllnessDAO.class);
+    }
+
+    /**
+     * Returns a new DAO for managing {@link LaborParameter} Objects.
+     * 
+     * @return a new {@link LaborParameterDAO} instance.
+     */
+    public LaborParameterDAO getLaborParameterDAO()
+    {
+        return (LaborParameterDAO) instantiateDAO(LaborParameterDAO.class);
+    }
+
+    /**
      * Returns a new DAO for managing {@link LaborReport} Objects.
      * 
      * @return a new {@link LaborReportDAO} instance.
@@ -190,6 +225,16 @@ public class DAOFactory
     public LaborReportDAO getLaborReportDAO()
     {
         return (LaborReportDAO) instantiateDAO(LaborReportDAO.class);
+    }
+
+    /**
+     * Returns a new DAO for managing {@link LaborReportType} Objects.
+     * 
+     * @return a new {@link LaborReportTypeDAO} instance.
+     */
+    public LaborReportTypeDAO getLaborReportTypeDAO()
+    {
+        return (LaborReportTypeDAO) instantiateDAO(LaborReportTypeDAO.class);
     }
 
     /**
@@ -425,5 +470,37 @@ public class DAOFactory
     protected Session getCurrentSession()
     {
         return HibernateUtil.currentSession();
+    }
+
+    /**
+     * Creates a new clob from the given data
+     * 
+     * @param data
+     *            The text value
+     * @return A new instance of class clob
+     */
+    public Clob createClob(String data)
+    {
+        return getCurrentSession().getLobHelper().createClob(data);
+    }
+
+    /**
+     * Converts a clob to a String
+     * 
+     * @param data
+     *            The clob to convert
+     * @return String value of the clob
+     */
+    public String clobToString(Clob data)
+    {
+        if (data == null) return "";
+        try
+        {
+            return data.getSubString(0, (int) data.length());
+        }
+        catch (SQLException e)
+        {
+            return "";
+        }
     }
 }

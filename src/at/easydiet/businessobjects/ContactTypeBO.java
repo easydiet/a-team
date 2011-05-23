@@ -1,6 +1,5 @@
 package at.easydiet.businessobjects;
 
-
 import at.easydiet.model.ContactType;
 
 /**
@@ -8,10 +7,10 @@ import at.easydiet.model.ContactType;
  */
 public enum ContactTypeBO
 {
-	DIET_PLANNING("Diätplanung"),
-	NP_ENTRY("EP Erfassung"),
-	MEDICAL("Medizinische Untersuchung"),
-	RECALL("Rückbesprechnung");
+    DIET_PLANNING("Diätplanung"),
+    NP_ENTRY("EP Erfassung"),
+    MEDICAL("Medizinische Untersuchung"),
+    RECALL("Rückbesprechnung");
 
 	private ContactType _model;
 
@@ -33,15 +32,15 @@ public enum ContactTypeBO
 		return _model;
 	}
 	
-    /**
-     * Gets the name of this enum value.
-     * @return the name of this enum value
-     */
-    public String getName()
-    {
-        return _model.getName();
-    }
-    
+	/**
+	 * Gets the name of this enum value.
+	 * @return the name of this enum value
+	 */
+	public String getName()
+	{
+		return _model.getName();
+	}
+	
 	/**
 	 * Returns the BusinessObject matching to the specified model object.
 	 * @returns the enum value matching to the given model or the default value. 

@@ -14,7 +14,7 @@ public class Patient  implements java.io.Serializable
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = 8553072159208926474L;
+    private static final long serialVersionUID = 4195729659042326768L;
     private long _patientId;
     private String _insuranceNumber;
     private String _forename;
@@ -27,10 +27,11 @@ public class Patient  implements java.io.Serializable
     private Date _birthday;
     private String _job;
     private String _religion;
-    private String _regime;
+    private Clob _regime;
     private Clob _notice;
     private Gender _gender;
-    private Set<String> _illnesses = new HashSet<String>(0);
+    private FamilyStatus _familyStatus;
+    private Set<Illness> _illnesses = new HashSet<Illness>(0);
     private Set<FamilyAnamnesis> _familyanamnesis = new HashSet<FamilyAnamnesis>(0);
     private Set<PatientState> _patientStates = new HashSet<PatientState>(0);
     private Set<LaborReport> _laborReports = new HashSet<LaborReport>(0);
@@ -47,28 +48,14 @@ public class Patient  implements java.io.Serializable
 
     /**
      * Initializes a new instance of the {@link Patient} class.
-     * @param insuranceNumber the insuranceNumber to set for this instance
      * @param forename the forename to set for this instance
      * @param lastname the lastname to set for this instance
-     * @param title the title to set for this instance
-     * @param street the street to set for this instance
-     * @param zip the zip to set for this instance
-     * @param place the place to set for this instance
-     * @param country the country to set for this instance
-     * @param birthday the birthday to set for this instance
      * @param gender the gender to set for this instance
      */
-    public Patient(String insuranceNumber, String forename, String lastname, String title, String street, String zip, String place, String country, Date birthday, Gender gender) 
+    public Patient(String forename, String lastname, Gender gender) 
     {
-        _insuranceNumber = insuranceNumber;
         _forename = forename;
         _lastname = lastname;
-        _title = title;
-        _street = street;
-        _zip = zip;
-        _place = place;
-        _country = country;
-        _birthday = birthday;
         _gender = gender;
     }
 
@@ -88,14 +75,15 @@ public class Patient  implements java.io.Serializable
      * @param regime the regime to set for this instance
      * @param notice the notice to set for this instance
      * @param gender the gender to set for this instance
+     * @param familyStatus the familyStatus to set for this instance
      * @param illnesses the illnesses to set for this instance
      * @param familyanamnesis the familyanamnesis to set for this instance
      * @param patientStates the patientStates to set for this instance
      * @param laborReports the laborReports to set for this instance
      * @param treatments the treatments to set for this instance
-     * @param disfavors the disfavors to set for this instance
+     * @param likes the likes to set for this instance
      */
-    public Patient(String insuranceNumber, String forename, String lastname, String title, String street, String zip, String place, String country, Date birthday, String job, String religion, String regime, Clob notice, Gender gender, Set<String> illnesses, Set<FamilyAnamnesis> familyanamnesis, Set<PatientState> patientStates, Set<LaborReport> laborReports, Set<DietTreatment> treatments, Set<PatientLike> likes) 
+    public Patient(String insuranceNumber, String forename, String lastname, String title, String street, String zip, String place, String country, Date birthday, String job, String religion, Clob regime, Clob notice, Gender gender, FamilyStatus familyStatus, Set<Illness> illnesses, Set<FamilyAnamnesis> familyanamnesis, Set<PatientState> patientStates, Set<LaborReport> laborReports, Set<DietTreatment> treatments, Set<PatientLike> likes) 
     {
        _insuranceNumber = insuranceNumber;
        _forename = forename;
@@ -111,6 +99,7 @@ public class Patient  implements java.io.Serializable
        _regime = regime;
        _notice = notice;
        _gender = gender;
+       _familyStatus = familyStatus;
        _illnesses = illnesses;
        _familyanamnesis = familyanamnesis;
        _patientStates = patientStates;
@@ -339,7 +328,7 @@ public class Patient  implements java.io.Serializable
      * Gets the regime of this instance. 
      * @return the regime currently set for this instance.
      */
-    public String getRegime() 
+    public Clob getRegime() 
     {
         return _regime;
     }
@@ -348,7 +337,7 @@ public class Patient  implements java.io.Serializable
      * Sets the regime of this instance. 
      * @param regime the new regime of this instance.
      */    
-    public void setRegime(String regime) 
+    public void setRegime(Clob regime) 
     {
         _regime = regime;
     }
@@ -390,10 +379,28 @@ public class Patient  implements java.io.Serializable
     }
     
     /**       
+     * Gets the familyStatus of this instance. 
+     * @return the familyStatus currently set for this instance.
+     */
+    public FamilyStatus getFamilyStatus() 
+    {
+        return _familyStatus;
+    }
+    
+    /**       
+     * Sets the familyStatus of this instance. 
+     * @param familyStatus the new familyStatus of this instance.
+     */    
+    public void setFamilyStatus(FamilyStatus familyStatus) 
+    {
+        _familyStatus = familyStatus;
+    }
+    
+    /**       
      * Gets the illnesses of this instance. 
      * @return the illnesses currently set for this instance.
      */
-    public Set<String> getIllnesses() 
+    public Set<Illness> getIllnesses() 
     {
         return _illnesses;
     }
@@ -402,7 +409,7 @@ public class Patient  implements java.io.Serializable
      * Sets the illnesses of this instance. 
      * @param illnesses the new illnesses of this instance.
      */    
-    public void setIllnesses(Set<String> illnesses) 
+    public void setIllnesses(Set<Illness> illnesses) 
     {
         _illnesses = illnesses;
     }

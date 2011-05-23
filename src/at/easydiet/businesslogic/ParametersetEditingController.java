@@ -1,4 +1,4 @@
-package at.easydiet.domainlogic;
+package at.easydiet.businesslogic;
 
 import org.apache.pivot.collections.ArrayList;
 import org.apache.pivot.collections.List;
@@ -133,14 +133,14 @@ public class ParametersetEditingController
 
         if (StringUtils.isNullOrWhitespaceOnly(_parameterset.getName()))
         {
-            getErrors().add("Kein Name f�r das Parameterset angegeben!");
+            getErrors().add("Kein Name für das Parameterset angegeben!");
             valid = false;
         }
 
         if (_parameterset.getDietParameters().getLength() == 0)
         {
             getErrors().add(
-                    "Keine Parameter f�r dieses Parameterset angegeben!");
+                    "Keine Parameter für dieses Parameterset angegeben!");
             valid = false;
         }
 

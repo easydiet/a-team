@@ -12,12 +12,12 @@ import org.apache.pivot.wtk.SortDirection;
 import org.apache.pivot.wtk.TableView;
 import org.apache.pivot.wtk.Mouse.Button;
 
+import at.easydiet.businesslogic.DietPlanEditingController;
 import at.easydiet.businesslogic.DietTreatmentDetailViewController;
 import at.easydiet.businessobjects.ContactJournalBO;
 import at.easydiet.businessobjects.DietPlanBO;
 import at.easydiet.businessobjects.DietTreatmentBO;
 import at.easydiet.businessobjects.NutritionProtocolBO;
-import at.easydiet.domainlogic.DietPlanEditingController;
 
 /**
  * This is the background class for viewing and changing a

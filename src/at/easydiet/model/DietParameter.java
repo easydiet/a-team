@@ -11,7 +11,7 @@ public class DietParameter extends at.easydiet.model.DietParameterTemplate imple
     /**
      * A unique serialization id. 
      */
-    private static final long serialVersionUID = -8505565857503590488L;
+    private static final long serialVersionUID = -665500637975779233L;
     private Date _start;
 
     /**
@@ -25,16 +25,16 @@ public class DietParameter extends at.easydiet.model.DietParameterTemplate imple
     /**
      * Initializes a new instance of the {@link DietParameter} class.
      */
-    public DietParameter(CheckOperator checkOperator, ParameterDefinitionUnit parameterDefinitionUnit, DietParameterType dietParameterType, ParameterDefinition parameterDefinition, DietParameterSet dietParameterSet) 
+    public DietParameter(CheckOperator checkOperator, ParameterDefinitionUnit parameterDefinitionUnit, DietParameterType dietParameterType, ParameterDefinition parameterDefinition) 
     {
-        super(checkOperator, parameterDefinitionUnit, dietParameterType, parameterDefinition, dietParameterSet);        
+        super(checkOperator, parameterDefinitionUnit, dietParameterType, parameterDefinition);        
     }
 
     /**
      * Initializes a new instance of the {@link DietParameter} class.
      * @param start the start to set for this instance
      */
-    public DietParameter(CheckOperator checkOperator, int duration, String value, ParameterDefinitionUnit parameterDefinitionUnit, DietParameterType dietParameterType, ParameterDefinition parameterDefinition, Date start, DietParameterSet dietParameterSet) 
+    public DietParameter(CheckOperator checkOperator, int duration, String value, ParameterDefinitionUnit parameterDefinitionUnit, DietParameterType dietParameterType, ParameterDefinition parameterDefinition, DietParameterSet dietParameterSet, Date start) 
     {
         super(checkOperator, duration, value, parameterDefinitionUnit, dietParameterType, parameterDefinition, dietParameterSet);        
        _start = start;

@@ -90,8 +90,9 @@ public class EasyDietApplication implements Application
         LOG.trace("Loading UI");
         BXMLSerializer bxmlSerializer = new BXMLSerializer();
 
+        ViewController.getInstance();
         _mainWindow = (Window) bxmlSerializer.readObject(EasyDietMainWindow.class,
-                "EasyDietMainWindow" + ViewController.getInstance().PIVOT_FILE_EXTENSION);
+                "EasyDietMainWindow" + ViewController.PIVOT_FILE_EXTENSION);
 
                 //"EasyDietMainWindow" + ViewController.PIVOT_FILE_EXTENSION);
 
