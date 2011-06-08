@@ -1,1 +1,0 @@
-This directory contains all source files and resources of prototypes and for testing purposes.

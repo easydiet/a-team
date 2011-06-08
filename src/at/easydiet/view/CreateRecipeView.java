@@ -213,7 +213,8 @@ public class CreateRecipeView extends EasyDietContentView implements Bindable
             }
         });
         // removes selected ingredients
-        addRecipeButton.getButtonPressListeners().add(new ButtonPressListener()
+        Button removeRecipeButton = (Button) map.get("removeRecipeButton");
+        removeRecipeButton.getButtonPressListeners().add(new ButtonPressListener()
         {
             @SuppressWarnings("unchecked")
             @Override
