@@ -6,6 +6,8 @@ import at.easydiet.businessobjects.CheckOperatorBO;
 import at.easydiet.businessobjects.DietParameterBO;
 import at.easydiet.businessobjects.DietParameterTemplateBO;
 import at.easydiet.businessobjects.DietParameterTypeBO;
+import at.easydiet.businessobjects.DietPlanBO;
+import at.easydiet.businessobjects.DietTreatmentBO;
 import at.easydiet.businessobjects.IDietParameterizable;
 import at.easydiet.businessobjects.ParameterDefinitionBO;
 import at.easydiet.dao.DAOFactory;
@@ -21,7 +23,6 @@ public class ParameterTableViewController
     /**
      * Logger for debugging purposes
      */
-    @SuppressWarnings("unused")
     private static final org.apache.log4j.Logger     LOG = org.apache.log4j.Logger
                                                                  .getLogger(MealContainerController.class);
 
@@ -144,8 +145,7 @@ public class ParameterTableViewController
     {
         _parameterProvider.addDietParameters(getParameterTemplate());
         isValid();
-        // TODO: start validation in corresponding controller
-        // DietPlanEditingController.getInstance().validateDietPlan();
+        validateView();
     }
 
     /**
@@ -158,7 +158,7 @@ public class ParameterTableViewController
     {
         _parameterProvider.removeDietParameters(dietParameter);
         isValid();
-        DietPlanEditingController.getInstance().validateDietPlan();
+        validateView();
     }
 
     /**
@@ -199,5 +199,25 @@ public class ParameterTableViewController
     public ParameterTemplateValidator getValidator()
     {
         return ParameterTemplateValidator.getInstance();
+    }
+    
+    /**
+     * Validate the view around the parameterTable
+     */
+    public void validateView()
+    {
+        //TODO: find a better way
+        if(_parameterProvider instanceof DietPlanBO)
+        {
+             DietPlanEditingController.getInstance().validateDietPlan();
+        }
+        else if(_parameterProvider instanceof DietTreatmentBO)
+        {
+            DietTreatmentEditingController.getInstance().validateDietTreatment();
+        }
+        else
+        {
+            LOG.error("ParameterProvider not supported");
+        }
     }
 }

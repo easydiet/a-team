@@ -90,6 +90,7 @@ public class DietPlanEditingController
     {
         TimeSpanBO t = new TimeSpanBO();
         t.setDietPlan(_dietPlan);
+        t.setStart(_dietPlan.getDietTreatment().getStart());
         _dietPlan.addTimeSpans(t);
         validateDietPlan();
         return t;
@@ -154,6 +155,7 @@ public class DietPlanEditingController
     public MealLineBO addRecipeToMeal(MealBO meal, RecipeBO recipe)
     {
         MealLineBO line = new MealLineBO();
+        line.setUnit(recipe.getUnit());
         line.setMeal(meal);
         line.setRecipe(recipe);
         line.setQuantity(recipe.getAmount());
@@ -193,6 +195,7 @@ public class DietPlanEditingController
             RecipeBO recipe)
     {
         MealLineBO alternative = new MealLineBO();
+        alternative.setUnit(recipe.getUnit());
         alternative.setParent(mealLine);
         alternative.setMeal(mealLine.getMeal());
         alternative.setRecipe(recipe);

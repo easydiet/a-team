@@ -208,7 +208,7 @@
 			<one-to-many class="DietPlan" />
 		</set> 		
 
-		<set name="dietParameters" table="DietTreatmentDietParameter" lazy="true"  cascade="all,delete-orphan">
+		<set name="dietParameters" table="DietTreatmentDietParameter" lazy="true" cascade="all,delete-orphan">
 			<key column="DietTreatmentId" not-null="true" />
 			<many-to-many class="DietParameter" column="DietParameterId"  unique="true" />
 		</set>		
@@ -217,7 +217,7 @@
 			<many-to-many class="PatientState" column="PatientStateId"/>
 		</set>
 		
-		<set name="systemUsers" lazy="true">
+		<set name="systemUsers" lazy="true" cascade="all,delete-orphan">
 			<key column="DietTreatmentId" not-null="true" />
 			<one-to-many class="DietTreatmentSystemUser" />
 		</set>

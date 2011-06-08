@@ -368,7 +368,6 @@ public abstract class DietTreatmentManagementView extends EasyDietContentView
                                 .getSelectedRow());
                     }
                 });
-
     }
 
     /**

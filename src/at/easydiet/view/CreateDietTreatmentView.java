@@ -39,5 +39,7 @@ public class CreateDietTreatmentView extends DietTreatmentManagementView {
 		CalendarDate end = _endDateButton.getSelectedDate();
 		int days = end.subtract(start);
 		getDietTreatment().setDuration(days);
+		
+		updateDurationLabel();
 	}
 }
