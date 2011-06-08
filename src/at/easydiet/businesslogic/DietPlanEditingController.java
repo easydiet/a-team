@@ -89,6 +89,7 @@ public class DietPlanEditingController
     public TimeSpanBO createTimeSpan()
     {
         TimeSpanBO t = new TimeSpanBO();
+        t.setDietPlan(_dietPlan);
         _dietPlan.addTimeSpans(t);
         validateDietPlan();
         return t;

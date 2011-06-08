@@ -92,21 +92,7 @@ public class PatientLikeManagementView extends EasyDietContentView implements
             public void buttonPressed(Button button)
             {
                 // save data
-                if (PatientLikeManagementController.getInstance().saveData())
-                {
-                    ViewController.getInstance()
-                            .loadContent("PatientDetailView",
-                                    PatientLikeManagementView.this);
-                    _saved = true;
-                }
-                else
-                {
-                    EasyAlerts
-                            .error("Fehler beim Speichern der Daten, versuchen Sie es bitte erneut!",
-                                    EasyAlerts.OK_ONLY, EasyAlerts.OK,
-                                    getWindow(), null);
-                }
-
+                save();
             }
         });
 
@@ -141,6 +127,24 @@ public class PatientLikeManagementView extends EasyDietContentView implements
                 removeLike();
             }
         });
+    }
+
+    protected void save()
+    {
+        if (PatientLikeManagementController.getInstance().saveData())
+        {
+            ViewController.getInstance()
+                    .loadContent("PatientDetailView",
+                            PatientLikeManagementView.this);
+            _saved = true;
+        }
+        else
+        {
+            EasyAlerts
+                    .error("Fehler beim Speichern der Daten, versuchen Sie es bitte erneut!",
+                            EasyAlerts.OK_ONLY, EasyAlerts.OK,
+                            getWindow(), null);
+        }
     }
 
     /**

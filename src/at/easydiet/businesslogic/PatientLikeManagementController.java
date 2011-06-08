@@ -23,7 +23,6 @@ public class PatientLikeManagementController
     /**
      * Logger for debugging purposes
      */
-    @SuppressWarnings("unused")
     private static final org.apache.log4j.Logger   LOG = org.apache.log4j.Logger
                                                                .getLogger(PatientLikeManagementController.class);
 
@@ -108,6 +107,7 @@ public class PatientLikeManagementController
     public void addLike(PatientLikeBO newLike)
     {
         _patient.addLikes(newLike);
+        newLike.setPatient(_patient);
     }
 
     /**
@@ -190,6 +190,7 @@ public class PatientLikeManagementController
         }
         catch (Exception e)
         {
+            LOG.error(e);
             HibernateUtil.currentSession().getTransaction().rollback();
             return false;
         }
