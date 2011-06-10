@@ -152,6 +152,7 @@ public class DietPlanEditingController
     public MealBO createMeal(TimeSpanBO timeSpan)
     {
         MealBO meal = new MealBO();
+        meal.setTimeSpan(timeSpan);
         timeSpan.addMeals(meal);
         validateDietPlan();
         return meal;
