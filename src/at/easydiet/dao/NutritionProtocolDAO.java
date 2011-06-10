@@ -1,5 +1,10 @@
 package at.easydiet.dao;
 
+import java.util.List;
+
+import org.hibernate.criterion.Restrictions;
+
+import at.easydiet.model.DietTreatment;
 import at.easydiet.model.NutritionProtocol;
 
 /**
@@ -8,5 +13,8 @@ import at.easydiet.model.NutritionProtocol;
 public class NutritionProtocolDAO 
         extends GenericHibernateDAO<NutritionProtocol, Long>
 {
-	// implementation in parent class
+    public List<NutritionProtocol> findByDietTreatment(DietTreatment model) 
+    {
+        return findByCriteria(Restrictions.eq("dietTreatment", model));
+    }
 }

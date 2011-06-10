@@ -12,7 +12,6 @@ import at.easydiet.model.DietParameter;
 import at.easydiet.model.DietPlan;
 import at.easydiet.model.DietTreatment;
 import at.easydiet.model.DietTreatmentSystemUser;
-import at.easydiet.model.NutritionProtocol;
 import at.easydiet.model.PatientState;
 
 /**
@@ -145,59 +144,6 @@ public class DietTreatmentBO implements IDietParameterizable
     public void setShortDescription(String shortDescription) 
     {
         _model.setShortDescription(shortDescription);
-    }
-
-
-	private List<NutritionProtocolBO> _nutritionProtocols;
-	
-    /**
-     * Gets a list of referenced NutritionProtocols of this instance.
-     * This list is cached, use {@link DietTreatment#updateNutritionProtocolsCache()) to update this cache.
-     * @return a cached list of referenced NutritionProtocols wrapped into the correct businessobject. 
-     */
-    public List<NutritionProtocolBO> getNutritionProtocols()
-    {
-        if(_nutritionProtocols == null) 
-        {
-            _nutritionProtocols = new ArrayList<NutritionProtocolBO>();
-            for(NutritionProtocol nutritionProtocols : _model.getNutritionProtocols())
-            {
-                _nutritionProtocols.add(new NutritionProtocolBO(nutritionProtocols));
-            }
-        }
-        return _nutritionProtocols;
-    }
-	
-    /**
-     * Adds a new NutritionProtocol to the list of referenced nutritionProtocols.
-     * The cache will updated
-     * @param nutritionProtocols the NutritionProtocol to add. 
-     */
-    public void addNutritionProtocols(NutritionProtocolBO nutritionProtocols)
-    {
-        getNutritionProtocols().add(nutritionProtocols);
-        _model.getNutritionProtocols().add(nutritionProtocols.getModel());
-    }
-    
-        
-    /**
-     * Removes the given NutritionProtocol from the list of referenced nutritionProtocols.
-     * The cache will updated
-     * @param nutritionProtocols the timespan to add. 
-     */
-    public void removeNutritionProtocols(NutritionProtocolBO nutritionProtocols)
-    {
-        getNutritionProtocols().remove(nutritionProtocols);
-        _model.getNutritionProtocols().remove(nutritionProtocols.getModel());
-    }
-	
-    /**
-     * Rebuilds the cache for referenced nutritionProtocols.
-     */
-    public void updateNutritionProtocolsCache()
-    {
-        _nutritionProtocols = null;
-        getNutritionProtocols();
     }
 
 

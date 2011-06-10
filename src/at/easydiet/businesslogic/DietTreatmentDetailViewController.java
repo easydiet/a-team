@@ -1,8 +1,15 @@
 package at.easydiet.businesslogic;
 
+import java.util.List;
+
+import org.apache.pivot.collections.ArrayList;
+
 import at.easydiet.businessobjects.DietTreatmentBO;
+import at.easydiet.businessobjects.NutritionProtocolBO;
 import at.easydiet.dao.DAOFactory;
 import at.easydiet.dao.DietTreatmentDAO;
+import at.easydiet.dao.NutritionProtocolDAO;
+import at.easydiet.model.NutritionProtocol;
 import at.easydiet.view.DietTreatmentDetailView;
 
 /**
@@ -21,6 +28,7 @@ public class DietTreatmentDetailViewController
      * The current opened diet treatment
      */
     private DietTreatmentBO                          _dietTreatment;
+    private ArrayList<NutritionProtocolBO>           _nutritionProtocols;
 
     /**
      * This is a unique instance, it is stored as this singleton
@@ -83,9 +91,22 @@ public class DietTreatmentDetailViewController
         _dietTreatment.updateContactJournalsCache();
         _dietTreatment.updateDietParametersCache();
         _dietTreatment.updateDietPlansCache();
-        _dietTreatment.updateNutritionProtocolsCache();
         _dietTreatment.updatePatientStatesCache();
         _dietTreatment.updateSystemUsersCache();
+        
+        // load nutritionprotocols
+        NutritionProtocolDAO dao = DAOFactory.getInstance().getNutritionProtocolDAO();
+        List<NutritionProtocol> nps = dao.findByDietTreatment(_dietTreatment.getModel());
+        _nutritionProtocols = new ArrayList<NutritionProtocolBO>();
+        for (NutritionProtocol nutritionProtocol : nps) 
+        {
+            _nutritionProtocols.add(new NutritionProtocolBO(nutritionProtocol));
+        }
+    }
+    
+    public ArrayList<NutritionProtocolBO> getNutritionProtocols() 
+    {
+        return _nutritionProtocols;
     }
 
     /**

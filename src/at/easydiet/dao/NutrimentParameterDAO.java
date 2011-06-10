@@ -8,5 +8,5 @@ import at.easydiet.model.NutrimentParameter;
 public class NutrimentParameterDAO 
         extends GenericHibernateDAO<NutrimentParameter, Long>
 {
-	// implementation in parent class
+
 }

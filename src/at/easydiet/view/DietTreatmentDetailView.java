@@ -93,7 +93,7 @@ public class DietTreatmentDetailView extends EasyDietContentView implements
         _contactJournalTable.setTableData(DietTreatmentDetailViewController
                 .getInstance().getDietTreatment().getContactJournals());
         _nutritionProtocolTable.setTableData(DietTreatmentDetailViewController
-                .getInstance().getDietTreatment().getNutritionProtocols());
+                .getInstance().getNutritionProtocols());
     }
 
     /**

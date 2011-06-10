@@ -5,7 +5,6 @@ import java.util.Date;
 import org.apache.pivot.collections.List;
 import org.apache.pivot.collections.ArrayList;
 
-import antlr.StringUtils;
 import at.easydiet.dao.DAOFactory;
 import at.easydiet.model.DietTreatment;
 import at.easydiet.model.LaborReport;
